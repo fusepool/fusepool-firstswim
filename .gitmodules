@@ -1,0 +1,9 @@
+[submodule "src/main/resources/META-INF/resources/firstswim/javascript/enyo"]
+	path = src/main/resources/META-INF/resources/firstswim/javascript/enyo
+	url = https://github.com/enyojs/enyo.git
+[submodule "src/main/resources/META-INF/resources/firstswim/javascript/lib/onyx"]
+	path = src/main/resources/META-INF/resources/firstswim/javascript/lib/onyx
+	url = https://github.com/enyojs/onyx.git
+[submodule "src/main/resources/META-INF/resources/firstswim/javascript/lib/layout"]
+	path = src/main/resources/META-INF/resources/firstswim/javascript/lib/layout
+	url = https://github.com/enyojs/layout.git
