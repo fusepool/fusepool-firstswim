@@ -1,7 +1,7 @@
-Example Apache Stanbol Component
+fusepool FirstSwim
 ===========
 
-This is an example Apache Stanbol component.
+This Stanbol Component is used to deliver the JavaScript Based GUI client to the user.
 
 To compile the engine run
 
@@ -13,6 +13,3 @@ To deploy the engine to a stanbol instance running on localhost port 8080 run
 
 
 After installing a new menu item pointing you to /fusepool-firstswim will appear.
-
-The example service allows to upload a file for which enhancement will be generated.
-The service can be accessed via browser as HTML or as RDF for machine clients.
