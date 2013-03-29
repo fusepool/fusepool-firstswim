@@ -3,6 +3,7 @@
 <html>
   <head>
     <title>FirstSwim</title>
+    <script src="firstswim/javascript/enyo/enyo.js"></script>
     <link type="text/css" rel="stylesheet" href="firstswim/styles/firstswim.css" />
   </head>
 
