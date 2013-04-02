@@ -11,6 +11,7 @@ enyo.kind({
             ]},
         {kind: "onyx.TextArea", fit: true, classes: "webservice-sample-source"}
     ],
+
     fetch: function() {
     // send parameters the remote service using the 'send()' method
         this.$.entityhub.send({
