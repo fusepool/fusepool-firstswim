@@ -1,3 +1,38 @@
+/** ------------- Main frame ------------- **/
+#docApp{
+    border: 2px solid #F2F2F2;
+    height: 520px;
+    margin: 15px auto;
+    width: 1000px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/** ----- Search box ----- **/
+.searchLabel{
+    padding: 9px !important;
+}
+
+.searchBox{
+    margin: 10px auto;
+    width: 300px;
+}
+
+.searchImage{
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/search-icon.png);
+}
+
+.searchButton{
+    height: 40px;
+    margin-left: 10px;
+    width: 50px;
+}
+
+
+/** webservice sample **/
 .webservice-sample {
     padding: 15px;
 }
