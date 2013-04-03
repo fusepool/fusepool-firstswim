@@ -8,8 +8,13 @@ window.onload = function () {
             enyo.kind({
                 name: 'DocumentApp',
                 id: 'docApp',
+                fit: false,
                 components: [
-                    { kind: 'SearchBox' }
+                    { kind: 'SearchBox' },
+                    { kind: 'Bookmark' },
+                    { kind: 'DictionaryList' }
+//                    { kind: 'DocumentList' },
+//                    { kind: 'Document' }
                 ]
             });
             new DocumentApp().renderInto(document.body);
