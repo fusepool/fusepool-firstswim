@@ -19,6 +19,6 @@ enyo.kind({
     },
 
     search: function(){
-        console.log('search implementing coming soon...');
+        this.owner.updateUI();
     }
 });

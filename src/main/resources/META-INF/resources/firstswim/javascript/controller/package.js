@@ -1,6 +1,8 @@
 enyo.depends(
     'SearchBox.js',
     'Bookmark.js',
+    'DictionaryEntity.js',
+    'Dictionary.js',
     'DictionaryList.js',
     'DocumentList.js',
     'Document.js',
