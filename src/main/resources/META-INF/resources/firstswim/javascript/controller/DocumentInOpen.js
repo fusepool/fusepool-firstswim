@@ -6,7 +6,8 @@ enyo.kind({
     published: {
         documentId: '',
         documentTitle: '',
-        documentContent: ''
+        documentContent: '',
+        pozitiveRate: null
     },
 
     create: function(){
@@ -17,11 +18,50 @@ enyo.kind({
     components: [
         { tag: 'div', classes: 'openedDocument', name: 'documentBox', components: [
             { kind: 'enyo.Scroller', fit: true, touch: true, touchOverscroll: false, components: [
+                { tag: 'div', classes: 'rateDiv', name: 'rate', components: [
+                    { tag: 'div', classes: 'positiveRate', ontap: 'showPozitive' },
+                    { tag: 'div', classes: 'negativeRate', ontap: 'showNegative' }
+                ]},
                 { tag: 'div', classes: 'documentTitle', name: 'title' },
                 { tag: 'div', classes: 'documentContent', name: 'content' }
             ]}
+        ]},
+        { kind: onyx.Popup, name: 'ratePopup', classes: 'ratePopup', components: [
+            { tag: 'div', name: 'rateContent', classes: 'rateContent' },
+            { kind: 'onyx.InputDecorator', classes: 'searchLabel', components: [
+                { kind: onyx.Input, name: 'categoryInput', placeholder: 'Category name...', onkeyup: 'categoryKeyUp' }
+            ]},
+            { kind: onyx.Button, classes: 'okRateButton', content: 'OK', ontap: 'sendRating' }
         ]}
     ],
+
+    categoryKeyUp: function(inSender, inEvent){
+        if(inEvent.keyCode === 13){
+            this.sendRating();
+        }
+    },
+
+    sendRating: function(){
+        // TODO: send a request about rating
+        this.$.categoryInput.setValue('');
+        this.$.ratePopup.hide();
+    },
+
+    showPozitive: function(){
+        this.pozitiveRate = true;
+        this.$.rateContent.setContent('Rate to positive');
+        this.showRatePopup();
+    },
+
+    showNegative: function(){
+        this.pozitiveRate = false;
+        this.$.rateContent.setContent('Rate to negative');
+        this.showRatePopup();
+    },
+
+    showRatePopup: function(){
+        this.$.ratePopup.show();
+    },
 
     openDoc: function(documentId){
         this.documentId = documentId;

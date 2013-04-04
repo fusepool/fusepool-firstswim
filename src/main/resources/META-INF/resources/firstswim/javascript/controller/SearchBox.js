@@ -5,7 +5,7 @@ enyo.kind({
     classes: 'searchBox',
 
     components: [
-        { kind: 'onyx.InputDecorator', classes: 'searchLabel', components: [
+        { kind: 'onyx.InputDecorator', classes: 'categoryLabel', components: [
             { kind: 'onyx.Input', placeholder: 'Search in documents', onkeyup: 'searchKeyUp' },
             { tag: 'div', classes: 'searchImage' }
         ]},

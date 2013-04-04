@@ -33,7 +33,7 @@ enyo.kind({
         detailsObj = {};
         detailsObj.title = this.entityText;
         detailsObj.content = 'Paris is the capital and largest city of France…';
-        detailsObj.image = 'http://symbols.widgit.com/symbolworld/col/50/graphics/widgit%20rebus%2007/symbols%207b/eiffel%20tower.svg.sym';
+        detailsObj.image = 'https://groupshuttle.com/wp-content/themes/ProjectTheme/images/eiffel-tower.png';
         return detailsObj;
     },
 
