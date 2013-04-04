@@ -8,7 +8,7 @@ enyo.kind({
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox' },
-        { tag: 'span', style: 'cursor: pointer;', name: 'entityLabel', ontap: 'changeCheckbox' }
+        { tag: 'span', classes: 'entityText', name: 'entityLabel', ontap: 'changeCheckbox' }
     ],
 
     changeCheckbox: function(){

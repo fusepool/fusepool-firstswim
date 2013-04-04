@@ -8,7 +8,7 @@ enyo.kind({
     },
     
     components: [
-        { tag: 'div', name: 'nameDiv' },
+        { tag: 'div', classes: 'dictionaryName', name: 'nameDiv' },
         { tag: 'div', name: 'list' }
     ],
 

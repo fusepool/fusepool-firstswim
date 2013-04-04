@@ -43,6 +43,37 @@
     right: 15px;
 }
 
+/** ----- Dictionary and entity list ----- **/
+.dictionaryList{
+    margin-top: 60px;
+    margin-left: 15px;
+}
+
+.dictionariesMainTitle{
+    font-size: 20px;
+}
+
+.dictionaryName{
+    margin-top: 15px;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.entityText{
+    cursor: pointer;
+    font-size: 17px;
+    margin-left: 7px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.entityText:hover{
+    color: blue;
+    font-weight: bold;
+}
 
 /** webservice sample **/
 .webservice-sample {

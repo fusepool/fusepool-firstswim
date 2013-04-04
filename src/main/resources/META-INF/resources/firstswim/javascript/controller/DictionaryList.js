@@ -1,27 +1,36 @@
 enyo.kind({
     name: 'DictionaryList',
     kind: enyo.Control,
+    classes: 'dictionaryList',
 
     published: {
         dictionaries: null
     },
+
+    create: function(){
+        this.inherited(arguments);
+        this.$.title.hide();
+    },
     
     components: [
-        { tag: 'div', content: 'Dictionaries' },
+        { tag: 'div', name: 'title', classes: 'dictionariesMainTitle', content: 'Dictionaries' },
         { tag: 'div', name: 'list' }
     ],
 
     updateList: function(dictionaries){
         this.dictionaries = dictionaries;
-        this.$.list.destroyClientControls();
-        for(var i=0;i<dictionaries.length;++i){
-            this.$.list.createComponent({
-                kind: 'Dictionary',
-                dictionaryName: dictionaries[i].name,
-                entityList: dictionaries[i].entities
-            });
+        if(dictionaries.length > 0){
+            this.$.title.show();
+            this.$.list.destroyClientControls();
+            for(var i=0;i<dictionaries.length;++i){
+                this.$.list.createComponent({
+                    kind: 'Dictionary',
+                    dictionaryName: dictionaries[i].name,
+                    entityList: dictionaries[i].entities
+                });
+            }
+            this.$.list.render();
         }
-        this.$.list.render();
     }
 
 });
