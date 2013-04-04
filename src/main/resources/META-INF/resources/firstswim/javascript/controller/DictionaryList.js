@@ -20,7 +20,6 @@ enyo.kind({
     updateList: function(dictionaries){
         this.dictionaries = dictionaries;
         if(dictionaries.length > 0){
-            this.$.title.show();
             this.$.list.destroyClientControls();
             for(var i=0;i<dictionaries.length;++i){
                 this.$.list.createComponent({
@@ -30,7 +29,10 @@ enyo.kind({
                 });
             }
             this.$.list.render();
+        } else {
+            this.$.title.setContent('No data available');
         }
+        this.$.title.show();
     }
 
 });

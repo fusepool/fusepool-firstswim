@@ -24,6 +24,7 @@
     width: 20px;
     height: 20px;
     background-image: url(../images/search-icon.png);
+    background-repeat: no-repeat;
 }
 
 .searchButton{
@@ -47,6 +48,8 @@
 .dictionaryList{
     margin-top: 60px;
     margin-left: 15px;
+    display: inline-block;
+    width: 300px;
 }
 
 .dictionariesMainTitle{
@@ -73,6 +76,39 @@
 .entityText:hover{
     color: blue;
     font-weight: bold;
+}
+
+/** ----- Document list ----- **/
+.documentList{
+    display: inline-block;
+    margin-top: 60px;
+    vertical-align: top;
+    width: 250px;
+}
+
+.documentsMainTitle{
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.shortDocument{
+    border: 1px solid #AAAAAA;
+    font-size: 14px;
+    height: 50px;
+    margin-bottom: 30px;
+    padding: 5px;
+    width: 100%;
+}
+
+.openDocButton{
+    width: 30px;
+    height: 34px;
+    background-image: url(../images/open-doc-icon.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    right: -25px;
+    top: -15px;
 }
 
 /** webservice sample **/
