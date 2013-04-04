@@ -1,4 +1,4 @@
-package net.fusepool.firstswim;
+package eu.fusepool.firstswim;
 
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;

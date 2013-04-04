@@ -1,4 +1,4 @@
-package net.fusepool.firstswim;
+package eu.fusepool.firstswim;
 
 import java.io.IOException;
 import javax.ws.rs.GET;

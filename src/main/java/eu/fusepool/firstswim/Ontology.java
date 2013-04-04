@@ -1,4 +1,4 @@
-package net.fusepool.firstswim;
+package eu.fusepool.firstswim;
 
 import org.apache.clerezza.rdf.core.UriRef;
 
