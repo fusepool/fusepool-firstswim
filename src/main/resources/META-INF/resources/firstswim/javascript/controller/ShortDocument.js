@@ -14,7 +14,7 @@ enyo.kind({
     ],
 
     openDoc: function(){
-        console.log('open doc: ' + this.documentId);
+        this.owner.openDoc(this.documentId);
     },
 
     create: function(){

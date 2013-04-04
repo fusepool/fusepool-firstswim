@@ -13,13 +13,17 @@ window.onload = function () {
                     { kind: 'SearchBox' },
                     { kind: 'Bookmark' },
                     { kind: 'DictionaryList', name: 'dictionaries' },
-                    { kind: 'DocumentList', name: 'documents' }
-//                    { kind: 'DocumentInOpen' }
+                    { kind: 'DocumentList', name: 'documents' },
+                    { kind: 'DocumentInOpen', name: 'documentOpen' }
                 ],
 
                 updateUI: function(){
                     this.$.dictionaries.updateList(this.createFakeDictionaries());
                     this.$.documents.updateList(this.createFakeDocuments());
+                },
+
+                openDoc: function(documentId){
+                    this.$.documentOpen.openDoc(documentId);
                 },
 
                 createFakeDictionaries: function(){

@@ -22,8 +22,9 @@ enyo.kind({
         if(documents.length > 0){
             this.$.list.destroyClientControls();
             for(var i=0;i<documents.length;++i){
-                this.$.list.createComponent({
+                this.createComponent({
                     kind: 'ShortDocument',
+                    container: this.$.list,
                     documentId: documents[i].id,
                     shortContent: documents[i].shortContent
                 });
@@ -33,6 +34,10 @@ enyo.kind({
             this.$.title.setContent('No data available');
         }
         this.$.title.show();
+    },
+
+    openDoc: function(documentId){
+        this.owner.openDoc(documentId);
     }
 
 });

@@ -8,5 +8,6 @@ enyo.depends(
 // -- Documents -- //
     'DocumentList.js',
     'ShortDocument.js',
+    'DocumentInOpen.js',
     'main.js'
 );
