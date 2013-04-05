@@ -244,6 +244,14 @@
     background: #CFC4C8;
 }
 
+.dictionarySelect{
+    display: block;
+    height: 25px;
+    margin: 10px auto;
+    width: 200px;
+}
+
+/** ----- Add entity popup ----- **/
 .addEntityContent{
     text-align: center;
     margin-top: 3px;
@@ -262,14 +270,59 @@
     width: 240px;
 }
 
-.dictionarySelect{
-    display: block;
-    height: 25px;
-    margin: 10px auto;
-    width: 200px;
+.okAddEntityButton{
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
-.okAddEntityButton{
+/** ----- Remove entity popup ----- **/
+.removeEntityContent{
+    text-align: center;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+.removeEntityTitle{
+    font-weight: bold;
+}
+
+.removeEntityPopup{
+    background: white;
+    color: black;
+    height: 104px;
+    position: absolute;
+    width: 240px;
+}
+
+.okRemoveEntityButton{
+    margin-left: 30px;
+    margin-right: 30px;
+}
+/** ----- Add entity popup ----- **/
+.moveEntityContent{
+    text-align: center;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+.moveEntityTitle{
+    font-weight: bold;
+}
+
+.moveEntityPopup{
+    background: white;
+    color: black;
+    height: 197px;
+    position: absolute;
+    width: 240px;
+}
+
+.fromToText{
+    font-size: 13px;
+    margin-top: 15px;
+}
+
+.okMoveEntityButton{
     margin-left: 30px;
     margin-right: 30px;
 }

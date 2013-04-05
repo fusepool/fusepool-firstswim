@@ -63,6 +63,42 @@ enyo.kind({
             ]},
             { kind: onyx.Button, classes: 'okAddEntityButton', content: 'OK', ontap: 'okAddEntity' },
             { kind: onyx.Button, content: 'Cancel', ontap: 'cancelAddEntity' }
+        ]},
+        { kind: onyx.Popup, name: 'removeEntityPopup', classes: 'removeEntityPopup', components: [
+            { tag: 'div', name: 'removeEntityContent', classes: 'removeEntityContent', components: [
+                { tag: 'span', classes: 'removeEntityTitle', content: 'Remove entity: ' },
+                { tag: 'span', name: 'removeEntityWord' }
+            ]},
+            { tag: 'select', classes: 'dictionarySelect', components: [
+                { tag: 'option', content: 'Person' },
+                { tag: 'option', content: 'Location' },
+                { tag: 'option', content: 'Organization' },
+                { tag: 'option', content: 'LTE' }
+            ]},
+            { kind: onyx.Button, classes: 'okRemoveEntityButton', content: 'OK', ontap: 'okRemoveEntity' },
+            { kind: onyx.Button, content: 'Cancel', ontap: 'cancelRemoveEntity' }
+        ]},
+        { kind: onyx.Popup, name: 'moveEntityPopup', classes: 'moveEntityPopup', components: [
+            { tag: 'div', name: 'moveEntityContent', classes: 'moveEntityContent', components: [
+                { tag: 'span', classes: 'moveEntityTitle', content: 'Move entity: ' },
+                { tag: 'span', name: 'moveEntityWord' }
+            ]},
+            { tag: 'div', content: 'From:', classes: 'fromToText' },
+            { tag: 'select', classes: 'dictionarySelect', components: [
+                { tag: 'option', content: 'Person' },
+                { tag: 'option', content: 'Location' },
+                { tag: 'option', content: 'Organization' },
+                { tag: 'option', content: 'LTE' }
+            ]},
+            { tag: 'div', content: 'To:', classes: 'fromToText' },
+            { tag: 'select', classes: 'dictionarySelect', components: [
+                { tag: 'option', content: 'Person' },
+                { tag: 'option', content: 'Location' },
+                { tag: 'option', content: 'Organization' },
+                { tag: 'option', content: 'LTE' }
+            ]},
+            { kind: onyx.Button, classes: 'okMoveEntityButton', content: 'OK', ontap: 'okMoveEntity' },
+            { kind: onyx.Button, content: 'Cancel', ontap: 'cancelMoveEntity' }
         ]}
     ],
 
@@ -72,6 +108,22 @@ enyo.kind({
         this.$.addEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
         this.$.addEntityWord.setContent(this.selectedText);
         this.$.addEntityPopup.show();
+    },
+
+    removeEntity: function(){
+        this.hideMenu();
+        this.$.removeEntityPopup.applyStyle('top', this.clickTop - 130 + 'px');
+        this.$.removeEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
+        this.$.removeEntityWord.setContent(this.selectedText);
+        this.$.removeEntityPopup.show();
+    },
+
+    moveEntity: function(){
+        this.hideMenu();
+        this.$.moveEntityPopup.applyStyle('top', this.clickTop - 215 + 'px');
+        this.$.moveEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
+        this.$.moveEntityWord.setContent(this.selectedText);
+        this.$.moveEntityPopup.show();
     },
 
     getSelectedText: function(){
@@ -94,12 +146,20 @@ enyo.kind({
         this.$.addEntityPopup.hide();
     },
 
-    removeEntity: function(){
-        this.hideMenu();
+    okRemoveEntity: function(){
+        this.$.removeEntityPopup.hide();
     },
 
-    moveEntity: function(){
-        this.hideMenu();
+    cancelRemoveEntity: function(){
+        this.$.removeEntityPopup.hide();
+    },
+
+    okMoveEntity: function(){
+        this.$.moveEntityPopup.hide();
+    },
+
+    cancelMoveEntity: function(){
+        this.$.moveEntityPopup.hide();
     },
 
     clickText: function(inSender, inEvent){
