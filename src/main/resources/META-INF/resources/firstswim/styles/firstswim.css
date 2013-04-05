@@ -88,11 +88,11 @@
 .detailsPopup{
     background: white;
     color: black;
-    height: 90px;
+    height: 250px;
     left: 60px;
     position: absolute;
     top: -100px;
-    width: 250px;
+    width: 420px;
 }
 
 .detailsTitle{
