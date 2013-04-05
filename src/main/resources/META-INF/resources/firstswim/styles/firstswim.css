@@ -43,6 +43,7 @@
     position: absolute;
     top: 10px;
     right: 15px;
+    cursor: pointer;
 }
 
 /** ----- Dictionary and entity list ----- **/
@@ -224,6 +225,53 @@
 
 .categoryLabel{
     padding: 9px !important;
+}
+
+/** ----- Entity add/remove/move menu and popups ----- **/
+.entityMenu{
+    position: absolute;
+}
+
+.entityMenuItem{
+    text-align: center;
+    background: #D9D9D9;
+    cursor: pointer;
+    padding: 3px 12px;
+    width: 120px;
+}
+
+.entityMenuItem:hover{
+    background: #CFC4C8;
+}
+
+.addEntityContent{
+    text-align: center;
+    margin-top: 3px;
+    font-size: 15px;
+}
+
+.addEntityTitle{
+    font-weight: bold;
+}
+
+.addEntityPopup{
+    background: white;
+    color: black;
+    height: 104px;
+    position: absolute;
+    width: 240px;
+}
+
+.dictionarySelect{
+    display: block;
+    height: 25px;
+    margin: 10px auto;
+    width: 200px;
+}
+
+.okAddEntityButton{
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 /** webservice sample **/
