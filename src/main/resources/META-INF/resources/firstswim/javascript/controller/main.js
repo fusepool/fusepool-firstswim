@@ -10,7 +10,15 @@ window.onload = function () {
                 id: 'docApp',
                 fit: false,
                 components: [
-                    { kind: 'SearchBox' },
+                    {
+                        kind: 'SearchBox',
+                        placeholder: 'Search in documents',
+                        inputFrameClass: 'categoryLabel',
+                        buttonClass: 'searchButton',
+                        buttonContent: 'OK',
+                        searchIconClass: 'searchImage',
+                        parentSeachFunction: 'updateUI'
+                    },
                     { kind: 'Bookmark' },
                     { kind: 'DictionaryList', name: 'dictionaries' },
                     { kind: 'DocumentList', name: 'documents' },
