@@ -19,11 +19,20 @@ window.onload = function () {
                         searchIconClass: 'searchImage',
                         parentSeachFunction: 'updateUI'
                     },
-                    { kind: 'Bookmark' },
+                    {
+                        name: 'bookmark',
+                        kind: 'Bookmark',
+                        buttonClass: 'bookmarkButton',
+                        parentTapFunction: 'generateBMUrl'
+                    },
                     { kind: 'DictionaryList', name: 'dictionaries' },
                     { kind: 'DocumentList', name: 'documents' },
                     { kind: 'DocumentInOpen', name: 'documentOpen' }
                 ],
+
+                generateBMUrl: function(){
+                    this.$.bookmark.saveBookmark('test.com', 'This is test');
+                },
 
                 updateUI: function(){
                     this.$.dictionaries.updateList(this.createFakeDictionaries());
