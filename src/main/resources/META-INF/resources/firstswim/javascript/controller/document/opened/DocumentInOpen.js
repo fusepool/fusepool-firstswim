@@ -1,13 +1,11 @@
 enyo.kind({
     name: 'DocumentInOpen',
     kind: enyo.Control,
-    classes: 'documentInOpen',
 
     published: {
         documentId: '',
         clickTop: null,
         clickLeft: null,
-        documentBoxClass: '',
         selectedText: ''
     },
 
@@ -74,7 +72,23 @@ enyo.kind({
             okButtonContent: 'OK',
             cancelButtonContent: 'Cancel'
         },
-        { kind: 'MoveEntityPopup', name: 'moveEntityPopup' }
+        {
+            kind: 'MoveEntityPopup',
+            name: 'moveEntityPopup',
+            classes: 'moveEntityPopup',
+            entityContentClass: 'moveEntityContent',
+            titleClass: 'moveEntityTitle',
+            titleContent: 'Move entity: ',
+            fromContent: 'From:',
+            fromClass: 'fromToText',
+            fromSelectClass: 'dictionarySelect',
+            toContent: 'From:',
+            toClass: 'fromToText',
+            toSelectClass: 'dictionarySelect',
+            okButtonClass: 'okMoveEntityButton',
+            okButtonContent: 'OK',
+            cancelButtonContent: 'Cancel'
+        }
     ],
 
     addEntity: function(){

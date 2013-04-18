@@ -44,7 +44,8 @@ window.onload = function () {
                     },
                     {
                         kind: 'DocumentInOpen',
-                        name: 'documentOpen'
+                        name: 'documentOpen',
+                        classes: 'documentInOpen'
                     }
                 ],
 
