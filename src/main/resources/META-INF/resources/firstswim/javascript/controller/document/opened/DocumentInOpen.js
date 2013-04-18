@@ -40,21 +40,34 @@ enyo.kind({
             inputFrameClass: 'searchLabel',
             okButtonClass: 'okRateButton'
         },
-        { kind: 'EntityMenu', name: 'entityMenu' },
+        {
+            kind: 'DynamicMenu',
+            name: 'entityMenu',
+            classes: 'entityMenu',
+            menuItemClass: 'entityMenuItem',
+            menuItems: [
+                { label: 'Add entity', functionName: 'addEntity' },
+                { label: 'Remove entity', functionName: 'removeEntity' },
+                { label: 'Move entity', functionName: 'moveEntity' }
+            ]
+        },
         { kind: 'AddEntityPopup', name: 'addEntityPopup' },
         { kind: 'RemoveEntityPopup', name: 'removeEntityPopup' },
         { kind: 'MoveEntityPopup', name: 'moveEntityPopup' }
     ],
 
     addEntity: function(){
+        this.$.entityMenu.hide();
         this.$.addEntityPopup.addEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
     removeEntity: function(){
+        this.$.entityMenu.hide();
         this.$.removeEntityPopup.removeEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
     moveEntity: function(){
+        this.$.entityMenu.hide();
         this.$.moveEntityPopup.moveEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
