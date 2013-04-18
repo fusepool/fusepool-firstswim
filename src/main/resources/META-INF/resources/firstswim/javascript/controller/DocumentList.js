@@ -24,9 +24,13 @@ enyo.kind({
             for(var i=0;i<documents.length;++i){
                 this.createComponent({
                     kind: 'ShortDocument',
+                    classes: 'shortDocumentContainer',
+                    contentClass: 'shortDocument',
+                    openButtonClass: 'openDocButton',
                     container: this.$.list,
                     documentId: documents[i].id,
-                    shortContent: documents[i].shortContent
+                    shortContent: documents[i].shortContent,
+                    parentFunction: 'openDoc'
                 });
             }
             this.$.list.render();
