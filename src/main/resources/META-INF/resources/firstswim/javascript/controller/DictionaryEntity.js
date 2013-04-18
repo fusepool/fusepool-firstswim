@@ -4,7 +4,8 @@ enyo.kind({
     classes: 'detailsDiv',
 
     published: {
-        entityText: ''
+        entityText: '',
+        detailsVisible: false
     },
 
     components: [
@@ -19,9 +20,11 @@ enyo.kind({
     
     hideDetails: function(){
         this.$.detailsPopup.hide();
+        this.detailsVisible = false;
     },
 
     getDetails: function(){
+        this.detailsVisible = true;
         var url = 'http://platform.fusepool.info/entityhub/site/dbpedia/entity';
         var request = new enyo.Ajax({
             method: 'GET',
@@ -38,11 +41,12 @@ enyo.kind({
 
     showDetails: function(data){
         var details = this.getDetailsObject(data);
-        console.log(details);
         this.$.detailsTitle.setContent(details.title);
         this.$.detailsContent.setContent(details.content);
         this.$.detailsImage.setSrc(details.image);
-        this.$.detailsPopup.show();
+        if(this.detailsVisible){
+            this.$.detailsPopup.show();
+        }
     },
 
     getDetailsObject: function(data){
