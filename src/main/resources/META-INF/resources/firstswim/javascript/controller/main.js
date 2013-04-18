@@ -23,10 +23,25 @@ window.onload = function () {
                         name: 'bookmark',
                         kind: 'Bookmark',
                         buttonClass: 'bookmarkButton',
-                        parentTapFunction: 'generateBMUrl'
+                        parentTapFunction: 'generateBMUrl',
+                        noBrowserSupportText: 'This browser not support bookmarks!'
                     },
-                    { kind: 'DictionaryList', name: 'dictionaries' },
-                    { kind: 'DocumentList', name: 'documents' },
+                    {
+                        kind: 'DictionaryList',
+                        classes: 'dictionaryList',
+                        name: 'dictionaries',
+                        dictionaryTitle: 'Dictionaries',
+                        noContentLabel: 'No data available',
+                        titleClass: 'dictionariesMainTitle'
+                    },
+                    {
+                        kind: 'DocumentList',
+                        name: 'documents',
+                        classes: 'documentList',
+                        titleClass: 'documentsMainTitle',
+                        titleContent: 'Documents',
+                        noDataLabel: 'No data available'
+                    },
                     { kind: 'DocumentInOpen', name: 'documentOpen' }
                 ],
 

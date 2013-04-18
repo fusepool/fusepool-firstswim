@@ -1,20 +1,33 @@
 enyo.kind({
     tag: 'div',
     name: 'DictionaryEntity',
-    classes: 'detailsDiv',
 
     published: {
         entityText: '',
-        detailsVisible: false
+        entityTextClass: '',
+        detailsPopupClass: '',
+        detailsTitleClass: '',
+        detailsContentClass: '',
+        detailsVisible: false,
+        detailsURL: ''
+    },
+
+    create: function(){
+        this.inherited(arguments);
+        this.$.entityLabel.setContent(this.entityText);
+        this.$.entityLabel.setClasses(this.entityTextClass);
+        this.$.detailsPopup.setClasses(this.detailsPopupClass);
+        this.$.detailsTitle.setClasses(this.detailsTitleClass);
+        this.$.detailsContent.setClasses(this.detailsContentClass);
     },
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox' },
-        { tag: 'span', classes: 'entityText', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'changeCheckbox' },
-        { kind: onyx.Popup, name: 'detailsPopup', classes: 'detailsPopup', components: [
-            { tag: 'div', classes: 'detailsTitle', name: 'detailsTitle' },
+        { tag: 'span', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'changeCheckbox' },
+        { kind: onyx.Popup, name: 'detailsPopup', components: [
+            { tag: 'div', name: 'detailsTitle' },
             { kind: 'Image', name: 'detailsImage' },
-            { tag: 'div', classes: 'detailsContent', name: 'detailsContent' }
+            { tag: 'div', name: 'detailsContent' }
         ]}
     ],
     
@@ -25,7 +38,7 @@ enyo.kind({
 
     getDetails: function(){
         this.detailsVisible = true;
-        var url = 'http://platform.fusepool.info/entityhub/site/dbpedia/entity';
+        var url = this.detailsURL;
         var request = new enyo.Ajax({
             method: 'GET',
             url: url
@@ -60,10 +73,5 @@ enyo.kind({
     changeCheckbox: function(){
         var checkBox = this.$.entityCheckbox;
         checkBox.setValue(!checkBox.getValue());
-    },
-
-    create: function(){
-        this.inherited(arguments);
-        this.$.entityLabel.setContent(this.entityText);
     }
 });

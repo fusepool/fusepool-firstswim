@@ -5,7 +5,8 @@ enyo.kind({
         url: '',
         title: '',
         parentTapFunction: '',
-        buttonClass: ''
+        buttonClass: '',
+        noBrowserSupportText: ''
     },
 
     components: [
@@ -33,14 +34,11 @@ enyo.kind({
         }
 
 	if (window.sidebar) {
-            // Mozilla Firefox Bookmark
             window.sidebar.addPanel(title, url, '');
 	} else if(window.external) {
-            // IE Favorite
             window.external.AddFavorite( url, title); }
 	else {
-            // Opera Hotlist
-            alert('This browser not support bookmarks!');
+            alert(this.noBrowserSupportText);
         }
     },
 

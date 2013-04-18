@@ -1,19 +1,26 @@
 enyo.kind({
     name: 'DocumentList',
     kind: enyo.Control,
-    classes: 'documentList',
 
     published: {
-        documents: null
+        documents: null,
+        titleClass: '',
+        titleContent: '',
+        noDataLabel: ''
     },
 
     create: function(){
         this.inherited(arguments);
+        this.$.title.setContent(this.titleContent);
         this.$.title.hide();
     },
-    
+
+    rendered: function(){
+        this.$.title.setClasses(this.titleClass);
+    },
+
     components: [
-        { tag: 'div', name: 'title', classes: 'documentsMainTitle', content: 'Documents' },
+        { tag: 'div', name: 'title' },
         { tag: 'div', name: 'list' }
     ],
 
@@ -35,7 +42,7 @@ enyo.kind({
             }
             this.$.list.render();
         } else {
-            this.$.title.setContent('No data available');
+            this.$.title.setContent(this.noDataLabel);
         }
         this.$.title.show();
     },
