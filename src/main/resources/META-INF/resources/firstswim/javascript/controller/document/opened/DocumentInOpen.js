@@ -33,7 +33,12 @@ enyo.kind({
             name: 'ratePopup',
             classes: 'ratePopup',
             positiveLabel: 'Rate to positive',
-            negativeLabel: 'Rate to negative'
+            negativeLabel: 'Rate to negative',
+            okButtonLabel: 'OK',
+            placeholderText: 'Category name...',
+            rateContentClass: 'rateContent',
+            inputFrameClass: 'searchLabel',
+            okButtonClass: 'okRateButton'
         },
         { kind: 'EntityMenu', name: 'entityMenu' },
         { kind: 'AddEntityPopup', name: 'addEntityPopup' },

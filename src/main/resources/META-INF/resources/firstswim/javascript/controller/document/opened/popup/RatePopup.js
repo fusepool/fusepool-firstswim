@@ -4,16 +4,32 @@ enyo.kind({
     name: 'RatePopup',
 
     published: {
+        // -- labels
         positiveLabel: '',
-        negativeLabel: ''
+        negativeLabel: '',
+        okButtonLabel: '',
+        placeholderText: '',
+        // -- classes
+        rateContentClass: '',
+        inputFrameClass: '',
+        okButtonClass: ''     
+    },
+
+    create: function(){
+        this.inherited(arguments);
+        this.$.okButton.setContent(this.okButtonLabel);
+        this.$.okButton.setClasses(this.okButtonClass);
+        this.$.rateContent.setClasses(this.rateContentClass);
+        this.$.inputFrame.setClasses(this.inputFrameClass);
+        this.$.categoryInput.setPlaceholder(this.placeholderText);
     },
 
     components: [
-        { tag: 'div', name: 'rateContent', classes: 'rateContent' },
-        { kind: 'onyx.InputDecorator', classes: 'searchLabel', components: [
-            { kind: onyx.Input, name: 'categoryInput', placeholder: 'Category name...', onkeyup: 'categoryKeyUp' }
+        { tag: 'div', name: 'rateContent' },
+        { kind: 'onyx.InputDecorator', name: 'inputFrame', components: [
+            { kind: onyx.Input, name: 'categoryInput', onkeyup: 'categoryKeyUp' }
         ]},
-        { kind: onyx.Button, classes: 'okRateButton', content: 'OK', ontap: 'sendRating' }
+        { kind: onyx.Button, name: 'okButton', ontap: 'sendRating' }
     ],
 
     showPopup: function(isPositive){
