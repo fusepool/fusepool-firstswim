@@ -17,8 +17,24 @@ enyo.kind({
     },
 
     components: [
-        { kind: 'DocumentBox', name: 'documentBox', classes: 'openedDocument' },
-        { kind: 'RatePopup', name: 'ratePopup', classes: 'ratePopup'},
+        {
+            kind: 'DocumentBox',
+            name: 'documentBox',
+            classes: 'openedDocument',
+            positiveRateClass: 'positiveRate',
+            negativeRateClass: 'negativeRate',
+            documentTitleClass: 'documentTitle',
+            documentContentClass: 'documentContent',
+            noDataLabel: 'noDataLabel',
+            rateDivClass: 'rateDiv'
+        },
+        {
+            kind: 'RatePopup',
+            name: 'ratePopup',
+            classes: 'ratePopup',
+            positiveLabel: 'Rate to positive',
+            negativeLabel: 'Rate to negative'
+        },
         { kind: 'EntityMenu', name: 'entityMenu' },
         { kind: 'AddEntityPopup', name: 'addEntityPopup' },
         { kind: 'RemoveEntityPopup', name: 'removeEntityPopup' },

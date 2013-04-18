@@ -3,13 +3,22 @@ enyo.kind({
     name: 'DocumentBox',
 
     published: {
+        // -- labels
         documentTitle: '',
-        documentContent: ''
+        documentContent: '',
+        noDataLabel: '',
+        // -- classes
+        documentTitleClass: '',
+        documentContentClass: '',
+        positiveRateClass: '',
+        negativeRateClass: '',
+        rateDivClass: ''
     },
 
     create: function(){
         this.inherited(arguments);
-        // overwrite right click listener
+
+        // overwrite click listener
         if (document.addEventListener) {
             document.addEventListener('contextmenu', function(e) { e.preventDefault();}, false);
         } else {
@@ -17,16 +26,22 @@ enyo.kind({
         }
         this.hide();
         this.scrollToTop();
+
+        this.$.positiveRate.setClasses(this.positiveRateClass);
+        this.$.negativeRate.setClasses(this.negativeRateClass);
+        this.$.title.setClasses(this.documentTitleClass);
+        this.$.content.setClasses(this.documentContentClass);
+        this.$.rate.setClasses(this.rateDivClass);
     },
 
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
-            { tag: 'div', classes: 'rateDiv', name: 'rate', components: [
-                { tag: 'div', classes: 'positiveRate', name: 'positiveRate', ontap: 'showPositive' },
-                { tag: 'div', classes: 'negativeRate', name: 'negativeRate', ontap: 'showNegative' }
+            { tag: 'div', name: 'rate', components: [
+                { tag: 'div', name: 'positiveRate', ontap: 'showPositive' },
+                { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
             ]},
-            { tag: 'div', name: 'title', classes: 'documentTitle' },
-            { tag: 'div', onclick: 'clickText', name: 'content', classes: 'documentContent' }
+            { tag: 'div', name: 'title' },
+            { tag: 'div', onclick: 'clickText', name: 'content' }
         ]}
     ],
 
@@ -42,17 +57,10 @@ enyo.kind({
         }
     },
 
-    categoryKeyUp: function(inSender, inEvent){
-        if(inEvent.keyCode === 13){
-            this.sendRating();
-        }
-    },
-
     clickText: function(inSender, inEvent){
         this.owner.hideMenu();
         if(inEvent.which === 3){
-            this.selectedText = this.getSelectedText() + '';
-            this.owner.showMenu(inEvent, this.selectedText);
+            this.owner.showMenu(inEvent, this.getSelectedText()+'');
         }
     },
 
@@ -63,18 +71,18 @@ enyo.kind({
             this.$.title.setContent(this.documentTitle);
             this.$.content.setContent(this.documentContent);
         } else {
-            this.$.content.setContent('No data available');
+            this.$.content.setContent(this.noDataLabel);
         }
         this.scrollToTop();
         this.show();
     },
 
     showPositive: function(){
-        this.owner.showRatePopup(true, 'Rate to positive');
+        this.owner.showRatePopup(true);
     },
 
     showNegative: function(){
-        this.owner.showRatePopup(false, 'Rate to negative');
+        this.owner.showRatePopup(false);
     },
 
     scrollToTop: function(){
