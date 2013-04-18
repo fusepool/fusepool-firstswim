@@ -1,25 +1,28 @@
 enyo.kind({
     tag: 'div',
-    name: 'EntityMenu',
-    classes: 'entityMenu',
-    components: [
-        { tag: 'div', classes: 'entityMenuItem', content: 'Add entity', ontap: 'addEntity' },
-        { tag: 'div', classes: 'entityMenuItem', content: 'Remove entity', ontap: 'removeEntity' },
-        { tag: 'div', classes: 'entityMenuItem', content: 'Move entity', ontap: 'moveEntity' }
-    ],
-    
-    addEntity: function(){
-        this.hide();
-        this.owner.addEntity();
+    name: 'DynamicMenu',
+
+    published: {
+        menuItemClass: '',
+        menuItems: null
     },
 
-    removeEntity: function(){
-        this.hide();
-        this.owner.removeEntity();
+    create: function(){
+        this.inherited(arguments);
+        enyo.forEach(this.menuItems, this.addMenuItem, this);
     },
 
-    moveEntity: function(){
-        this.hide();
-        this.owner.moveEntity();
+    addMenuItem: function(menuItem){
+        this.createComponent({
+            tag: 'div',
+            classes: this.menuItemClass,
+            functionName: menuItem.functionName,
+            content: menuItem.label,
+            ontap: 'tapMenu'
+        });
+    },
+
+    tapMenu: function(inSender, inEvent){
+        this.owner[inSender.functionName]();
     }
 });

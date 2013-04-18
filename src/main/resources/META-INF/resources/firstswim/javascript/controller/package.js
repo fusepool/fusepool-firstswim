@@ -8,7 +8,7 @@ enyo.depends(
     'document/list/ShortDocument.js',
 // -- Document / opened -- //
     'document/opened/DocumentBox.js',
-    'document/opened/EntityMenu.js',
+    'document/opened/DynamicMenu.js',
     'document/opened/DocumentInOpen.js',
 // -- Document / opened / popup -- //
     'document/opened/popup/AddEntityPopup.js',
