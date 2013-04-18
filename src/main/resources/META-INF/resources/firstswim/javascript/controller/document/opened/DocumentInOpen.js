@@ -51,7 +51,17 @@ enyo.kind({
                 { label: 'Move entity', functionName: 'moveEntity' }
             ]
         },
-        { kind: 'AddEntityPopup', name: 'addEntityPopup' },
+        {
+            kind: 'AddEntityPopup',
+            name: 'addEntityPopup',
+            classes: 'addEntityPopup',
+            entityContentClass: 'addEntityContent',
+            titleContent: 'Add entity: ',
+            selectClass: 'dictionarySelect',
+            okAddEntityButtonClass: 'okAddEntityButton',
+            okAddEntityButtonContent: 'OK',
+            cancelAddEntityButtonContent: 'Cancel'
+        },
         { kind: 'RemoveEntityPopup', name: 'removeEntityPopup' },
         { kind: 'MoveEntityPopup', name: 'moveEntityPopup' }
     ],
