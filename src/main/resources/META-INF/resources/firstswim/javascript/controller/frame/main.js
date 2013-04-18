@@ -42,7 +42,10 @@ window.onload = function () {
                         titleContent: 'Documents',
                         noDataLabel: 'No data available'
                     },
-                    { kind: 'DocumentInOpen', name: 'documentOpen' }
+                    {
+                        kind: 'DocumentInOpen',
+                        name: 'documentOpen'
+                    }
                 ],
 
                 generateBMUrl: function(){

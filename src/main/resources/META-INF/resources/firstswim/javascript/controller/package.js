@@ -1,13 +1,22 @@
 enyo.depends(
-    'SearchBox.js',
-    'Bookmark.js',
 // -- Dictionaries -- //
-    'DictionaryEntity.js',
-    'Dictionary.js',
-    'DictionaryList.js',
-// -- Documents -- //
-    'DocumentList.js',
-    'ShortDocument.js',
-    'DocumentInOpen.js',
-    'main.js'
+    'dictionary/DictionaryEntity.js',
+    'dictionary/Dictionary.js',
+    'dictionary/DictionaryList.js',
+// -- Document / list -- //
+    'document/list/DocumentList.js',
+    'document/list/ShortDocument.js',
+// -- Document / opened -- //
+    'document/opened/DocumentBox.js',
+    'document/opened/EntityMenu.js',
+    'document/opened/DocumentInOpen.js',
+// -- Document / opened / popup -- //
+    'document/opened/popup/AddEntityPopup.js',
+    'document/opened/popup/MoveEntityPopup.js',
+    'document/opened/popup/RemoveEntityPopup.js',
+    'document/opened/popup/RatePopup.js',
+// -- Document / frame -- //
+    'frame/SearchBox.js',
+    'frame/Bookmark.js',
+    'frame/main.js'
 );

@@ -5,175 +5,43 @@ enyo.kind({
 
     published: {
         documentId: '',
-        documentTitle: '',
-        documentContent: '',
-        pozitiveRate: null,
         clickTop: null,
         clickLeft: null,
+        documentBoxClass: '',
         selectedText: ''
     },
 
     create: function(){
         this.inherited(arguments);
-        this.$.documentBox.hide();
-        this.scrollToTop();
         this.hideMenu();
-
-        // overwrite right click listener
-        if (document.addEventListener) {
-            document.addEventListener('contextmenu', function(e) { e.preventDefault();}, false);
-        } else {
-            document.attachEvent('oncontextmenu', function() { window.event.returnValue = false; });
-        }
     },
 
     components: [
-        { tag: 'div', classes: 'openedDocument', name: 'documentBox', components: [
-            { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
-                { tag: 'div', classes: 'rateDiv', name: 'rate', components: [
-                    { tag: 'div', classes: 'positiveRate', ontap: 'showPositive' },
-                    { tag: 'div', classes: 'negativeRate', ontap: 'showNegative' }
-                ]},
-                { tag: 'div', classes: 'documentTitle', name: 'title' },
-                { tag: 'div', classes: 'documentContent', onclick: 'clickText', name: 'content' }
-            ]}
-        ]},
-        { kind: onyx.Popup, name: 'ratePopup', classes: 'ratePopup', components: [
-            { tag: 'div', name: 'rateContent', classes: 'rateContent' },
-            { kind: 'onyx.InputDecorator', classes: 'searchLabel', components: [
-                { kind: onyx.Input, name: 'categoryInput', placeholder: 'Category name...', onkeyup: 'categoryKeyUp' }
-            ]},
-            { kind: onyx.Button, classes: 'okRateButton', content: 'OK', ontap: 'sendRating' }
-        ]},
-        { tag: 'div', name: 'entityMenu', classes: 'entityMenu', components: [
-            { tag: 'div', classes: 'entityMenuItem', content: 'Add entity', ontap: 'addEntity' },
-            { tag: 'div', classes: 'entityMenuItem', content: 'Remove entity', ontap: 'removeEntity' },
-            { tag: 'div', classes: 'entityMenuItem', content: 'Move entity', ontap: 'moveEntity' }
-        ]},
-        { kind: onyx.Popup, name: 'addEntityPopup', classes: 'addEntityPopup', components: [
-            { tag: 'div', name: 'addEntityContent', classes: 'addEntityContent', components: [
-                { tag: 'span', classes: 'addEntityTitle', content: 'Add entity: ' },
-                { tag: 'span', name: 'addEntityWord' }
-            ]},
-            { tag: 'select', classes: 'dictionarySelect', components: [
-                { tag: 'option', content: 'Person' },
-                { tag: 'option', content: 'Location' },
-                { tag: 'option', content: 'Organization' },
-                { tag: 'option', content: 'LTE' }
-            ]},
-            { kind: onyx.Button, classes: 'okAddEntityButton', content: 'OK', ontap: 'okAddEntity' },
-            { kind: onyx.Button, content: 'Cancel', ontap: 'cancelAddEntity' }
-        ]},
-        { kind: onyx.Popup, name: 'removeEntityPopup', classes: 'removeEntityPopup', components: [
-            { tag: 'div', name: 'removeEntityContent', classes: 'removeEntityContent', components: [
-                { tag: 'span', classes: 'removeEntityTitle', content: 'Remove entity: ' },
-                { tag: 'span', name: 'removeEntityWord' }
-            ]},
-            { tag: 'select', classes: 'dictionarySelect', components: [
-                { tag: 'option', content: 'Person' },
-                { tag: 'option', content: 'Location' },
-                { tag: 'option', content: 'Organization' },
-                { tag: 'option', content: 'LTE' }
-            ]},
-            { kind: onyx.Button, classes: 'okRemoveEntityButton', content: 'OK', ontap: 'okRemoveEntity' },
-            { kind: onyx.Button, content: 'Cancel', ontap: 'cancelRemoveEntity' }
-        ]},
-        { kind: onyx.Popup, name: 'moveEntityPopup', classes: 'moveEntityPopup', components: [
-            { tag: 'div', name: 'moveEntityContent', classes: 'moveEntityContent', components: [
-                { tag: 'span', classes: 'moveEntityTitle', content: 'Move entity: ' },
-                { tag: 'span', name: 'moveEntityWord' }
-            ]},
-            { tag: 'div', content: 'From:', classes: 'fromToText' },
-            { tag: 'select', classes: 'dictionarySelect', components: [
-                { tag: 'option', content: 'Person' },
-                { tag: 'option', content: 'Location' },
-                { tag: 'option', content: 'Organization' },
-                { tag: 'option', content: 'LTE' }
-            ]},
-            { tag: 'div', content: 'To:', classes: 'fromToText' },
-            { tag: 'select', classes: 'dictionarySelect', components: [
-                { tag: 'option', content: 'Person' },
-                { tag: 'option', content: 'Location' },
-                { tag: 'option', content: 'Organization' },
-                { tag: 'option', content: 'LTE' }
-            ]},
-            { kind: onyx.Button, classes: 'okMoveEntityButton', content: 'OK', ontap: 'okMoveEntity' },
-            { kind: onyx.Button, content: 'Cancel', ontap: 'cancelMoveEntity' }
-        ]}
+        { kind: 'DocumentBox', name: 'documentBox', classes: 'openedDocument' },
+        { kind: 'RatePopup', name: 'ratePopup', classes: 'ratePopup'},
+        { kind: 'EntityMenu', name: 'entityMenu' },
+        { kind: 'AddEntityPopup', name: 'addEntityPopup' },
+        { kind: 'RemoveEntityPopup', name: 'removeEntityPopup' },
+        { kind: 'MoveEntityPopup', name: 'moveEntityPopup' }
     ],
 
     addEntity: function(){
-        this.hideMenu();
-        this.$.addEntityPopup.applyStyle('top', this.clickTop - 130 + 'px');
-        this.$.addEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
-        this.$.addEntityWord.setContent(this.selectedText);
-        this.$.addEntityPopup.show();
+        this.$.addEntityPopup.addEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
     removeEntity: function(){
-        this.hideMenu();
-        this.$.removeEntityPopup.applyStyle('top', this.clickTop - 130 + 'px');
-        this.$.removeEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
-        this.$.removeEntityWord.setContent(this.selectedText);
-        this.$.removeEntityPopup.show();
+        this.$.removeEntityPopup.removeEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
     moveEntity: function(){
-        this.hideMenu();
-        this.$.moveEntityPopup.applyStyle('top', this.clickTop - 215 + 'px');
-        this.$.moveEntityPopup.applyStyle('left', this.clickLeft - 120 + 'px');
-        this.$.moveEntityWord.setContent(this.selectedText);
-        this.$.moveEntityPopup.show();
+        this.$.moveEntityPopup.moveEntity(this.clickTop, this.clickLeft, this.selectedText);
     },
 
-    getSelectedText: function(){
-        if (window.getSelection) {
-            return window.getSelection();
-        } else if (document.getSelection) {
-            return document.getSelection();
-        } else if (document.selection) {
-            return document.selection.createRange().text;
-        } else {
-            return '';
-        }
-    },
-
-    okAddEntity: function(){
-        this.$.addEntityPopup.hide();
-    },
-
-    cancelAddEntity: function(){
-        this.$.addEntityPopup.hide();
-    },
-
-    okRemoveEntity: function(){
-        this.$.removeEntityPopup.hide();
-    },
-
-    cancelRemoveEntity: function(){
-        this.$.removeEntityPopup.hide();
-    },
-
-    okMoveEntity: function(){
-        this.$.moveEntityPopup.hide();
-    },
-
-    cancelMoveEntity: function(){
-        this.$.moveEntityPopup.hide();
-    },
-
-    clickText: function(inSender, inEvent){
-        this.hideMenu();
-        if(inEvent.which === 3){
-            this.selectedText = this.getSelectedText() + '';
-            this.showMenu(inEvent);
-        }
-    },
-
-    showMenu: function(inEvent){
-        var textLength = this.selectedText.length;
+    showMenu: function(inEvent, selectedText){
+        this.selectedText = selectedText;
+        var textLength = selectedText.length;
         if(textLength > 0 && textLength < 20){
-            this.clickTop = inEvent.layerY - this.$.scroller.getScrollTop();
+            this.clickTop = inEvent.layerY - this.$.documentBox.$.scroller.getScrollTop();
             this.clickLeft = inEvent.layerX;
             this.$.entityMenu.applyStyle('top', this.clickTop + 'px');
             this.$.entityMenu.applyStyle('left', this.clickLeft + 'px');
@@ -185,58 +53,14 @@ enyo.kind({
         this.$.entityMenu.hide();
     },
 
-    categoryKeyUp: function(inSender, inEvent){
-        if(inEvent.keyCode === 13){
-            this.sendRating();
-        }
-    },
-
-    sendRating: function(){
-        // TODO: send a request about rating
-        this.$.categoryInput.setValue('');
-        this.$.ratePopup.hide();
-    },
-
-    showPositive: function(){
-        this.pozitiveRate = true;
-        this.$.rateContent.setContent('Rate to positive');
-        this.showRatePopup();
-    },
-
-    showNegative: function(){
-        this.pozitiveRate = false;
-        this.$.rateContent.setContent('Rate to negative');
-        this.showRatePopup();
-    },
-
-    showRatePopup: function(){
-        this.$.ratePopup.show();
+    showRatePopup: function(isPositive, content){
+        this.$.ratePopup.showPopup(isPositive, content);
     },
 
     openDoc: function(documentId){
         this.documentId = documentId;
         var docObj = this.getFakeDocument();
-        this.showDoc(docObj);
-    },
-
-    showDoc: function(docObj){
-        if(docObj.title !== '' && docObj.content !== ''){
-            this.documentTitle = docObj.title;
-            this.documentContent = docObj.content;
-            this.$.title.setContent(this.documentTitle);
-            this.$.content.setContent(this.documentContent);
-        } else {
-            this.$.content.setContent('No data available');
-        }
-        this.scrollToTop();
-        this.$.documentBox.show();
-    },
-
-    scrollToTop: function(){
-        this.$.scroller.render();
-        this.$.scroller.top = 0;
-        this.$.scroller.setScrollTop(0);
-        this.$.scroller.scrollTo(0,0);
+        this.$.documentBox.showDoc(docObj);
     },
 
     getFakeDocument: function(){
