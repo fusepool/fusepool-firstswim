@@ -64,15 +64,17 @@ window.onload = function () {
                 },
 
                 search: function(searchWord){
+                    console.log('searching...');
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: 'http://platform.fusepool.info/ecs/'
                     });
                     request.go({
-                        header_Accept : 'application%2Frdf%2Bxml',
+                        header_Accept : 'application/rdf+xml',
                         search: 'Japan'
                     });
                     request.response(this, function(inSender, inResponse) {
+                        console.log('ok');
                         console.log(inResponse);
                     });
                 },
