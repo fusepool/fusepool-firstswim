@@ -53,13 +53,28 @@ window.onload = function () {
                     this.$.bookmark.saveBookmark('test.com', 'This is test');
                 },
 
-                updateUI: function(){
+                updateUI: function(searchWord){
+                    this.search(searchWord);
                     this.$.dictionaries.updateList(this.createFakeDictionaries());
                     this.$.documents.updateList(this.createFakeDocuments());
                 },
 
                 openDoc: function(documentId){
                     this.$.documentOpen.openDoc(documentId);
+                },
+
+                search: function(searchWord){
+                    var request = new enyo.Ajax({
+                        method: 'GET',
+                        url: 'http://platform.fusepool.info/ecs/'
+                    });
+                    request.go({
+                        header_Accept : 'application%2Frdf%2Bxml',
+                        search: 'Japan'
+                    });
+                    request.response(this, function(inSender, inResponse) {
+                        console.log(inResponse);
+                    });
                 },
 
                 createFakeDictionaries: function(){

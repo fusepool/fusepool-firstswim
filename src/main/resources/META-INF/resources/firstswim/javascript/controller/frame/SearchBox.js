@@ -31,7 +31,7 @@ enyo.kind({
     },
 
     search: function(){
-        this.owner[this.parentSeachFunction]();
+        this.owner[this.parentSeachFunction](this.$.searchInput.hasNode().value);
     },
 
     rendered: function(){
