@@ -98,23 +98,13 @@ window.onload = function () {
                         label: 'http://www.w3.org/2000/01/rdf-schema#label',
                         comment: 'http://www.w3.org/2000/01/rdf-schema#comment',
                         subject: 'http://purl.org/dc/terms/subject',
-                        category: 'http://dbpedia.org/resource/Category'
+                        category: 'http://dbpedia.org/resource/Category',
+                        rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
                     };
 
-                    // all data
-//                    rdf.where('?p ?s ?o').each(function(){
-//                        console.log(this.p.value + ' ' + this.s.value + ' ' + this.o.value);
-//                    });
-
-                    // only South Korea
-//                    rdf.where('dbpedia:South_Korea ?s ?o').each(function(){
-//                        console.log(this.s.value + ' ' + this.o.value);
-//                    });
-
-                    // only descriptions
-                    rdf.where('?p comment: ?o').each(function(){
-                        console.log(this.o.value);
-                        console.log('---------------------------------');
+                    // documents :)
+                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?o').each(function(){
+                        console.log(this.s.value + ' ' + this.o.value);
                     });
                 },
 
