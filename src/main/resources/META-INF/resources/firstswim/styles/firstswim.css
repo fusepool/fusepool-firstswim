@@ -165,6 +165,7 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    word-wrap: break-word;
 }
 
 .documentTitle{
@@ -213,7 +214,7 @@
     position: absolute;
     right: -65px;
     top: -60px;
-    width: 240px;
+    width: 260px;
 }
 
 .rateContent{

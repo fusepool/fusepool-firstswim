@@ -41,7 +41,7 @@ enyo.kind({
                 { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
             ]},
             { tag: 'div', name: 'title' },
-            { tag: 'div', onclick: 'clickText', name: 'content' }
+            { tag: 'div', allowHtml: true, onclick: 'clickText', name: 'content' }
         ]}
     ],
 
@@ -65,9 +65,9 @@ enyo.kind({
     },
 
     showDoc: function(docObj){
-        if(docObj.title !== '' && docObj.content !== ''){
+        if(docObj.title !== '' || docObj.content !== ''){
             this.documentTitle = docObj.title;
-            this.documentContent = docObj.content;
+            this.documentContent = docObj.content.replace(/\|/g,'<br/>');
             this.$.title.setContent(this.documentTitle);
             this.$.content.setContent(this.documentContent);
         } else {

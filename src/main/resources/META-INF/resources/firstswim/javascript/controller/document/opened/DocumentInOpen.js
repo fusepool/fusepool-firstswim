@@ -23,7 +23,7 @@ enyo.kind({
             negativeRateClass: 'negativeRate',
             documentTitleClass: 'documentTitle',
             documentContentClass: 'documentContent',
-            noDataLabel: 'noDataLabel',
+            noDataLabel: 'No data available',
             rateDivClass: 'rateDiv'
         },
         {
@@ -126,22 +126,45 @@ enyo.kind({
         this.$.ratePopup.showPopup(isPositive, content);
     },
 
-    openDoc: function(documentId){
-        this.documentId = documentId;
-        var docObj = this.getFakeDocument();
-        this.$.documentBox.showDoc(docObj);
+    openDoc: function(documentURL){
+        this.documentId = documentURL;
+        var request = new enyo.Ajax({
+            method: 'GET',
+            url: documentURL + '.meta'
+        });
+        request.go({
+            header_Accept: 'application/rdf+xml',
+        });
+        request.response(this, function(inSender, inResponse) {
+            this.processOpenDocResponse(inResponse);
+        });
     },
 
-    getFakeDocument: function(){
-        var docObj = {};
-        if(this.documentId === 'AAAAAA1'){
-            docObj.title = 'Star Wars Episode III';
-            docObj.content = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam rutrum malesuada leo quis mollis. Duis sollicitudin purus rhoncus magna tempor et volutpat eros pulvinar. Phasellus id velit eget sem pretium luctus et eget urna. Fusce ac lorem a diam consequat ullamcorper. Ut vehicula odio in tellus interdum eu dapibus risus pretium. Sed convallis orci eu orci vehicula non fermentum enim dictum. Etiam non dolor nec neque mattis interdum vel sed mi. Integer ipsum ante, tincidunt non hendrerit eget, iaculis eu dui. Fusce quis elit est, et cursus velit. Vivamus eget leo at libero blandit tristique. Donec eleifend malesuada magna, in porttitor sem pellentesque vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec elementum leo id neque porttitor vel scelerisque orci volutpat. In hac habitasse platea dictumst. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent vel dolor volutpat augue dictum feugiat sed sed urna. Ut malesuada augue id turpis commodo porttitor. Nullam turpis dolor, mollis at tincidunt eget, faucibus suscipit nibh. Nulla et mauris odio. Sed leo ligula, malesuada at hendrerit id, pharetra vitae justo. In eu mi odio. In posuere, neque sed feugiat auctor, urna est vestibulum diam, a aliquet lorem tortor facilisis dui. Integer sollicitudin, nisl eget bibendum facilisis, elit leo congue lectus, at bibendum nulla orci nec lectus. Proin feugiat, nibh non condimentum consectetur, urna velit mollis odio, vel lacinia quam lorem nec urna. Etiam at arcu ipsum, et vehicula lorem. Suspendisse ac augue vitae tortor gravida iaculis sit amet in erat. Suspendisse potenti. Nullam a nisl nec mi vehicula condimentum eu sed mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras ut ligula tortor, ac venenatis massa. Nam vehicula, magna quis vestibulum imperdiet, felis felis vulputate felis, aliquam hendrerit erat nulla et nunc. Phasellus hendrerit dictum massa ac bibendum. Pellentesque ut purus ut lorem aliquet sodales. Etiam ipsum odio, elementum at tempor ultricies, rhoncus eu neque.';            
-        } else {
-            docObj.title = 'Other document';
-            docObj.content = 'Fusce ac lorem a diam consequat ullamcorper. Ut vehicula odio in tellus interdum eu dapibus risus pretium. Sed convallis orci eu orci vehicula non fermentum enim dictum. Etiam non dolor nec neque mattis interdum vel sed mi. Integer ipsum ante, tincidunt non hendrerit eget, iaculis eu dui. Fusce quis elit est, et cursus velit. Vivamus eget leo at libero blandit tristique. Donec eleifend malesuada magna, in porttitor sem pellentesque vitae. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec elementum leo id neque porttitor vel scelerisque orci volutpat. In hac habitasse platea dictumst. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent vel dolor volutpat augue dictum feugiat sed sed urna. Ut malesuada augue id turpis commodo porttitor. Nullam turpis dolor, mollis at tincidunt eget, faucibus suscipit nibh. Nulla et mauris odio. Sed leo ligula, malesuada at hendrerit id, pharetra vitae justo. In eu mi odio. In posuere, neque sed feugiat auctor, urna est vestibulum diam, a aliquet lorem tortor facilisis dui. Integer sollicitudin, nisl eget bibendum facilisis, elit leo congue lectus, at bibendum nulla orci nec lectus. Proin feugiat, nibh non condimentum consectetur, urna velit mollis odio, vel lacinia quam lorem nec urna. Etiam at arcu ipsum, et vehicula lorem. Suspendisse ac augue vitae tortor gravida iaculis sit amet in erat. Suspendisse potenti. Nullam a nisl nec mi vehicula condimentum eu sed mauris. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras ut ligula tortor, ac venenatis massa. Nam vehicula, magna quis vestibulum imperdiet, felis felis vulputate felis, aliquam hendrerit erat nulla et nunc. Phasellus hendrerit dictum massa ac bibendum. Pellentesque ut purus ut lorem aliquet sodales. Etiam ipsum odio, elementum at tempor ultricies, rhoncus eu neque.';
+    processOpenDocResponse: function(data){
+        // Delete bad type rows, and replace new lines to spaces
+        var textArray = data.split('\n');
+        var newText = '';
+        for(var i=0;i<textArray.length;i++){
+            var row = textArray[i];
+            if(row.indexOf('http://www.w3.org/2001/XMLSchema#base64Binary') === -1){
+                newText += textArray[i];
+                if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                    newText += '|';
+                } else {
+                    newText += ' ';
+                }
+            }
         }
-        return docObj;
+
+        var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
+        var rdf = jQuery.rdf();
+        rdf.load(parsedData, {});
+
+        var docText = '';
+        rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
+            docText = this.o.value;
+        });
+        this.$.documentBox.showDoc({ title : '', content : docText });
     }
 
 });
