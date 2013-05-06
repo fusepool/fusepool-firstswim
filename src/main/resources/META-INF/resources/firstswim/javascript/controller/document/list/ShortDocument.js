@@ -3,7 +3,7 @@ enyo.kind({
     kind: enyo.Control,
 
     published: {
-        documentId: '',
+        url: '',
         shortContent: null,
         parentFunction: '',
         contentClass: '',
@@ -16,7 +16,7 @@ enyo.kind({
     ],
 
     openDoc: function(){
-        this.owner[this.parentFunction](this.documentId);
+        this.owner[this.parentFunction](this.url);
     },
 
     create: function(){

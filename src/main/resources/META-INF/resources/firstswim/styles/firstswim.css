@@ -131,10 +131,11 @@
 .shortDocument{
     border: 1px solid #AAAAAA;
     font-size: 14px;
-    height: 50px;
-    margin-bottom: 30px;
-    padding: 5px;
+    height: 95px;
+    margin-bottom: 20px;
+    padding: 15px 5px 0px 5px;
     width: 100%;
+    
 }
 
 .openDocButton{

@@ -35,7 +35,7 @@ enyo.kind({
                     contentClass: 'shortDocument',
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
-                    documentId: documents[i].id,
+                    url: documents[i].url,
                     shortContent: documents[i].shortContent,
                     parentFunction: 'openDoc'
                 });
@@ -47,8 +47,8 @@ enyo.kind({
         this.$.title.show();
     },
 
-    openDoc: function(documentId){
-        this.owner.openDoc(documentId);
+    openDoc: function(url){
+        this.owner.openDoc(url);
     }
 
 });

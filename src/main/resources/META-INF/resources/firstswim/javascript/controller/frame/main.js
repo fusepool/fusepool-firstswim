@@ -56,13 +56,11 @@ window.onload = function () {
                 updateUI: function(searchWord){
                     if(searchWord != ''){
                         this.search(searchWord);
-                        this.$.dictionaries.updateList(this.createFakeDictionaries());
-                        this.$.documents.updateList(this.createFakeDocuments());
                     }
                 },
 
-                openDoc: function(documentId){
-                    this.$.documentOpen.openDoc(documentId);
+                openDoc: function(url){
+                    this.$.documentOpen.openDoc(url);
                 },
 
                 search: function(searchWord){
@@ -81,11 +79,11 @@ window.onload = function () {
 
                 processSearchResponse: function(searchResponse){
                     // Delete rows, which contains long type (it causes error)
-                    var textArray = searchResponse.split("\n");
-                    var newText = "";
+                    var textArray = searchResponse.split('\n');
+                    var newText = '';
                     for(var i=0;i<textArray.length;i++){
-                        if(textArray[i].indexOf("http://www.w3.org/2001/XMLSchema#long") === -1){
-                            newText += textArray[i] + "\n";
+                        if(textArray[i].indexOf('http://www.w3.org/2001/XMLSchema#long') === -1){
+                            newText += textArray[i] + '\n';
                         }
                     }
                     // Convert rdf text to rdf object
@@ -93,52 +91,33 @@ window.onload = function () {
 
                     var rdf = jQuery.rdf();
                     rdf.load(parsedData, {});
-                    rdf.databank.namespaces = { 
-                        dbpedia: 'http://dbpedia.org/resource/',
-                        label: 'http://www.w3.org/2000/01/rdf-schema#label',
-                        comment: 'http://www.w3.org/2000/01/rdf-schema#comment',
-                        subject: 'http://purl.org/dc/terms/subject',
-                        category: 'http://dbpedia.org/resource/Category',
-                        rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'
-                    };
 
-                    // documents :)
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?o').each(function(){
-                        console.log(this.s.value + ' ' + this.o.value);
+                    this.updateEntityList(rdf);
+                    this.updateDocumentList(rdf);
+                },
+
+                updateEntityList: function(rdf){
+                    // entities
+                    var entities = [];
+                    rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
+                        if(this.o.lang === 'en'){
+                            var entity = this.o.value.substring(1,this.o.value.length-1);
+                            entities.push(entity);
+                        }
                     });
+                    var obj = [ { name: '', entities: entities} ];
+                    this.$.dictionaries.updateList(obj);
                 },
 
-                createFakeDictionaries: function(){
-                    var list = [];
-
-                    var object = {};
-                    object.name = 'LTE';
-                    object.entities = ['4G', 'mobile', 'wireless'];
-                    list.push(object);
-
-                    var object2 = {};
-                    object2.name = 'Diseases';
-                    object2.entities = ['Multiple Sclerosis', 'Scleroderma'];
-                    list.push(object2);
-
-                    return list;
-                },
-
-                createFakeDocuments: function(){
-                    var list = [];
-
-                    var object = {};
-                    object.id = 'AAAAAA1';
-                    object.shortContent = 'This is the sort content of document1';
-                    list.push(object);
-
-                    var object2 = {};
-                    object2.id = 'BBBBBB2';
-                    object2.shortContent = 'This is the other short content of another document';
-                    list.push(object2);
-
-                    return list;
+                updateDocumentList: function(rdf){
+                    // documents :)
+                    var documents = [];
+                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?o').each(function(){
+                        documents.push({ url: this.s.value, shortContent:  this.o.value});
+                    });
+                    this.$.documents.updateList(documents);
                 }
+
             });
             new DocumentApp().renderInto(document.body);
         }
