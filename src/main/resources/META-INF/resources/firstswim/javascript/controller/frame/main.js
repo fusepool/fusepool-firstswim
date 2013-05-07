@@ -54,7 +54,7 @@ window.onload = function () {
                 },
 
                 updateUI: function(searchWord){
-                    if(searchWord != ''){
+                    if(!isEmpty(searchWord)){
                         this.search(searchWord);
                     }
                 },

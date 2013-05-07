@@ -44,7 +44,7 @@ enyo.kind({
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
-            id : 'http://dbpedia.org/resource/' + this.entityText,
+            id : 'http://dbpedia.org/resource/' + this.entityText
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);

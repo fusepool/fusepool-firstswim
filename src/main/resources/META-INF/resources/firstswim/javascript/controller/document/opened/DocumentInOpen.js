@@ -176,8 +176,9 @@ enyo.kind({
                 } else {
                     newText += ' ';
                 }
-            };
-        };
+            }
+        }
+        newText = newText.substring(0, newText.length-1);
 
         var parsedData = new DOMParser().parseFromString(newText,'text/xml');
         var rdf = jQuery.rdf();
