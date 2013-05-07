@@ -154,11 +154,10 @@ enyo.kind({
         this.documentId = documentURL;
         var request = new enyo.Ajax({
             method: 'GET',
-            url: documentURL + '.meta'
+            url: documentURL + '.meta',
+            headers: { Accept: 'application/rdf+xml' }
         });
-        request.go({
-            header_Accept: 'application/rdf+xml'
-        });
+        request.go();
         request.response(this, function(inSender, inResponse) {
             this.processOpenDocResponse(inResponse);
         });

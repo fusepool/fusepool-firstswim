@@ -40,11 +40,11 @@ enyo.kind({
         this.detailsVisible = true;
         var request = new enyo.Ajax({
             method: 'GET',
-            url: this.detailsURL
+            url: this.detailsURL,
+            headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
             id : 'http://dbpedia.org/resource/' + this.entityText,
-            header_Accept: 'application/rdf+xml'
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);

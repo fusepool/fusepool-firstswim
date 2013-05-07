@@ -66,10 +66,10 @@ window.onload = function () {
                 search: function(searchWord){
                     var request = new enyo.Ajax({
                         method: 'GET',
-                        url: 'http://platform.fusepool.info/ecs/'
+                        url: 'http://platform.fusepool.info/ecs/',
+                        headers: { Accept: 'application/rdf+xml' }
                     });
                     request.go({
-                        header_Accept: 'application/rdf+xml',
                         search: searchWord
                     });
                     request.response(this, function(inSender, inResponse) {
