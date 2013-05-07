@@ -101,10 +101,15 @@
     margin-bottom: 8px;
 }
 
+.detailsImage{
+    width: 150px;
+    height: 100px;
+}
+
 .detailsContent{
     display: inline-block;
     font-size: 13px;
-    width: 270px;
+    width: 320px;
     margin-left: 15px;
     padding-top: 10px;
     vertical-align: top;

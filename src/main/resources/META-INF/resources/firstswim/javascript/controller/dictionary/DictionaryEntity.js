@@ -26,7 +26,7 @@ enyo.kind({
         { tag: 'span', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'changeCheckbox' },
         { kind: onyx.Popup, name: 'detailsPopup', components: [
             { tag: 'div', name: 'detailsTitle' },
-            { kind: 'Image', name: 'detailsImage' },
+            { kind: 'Image', name: 'detailsImage', classes: 'detailsImage' },
             { tag: 'div', name: 'detailsContent' }
         ]}
     ],
@@ -44,7 +44,7 @@ enyo.kind({
             url: url
         });
         request.go({
-            id : 'http://dbpedia.org/resource/Paris',
+            id : 'http://dbpedia.org/resource/' + this.entityText,
             header_Accept : 'application/rdf%2bxml'
         });
         request.response(this, function(inSender, inResponse) {
