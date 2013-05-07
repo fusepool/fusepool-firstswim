@@ -155,7 +155,6 @@
     margin-left: 30px;
     margin-top: 60px;
     vertical-align: top;
-    position: relative;
 }
 
 .openedDocument{
@@ -212,8 +211,8 @@
     color: black;
     height: 65px;
     position: absolute;
-    right: -65px;
-    top: -60px;
+    top: 45px;
+    right: -50px;
     width: 260px;
 }
 

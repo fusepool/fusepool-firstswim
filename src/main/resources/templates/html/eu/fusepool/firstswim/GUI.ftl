@@ -18,5 +18,7 @@
   </head>
 
   <body>
+      <div id="main"></div>
+      <div id="menu"></div>
   </body>
 </html>

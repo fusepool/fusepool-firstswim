@@ -1,4 +1,6 @@
 enyo.depends(
+// -- Utils -- //
+    'utils.js',
 // -- Dictionaries -- //
     'dictionary/DictionaryEntity.js',
     'dictionary/Dictionary.js',

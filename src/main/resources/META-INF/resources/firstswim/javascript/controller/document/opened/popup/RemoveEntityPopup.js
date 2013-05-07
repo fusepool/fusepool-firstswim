@@ -39,9 +39,9 @@ enyo.kind({
         { kind: onyx.Button, name: 'cancelButton', ontap: 'cancelRemoveEntity' }
     ],
 
-    removeEntity: function(clickTop, clickLeft, selectedText){
-        this.applyStyle('top', clickTop - 130 + 'px');
-        this.applyStyle('left', clickLeft - 120 + 'px');
+    removeEntity: function(selectedText){
+        this.applyStyle('top', '-130px');
+        this.applyStyle('left', '-120px');
         this.$.removeEntityWord.setContent(selectedText);
         this.show();
     },

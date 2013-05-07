@@ -41,7 +41,7 @@ enyo.kind({
                 { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
             ]},
             { tag: 'div', name: 'title' },
-            { tag: 'div', allowHtml: true, onclick: 'clickText', name: 'content' }
+            { tag: 'div', allowHtml: true, onmouseup: 'clickText', name: 'content' }
         ]}
     ],
 
@@ -58,9 +58,12 @@ enyo.kind({
     },
 
     clickText: function(inSender, inEvent){
-        this.owner.hideMenu();
-        if(inEvent.which === 3){
-            this.owner.showMenu(inEvent, this.getSelectedText()+'');
+        console.log(inEvent);
+        var selectedText = jQuery.trim(this.getSelectedText()+'');
+        if(textLengthBetween(selectedText, 1, 40)){
+            this.owner.showMenu(inEvent, selectedText);
+        } else {
+            this.owner.hideMenu();
         }
     },
 

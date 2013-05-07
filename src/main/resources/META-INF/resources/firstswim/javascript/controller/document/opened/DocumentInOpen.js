@@ -4,14 +4,108 @@ enyo.kind({
 
     published: {
         documentId: '',
-        clickTop: null,
-        clickLeft: null,
-        selectedText: ''
+        menu: null
     },
 
     create: function(){
         this.inherited(arguments);
-        this.hideMenu();
+        this.createMenu();
+    },
+
+    createMenu: function(){
+        enyo.kind({ 
+            kind: enyo.Control,
+            name: 'MenuController',
+            classes: 'entityMenu',
+            
+            published: {
+                clickTop: null,
+                clickLeft: null,
+                selectedText: ''
+            },
+
+            components: [
+                { kind: 'DynamicMenu', name: 'entityMenu',
+                    menuItemClass: 'entityMenuItem', menuItems: [
+                        { label: 'Add entity', functionName: 'addEntity' },
+                        { label: 'Remove entity', functionName: 'removeEntity' },
+                        { label: 'Move entity', functionName: 'moveEntity' }
+                    ]
+                },
+                {
+                    kind: 'AddEntityPopup',
+                    name: 'addEntityPopup',
+                    classes: 'addEntityPopup',
+                    entityContentClass: 'addEntityContent',
+                    titleContent: 'Add entity: ',
+                    selectClass: 'dictionarySelect',
+                    okAddEntityButtonClass: 'okAddEntityButton',
+                    okAddEntityButtonContent: 'OK',
+                    cancelAddEntityButtonContent: 'Cancel'
+                },
+                {
+                    kind: 'RemoveEntityPopup',
+                    name: 'removeEntityPopup',
+                    classes: 'removeEntityPopup',
+                    entityContentClass: 'removeEntityContent',
+                    titleClass: 'removeEntityTitle',
+                    titleContent: 'Remove entity: ',
+                    selectClass: 'dictionarySelect',
+                    okButtonClass: 'okRemoveEntityButton',
+                    okButtonContent: 'OK',
+                    cancelButtonContent: 'Cancel'
+                },
+                {
+                    kind: 'MoveEntityPopup',
+                    name: 'moveEntityPopup',
+                    classes: 'moveEntityPopup',
+                    entityContentClass: 'moveEntityContent',
+                    titleClass: 'moveEntityTitle',
+                    titleContent: 'Move entity: ',
+                    fromContent: 'From:',
+                    fromClass: 'fromToText',
+                    fromSelectClass: 'dictionarySelect',
+                    toContent: 'From:',
+                    toClass: 'fromToText',
+                    toSelectClass: 'dictionarySelect',
+                    okButtonClass: 'okMoveEntityButton',
+                    okButtonContent: 'OK',
+                    cancelButtonContent: 'Cancel'
+                }
+            ],
+
+            addEntity: function(){
+                this.hideMenu();
+                this.$.addEntityPopup.addEntity(this.selectedText);
+            },
+
+            removeEntity: function(){
+                this.hideMenu();
+                this.$.removeEntityPopup.removeEntity(this.selectedText);
+            },
+
+            moveEntity: function(){
+                this.hideMenu();
+                this.$.moveEntityPopup.moveEntity(this.selectedText);
+            },
+
+            showMenu: function(inEvent, selectedText){
+                this.selectedText = selectedText;
+                this.clickTop = inEvent.pageY;
+                this.clickLeft = inEvent.pageX;
+                this.applyStyle('top', this.clickTop + 'px');
+                this.applyStyle('left', this.clickLeft + 'px');
+                this.$.entityMenu.show();
+            },
+
+            hideMenu: function(){
+                this.$.entityMenu.hide();
+            }
+
+        });
+        this.menu = new MenuController();
+        this.menu.renderInto(document.getElementById('menu'));
+        this.menu.hideMenu();
     },
 
     components: [
@@ -37,90 +131,20 @@ enyo.kind({
             rateContentClass: 'rateContent',
             inputFrameClass: 'searchLabel',
             okButtonClass: 'okRateButton'
-        },
-        {
-            kind: 'DynamicMenu',
-            name: 'entityMenu',
-            classes: 'entityMenu',
-            menuItemClass: 'entityMenuItem',
-            menuItems: [
-                { label: 'Add entity', functionName: 'addEntity' },
-                { label: 'Remove entity', functionName: 'removeEntity' },
-                { label: 'Move entity', functionName: 'moveEntity' }
-            ]
-        },
-        {
-            kind: 'AddEntityPopup',
-            name: 'addEntityPopup',
-            classes: 'addEntityPopup',
-            entityContentClass: 'addEntityContent',
-            titleContent: 'Add entity: ',
-            selectClass: 'dictionarySelect',
-            okAddEntityButtonClass: 'okAddEntityButton',
-            okAddEntityButtonContent: 'OK',
-            cancelAddEntityButtonContent: 'Cancel'
-        },
-        {
-            kind: 'RemoveEntityPopup',
-            name: 'removeEntityPopup',
-            classes: 'removeEntityPopup',
-            entityContentClass: 'removeEntityContent',
-            titleClass: 'removeEntityTitle',
-            titleContent: 'Remove entity: ',
-            selectClass: 'dictionarySelect',
-            okButtonClass: 'okRemoveEntityButton',
-            okButtonContent: 'OK',
-            cancelButtonContent: 'Cancel'
-        },
-        {
-            kind: 'MoveEntityPopup',
-            name: 'moveEntityPopup',
-            classes: 'moveEntityPopup',
-            entityContentClass: 'moveEntityContent',
-            titleClass: 'moveEntityTitle',
-            titleContent: 'Move entity: ',
-            fromContent: 'From:',
-            fromClass: 'fromToText',
-            fromSelectClass: 'dictionarySelect',
-            toContent: 'From:',
-            toClass: 'fromToText',
-            toSelectClass: 'dictionarySelect',
-            okButtonClass: 'okMoveEntityButton',
-            okButtonContent: 'OK',
-            cancelButtonContent: 'Cancel'
         }
     ],
 
-    addEntity: function(){
-        this.$.entityMenu.hide();
-        this.$.addEntityPopup.addEntity(this.clickTop, this.clickLeft, this.selectedText);
-    },
-
-    removeEntity: function(){
-        this.$.entityMenu.hide();
-        this.$.removeEntityPopup.removeEntity(this.clickTop, this.clickLeft, this.selectedText);
-    },
-
-    moveEntity: function(){
-        this.$.entityMenu.hide();
-        this.$.moveEntityPopup.moveEntity(this.clickTop, this.clickLeft, this.selectedText);
-    },
-
     showMenu: function(inEvent, selectedText){
-        this.selectedText = selectedText;
-        var textLength = selectedText.length;
-        if(textLength > 0 && textLength < 20){
-            this.clickTop = inEvent.layerY - this.$.documentBox.$.scroller.getScrollTop();
-            this.clickLeft = inEvent.layerX;
-            this.$.entityMenu.applyStyle('top', this.clickTop + 'px');
-            this.$.entityMenu.applyStyle('left', this.clickLeft + 'px');
-            this.$.entityMenu.show();
+        if(!isEmpty(this.menu)){
+            this.menu.showMenu(inEvent, selectedText);
         }
-    },
+     },
 
-    hideMenu: function(){
-        this.$.entityMenu.hide();
-    },
+     hideMenu: function(){
+        if(!isEmpty(this.menu)){
+            this.menu.hideMenu();
+        }
+     },
 
     showRatePopup: function(isPositive, content){
         this.$.ratePopup.showPopup(isPositive, content);
@@ -153,10 +177,10 @@ enyo.kind({
                 } else {
                     newText += ' ';
                 }
-            }
-        }
+            };
+        };
 
-        var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
+        var parsedData = new DOMParser().parseFromString(newText,'text/xml');
         var rdf = jQuery.rdf();
         rdf.load(parsedData, {});
 

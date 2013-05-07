@@ -119,7 +119,7 @@ window.onload = function () {
                 }
 
             });
-            new DocumentApp().renderInto(document.body);
+            new DocumentApp().renderInto(document.getElementById('main'));
         }
     }
 
