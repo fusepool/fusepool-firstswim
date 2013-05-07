@@ -59,7 +59,7 @@ enyo.kind({
 
     clickText: function(inSender, inEvent){
         var selectedText = jQuery.trim(this.getSelectedText()+'');
-        if(textLengthBetween(selectedText, 1, 40)){
+        if(textLengthBetween(selectedText, 1, 50)){
             this.owner.showMenu(inEvent, selectedText);
         } else {
             this.owner.hideMenu();

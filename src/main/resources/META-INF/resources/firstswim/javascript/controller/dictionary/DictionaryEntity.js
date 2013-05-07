@@ -38,36 +38,83 @@ enyo.kind({
 
     getDetails: function(){
         this.detailsVisible = true;
-        var url = this.detailsURL;
         var request = new enyo.Ajax({
             method: 'GET',
-            url: url
+            url: this.detailsURL
         });
         request.go({
             id : 'http://dbpedia.org/resource/' + this.entityText,
-            header_Accept : 'application/rdf%2bxml'
+            header_Accept: 'application/rdf+xml'
         });
         request.response(this, function(inSender, inResponse) {
-            this.showDetails(inResponse.representation);
+            this.processDetailsResponse(inResponse);
         });
     },
 
-    showDetails: function(data){
-        var details = this.getDetailsObject(data);
+    processDetailsResponse: function(rdfResponse){
+        // delete bad type rows
+        var textArray = rdfResponse.split('\n');
+        var newText = '';
+        for(var i=0;i<textArray.length;i++){
+            if(textArray[i].indexOf('http://www.w3.org/2001/XMLSchema#long') === -1){
+                newText += textArray[i] + '\n';
+            }
+        }
+        // Convert rdf text to rdf object
+        var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
+        var rdf = jQuery.rdf();
+        rdf.load(parsedData, {});
+
+        var content = this.getContent(rdf);
+        var title = this.getTitle(rdf);
+        var image = this.getImage(rdf);
+
+        var details = { content: content, title: title, image: image };
+        this.showDetails(details);
+    },
+
+    getImage: function(rdf){
+        var pictures = [];
+        rdf.where('?s <http://xmlns.com/foaf/0.1/depiction> ?o').each(function(){
+            pictures.push(this.o.value + '');
+        });
+        // If there are a small version of the picture, we return with that
+        if(pictures.length > 0){
+            for(var i=0;i<pictures.length;i++){
+                if(pictures[i].indexOf('thumb') !== -1){
+                    return pictures[i];
+                }
+            }            
+            return pictures[0];
+        }
+        return '';
+    },
+
+    getTitle: function(rdf){
+        var title = '';
+        rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
+            if(this.o.lang === 'en'){
+                title = this.o.value;
+            }
+        });
+        return title;
+    },
+
+    getContent: function(rdf){
+        var content = '';
+        rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#comment> ?o').each(function(){
+            content = this.o.value;
+        });
+        return content;
+    },
+
+    showDetails: function(details){
         this.$.detailsTitle.setContent(details.title);
         this.$.detailsContent.setContent(details.content);
         this.$.detailsImage.setSrc(details.image);
         if(this.detailsVisible){
             this.$.detailsPopup.show();
         }
-    },
-
-    getDetailsObject: function(data){
-        detailsObj = {};
-        detailsObj.title = data['http://www.w3.org/2000/01/rdf-schema#label'][2].value;
-        detailsObj.content = data['http://www.w3.org/2000/01/rdf-schema#comment'][0].value;
-        detailsObj.image = data['http://xmlns.com/foaf/0.1/depiction'][0].value;
-        return detailsObj;
     },
 
     changeCheckbox: function(){

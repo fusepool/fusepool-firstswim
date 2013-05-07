@@ -157,7 +157,7 @@ enyo.kind({
             url: documentURL + '.meta'
         });
         request.go({
-            header_Accept: 'application/rdf+xml',
+            header_Accept: 'application/rdf+xml'
         });
         request.response(this, function(inSender, inResponse) {
             this.processOpenDocResponse(inResponse);
