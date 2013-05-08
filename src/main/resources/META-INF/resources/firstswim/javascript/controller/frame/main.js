@@ -74,11 +74,22 @@ window.onload = function () {
                         search: searchWord
                     });
                     request.response(this, function(inSender, inResponse) {
-                        this.processSearchResponse(inResponse);
+                        this.processSearchResponse(inResponse, searchWord);
                     });
                 },
 
-                processSearchResponse: function(searchResponse){
+                processSearchResponse: function(searchResponse, searchWord){
+                    var rdf = this.createRdfObject(searchResponse);
+                    this.updateEntityList(rdf, searchWord);
+                    this.updateDocumentList(rdf);
+                },
+
+                entityFilter: function(searchResponse){
+                    var rdf = this.createRdfObject(searchResponse);
+                    this.updateDocumentList(rdf);
+                },
+
+                createRdfObject: function(searchResponse){
                     // Delete rows, which contains long type (it causes error)
                     var textArray = searchResponse.split('\n');
                     var newText = '';
@@ -92,21 +103,19 @@ window.onload = function () {
 
                     var rdf = jQuery.rdf();
                     rdf.load(parsedData, {});
-
-                    this.updateEntityList(rdf);
-                    this.updateDocumentList(rdf);
+                    return rdf;
                 },
 
-                updateEntityList: function(rdf){
+                updateEntityList: function(rdf, searchWord){
                     // entities
                     var entities = [];
                     rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
                         if(this.o.lang === 'en'){
-                            var entity = this.o.value.substring(1,this.o.value.length-1);
+                            var entity = this.o.value.substring(1, this.o.value.length-1);
                             entities.push(entity);
                         }
                     });
-                    var obj = [ { name: '', entities: entities} ];
+                    var obj = [ { searchWord: searchWord, name: '', entities: entities} ];
                     this.$.dictionaries.updateList(obj);
                 },
 

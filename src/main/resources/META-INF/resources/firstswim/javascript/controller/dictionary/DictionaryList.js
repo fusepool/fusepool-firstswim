@@ -26,21 +26,27 @@ enyo.kind({
 
     updateList: function(dictionaries){
         this.dictionaries = dictionaries;
+        this.$.list.destroyClientControls();
         if(dictionaries.length > 0){
-            this.$.list.destroyClientControls();
             for(var i=0;i<dictionaries.length;++i){
                 this.$.list.createComponent({
                     kind: 'Dictionary',
                     nameClass: 'dictionaryName',
+                    searchWord: dictionaries[i].searchWord,
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities
                 });
             }
             this.$.list.render();
         } else {
-            this.$.title.setContent(this.noContentLabel);
+            this.$.list.setContent(this.noContentLabel);
+            this.$.list.render();
         }
         this.$.title.show();
+    },
+
+    entityFilter: function(data){
+        this.owner.entityFilter(data);
     }
 
 });

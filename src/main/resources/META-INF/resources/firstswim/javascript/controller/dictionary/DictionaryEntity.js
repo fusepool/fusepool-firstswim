@@ -9,11 +9,13 @@ enyo.kind({
         detailsTitleClass: '',
         detailsContentClass: '',
         detailsVisible: false,
-        detailsURL: ''
+        detailsURL: '',
+        parentFunction: ''
     },
 
     create: function(){
         this.inherited(arguments);
+        this.$.entityCheckbox.setValue(true);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
         this.$.detailsPopup.setClasses(this.detailsPopupClass);
@@ -22,8 +24,8 @@ enyo.kind({
     },
 
     components: [
-        { kind: onyx.Checkbox, name: 'entityCheckbox' },
-        { tag: 'span', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'changeCheckbox' },
+        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'cbChange' },
+        { tag: 'span', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'tapEntity' },
         { kind: onyx.Popup, name: 'detailsPopup', components: [
             { tag: 'div', name: 'detailsTitle' },
             { kind: 'Image', name: 'detailsImage', classes: 'detailsImage' },
@@ -118,8 +120,25 @@ enyo.kind({
         }
     },
 
+    cbChange: function(inSender, inEvent){
+        var cbValue = inSender.getValue();
+        this.filterEntity(cbValue);
+    },
+
+    tapEntity: function(){
+        var cbValue = this.changeCheckbox();
+        this.filterEntity(cbValue);
+    },
+
+    filterEntity: function(cbValue){
+        this.owner.owner[this.parentFunction](this.entityText, cbValue);
+    },
+
     changeCheckbox: function(){
         var checkBox = this.$.entityCheckbox;
-        checkBox.setValue(!checkBox.getValue());
+        var newValue = !checkBox.getValue();
+        checkBox.setValue(newValue);
+        return newValue;
     }
+
 });

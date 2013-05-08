@@ -26,8 +26,8 @@ enyo.kind({
 
     updateList: function(documents){
         this.documents = documents;
+        this.$.list.destroyClientControls();
         if(documents.length > 0){
-            this.$.list.destroyClientControls();
             for(var i=0;i<documents.length;++i){
                 this.createComponent({
                     kind: 'ShortDocument',
@@ -42,7 +42,8 @@ enyo.kind({
             }
             this.$.list.render();
         } else {
-            this.$.title.setContent(this.noDataLabel);
+            this.$.list.setContent(this.noDataLabel);
+            this.$.list.render();
         }
         this.$.title.show();
     },
