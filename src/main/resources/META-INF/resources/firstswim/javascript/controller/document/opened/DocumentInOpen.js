@@ -118,7 +118,8 @@ enyo.kind({
             documentTitleClass: 'documentTitle',
             documentContentClass: 'documentContent',
             noDataLabel: 'No data available',
-            rateDivClass: 'rateDiv'
+            rateDivClass: 'rateDiv',
+            ontap: 'hideMenu'
         },
         {
             kind: 'RatePopup',

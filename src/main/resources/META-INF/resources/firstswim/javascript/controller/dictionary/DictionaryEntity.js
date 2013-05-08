@@ -112,11 +112,14 @@ enyo.kind({
     },
 
     showDetails: function(details){
-        this.$.detailsTitle.setContent(details.title);
-        this.$.detailsContent.setContent(details.content);
-        this.$.detailsImage.setSrc(details.image);
-        if(this.detailsVisible){
-            this.$.detailsPopup.show();
+        if(!isEmpty(this.$.detailsTitle) && !isEmpty(this.$.detailsContent) && !isEmpty(this.$.detailsImage)){
+            this.$.detailsTitle.setContent(details.title);
+            this.$.detailsContent.setContent(details.content);
+            this.$.detailsImage.setSrc(details.image);
+
+            if(this.detailsVisible){
+                this.$.detailsPopup.show();
+            }
         }
     },
 

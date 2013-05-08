@@ -24,6 +24,7 @@ enyo.kind({
         } else {
             document.attachEvent('oncontextmenu', function() { window.event.returnValue = false; });
         }
+
         this.hide();
         this.scrollToTop();
 
@@ -46,23 +47,21 @@ enyo.kind({
     ],
 
     getSelectedText: function(){
+        var result = '';
         if (window.getSelection) {
-            return window.getSelection();
+            result = window.getSelection();
         } else if (document.getSelection) {
-            return document.getSelection();
+            result = document.getSelection();
         } else if (document.selection) {
-            return document.selection.createRange().text;
-        } else {
-            return '';
+            result = document.selection.createRange().text;
         }
+        return jQuery.trim(result + '');
     },
 
     clickText: function(inSender, inEvent){
-        var selectedText = jQuery.trim(this.getSelectedText()+'');
+        var selectedText = this.getSelectedText();
         if(textLengthBetween(selectedText, 1, 50)){
             this.owner.showMenu(inEvent, selectedText);
-        } else {
-            this.owner.hideMenu();
         }
     },
 
