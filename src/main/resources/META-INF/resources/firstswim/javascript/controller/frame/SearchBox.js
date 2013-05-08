@@ -30,6 +30,10 @@ enyo.kind({
         }
     },
 
+    updateInput: function(inputText){
+        this.$.searchInput.setValue(inputText);
+    },
+
     search: function(){
         this.owner[this.parentSeachFunction](this.$.searchInput.hasNode().value);
     },

@@ -1,4 +1,4 @@
-window.onload = function () {
+jQuery(document).ready(function () {
 
     function initialization(){
 
@@ -9,9 +9,31 @@ window.onload = function () {
                 name: 'DocumentApp',
                 id: 'docApp',
                 fit: false,
+
+                create: function(){
+                    this.inherited(arguments);
+                    this.processGETParameters();
+                },
+
+                processGETParameters: function(){
+                    // Search
+                    var searchWord = GetURLParameter('search')[0];
+                    var uncheckedEntities = GetURLParameter('entity');
+                    if(!isEmpty(searchWord)){
+                        this.$.searchBox.updateInput(searchWord);
+                        this.updateUI(searchWord, uncheckedEntities);
+                    }
+                    // Open Document
+                    var openedDocument = GetURLParameter('openedDocument')[0];
+                    if(!isEmpty(openedDocument)){
+                        this.openDoc(openedDocument);
+                    }
+                },
+
                 components: [
                     {
                         kind: 'SearchBox',
+                        name: 'searchBox',
                         placeholder: 'Search in documents',
                         inputFrameClass: 'categoryLabel',
                         buttonClass: 'searchButton',
@@ -24,7 +46,7 @@ window.onload = function () {
                         kind: 'Bookmark',
                         buttonClass: 'bookmarkButton',
                         parentTapFunction: 'generateBMUrl',
-                        noBrowserSupportText: 'This browser not support bookmarks!'
+                        noBrowserSupportText: 'Please press CTRL + D to save bookmark'
                     },
                     {
                         kind: 'DictionaryList',
@@ -53,9 +75,9 @@ window.onload = function () {
                     this.$.bookmark.saveBookmark('test.com', 'This is test');
                 },
 
-                updateUI: function(searchWord){
+                updateUI: function(searchWord, uncheckedEntities){
                     if(!isEmpty(searchWord)){
-                        this.search(searchWord);
+                        this.search(searchWord, uncheckedEntities);
                     }
                 },
 
@@ -63,7 +85,7 @@ window.onload = function () {
                     this.$.documentOpen.openDoc(url);
                 },
 
-                search: function(searchWord){
+                search: function(searchWord, uncheckedEntities){
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: 'http://platform.fusepool.info/ecs/',
@@ -74,13 +96,13 @@ window.onload = function () {
                         search: searchWord
                     });
                     request.response(this, function(inSender, inResponse) {
-                        this.processSearchResponse(inResponse, searchWord);
+                        this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
                     });
                 },
 
-                processSearchResponse: function(searchResponse, searchWord){
+                processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
                     var rdf = this.createRdfObject(searchResponse);
-                    this.updateEntityList(rdf, searchWord);
+                    this.updateEntityList(rdf, searchWord, uncheckedEntities);
                     this.updateDocumentList(rdf);
                 },
 
@@ -106,7 +128,7 @@ window.onload = function () {
                     return rdf;
                 },
 
-                updateEntityList: function(rdf, searchWord){
+                updateEntityList: function(rdf, searchWord, uncheckedEntities){
                     // entities
                     var entities = [];
                     rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
@@ -115,7 +137,7 @@ window.onload = function () {
                             entities.push(entity);
                         }
                     });
-                    var obj = [ { searchWord: searchWord, name: '', entities: entities} ];
+                    var obj = [ { searchWord: searchWord, name: '', entities: entities, uncheckedEntities: uncheckedEntities} ];
                     this.$.dictionaries.updateList(obj);
                 },
 
@@ -138,4 +160,4 @@ window.onload = function () {
     } catch(e) {
         console.log(e);
     }
-};
+});

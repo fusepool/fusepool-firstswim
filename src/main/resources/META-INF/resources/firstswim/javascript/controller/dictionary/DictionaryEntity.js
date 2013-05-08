@@ -10,7 +10,8 @@ enyo.kind({
         detailsContentClass: '',
         detailsVisible: false,
         detailsURL: '',
-        parentFunction: ''
+        parentFunction: '',
+        unchecked: false
     },
 
     create: function(){
@@ -21,6 +22,9 @@ enyo.kind({
         this.$.detailsPopup.setClasses(this.detailsPopupClass);
         this.$.detailsTitle.setClasses(this.detailsTitleClass);
         this.$.detailsContent.setClasses(this.detailsContentClass);
+        if(this.unchecked){
+            console.log('unchecked: ' + this.entityText);
+        }
     },
 
     components: [
@@ -47,7 +51,7 @@ enyo.kind({
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
-            id : 'http://dbpedia.org/resource/' + this.entityText
+            id : 'http://dbpedia.org/resource/' + replaceSpacesToUnderline(this.entityText)
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);

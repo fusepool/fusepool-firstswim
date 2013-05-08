@@ -33,11 +33,17 @@ enyo.kind({
             url = 'http://' + url;
         }
 
-	if (window.sidebar) {
+        if (window.sidebar){ // firefox
             window.sidebar.addPanel(title, url, '');
-	} else if(window.external) {
-            window.external.AddFavorite( url, title); }
-	else {
+        } else if(window.opera && window.print){ // opera
+            var elem = document.createElement('a');
+            elem.setAttribute('href',url);
+            elem.setAttribute('title',title);
+            elem.setAttribute('rel','sidebar');
+            elem.click();
+        } else if(document.all) { // ie
+            window.external.AddFavorite(url, title);
+        } else {
             alert(this.noBrowserSupportText);
         }
     },

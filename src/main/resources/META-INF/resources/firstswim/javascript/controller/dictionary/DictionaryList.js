@@ -34,7 +34,8 @@ enyo.kind({
                     nameClass: 'dictionaryName',
                     searchWord: dictionaries[i].searchWord,
                     dictionaryName: dictionaries[i].name,
-                    entityList: dictionaries[i].entities
+                    entityList: dictionaries[i].entities,
+                    uncheckedEntities: dictionaries[i].uncheckedEntities
                 });
             }
             this.$.list.render();
