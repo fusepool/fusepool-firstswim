@@ -155,6 +155,7 @@ enyo.kind({
         var request = new enyo.Ajax({
             method: 'GET',
             url: documentURL + '.meta',
+            handleAs: 'text',
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go();

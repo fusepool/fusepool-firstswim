@@ -67,6 +67,7 @@ window.onload = function () {
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: 'http://platform.fusepool.info/ecs/',
+                        handleAs: 'text',
                         headers: { Accept: 'application/rdf+xml' }
                     });
                     request.go({

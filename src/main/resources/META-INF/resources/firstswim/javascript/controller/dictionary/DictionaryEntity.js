@@ -41,6 +41,7 @@ enyo.kind({
         var request = new enyo.Ajax({
             method: 'GET',
             url: this.detailsURL,
+            handleAs: 'text',
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
