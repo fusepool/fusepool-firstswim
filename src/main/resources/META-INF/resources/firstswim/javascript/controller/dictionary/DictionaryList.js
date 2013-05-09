@@ -39,6 +39,9 @@ enyo.kind({
                 });
             }
             this.$.list.render();
+            if(this.uncheckedEntitiesExist()){
+                this.filter();
+            }
         } else {
             this.$.list.setContent(this.noContentLabel);
             this.$.list.render();
@@ -46,8 +49,46 @@ enyo.kind({
         this.$.title.show();
     },
 
-    entityFilter: function(data){
+    uncheckedEntitiesExist: function(){
+        var dictionaries = this.$.list.children;
+        for(var i=0;i<dictionaries.length;i++){
+            var entities = dictionaries[i].uncheckedEntities;
+            if(entities.length > 0){
+                return true;
+            }
+        }
+        return false;
+    },
+
+    filter: function(){
+        var url = this.createFilterRequestURL();
+        var request = new enyo.Ajax({
+            method: 'GET',
+            url: url,
+            handleAs: 'text',
+            headers: { Accept: 'application/rdf+xml' }
+        });
+        request.go();
+        request.response(this, function(inSender, inResponse) {
+            this.responseFilter(inResponse);
+        });
+    },
+
+    createFilterRequestURL: function(){
+        var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
+        var dictionaries = this.$.list.children;
+        for(var i=0;i<dictionaries.length;i++){
+            var entities = dictionaries[i].uncheckedEntities;
+            for(var j=0;j<entities.length;j++){
+                url += '&subject=http://dbpedia.org/resource/' + entities[j];
+            }
+        }
+        url = replaceSpacesToUnderline(url);
+        return url;
+    },
+
+    responseFilter: function(data){
         this.owner.entityFilter(data);
-    }
+    }    
 
 });

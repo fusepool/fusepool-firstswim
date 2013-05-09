@@ -95,7 +95,7 @@ jQuery(document).ready(function () {
                     request.go({
                         search: searchWord
                     });
-                    request.response(this, function(inSender, inResponse) {
+                    request.response(this, function(inSender, inResponse, updateDocuments) {
                         this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
                     });
                 },
@@ -103,7 +103,9 @@ jQuery(document).ready(function () {
                 processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateEntityList(rdf, searchWord, uncheckedEntities);
-                    this.updateDocumentList(rdf);
+                    if(uncheckedEntities.length === 0){
+                        this.updateDocumentList(rdf);
+                    }
                 },
 
                 entityFilter: function(searchResponse){
