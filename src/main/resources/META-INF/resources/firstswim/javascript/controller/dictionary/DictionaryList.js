@@ -3,10 +3,10 @@ enyo.kind({
     kind: enyo.Control,
 
     published: {
-        dictionaries: null,
         dictionaryTitle: '',
         noContentLabel: '',
-        titleClass: ''
+        titleClass: '',
+        searchWord: ''
     },
 
     create: function(){
@@ -24,22 +24,22 @@ enyo.kind({
         { tag: 'div', name: 'list' }
     ],
 
-    updateList: function(dictionaries){
-        this.dictionaries = dictionaries;
+    updateList: function(dictionaryObject){
+        this.searchWord = dictionaryObject.searchWord;
+        var dictionaries = dictionaryObject.dictionaries;
         this.$.list.destroyClientControls();
         if(dictionaries.length > 0){
             for(var i=0;i<dictionaries.length;++i){
                 this.$.list.createComponent({
                     kind: 'Dictionary',
                     nameClass: 'dictionaryName',
-                    searchWord: dictionaries[i].searchWord,
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities,
                     uncheckedEntities: dictionaries[i].uncheckedEntities
                 });
             }
             this.$.list.render();
-            if(this.uncheckedEntitiesExist()){
+            if(this.uncheckedEntitiesExist(dictionaries)){
                 this.filter();
             }
         } else {
@@ -49,8 +49,7 @@ enyo.kind({
         this.$.title.show();
     },
 
-    uncheckedEntitiesExist: function(){
-        var dictionaries = this.$.list.children;
+    uncheckedEntitiesExist: function(dictionaries){
         for(var i=0;i<dictionaries.length;i++){
             var entities = dictionaries[i].uncheckedEntities;
             if(entities.length > 0){

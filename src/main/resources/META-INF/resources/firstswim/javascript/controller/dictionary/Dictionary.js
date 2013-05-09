@@ -6,7 +6,6 @@ enyo.kind({
         nameClass: '',
         dictionaryName: '',
         entityList: null,
-        searchWord: '',
         uncheckedEntities: []
     },
 

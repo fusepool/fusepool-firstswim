@@ -139,8 +139,13 @@ jQuery(document).ready(function () {
                             entities.push(entity);
                         }
                     });
-                    var obj = [ { searchWord: searchWord, name: '', entities: entities, uncheckedEntities: uncheckedEntities} ];
-                    this.$.dictionaries.updateList(obj);
+                    var dictionaryObject = {
+                        searchWord: searchWord,
+                        dictionaries: [
+                            { name: '', entities: entities, uncheckedEntities: uncheckedEntities}
+                        ]
+                    };
+                    this.$.dictionaries.updateList(dictionaryObject);
                 },
 
                 updateDocumentList: function(rdf){
