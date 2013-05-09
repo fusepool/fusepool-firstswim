@@ -3,7 +3,7 @@ enyo.kind({
     kind: enyo.Control,
 
     published: {
-        documentId: '',
+        documentURL: '',
         menu: null
     },
 
@@ -152,7 +152,7 @@ enyo.kind({
     },
 
     openDoc: function(documentURL){
-        this.documentId = documentURL;
+        this.documentURL = documentURL;
         var request = new enyo.Ajax({
             method: 'GET',
             url: documentURL + '.meta',

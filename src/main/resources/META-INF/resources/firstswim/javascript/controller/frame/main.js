@@ -72,7 +72,26 @@ jQuery(document).ready(function () {
                 ],
 
                 generateBMUrl: function(){
-                    this.$.bookmark.saveBookmark('test.com', 'This is test');
+                    var searchWord = this.$.dictionaries.getSearchWord();
+                    if(!isEmpty(searchWord)){
+                        var location = window.location.href;
+                        var url = location + '?search=' + searchWord;
+
+                        var entities = this.$.dictionaries.getUncheckedEntities();
+                        for(var i=0;i<entities.length;i++){
+                            url += '&entity=' + entities[i];
+                        }
+
+                        var documentURL = this.$.documentOpen.getDocumentURL();
+                        if(!isEmpty(documentURL)){
+                            url += '&openPreview=' + documentURL;
+                        }
+
+                        var title = 'Fusepool';
+                        this.$.bookmark.saveBookmark(url, title);
+                    } else {
+                        this.$.bookmark.saveBookmark();
+                    }
                 },
 
                 updateUI: function(searchWord, uncheckedEntities){

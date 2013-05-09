@@ -49,6 +49,18 @@ enyo.kind({
         this.$.title.show();
     },
 
+    getUncheckedEntities: function(){
+        var result = [];
+        var dictionaries = this.$.list.children;
+        for(var i=0;i<dictionaries.length;i++){
+            var entities = dictionaries[i].uncheckedEntities;
+            for(var j=0;j<entities.length;j++){
+                result.push(entities[j]);
+            }
+        }
+        return result;
+    },
+
     uncheckedEntitiesExist: function(dictionaries){
         for(var i=0;i<dictionaries.length;i++){
             var entities = dictionaries[i].uncheckedEntities;
@@ -74,16 +86,20 @@ enyo.kind({
     },
 
     createFilterRequestURL: function(){
-        var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
-        var dictionaries = this.$.list.children;
-        for(var i=0;i<dictionaries.length;i++){
-            var entities = dictionaries[i].uncheckedEntities;
-            for(var j=0;j<entities.length;j++){
-                url += '&subject=http://dbpedia.org/resource/' + entities[j];
+        if(!isEmpty(this.searchWord)){
+            var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
+            var dictionaries = this.$.list.children;
+            for(var i=0;i<dictionaries.length;i++){
+                var entities = dictionaries[i].uncheckedEntities;
+                for(var j=0;j<entities.length;j++){
+                    url += '&subject=http://dbpedia.org/resource/' + entities[j];
+                }
             }
+            url = replaceSpacesToUnderline(url);
+            return url;            
+        } else {
+            return '';
         }
-        url = replaceSpacesToUnderline(url);
-        return url;
     },
 
     responseFilter: function(data){

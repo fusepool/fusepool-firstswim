@@ -46,6 +46,12 @@
     cursor: pointer;
 }
 
+.bookmarkPopup{
+    margin: 70px 0 0 175px;
+    width: 600px;
+    word-wrap: break-word;
+}
+
 /** ----- Dictionary and entity list ----- **/
 .dictionaryList{
     margin-top: 60px;

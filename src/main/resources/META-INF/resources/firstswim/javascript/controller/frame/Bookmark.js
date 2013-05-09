@@ -1,6 +1,7 @@
 enyo.kind({
     name: 'Bookmark',
     kind: enyo.Control,
+
     published: {
         url: '',
         title: '',
@@ -10,7 +11,8 @@ enyo.kind({
     },
 
     components: [
-        { tag: 'div', name: 'bookMarkButton', ontap: 'tapBookmarkButton' }
+        { tag: 'div', name: 'bookMarkButton', ontap: 'tapBookmarkButton' },
+        { kind: onyx.Popup, classes: 'bookmarkPopup', allowHtml: true, name: 'warningPopup' }
     ],
 
     tapBookmarkButton: function(){
@@ -22,10 +24,10 @@ enyo.kind({
     },
 
     saveBookmark: function(url, title){
-        if(!url || url === ''){
+        if(isEmpty(url)){
             url = window.location.href;
         }
-        if(!title || title === ''){
+        if(isEmpty(title)){
             title = document.title;
         }
 
@@ -44,7 +46,11 @@ enyo.kind({
         } else if(document.all) { // ie
             window.external.AddFavorite(url, title);
         } else {
-            alert(this.noBrowserSupportText);
+            var content = '<br/>You browser doesn\'t support add bookmark via Javascript.<br/><br/>';
+            content += 'Please insert manually this URL:<br/><br/>';
+            content += url;
+            this.$.warningPopup.setContent(content);
+            this.$.warningPopup.show();
         }
     },
 
