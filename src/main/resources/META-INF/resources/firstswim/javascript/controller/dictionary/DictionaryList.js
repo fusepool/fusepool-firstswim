@@ -52,7 +52,7 @@ enyo.kind({
     uncheckedEntitiesExist: function(dictionaries){
         for(var i=0;i<dictionaries.length;i++){
             var entities = dictionaries[i].uncheckedEntities;
-            if(entities.length > 0){
+            if(!isEmpty(entities) && entities.length > 0){
                 return true;
             }
         }

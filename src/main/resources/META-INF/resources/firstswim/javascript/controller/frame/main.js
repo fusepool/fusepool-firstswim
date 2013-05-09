@@ -24,9 +24,9 @@ jQuery(document).ready(function () {
                         this.updateUI(searchWord, uncheckedEntities);
                     }
                     // Open Document
-                    var openedDocument = GetURLParameter('openedDocument')[0];
-                    if(!isEmpty(openedDocument)){
-                        this.openDoc(openedDocument);
+                    var openPreview = GetURLParameter('openPreview')[0];
+                    if(!isEmpty(openPreview)){
+                        this.openDoc(openPreview);
                     }
                 },
 
@@ -95,7 +95,7 @@ jQuery(document).ready(function () {
                     request.go({
                         search: searchWord
                     });
-                    request.response(this, function(inSender, inResponse, updateDocuments) {
+                    request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
                     });
                 },
@@ -103,7 +103,7 @@ jQuery(document).ready(function () {
                 processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateEntityList(rdf, searchWord, uncheckedEntities);
-                    if(uncheckedEntities.length === 0){
+                    if(isEmpty(uncheckedEntities) || uncheckedEntities.length === 0){
                         this.updateDocumentList(rdf);
                     }
                 },
