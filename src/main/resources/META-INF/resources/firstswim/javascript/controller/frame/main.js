@@ -75,6 +75,11 @@ jQuery(document).ready(function () {
                     var searchWord = this.$.dictionaries.getSearchWord();
                     if(!isEmpty(searchWord)){
                         var location = window.location.href;
+                        var parametersIndex = location.indexOf('?');
+                        if(parametersIndex !== -1){
+                            location = location.substr(0, parametersIndex);
+                        }
+                        
                         var url = location + '?search=' + searchWord;
 
                         var entities = this.$.dictionaries.getUncheckedEntities();
