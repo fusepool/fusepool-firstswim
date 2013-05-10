@@ -152,6 +152,7 @@ enyo.kind({
     },
 
     openDoc: function(documentURL){
+        this.$.documentBox.clearDoc();
         this.documentURL = documentURL;
         var request = new enyo.Ajax({
             method: 'GET',

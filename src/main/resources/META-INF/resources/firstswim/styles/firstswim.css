@@ -159,6 +159,15 @@
 }
 
 /** ----- Opened document ----- **/
+.loader{
+    background-image: url(../images/loader.gif);
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    left: 130px;
+    top: 50px;
+}
+
 .documentInOpen{
     display: inline-block;
     margin-left: 30px;

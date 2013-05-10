@@ -56,7 +56,6 @@ enyo.kind({
 
     filter: function(){
         var url = this.createFilterRequestURL();
-        console.log(url);
         var request = new enyo.Ajax({
             method: 'GET',
             url: url,

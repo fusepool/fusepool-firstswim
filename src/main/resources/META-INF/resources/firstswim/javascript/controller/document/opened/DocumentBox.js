@@ -17,6 +17,7 @@ enyo.kind({
 
     create: function(){
         this.inherited(arguments);
+        this.$.loader.hide();
 
         // overwrite click listener
         if (document.addEventListener) {
@@ -41,6 +42,7 @@ enyo.kind({
                 { tag: 'div', name: 'positiveRate', ontap: 'showPositive' },
                 { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
             ]},
+            { name: 'loader', classes: 'loader' },
             { tag: 'div', name: 'title' },
             { tag: 'div', allowHtml: true, onmouseup: 'clickText', name: 'content' }
         ]}
@@ -65,17 +67,28 @@ enyo.kind({
         }
     },
 
+    clearDoc: function(){
+        this.documentTitle = '';
+        this.documentContent = '';
+        this.$.title.setContent('');
+        this.$.content.setContent('');
+        this.$.rate.hide();
+        this.$.loader.show();
+        this.show();
+    },
+
     showDoc: function(docObj){
         if(docObj.title !== '' || docObj.content !== ''){
             this.documentTitle = docObj.title;
             this.documentContent = docObj.content.replace(/\|/g,'<br/>');
             this.$.title.setContent(this.documentTitle);
             this.$.content.setContent(this.documentContent);
+            this.$.rate.show();
         } else {
             this.$.content.setContent(this.noDataLabel);
         }
         this.scrollToTop();
-        this.show();
+        this.$.loader.hide();
     },
 
     showPositive: function(){
