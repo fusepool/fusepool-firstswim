@@ -188,7 +188,6 @@ jQuery(document).ready(function () {
                         }
                     }
                     var dictionaryObject = { searchWord: searchWord, dictionaries: dictionaries };
-                    console.log(dictionaryObject);
                     this.$.dictionaries.updateList(dictionaryObject);
                 },
 
