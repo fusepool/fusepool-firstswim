@@ -184,10 +184,10 @@ jQuery(document).ready(function () {
 
                                 entities.push(entityName);
                             }
-                            dictionaries.push({ name: categoryName, entities: entities, uncheckedEntities: uncheckedEntities});                            
+                            dictionaries.push({ name: categoryName, entities: entities });
                         }
                     }
-                    var dictionaryObject = { searchWord: searchWord, dictionaries: dictionaries };
+                    var dictionaryObject = { searchWord: searchWord, uncheckedEntities: uncheckedEntities, dictionaries: dictionaries };
                     this.$.dictionaries.updateList(dictionaryObject);
                 },
 

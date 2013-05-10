@@ -60,7 +60,7 @@ function GetURLParameter(paramName){
 function replaceAll(text, from, to){
     if(!isEmpty(text)){
         var re = new RegExp(from, 'g');
-        return text.replace(re, to).trim();        
+        return decodeURIComponent(text.replace(re, to).trim());
     } else {
         return '';
     }

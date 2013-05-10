@@ -6,7 +6,8 @@ enyo.kind({
         dictionaryTitle: '',
         noContentLabel: '',
         titleClass: '',
-        searchWord: ''
+        searchWord: '',
+        uncheckedEntities: []
     },
 
     create: function(){
@@ -26,6 +27,10 @@ enyo.kind({
 
     updateList: function(dictionaryObject){
         this.searchWord = dictionaryObject.searchWord;
+        this.uncheckedEntities = dictionaryObject.uncheckedEntities;
+        if(isEmpty(this.uncheckedEntities)){
+            this.uncheckedEntities = [];
+        }
         var dictionaries = dictionaryObject.dictionaries;
         this.$.list.destroyClientControls();
         if(dictionaries.length > 0){
@@ -35,11 +40,11 @@ enyo.kind({
                     nameClass: 'dictionaryName',
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities,
-                    uncheckedEntities: dictionaries[i].uncheckedEntities
+                    uncheckedEntities: this.uncheckedEntities
                 });
             }
             this.$.list.render();
-            if(this.uncheckedEntitiesExist(dictionaries)){
+            if(this.uncheckedEntities.length > 0){
                 this.filter();
             }
         } else {
@@ -49,30 +54,9 @@ enyo.kind({
         this.$.title.show();
     },
 
-    getUncheckedEntities: function(){
-        var result = [];
-        var dictionaries = this.$.list.children;
-        for(var i=0;i<dictionaries.length;i++){
-            var entities = dictionaries[i].uncheckedEntities;
-            for(var j=0;j<entities.length;j++){
-                result.push(entities[j]);
-            }
-        }
-        return result;
-    },
-
-    uncheckedEntitiesExist: function(dictionaries){
-        for(var i=0;i<dictionaries.length;i++){
-            var entities = dictionaries[i].uncheckedEntities;
-            if(!isEmpty(entities) && entities.length > 0){
-                return true;
-            }
-        }
-        return false;
-    },
-
     filter: function(){
         var url = this.createFilterRequestURL();
+        console.log(url);
         var request = new enyo.Ajax({
             method: 'GET',
             url: url,
@@ -88,15 +72,12 @@ enyo.kind({
     createFilterRequestURL: function(){
         if(!isEmpty(this.searchWord)){
             var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
-            var dictionaries = this.$.list.children;
-            for(var i=0;i<dictionaries.length;i++){
-                var entities = dictionaries[i].uncheckedEntities;
-                for(var j=0;j<entities.length;j++){
-                    url += '&subject=http://dbpedia.org/resource/' + entities[j];
-                }
+            var entities = this.uncheckedEntities;
+            for(var i=0;i<entities.length;i++){
+                url += '&subject=http://dbpedia.org/resource/' + entities[i];
             }
             url = replaceAll(url, ' ', '_');
-            return url;            
+            return url;
         } else {
             return '';
         }
