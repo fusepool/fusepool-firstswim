@@ -155,21 +155,53 @@ jQuery(document).ready(function () {
                 },
 
                 updateEntityList: function(rdf, searchWord, uncheckedEntities){
-                    // entities
-                    var entities = [];
-                    rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
-                        if(this.o.lang === 'en'){
-                            var entity = this.o.value.substring(1, this.o.value.length-1);
-                            entities.push(entity);
+                    // categories
+                    var categories = [];
+                    rdf.where('?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o').each(function(){
+                        var value = this.o.value + '';
+                        if(value.indexOf('#') === -1){
+                            categories.push({ entity: this.s.value, value: value });
                         }
                     });
-                    var dictionaryObject = {
-                        searchWord: searchWord,
-                        dictionaries: [
-                            { name: '', entities: entities, uncheckedEntities: uncheckedEntities}
-                        ]
-                    };
+
+                    var groupVars = _.groupBy(categories, function(val){ return val.value; });
+                    var sortedGroup = _.sortBy(groupVars, function(val){ return -val.length; });
+
+                    var dictionaries = [];
+                    for(var i=0;i<sortedGroup.length;i++){
+                        // One category
+                        var category = sortedGroup[i];
+                        if(category.length > 0){
+                            var categoryText = replaceAll(category[0].value, '_', ' ');
+                            var categoryName = categoryText.substr(categoryText.lastIndexOf('/')+1);
+
+                            var entities = [];
+                            for(var j=0;j<category.length;j++){
+                                this.deteleLaterEntities(sortedGroup, category[j].entity, i);
+                                // Entity
+                                var entityText = replaceAll(category[j].entity + '', '_', ' ');
+                                var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
+
+                                entities.push(entityName);
+                            }
+                            dictionaries.push({ name: categoryName, entities: entities, uncheckedEntities: uncheckedEntities});                            
+                        }
+                    }
+                    var dictionaryObject = { searchWord: searchWord, dictionaries: dictionaries };
+                    console.log(dictionaryObject);
                     this.$.dictionaries.updateList(dictionaryObject);
+                },
+
+                deteleLaterEntities: function(array, entity, fromIndex){
+                    for(var i=fromIndex+1;i<array.length;i++){
+                        var category = array[i];
+                        for(var j=0;j<category.length;j++){
+                            if(category[j].entity === entity){
+                                array[i].splice(j, 1);
+                                j--;
+                            }
+                        }
+                    }
                 },
 
                 updateDocumentList: function(rdf){

@@ -48,7 +48,7 @@ enyo.kind({
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
-            id : 'http://dbpedia.org/resource/' + replaceSpacesToUnderline(this.entityText)
+            id : 'http://dbpedia.org/resource/' + replaceAll(this.entityText, ' ', '_')
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);

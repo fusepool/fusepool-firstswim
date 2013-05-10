@@ -95,7 +95,7 @@ enyo.kind({
                     url += '&subject=http://dbpedia.org/resource/' + entities[j];
                 }
             }
-            url = replaceSpacesToUnderline(url);
+            url = replaceAll(url, ' ', '_');
             return url;            
         } else {
             return '';
