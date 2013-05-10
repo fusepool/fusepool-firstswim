@@ -94,10 +94,9 @@
 .detailsPopup{
     background: white;
     color: black;
-    height: 200px;
     left: 50px;
     position: absolute;
-    top: -215px;
+    top: 40px;
     width: 490px;
 }
 
@@ -109,7 +108,6 @@
 
 .detailsImage{
     width: 150px;
-    height: 100px;
 }
 
 .detailsContent{
