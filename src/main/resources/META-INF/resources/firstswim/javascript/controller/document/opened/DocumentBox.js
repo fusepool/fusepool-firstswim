@@ -12,7 +12,8 @@ enyo.kind({
         documentContentClass: '',
         positiveRateClass: '',
         negativeRateClass: '',
-        rateDivClass: ''
+        rateDivClass: '',
+        loaderClass: ''
     },
 
     create: function(){
@@ -34,6 +35,7 @@ enyo.kind({
         this.$.title.setClasses(this.documentTitleClass);
         this.$.content.setClasses(this.documentContentClass);
         this.$.rate.setClasses(this.rateDivClass);
+        this.$.loader.setClasses(this.loaderClass);
     },
 
     components: [
@@ -42,7 +44,7 @@ enyo.kind({
                 { tag: 'div', name: 'positiveRate', ontap: 'showPositive' },
                 { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
             ]},
-            { name: 'loader', classes: 'loader' },
+            { name: 'loader' },
             { tag: 'div', name: 'title' },
             { tag: 'div', allowHtml: true, onmouseup: 'clickText', name: 'content' }
         ]}

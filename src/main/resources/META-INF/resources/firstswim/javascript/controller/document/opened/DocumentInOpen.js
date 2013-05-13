@@ -119,6 +119,7 @@ enyo.kind({
             documentContentClass: 'documentContent',
             noDataLabel: 'No data available',
             rateDivClass: 'rateDiv',
+            loaderClass: 'loader',
             ontap: 'hideMenu'
         },
         {
