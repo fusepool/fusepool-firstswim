@@ -46,7 +46,8 @@ jQuery(document).ready(function () {
                         kind: 'Bookmark',
                         buttonClass: 'bookmarkButton',
                         parentTapFunction: 'generateBMUrl',
-                        noBrowserSupportText: 'Please press CTRL + D to save bookmark'
+                        warningPopupClass: 'bookmarkPopup',
+                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
                     },
                     {
                         kind: 'DictionaryList',
