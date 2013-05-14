@@ -24,6 +24,7 @@
     left: -1px;
     top: 24px;
     word-wrap: break-word;
+    z-index: 9999;
 }
 
 /* One element of suggest list */
