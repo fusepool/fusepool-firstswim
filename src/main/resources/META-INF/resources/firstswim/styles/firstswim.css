@@ -349,19 +349,3 @@
     margin-left: 30px;
     margin-right: 30px;
 }
-
-/** webservice sample **/
-.webservice-sample {
-    padding: 15px;
-}
-
-.webservice-sample-source {
-    padding:15px;
-    font-family: monospace;
-    font-size: 12px;
-    white-space: pre-wrap;
-    box-sizing: border-box;
-    width:90%;
-    height:100%;
-    margin-top:15px;
-}
