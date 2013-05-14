@@ -14,7 +14,7 @@ enyo.kind({
         { kind: enyo.Control, name: 'suggestDiv' }
     ],
 
-    /** The global variables **/
+    /** The global variables */
     published: {
         backendRefresh: false,
         backendFormat: 'json',
@@ -37,7 +37,7 @@ enyo.kind({
     /**
      * Creating function which set the input and the suggest div css class
      * and hide the suggest div
-     **/
+     */
     create: function(){
         this.inherited(arguments);
         this.$.inputField.setClasses(this.inputFieldClass);
