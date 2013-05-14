@@ -18,28 +18,28 @@ enyo.kind({
 
     components: [
         { name: 'inputDecorator', kind: 'onyx.InputDecorator', components: [
-            { name: 'searchInput', kind: 'onyx.Input', onkeyup: 'searchKeyUp' },
+            { name: 'searchInput', kind: 'AutoSuggest',
+                backendRefresh: true,
+                format: 'rdf',
+                onEnterParentFunction: 'search',
+                rdfRowName: '<http://www.w3.org/2000/01/rdf-schema#label>',
+                url: 'http://82.141.158.251/rdftest/rdf.php'
+            },  
             { name: 'searchIcon', tag: 'div' }
         ]},
         { name: 'searchButton', kind: onyx.Button, ontap: 'search' }
     ],
-
-    searchKeyUp: function(inSender, inEvent){
-        if(this.searchOnEveryCharacter || inEvent.keyCode === 13){
-            this.search();
-        }
-    },
 
     updateInput: function(inputText){
         this.$.searchInput.setValue(inputText);
     },
 
     search: function(){
-        this.owner[this.parentSeachFunction](this.$.searchInput.hasNode().value);
+        this.owner[this.parentSeachFunction](this.$.searchInput.getText());
     },
 
     rendered: function(){
-        this.$.searchInput.setPlaceholder(this.placeholder);
+        this.$.searchInput.updatePlaceholder(this.placeholder);
         this.$.inputDecorator.setClasses(this.inputFrameClass);
         this.$.searchInput.setClasses(this.inputClass);
         this.$.searchIcon.setClasses(this.searchIconClass);

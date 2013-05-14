@@ -4,7 +4,8 @@ enyo.kind({
 
     published: {
         documentURL: '',
-        menu: null
+        menu: null,
+        rdf: null
     },
 
     create: function(){
@@ -185,11 +186,11 @@ enyo.kind({
         newText = newText.substring(0, newText.length-1);
 
         var parsedData = new DOMParser().parseFromString(newText,'text/xml');
-        var rdf = jQuery.rdf();
-        rdf.load(parsedData, {});
+        this.rdf = jQuery.rdf();
+        this.rdf.load(parsedData, {});
 
         var docText = '';
-        rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
+        this.rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
             docText = this.o.value;
         });
         this.$.documentBox.showDoc({ title : '', content : docText });

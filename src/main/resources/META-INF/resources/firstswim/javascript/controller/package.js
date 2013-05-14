@@ -1,6 +1,8 @@
 enyo.depends(
 // -- Utils -- //
     'utils.js',
+// -- Autosuggest -- //
+    '../autosuggest/autosuggest.js',
 // -- Dictionaries -- //
     'dictionary/DictionaryEntity.js',
     'dictionary/Dictionary.js',
