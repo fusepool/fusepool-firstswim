@@ -16,7 +16,7 @@
     <!-- controller -->
     <script src="firstswim/javascript/controller/package.js" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="firstswim/styles/firstswim.css" />
-    <link type="text/css" rel="stylesheet" href="../../../../../META-INF/resources/firstswim/styles/autocomplete.css" />
+    <link type="text/css" rel="stylesheet" href="firstswim/styles/autocomplete.css" />
   </head>
 
   <body>
