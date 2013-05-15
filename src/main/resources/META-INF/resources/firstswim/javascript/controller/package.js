@@ -1,4 +1,6 @@
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+var platform = '';
+//platform = navigator.platform;
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(platform)) {
     enyo.depends(
     // -- Document / frame -- //
         'frame/main-mobile.js'
