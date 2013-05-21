@@ -6,9 +6,9 @@ enyo.kind({
 
     published: {
         placeholder: '',
-        inputFrameClass: '',
         inputClass: '',
         searchIconClass: '',
+        mobile: false,
         buttonVisible: true,
         buttonContent: '',
         buttonClass: '',
@@ -17,30 +17,32 @@ enyo.kind({
     },
 
     components: [
-        { name: 'inputDecorator', kind: 'onyx.InputDecorator', components: [
+        { name: 'decorator', classes: 'decorator', components: [
             { name: 'searchInput', kind: 'AutoSuggest',
                 backendRefresh: true,
+                wordStartMatching: true,
                 format: 'rdf',
                 onEnterParentFunction: 'search',
                 rdfRowName: '<http://www.w3.org/2000/01/rdf-schema#label>',
                 url: 'http://82.141.158.251/rdftest/rdf.php'
-            },  
+            },
             { name: 'searchIcon', tag: 'div' }
         ]},
         { name: 'searchButton', kind: onyx.Button, ontap: 'search' }
     ],
 
     updateInput: function(inputText){
-        this.$.searchInput.setValue(inputText);
+        this.$.searchInput.updateInputValue(inputText);
     },
 
     search: function(){
+        this.$.searchInput.clearBackInput();
         this.owner[this.parentSeachFunction](this.$.searchInput.getText());
     },
 
     rendered: function(){
         this.$.searchInput.updatePlaceholder(this.placeholder);
-        this.$.inputDecorator.setClasses(this.inputFrameClass);
+        this.$.searchInput.setMobile(this.mobile);
         this.$.searchInput.setClasses(this.inputClass);
         this.$.searchIcon.setClasses(this.searchIconClass);
         if(this.buttonVisible){

@@ -4,24 +4,85 @@ jQuery(document).ready(function () {
 
         createUI();
 
-        function createUI(){
+        /** This function create the user interface with the all components */
+        function createUI(){            
             enyo.kind({
                 name: 'DocumentApp',
                 id: 'docApp',
-                fit: false,
+                kind: enyo.Control,
 
                 create: function(){
                     this.inherited(arguments);
+                    this.$.openedDoc.hide();
                     this.processGETParameters();
                 },
 
+                published: {
+                    searchWord: '',
+                    uncheckedEntities: []
+                },
+
+                components: [
+                    {
+                        kind: 'SearchBox',
+                        name: 'searchBox',
+                        placeholder: 'Search in documents',
+                        buttonClass: 'searchButton',
+                        buttonContent: 'OK',
+                        searchIconClass: 'searchImage',
+                        parentSeachFunction: 'search'
+                    },
+                    {
+                        name: 'bookmark',
+                        kind: 'Bookmark',
+                        buttonClass: 'bookmarkButton',
+                        parentTapFunction: 'createBookmark',
+                        parentPopupFunction: 'popupBookmark',
+                        warningPopupClass: 'bookmarkPopup',
+                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
+                    },
+                    {
+                        kind: 'DictionaryList',
+                        classes: 'dictionaryList',
+                        entityFilterFunction: 'entityFilter',
+                        name: 'dictionaries',
+                        dictionaryTitle: 'Dictionaries',
+                        noContentLabel: 'No data available',
+                        titleClass: 'dictionariesMainTitle',
+                        showDetailsFunction: 'updateDetails'
+                    },
+                    {
+                        kind: 'DocumentList',
+                        name: 'documents',
+                        openDocFunction: 'openDoc',
+                        classes: 'documentList',
+                        titleClass: 'documentsMainTitle',
+                        titleContent: 'Documents',
+                        noDataLabel: 'No data available'
+                    },
+                    {
+                        kind: 'OpenedDoc',
+                        name: 'openedDoc',
+                        classes: 'openedDocument',
+                        documentTitleClass: 'documentTitle',
+                        documentContentClass: 'documentContent',
+                        noDataLabel: 'No data available',
+                        loaderClass: 'loader'
+                    }
+                ],
+
+                /**
+                 * This function process the get parameters. If there is search word,
+                 * starts a search with the unchecked entitites and if there is
+                 * previewed document, opens that.
+                 */
                 processGETParameters: function(){
                     // Search
-                    var searchWord = GetURLParameter('search')[0];
-                    var uncheckedEntities = GetURLParameter('entity');
-                    if(!isEmpty(searchWord)){
-                        this.$.searchBox.updateInput(searchWord);
-                        this.updateUI(searchWord, uncheckedEntities);
+                    this.searchWord = GetURLParameter('search')[0];
+                    this.uncheckedEntities = GetURLParameter('entity');
+                    if(!isEmpty(this.searchWord)){
+                        this.$.searchBox.updateInput(this.searchWord);
+                        this.search(this.searchWord, this.uncheckedEntities);
                     }
                     // Open Document
                     var openPreview = GetURLParameter('openPreview')[0];
@@ -30,65 +91,36 @@ jQuery(document).ready(function () {
                     }
                 },
 
-                components: [
-                    {
-                        kind: 'SearchBox',
-                        name: 'searchBox',
-                        placeholder: 'Search in documents',
-                        inputFrameClass: 'categoryLabel',
-                        buttonClass: 'searchButton',
-                        buttonContent: 'OK',
-                        searchIconClass: 'searchImage',
-                        parentSeachFunction: 'updateUI'
-                    },
-                    {
-                        name: 'bookmark',
-                        kind: 'Bookmark',
-                        buttonClass: 'bookmarkButton',
-                        parentTapFunction: 'generateBMUrl',
-                        warningPopupClass: 'bookmarkPopup',
-                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
-                    },
-                    {
-                        kind: 'DictionaryList',
-                        classes: 'dictionaryList',
-                        name: 'dictionaries',
-                        dictionaryTitle: 'Dictionaries',
-                        noContentLabel: 'No data available',
-                        titleClass: 'dictionariesMainTitle'
-                    },
-                    {
-                        kind: 'DocumentList',
-                        name: 'documents',
-                        classes: 'documentList',
-                        titleClass: 'documentsMainTitle',
-                        titleContent: 'Documents',
-                        noDataLabel: 'No data available'
-                    },
-                    {
-                        kind: 'DocumentInOpen',
-                        name: 'documentOpen',
-                        classes: 'documentInOpen'
-                    }
-                ],
+                /**
+                 * This function open a document on the preview on the right side.
+                 * @param document the document what user want to see
+                 */
+                openDoc: function(document){
+                    this.$.openedDoc.openDoc(document);
+                    this.$.openedDoc.show();
+                },
 
-                generateBMUrl: function(){
-                    var searchWord = this.$.dictionaries.getSearchWord();
-                    if(!isEmpty(searchWord)){
+                /**
+                 * This function create and save a bookmark, which contains the
+                 * search word, the unchecked entities and the opened document
+                 */
+                createBookmark: function(){
+                    if(!isEmpty(this.searchWord)){
+                        // Cut characters after '?'
                         var location = window.location.href;
                         var parametersIndex = location.indexOf('?');
                         if(parametersIndex !== -1){
                             location = location.substr(0, parametersIndex);
                         }
-                        
-                        var url = location + '?search=' + searchWord;
-
-                        var entities = this.$.dictionaries.getUncheckedEntities();
+                        // Search word
+                        var url = location + '?search=' + this.searchWord;
+                        // Unchecked entities
+                        var entities = this.uncheckedEntities;
                         for(var i=0;i<entities.length;i++){
                             url += '&entity=' + entities[i];
                         }
-
-                        var documentURL = this.$.documentOpen.getDocumentURL();
+                        // Preview document
+                        var documentURL = this.$.openedDoc.getDocumentURL();
                         if(!isEmpty(documentURL)){
                             url += '&openPreview=' + documentURL;
                         }
@@ -96,21 +128,33 @@ jQuery(document).ready(function () {
                         var title = 'Fusepool';
                         this.$.bookmark.saveBookmark(url, title);
                     } else {
-                        this.$.bookmark.saveBookmark();
+                        this.$.bookmark.saveBookmark(url, title);
                     }
                 },
 
-                updateUI: function(searchWord, uncheckedEntities){
-                    if(!isEmpty(searchWord)){
-                        this.search(searchWord, uncheckedEntities);
-                    }
-                },
-
-                openDoc: function(url){
-                    this.$.documentOpen.openDoc(url);
-                },
-
+                /**
+                 * This function call the ajax search if the search word is not empty
+                 * @param searchWord the search word
+                 * @param uncheckedEntities the unchecked entities on the left side
+                 */
                 search: function(searchWord, uncheckedEntities){
+                    this.searchWord = searchWord;
+                    if(isEmpty(uncheckedEntities)){
+                        this.uncheckedEntities = [];
+                    } else {
+                        this.uncheckedEntities = uncheckedEntities;
+                    }
+                    if(!isEmpty(searchWord)){
+                        this.ajaxSearch(searchWord, uncheckedEntities);
+                    }
+                },
+
+                /**
+                 * This function send an ajax request for searching
+                 * @param searchWord the search word
+                 * @param uncheckedEntities the unchecked entities on the left side
+                 */
+                ajaxSearch: function(searchWord, uncheckedEntities){
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: 'http://platform.fusepool.info/ecs/',
@@ -125,6 +169,13 @@ jQuery(document).ready(function () {
                     });
                 },
 
+                /**
+                 * This function runs after the ajax search's finish. This function call
+                 * the entity list updater and the document updater functions
+                 * @param searchResponse the search response from the backend
+                 * @param searchWord the searched word
+                 * @param uncheckedEntities the unchecked entities on the left side
+                 */
                 processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateEntityList(rdf, searchWord, uncheckedEntities);
@@ -133,11 +184,23 @@ jQuery(document).ready(function () {
                     }
                 },
 
+                /**
+                 * This function update the document list. It is called when the user
+                 * check/uncheck an entity on the left side.
+                 * @param searchResponse the search response,
+                 *  which contains the new document list
+                 */
                 entityFilter: function(searchResponse){
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateDocumentList(rdf);
                 },
 
+                /**
+                 * This funtion create an rdf object from the search response
+                 * with the rdfquery lib
+                 * @param searchResponse search response from the backend
+                 * @returns the created rdf object
+                 */
                 createRdfObject: function(searchResponse){
                     // Delete rows, which contains long type (it causes error)
                     var textArray = searchResponse.split('\n');
@@ -149,12 +212,17 @@ jQuery(document).ready(function () {
                     }
                     // Convert rdf text to rdf object
                     var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
-
                     var rdf = jQuery.rdf();
                     rdf.load(parsedData, {});
                     return rdf;
                 },
 
+                /**
+                 * This functions group and sort the entities update the entity list on the left side
+                 * @param rdf the rdf object which contains the new entity list
+                 * @param searchWord the searched word
+                 * @param uncheckedEntities unchecked entities
+                 */
                 updateEntityList: function(rdf, searchWord, uncheckedEntities){
                     // categories
                     var categories = [];
@@ -192,6 +260,13 @@ jQuery(document).ready(function () {
                     this.$.dictionaries.updateList(dictionaryObject);
                 },
 
+                /**
+                 * This function delete all entites in an array which are equal
+                 * with an entity after an index
+                 * @param array the array
+                 * @param entity the checked entity
+                 * @param fromIndex the start index in the array
+                 */
                 deteleLaterEntities: function(array, entity, fromIndex){
                     for(var i=fromIndex+1;i<array.length;i++){
                         var category = array[i];
@@ -204,18 +279,24 @@ jQuery(document).ready(function () {
                     }
                 },
 
+                /**
+                 * This function update the document list on the middle
+                 * @param rdf the rdf object which contains the new document list
+                 */
                 updateDocumentList: function(rdf){
-                    // documents :)
                     var documents = [];
                     rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?o').each(function(){
                         documents.push({ url: this.s.value, shortContent:  this.o.value});
                     });
                     this.$.documents.updateList(documents);
-                }
+                },
 
+                updateDetails: function(details){
+                    console.log(details);
+                }
             });
-            new DocumentApp().renderInto(document.getElementById('main'));
         }
+        new DocumentApp().renderInto(document.body);
     }
 
     try {
@@ -223,4 +304,5 @@ jQuery(document).ready(function () {
     } catch(e) {
         console.log(e);
     }
+
 });

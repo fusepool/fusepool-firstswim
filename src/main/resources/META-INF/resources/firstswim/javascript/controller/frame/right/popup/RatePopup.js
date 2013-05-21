@@ -7,7 +7,8 @@ enyo.kind({
         // -- labels
         positiveLabel: '',
         negativeLabel: '',
-        okButtonLabel: '',
+        okButtonLabel: 'OK',
+        cancelButtonLabel: 'Cancel',
         placeholderText: '',
         // -- classes
         rateContentClass: '',
@@ -18,6 +19,7 @@ enyo.kind({
     create: function(){
         this.inherited(arguments);
         this.$.okButton.setContent(this.okButtonLabel);
+        this.$.cancelButton.setContent(this.cancelButtonLabel);
         this.$.okButton.setClasses(this.okButtonClass);
         this.$.rateContent.setClasses(this.rateContentClass);
         this.$.inputFrame.setClasses(this.inputFrameClass);
@@ -29,7 +31,8 @@ enyo.kind({
         { kind: 'onyx.InputDecorator', name: 'inputFrame', components: [
             { kind: onyx.Input, name: 'categoryInput', onkeyup: 'categoryKeyUp' }
         ]},
-        { kind: onyx.Button, name: 'okButton', ontap: 'sendRating' }
+        { kind: onyx.Button, name: 'okButton', ontap: 'sendRating' },
+        { kind: onyx.Button, name: 'cancelButton', ontap: 'cancelRate' }
     ],
 
     showPopup: function(isPositive){
@@ -48,6 +51,11 @@ enyo.kind({
     },
 
     sendRating: function(){
+        this.$.categoryInput.setValue('');
+        this.hide();
+    },
+
+    cancelRate: function(){
         this.$.categoryInput.setValue('');
         this.hide();
     }

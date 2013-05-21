@@ -4,15 +4,9 @@ enyo.kind({
     name: 'MoveEntityPopup',
 
     published: {
-        entityContentClass: '',
-        titleClass: '',
         titleContent: '',
         fromContent: '',
-        fromClass: '',
-        fromSelectClass: '',
         toContent: '',
-        toClass: '',
-        toSelectClass: '',
         okButtonClass: '',
         okButtonContent: '',
         cancelButtonContent: ''
@@ -20,19 +14,9 @@ enyo.kind({
 
     create: function(){
         this.inherited(arguments);
-        this.$.moveEntityContent.setClasses(this.entityContentClass);
-        this.$.title.setClasses(this.titleClass);
         this.$.title.setContent(this.titleContent);
-        
         this.$.from.setContent(this.fromContent);
-        this.$.from.setClasses(this.fromClass);
-        this.$.fromSelect.setClasses(this.fromSelectClass);
-        
         this.$.to.setContent(this.toContent);
-        this.$.to.setClasses(this.toClass);
-        this.$.toSelect.setClasses(this.toSelectClass);
-
-        this.$.okButton.setClasses(this.okButtonClass);
         this.$.okButton.setContent(this.okButtonContent);
         this.$.cancelButton.setContent(this.cancelButtonContent);
     },
@@ -61,8 +45,6 @@ enyo.kind({
     ],
 
     moveEntity: function(selectedText){
-        this.applyStyle('top', '-215px');
-        this.applyStyle('left', '-120px');
         this.$.moveEntityWord.setContent(selectedText);
         this.show();  
     },

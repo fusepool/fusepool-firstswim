@@ -5,8 +5,10 @@ enyo.kind({
     published: {
         dictionaryTitle: '',
         noContentLabel: '',
+        entityFilterFunction: '',
         titleClass: '',
         searchWord: '',
+        showDetailsFunction: '',
         uncheckedEntities: []
     },
 
@@ -40,7 +42,8 @@ enyo.kind({
                     nameClass: 'dictionaryName',
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities,
-                    uncheckedEntities: this.uncheckedEntities
+                    uncheckedEntities: this.uncheckedEntities,
+                    showDetailsFunction: 'updateDetails'
                 });
             }
             this.$.list.render();
@@ -52,6 +55,10 @@ enyo.kind({
             this.$.list.render();
         }
         this.$.title.show();
+    },
+
+    updateDetails: function(details){
+        this.owner[this.showDetailsFunction](details);
     },
 
     filter: function(){
@@ -83,7 +90,7 @@ enyo.kind({
     },
 
     responseFilter: function(data){
-        this.owner.entityFilter(data);
+        this.owner[this.entityFilterFunction](data);
     }    
 
 });

@@ -7,6 +7,7 @@ enyo.kind({
         title: '',
         useHttpPrefix: true,
         parentTapFunction: '',
+        parentPopupFunction: '',
         buttonClass: '',
         noBrowserSupportText: '',
         warningPopupClass: '',
@@ -50,8 +51,12 @@ enyo.kind({
             window.external.AddFavorite(url, title);
         } else {
             var content = this.warningPopupContent + url;
-            this.$.warningPopup.setContent(content);
-            this.$.warningPopup.show();
+            if(this.parentPopupFunction !== ''){
+                this.owner[this.parentPopupFunction](content);
+            } else {
+                this.$.warningPopup.setContent(content);
+                this.$.warningPopup.show();
+            }
         }
     },
 

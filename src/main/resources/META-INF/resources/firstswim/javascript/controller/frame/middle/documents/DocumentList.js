@@ -6,7 +6,8 @@ enyo.kind({
         documents: null,
         titleClass: '',
         titleContent: '',
-        noDataLabel: ''
+        noDataLabel: '',
+        openDocFunction: ''
     },
 
     create: function(){
@@ -49,7 +50,7 @@ enyo.kind({
     },
 
     openDoc: function(url){
-        this.owner.openDoc(url);
+        this.owner[this.openDocFunction](url);
     }
 
 });

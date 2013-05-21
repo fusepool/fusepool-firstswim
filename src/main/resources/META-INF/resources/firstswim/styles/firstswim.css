@@ -1,76 +1,132 @@
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 400;
-  src: local('PT Sans Caption'), local('PTSans-Caption'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/OXYTDOzBcXU8MTNBvBHeSZsUyLnvNVEr3YfO1b3hweY.woff') format('woff');
-}
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 700;
-  src: local('PT Sans Caption Bold'), local('PTSans-CaptionBold'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/Q-gJrFokeE7JydPpxASt26-uHvvNr40SEURDy78pRVo.woff') format('woff');
-}
+/************* DESKTOP VERSION *************/
 
-/** ------------- Main frame ------------- **/
+/* ----------- MAIN ----------- */
 #docApp{
     border: 1px solid #D9D9D9;
-    height: 520px;
     margin: 15px auto;
     width: 1000px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    position: relative;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
-/** ----- Search box ----- **/
-.searchLabel{
-    padding: 9px !important;
-}
-
-.searchBox{
-    margin: 10px auto;
+/* ----------- MIDDLE ----------- */
+.documentList{
+    display: inline-block;
+    margin: 20px auto;
+    vertical-align: top;
     width: 300px;
 }
 
-.searchImage{
-    width: 20px;
-    height: 20px;
-    background-image: url(../images/search-icon.png);
-    background-repeat: no-repeat;
+/* ----------- RIGHT ----------- */
+.openedDocument{
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #CFC4C8;
+    display: inline-block;
+    height: 380px;
+    margin: 25px 0 15px 30px;
+    padding: 15px;
+    width: 305px;
+    word-wrap: break-word;
 }
 
-.searchButton{
-    height: 40px;
-    margin-left: 10px;
-    width: 50px;
-}
+/************* MOBILE VERSION *************/
 
-/** ----- Bookmark ----- **/
-.bookmarkButton{
-    width: 40px;
-    height: 40px;
-    background-image: url(../images/bookmark.png);
-    background-repeat: no-repeat;
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-}
-
+/* ----------- MAIN ----------- */
 .bookmarkPopup{
-    margin: 70px 0 0 175px;
+    position: absolute;
+    top: 105px;
+    left: 400px;
     width: 600px;
     word-wrap: break-word;
 }
 
+/* ----------- LEFT ----------- */
+
+.leftPanel{
+    background-color: lightgrey;
+    width: 350px;
+}
+
+/** ----- Logo ----- **/
+.leftHeader{
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.logoImage{
+    display: inline-block;
+    width: 49px;
+    height: 54px;
+    background-image: url(../images/logo.png);
+    background-repeat: no-repeat;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.logoText{
+    display: inline-block;
+    vertical-align: top;
+    padding: 30px 0 0 15px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/** ----- Bookmark ----- **/
+.bookmarkButton{
+    width: 35px;
+    height: 42px;
+    background-image: url(../images/bookmark.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    right: 30px;
+    cursor: pointer;
+}
+
+/** ----- Details ----- **/
+.detailsBox{
+    background-color: wheat;
+    height: 140px;
+    margin-top: 80px;
+}
+
+.detailsTitle{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.detailsImage{
+    width: 90px;
+}
+
+.detailsContent{
+    display: inline-block;
+    font-size: 10px;
+}
+
+/** ----- Documents button ----- **/
+.docsButton{
+    background-color: #FFED8A;
+    float: right;
+    height: 25px;
+    padding-top: 6px;
+    text-align: center;
+    width: 100px;
+}
+
 /** ----- Dictionary and entity list ----- **/
 .dictionaryList{
-    margin-top: 60px;
-    margin-left: 15px;
+    margin: 20px 0 20px 15px;
     display: inline-block;
     width: 300px;
+    vertical-align: top;
 }
 
 .dictionariesMainTitle{
@@ -87,11 +143,6 @@
     cursor: pointer;
     font-size: 17px;
     margin-left: 7px;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .entityText:hover{
@@ -99,45 +150,62 @@
     font-weight: bold;
 }
 
-/** ----- Details ----- **/
-.detailsDiv{
+/* ----------- MIDDLE ----------- */
+
+/** ----- Search box ----- **/
+.searchLabel{
+    padding: 9px !important;
+}
+
+.searchBox{
+    margin: 35px auto 30px;
+    width: 275px;
     position: relative;
 }
 
-.detailsPopup{
-    background: white;
-    color: black;
-    left: 50px;
+.searchImage{
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/search-icon.png);
+    background-repeat: no-repeat;
     position: absolute;
-    top: 40px;
-    width: 490px;
+    right: 84px;
+    top: 11px;
 }
 
-.detailsTitle{
+.searchButton{
+    height: 40px;
+    margin-left: 11px;
+    position: absolute;
+    right: 14px;
+    top: 0px;
+    width: 50px;
+}
+
+.decorator{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 3px 3px 3px 3px;
+    margin: 0;
+    padding: 6px 8px 10px;
+    width: 183px;
+    height: 23px;
+}
+
+/** ----- Entities button ----- **/
+.entitiesButton{
+    background-color: #FFED8A;
+    height: 30px;
+    padding-top: 6px;
     text-align: center;
-    font-size: 20px;
-    margin-bottom: 8px;
+    width: 100px;
 }
 
-.detailsImage{
-    width: 150px;
-}
-
-.detailsContent{
-    display: inline-block;
-    font-size: 13px;
-    width: 320px;
-    margin-left: 15px;
-    padding-top: 10px;
-    vertical-align: top;
-}
 /** ----- Document list ----- **/
-.documentList{
-    display: inline-block;
-    margin-top: 60px;
-    margin-right: 30px;
+.documentMobileList{
+    display: block;
+    margin: 20px auto;
     vertical-align: top;
-    width: 250px;
+    width: 300px;
 }
 
 .documentsMainTitle{
@@ -157,7 +225,6 @@
     margin-bottom: 20px;
     padding: 15px 5px 0px 5px;
     width: 100%;
-    
 }
 
 .openDocButton{
@@ -171,194 +238,100 @@
     cursor: pointer;
 }
 
-/** ----- Opened document ----- **/
-.loader{
-    background-image: url(../images/loader.gif);
-    width: 64px;
-    height: 64px;
-    position: absolute;
-    left: 130px;
-    top: 50px;
+/* ----------- RIGHT ----------- */
+.rightPanel{
+    background-color: lightgrey;
 }
 
-.documentInOpen{
-    display: inline-block;
-    margin-left: 30px;
-    margin-top: 60px;
-    vertical-align: top;
+/** ----- Header ----- **/
+.openedDocHeader{
+    height: 80px;
+    background-color: lightblue;
 }
 
-.openedDocument{
-    border: 1px solid #CFC4C8;
-    height: 380px;
-    width: 350px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    word-wrap: break-word;
-}
-
-.documentTitle{
-    font-size: 17px;
-    font-weight: bold;
-    padding-bottom: 15px;
-    padding-top: 50px;
-    text-align: center;
-}
-
-.documentContent{
-    padding: 15px;
-    height: 265px;
-}
-
-/** ----- Positive and negative rating ----- **/
-.rateDiv{
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    width: 80px;
-}
-
-.positiveRate{
+.positiveRateButton{
     display: inline-block;
     width: 40px;
     height: 36px;
-    background-image: url(../images/positiveRate.png);
+    background-image: url(../images/positive-rate-icon.png);
     background-repeat: no-repeat;
+    margin-left: 60px;
+    margin-top: 25px;
     cursor: pointer;
 }
 
-.negativeRate{
+.negativeRateButton{
     display: inline-block;
     width: 40px;
     height: 36px;
-    background-image: url(../images/negativeRate.png);
+    background-image: url(../images/negative-rate-icon.png);
     background-repeat: no-repeat;
     cursor: pointer;
+    margin-left: 25px;
+}
+
+.fullViewButton{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url(../images/full-view-icon.png);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 25px;
 }
 
 .ratePopup{
     background: white;
     color: black;
+    width: 100%;
     height: 65px;
-    position: absolute;
-    top: 45px;
-    right: -50px;
-    width: 260px;
+    top: 0;
+    left: 0;
 }
 
-.rateContent{
-    text-align: center;
-    margin-bottom: 5px;
-    font-size: 17px;
+/** ----- Opened document ----- **/
+.openedMobileDocument{
+    padding: 15px;
+    word-wrap: break-word;
 }
 
-.okRateButton{
-    height: 40px;
-    margin-left: 6px;
-    width: 50px;    
+.loader{
+    background-image: url("../images/loader.gif");
+    background-repeat: no-repeat;
+    height: 100px;
+    margin: 40px auto;
+    width: 100px;
 }
 
-.categoryLabel{
-    padding: 9px !important;
-}
-
-/** ----- Entity add/remove/move menu and popups ----- **/
-.entityMenu{
-    position: absolute;
-}
-
-.entityMenuItem{
-    text-align: center;
-    background: #D9D9D9;
-    cursor: pointer;
-    padding: 3px 12px;
-    width: 120px;
-}
-
-.entityMenuItem:hover{
-    background: #CFC4C8;
-}
-
-.dictionarySelect{
-    display: block;
-    height: 25px;
-    margin: 10px auto;
-    width: 200px;
+.docButtonToolBar{
+    position: relative;
 }
 
 /** ----- Add entity popup ----- **/
-.addEntityContent{
-    text-align: center;
-    margin-top: 3px;
-    font-size: 15px;
-}
-
-.addEntityTitle{
-    font-weight: bold;
-}
-
 .addEntityPopup{
     background: white;
     color: black;
-    height: 104px;
-    position: absolute;
-    width: 240px;
-}
-
-.okAddEntityButton{
-    margin-left: 30px;
-    margin-right: 30px;
-}
-
-/** ----- Remove entity popup ----- **/
-.removeEntityContent{
-    text-align: center;
-    margin-top: 3px;
-    font-size: 15px;
-}
-
-.removeEntityTitle{
-    font-weight: bold;
-}
-
-.removeEntityPopup{
-    background: white;
-    color: black;
-    height: 104px;
-    position: absolute;
-    width: 240px;
-}
-
-.okRemoveEntityButton{
-    margin-left: 30px;
-    margin-right: 30px;
-}
-/** ----- Add entity popup ----- **/
-.moveEntityContent{
-    text-align: center;
-    margin-top: 3px;
-    font-size: 15px;
-}
-
-.moveEntityTitle{
-    font-weight: bold;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
 }
 
 .moveEntityPopup{
     background: white;
     color: black;
-    height: 197px;
-    position: absolute;
-    width: 240px;
+    width: 100%;
+    height: 150px;
+    top: 0;
+    left: 0;
 }
 
-.fromToText{
-    font-size: 13px;
-    margin-top: 15px;
-}
-
-.okMoveEntityButton{
-    margin-left: 30px;
-    margin-right: 30px;
+.removeEntityPopup{
+    background: white;
+    color: black;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
 }

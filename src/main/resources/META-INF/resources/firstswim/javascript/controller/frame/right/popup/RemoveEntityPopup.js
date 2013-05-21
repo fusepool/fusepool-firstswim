@@ -4,22 +4,14 @@ enyo.kind({
     name: 'RemoveEntityPopup',
 
     published: {
-        entityContentClass: '',
-        titleClass: '',
         titleContent: '',
-        selectClass: '',
-        okButtonClass: '',
         okButtonContent: '',
         cancelButtonContent: ''
     },
 
     create: function(){
         this.inherited(arguments);
-        this.$.removeEntityContent.setClasses(this.entityContentClass);
-        this.$.title.setClasses(this.titleClass);
         this.$.title.setContent(this.titleContent);
-        this.$.dictionarySelect.setClasses(this.selectClass);
-        this.$.okButton.setClasses(this.okButtonClass);
         this.$.okButton.setContent(this.okButtonContent);
         this.$.cancelButton.setContent(this.cancelButtonContent);
     },
@@ -40,8 +32,6 @@ enyo.kind({
     ],
 
     removeEntity: function(selectedText){
-        this.applyStyle('top', '-130px');
-        this.applyStyle('left', '-120px');
         this.$.removeEntityWord.setContent(selectedText);
         this.show();
     },

@@ -1,35 +1,57 @@
-var platform = '';
-//platform = navigator.platform;
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(platform)) {
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)){
     enyo.depends(
-    // -- Document / frame -- //
-        'frame/main-mobile.js'
+        // -- Utils -- //
+            'utils.js',
+        // -- Autosuggest -- //
+            '../autosuggest/autosuggest.js',
+        // -- Left panel -- //
+            'frame/left/LeftHeader.js',
+            'frame/left/Bookmark.js',
+            'frame/left/DetailsBox.js',
+            'frame/left/dictionary/DictionaryEntity.js',
+            'frame/left/dictionary/Dictionary.js',
+            'frame/left/dictionary/DictionaryList.js',
+            'frame/left/LeftPanel.js',
+        // -- Middle -- //
+            'frame/middle/SearchBox.js',
+            'frame/middle/documents/DocumentList.js',
+            'frame/middle/documents/ShortDocument.js',
+            'frame/middle/MiddlePanel.js',
+        // -- Right -- //
+            'frame/right/OpenedDocHeader.js',
+            'frame/right/OpenedDoc.js',
+            'frame/right/popup/AddEntityPopup.js',
+            'frame/right/popup/MoveEntityPopup.js',
+            'frame/right/popup/RemoveEntityPopup.js',
+            'frame/right/popup/RatePopup.js',
+            'frame/right/RightPanel.js',
+        // -- Controller -- //
+            'MobileApp.js'
     );
 } else {
     enyo.depends(
-    // -- Utils -- //
-        'utils.js',
-    // -- Autosuggest -- //
-        '../autosuggest/autosuggest.js',
-    // -- Dictionaries -- //
-        'dictionary/DictionaryEntity.js',
-        'dictionary/Dictionary.js',
-        'dictionary/DictionaryList.js',
-    // -- Document / list -- //
-        'document/list/DocumentList.js',
-        'document/list/ShortDocument.js',
-    // -- Document / opened -- //
-        'document/opened/DocumentBox.js',
-        'document/opened/DynamicMenu.js',
-        'document/opened/DocumentInOpen.js',
-    // -- Document / opened / popup -- //
-        'document/opened/popup/AddEntityPopup.js',
-        'document/opened/popup/MoveEntityPopup.js',
-        'document/opened/popup/RemoveEntityPopup.js',
-        'document/opened/popup/RatePopup.js',
-    // -- Document / frame -- //
-        'frame/SearchBox.js',
-        'frame/Bookmark.js',
-        'frame/main.js'
+        // -- Utils -- //
+            'utils.js',
+        // -- Autosuggest -- //
+            '../autosuggest/autosuggest.js',
+        // -- Left panel -- //
+            'frame/left/Bookmark.js',
+            'frame/left/DetailsBox.js',
+            'frame/left/dictionary/DictionaryEntity.js',
+            'frame/left/dictionary/Dictionary.js',
+            'frame/left/dictionary/DictionaryList.js',
+        // -- Middle -- //
+            'frame/middle/SearchBox.js',
+            'frame/middle/documents/DocumentList.js',
+            'frame/middle/documents/ShortDocument.js',
+        // -- Right -- //
+            'frame/right/OpenedDocHeader.js',
+            'frame/right/OpenedDoc.js',
+            'frame/right/popup/AddEntityPopup.js',
+            'frame/right/popup/MoveEntityPopup.js',
+            'frame/right/popup/RemoveEntityPopup.js',
+            'frame/right/popup/RatePopup.js',
+        // -- Controller -- //
+            'DesktopApp.js'
     );
 }

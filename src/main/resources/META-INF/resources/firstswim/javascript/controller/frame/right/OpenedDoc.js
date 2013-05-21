@@ -1,55 +1,37 @@
 enyo.kind({
     tag: 'div',
-    name: 'DocumentBox',
+    name: 'OpenedDoc',
 
     published: {
-        // -- labels
-        documentTitle: '',
-        documentContent: '',
+        documentURL: '',
         noDataLabel: '',
-        // -- classes
         documentTitleClass: '',
         documentContentClass: '',
-        positiveRateClass: '',
-        negativeRateClass: '',
-        rateDivClass: '',
         loaderClass: ''
     },
 
     create: function(){
         this.inherited(arguments);
         this.$.loader.hide();
-
-        // overwrite click listener
+        // Overwrite click listener
         if (document.addEventListener) {
             document.addEventListener('contextmenu', function(e) { e.preventDefault();}, false);
         } else {
             document.attachEvent('oncontextmenu', function() { window.event.returnValue = false; });
         }
-
-        this.hide();
         this.scrollToTop();
-
-        this.$.positiveRate.setClasses(this.positiveRateClass);
-        this.$.negativeRate.setClasses(this.negativeRateClass);
-        this.$.title.setClasses(this.documentTitleClass);
         this.$.content.setClasses(this.documentContentClass);
-        this.$.rate.setClasses(this.rateDivClass);
         this.$.loader.setClasses(this.loaderClass);
     },
 
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
-            { tag: 'div', name: 'rate', components: [
-                { tag: 'div', name: 'positiveRate', ontap: 'showPositive' },
-                { tag: 'div', name: 'negativeRate', ontap: 'showNegative' }
-            ]},
             { name: 'loader' },
-            { tag: 'div', name: 'title' },
-            { tag: 'div', allowHtml: true, onmouseup: 'clickText', name: 'content' }
+            { tag: 'div', name: 'content', allowHtml: true }
         ]}
     ],
 
+    /** This function returns the trimmed selected text in the window */
     getSelectedText: function(){
         var result = '';
         if (window.getSelection) {
@@ -62,30 +44,15 @@ enyo.kind({
         return jQuery.trim(result + '');
     },
 
-    clickText: function(inSender, inEvent){
-        var selectedText = this.getSelectedText();
-        if(textLengthBetween(selectedText, 1, 50)){
-            this.owner.showMenu(inEvent, selectedText);
-        }
-    },
-
     clearDoc: function(){
-        this.documentTitle = '';
         this.documentContent = '';
-        this.$.title.setContent('');
         this.$.content.setContent('');
-        this.$.rate.hide();
-        this.$.loader.show();
-        this.show();
     },
 
-    showDoc: function(docObj){
-        if(docObj.title !== '' || docObj.content !== ''){
-            this.documentTitle = docObj.title;
-            this.documentContent = docObj.content.replace(/\|/g,'<br/>');
-            this.$.title.setContent(this.documentTitle);
-            this.$.content.setContent(this.documentContent);
-            this.$.rate.show();
+    showDoc: function(docText){
+        if(docText !== ''){
+            var documentContent = docText.replace(/\|/g,'<br/>');
+            this.$.content.setContent(documentContent);
         } else {
             this.$.content.setContent(this.noDataLabel);
         }
@@ -93,12 +60,48 @@ enyo.kind({
         this.$.loader.hide();
     },
 
-    showPositive: function(){
-        this.owner.showRatePopup(true);
+    openDoc: function(documentURL){
+        this.clearDoc();
+        this.$.loader.show();
+        this.documentURL = documentURL;
+        var request = new enyo.Ajax({
+            method: 'GET',
+            url: documentURL + '.meta',
+            handleAs: 'text',
+            headers: { Accept: 'application/rdf+xml' }
+        });
+        request.go();
+        request.response(this, function(inSender, inResponse) {
+            this.processOpenDocResponse(inResponse);
+        });
     },
 
-    showNegative: function(){
-        this.owner.showRatePopup(false);
+    processOpenDocResponse: function(data){
+        // Delete bad type rows, and replace new lines to spaces
+        var textArray = data.split('\n');
+        var newText = '';
+        for(var i=0;i<textArray.length;i++){
+            var row = textArray[i];
+            if(row.indexOf('http://www.w3.org/2001/XMLSchema#base64Binary') === -1){
+                newText += textArray[i];
+                if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                    newText += '|';
+                } else {
+                    newText += ' ';
+                }
+            }
+        }
+        newText = newText.substring(0, newText.length-1);
+
+        var parsedData = new DOMParser().parseFromString(newText,'text/xml');
+        this.rdf = jQuery.rdf();
+        this.rdf.load(parsedData, {});
+
+        var docText = '';
+        this.rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
+            docText = this.o.value;
+        });
+        this.showDoc(docText);
     },
 
     scrollToTop: function(){

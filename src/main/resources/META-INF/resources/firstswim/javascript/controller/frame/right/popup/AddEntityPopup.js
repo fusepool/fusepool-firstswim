@@ -4,22 +4,16 @@ enyo.kind({
     name: 'AddEntityPopup',
 
     published: {
-        entityContentClass: '',
         titleContent: '',
-        selectClass: '',
-        okAddEntityButtonClass: '',
-        okAddEntityButtonContent: '',
-        cancelAddEntityButtonContent: ''
+        okButtonContent: '',
+        cancelButtonContent: ''
     },
 
     create: function(){
         this.inherited(arguments);
-        this.$.addEntityContent.setClasses(this.entityContentClass);
         this.$.title.setContent(this.titleContent);
-        this.$.dictionarySelect.setClasses(this.selectClass);
-        this.$.okButton.setClasses(this.okAddEntityButtonClass);
-        this.$.okButton.setContent(this.okAddEntityButtonContent);
-        this.$.cancelButton.setContent(this.cancelAddEntityButtonContent);
+        this.$.okButton.setContent(this.okButtonContent);
+        this.$.cancelButton.setContent(this.cancelButtonContent);
     },
 
     components: [
@@ -38,8 +32,6 @@ enyo.kind({
     ],
 
     addEntity: function(selectedText){
-        this.applyStyle('top', '-130px');
-        this.applyStyle('left', '- 120px');
         this.$.addEntityWord.setContent(selectedText);
         this.show();
     },

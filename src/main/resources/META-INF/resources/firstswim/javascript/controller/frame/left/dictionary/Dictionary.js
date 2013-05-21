@@ -6,6 +6,7 @@ enyo.kind({
         nameClass: '',
         dictionaryName: '',
         entityList: null,
+        showDetailsFunction: '',
         uncheckedEntities: []
     },
 
@@ -22,16 +23,18 @@ enyo.kind({
             this.$.list.createComponent({
                 kind: 'DictionaryEntity',
                 classes: 'detailsDiv',
-                entityTextClass: 'entityText',
-                detailsPopupClass: 'detailsPopup',
-                detailsTitleClass: 'detailsTitle',
-                detailsContentClass: 'detailsContent',
+                entityTextClass: 'entityText enyo-unselectable',
                 detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
                 entityText: this.entityList[i],
                 parentFunction: 'updateEntities',
+                showDetailsFunction: 'updateDetails',
                 unchecked: unchecked
             });
         }
+    },
+
+    updateDetails: function(details){
+        this.owner.owner[this.showDetailsFunction](details);
     },
 
     isUncheckedEntity: function(entity){

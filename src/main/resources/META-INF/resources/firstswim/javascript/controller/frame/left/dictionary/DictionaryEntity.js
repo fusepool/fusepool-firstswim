@@ -5,13 +5,10 @@ enyo.kind({
     published: {
         entityText: '',
         entityTextClass: '',
-        detailsPopupClass: '',
-        detailsTitleClass: '',
-        detailsContentClass: '',
-        detailsVisible: false,
         detailsURL: '',
         parentFunction: '',
-        unchecked: false
+        unchecked: false,
+        showDetailsFunction: ''
     },
 
     create: function(){
@@ -19,28 +16,14 @@ enyo.kind({
         this.$.entityCheckbox.setValue(!this.unchecked);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
-        this.$.detailsPopup.setClasses(this.detailsPopupClass);
-        this.$.detailsTitle.setClasses(this.detailsTitleClass);
-        this.$.detailsContent.setClasses(this.detailsContentClass);
     },
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'cbChange' },
-        { tag: 'span', name: 'entityLabel', onmouseout: 'hideDetails', onmouseover: 'getDetails', ontap: 'tapEntity' },
-        { kind: onyx.Popup, name: 'detailsPopup', components: [
-            { tag: 'div', name: 'detailsTitle' },
-            { kind: 'Image', name: 'detailsImage', classes: 'detailsImage' },
-            { tag: 'div', name: 'detailsContent' }
-        ]}
+        { tag: 'span', name: 'entityLabel', onmouseout: 'clearDetails', onmouseover: 'getDetails', ontap: 'tapEntity' }
     ],
-    
-    hideDetails: function(){
-        this.$.detailsPopup.hide();
-        this.detailsVisible = false;
-    },
 
     getDetails: function(){
-        this.detailsVisible = true;
         var request = new enyo.Ajax({
             method: 'GET',
             url: this.detailsURL,
@@ -56,7 +39,7 @@ enyo.kind({
     },
 
     processDetailsResponse: function(rdfResponse){
-        // delete bad type rows
+        // Delete bad type rows
         var textArray = rdfResponse.split('\n');
         var newText = '';
         for(var i=0;i<textArray.length;i++){
@@ -74,7 +57,12 @@ enyo.kind({
         var image = this.getImage(rdf);
 
         var details = { content: content, title: title, image: image };
-        this.showDetails(details);
+        this.owner.owner[this.showDetailsFunction](details);
+    },
+
+    clearDetails: function(){
+        var details = { content: '', title: '', image: '' };
+        this.owner.owner[this.showDetailsFunction](details);
     },
 
     getImage: function(rdf){
@@ -110,18 +98,6 @@ enyo.kind({
             content = this.o.value;
         });
         return content;
-    },
-
-    showDetails: function(details){
-        if(!isEmpty(this.$.detailsTitle) && !isEmpty(this.$.detailsContent) && !isEmpty(this.$.detailsImage)){
-            this.$.detailsTitle.setContent(details.title);
-            this.$.detailsContent.setContent(details.content);
-            this.$.detailsImage.setSrc(details.image);
-
-            if(this.detailsVisible){
-                this.$.detailsPopup.show();
-            }
-        }
     },
 
     cbChange: function(inSender, inEvent){
