@@ -1,5 +1,5 @@
 /**
- * AutoSuggest 1.5
+ * AutoSuggest 1.6
  * Created by Adam Nagy, GeoX Kft.
  */
 
@@ -10,6 +10,7 @@ enyo.kind({
 
     /** The input field and the suggest div components */
     components: [
+        { kind: onyx.Input, name: 'backInputField' },
         { kind: onyx.Input, name: 'inputField', onkeydown: 'keyDown', onkeyup: 'keyUp', onblur: 'hideSuggest' },
         { kind: enyo.Control, name: 'suggestDiv' }
     ],
@@ -21,7 +22,10 @@ enyo.kind({
         countElements: 0,
         currentElement: -1,
         data: null,
+        backInputFieldClass: 'autoSuggest_back_input',
         inputFieldClass: 'autoSuggest_input',
+        wordStartMatching: false,
+        mobile: false,
         maxElements: 20,
         onEnterParentFunction: '',
         placeholder: '',
@@ -40,6 +44,7 @@ enyo.kind({
      */
     create: function(){
         this.inherited(arguments);
+        this.$.backInputField.setClasses(this.backInputFieldClass);
         this.$.inputField.setClasses(this.inputFieldClass);
         this.$.suggestDiv.setClasses(this.suggestDivClass);
         this.hideSuggest();
@@ -51,6 +56,14 @@ enyo.kind({
      */
     updatePlaceholder: function(placeHolderText){
         this.$.inputField.setPlaceholder(placeHolderText);
+    },
+
+    /**
+     * This function put a new text to the input
+     * @param newValue the new value
+     */
+    updateInputValue: function(newValue){
+        this.$.inputField.setValue(newValue);
     },
 
     /**
@@ -129,7 +142,7 @@ enyo.kind({
      * the where property is optional.
      */
     generatePostBodyText: function(){
-        var inputText = this.$.inputField.hasNode().value;
+        var inputText = this.$.inputField.getValue();
         var result = 'text=' + inputText + '&maxElem=' + this.maxElements;
         if(!this.isEmptyParam(this.tableName)){
             result += '&table=' + this.tableName;
@@ -142,7 +155,7 @@ enyo.kind({
 
     /**
      * Return the format for the request. The possible
-     * formats: json, rdf and xml. If the format variable
+     * formats: json and rdf. If the format variable
      * is not same any formats of these, the function return with json
      */
     generateRequestFormat: function(){
@@ -151,9 +164,6 @@ enyo.kind({
         }
         if(this.format === 'rdf'){
             return 'text';
-        }
-        if(this.format === 'xml'){
-            return 'xml';
         }
         return 'json';
     },
@@ -171,13 +181,13 @@ enyo.kind({
 
     /** This function delete the input field's content and hide the suggest list */
     clearText: function(){
-        this.$.inputField.hasNode().value = '';
+        this.$.inputField.setValue('');
         this.hideSuggest();
     },
 
     /** This function returns the input field's value */
     getText: function(){
-        return this.$.inputField.hasNode().value;
+        return this.$.inputField.getValue();
     },
 
     /** This function disable the input field */
@@ -234,19 +244,10 @@ enyo.kind({
      */
     keyUp: function(inSender, inEvent){
         var keyCode = inEvent.keyCode;
-        // backspace and delete
-        if(keyCode === 8 || keyCode === 46){
-            var inputText = this.$.inputField.hasNode().value;
-            if(this.backendRefresh && inputText.length >= this.startCharacter){
-                this.refreshFromBackend();
-            } else {
-                this.onTextChange(); // without autocomplete
-            }
-        } else if (keyCode < 32 || (keyCode >= 33 && keyCode <= 46) || (keyCode >= 112 && keyCode <= 123)) {
-            // arrows, page up, page down, f1-f12, home, end, insert -- nothing to do
-        } else{
-            // with autocomplete
-            var inputText = this.$.inputField.hasNode().value;
+        if (keyCode < 32 && keyCode !== 8 || keyCode >= 33 && keyCode < 46 || keyCode >= 112 && keyCode <= 123){
+            // Arrows, Page up, Page down, F1-F12, Home, End, Insert -- Nothing to do
+        } else {
+            var inputText = this.$.inputField.getValue();
             if(this.backendRefresh && inputText.length >= this.startCharacter){
                 this.refreshFromBackend();
             } else {
@@ -268,7 +269,7 @@ enyo.kind({
                 if(i === this.currentElement){
                     suggestDiv.children[i].addClass('over');
                     var elementText = suggestDiv.children[i].getContent();
-                    this.$.inputField.hasNode().value = elementText;
+                    this.$.inputField.setValue(elementText);
                 } else {
                     suggestDiv.children[i].removeClass('over');
                 }
@@ -337,7 +338,7 @@ enyo.kind({
      * @param inSender the selected list element
      */
     mouseDown: function(inSender){
-        this.$.inputField.hasNode().value = inSender.getContent();
+        this.$.inputField.setValue(inSender.getContent());
         this.hideSuggest();
     },
 
@@ -346,7 +347,7 @@ enyo.kind({
      * suggest list.
      */
     onTextChange: function(){
-        var inputText = this.$.inputField.hasNode().value;
+        var inputText = this.$.inputField.getValue();
         var suggestDiv = this.$.suggestDiv;
         this.currentElement = -1;
         suggestDiv.destroyClientControls();
@@ -360,19 +361,48 @@ enyo.kind({
             }
 
             if(!list.length){
+                this.clearBackInput();
                 this.hideSuggest();
                 return;
             }
 
-            this.countElements = list.length;
-            for(var i=0;i<list.length;++i){
-                this.addSuggestElement(list[i]);
+            /** Mobile version complete the input text with the first element of
+                the filtered list */
+            if(this.mobile){
+                this.completeBackInput(list[0]);
+            } else {                
+                this.countElements = list.length;
+                for(var i=0;i<list.length;++i){
+                    this.addSuggestElement(list[i]);
+                }
+                this.showSuggest();
             }
-            this.showSuggest();
 
         } else {
+            this.clearBackInput();
             this.hideSuggest();
         }
+    },
+
+    /**
+     * This function clear the background input
+     * (it is important on mobile devices).
+     */
+    clearBackInput: function(){
+        this.$.backInputField.hasNode().value = '';
+    },
+
+    /**
+     * In mobile devices there isn't suggest list, the application show the first
+     * suggest in the background input. This function put the suggest word to the
+     * background input with case sensitive.
+     * @param word the word what the function puts
+     */
+    completeBackInput: function(word){
+        var inputText = this.$.inputField.getValue();
+        var length = inputText.length;
+        var other = word.substring(length);
+        this.$.backInputField.hasNode().value = inputText + other;
     },
 
     /**
@@ -387,7 +417,7 @@ enyo.kind({
         // Global data list
         if(this.useGlobalData && !this.backendRefresh){
             for(var i=0;i<suggestData.length;++i){
-                if(suggestData[i].toLowerCase().indexOf(inputText.toLowerCase()) !== -1){
+                if(this.containsText(suggestData[i], inputText)){
                     list.push(suggestData[i]);
                     counter++;
                 }
@@ -398,7 +428,7 @@ enyo.kind({
         // Own data list
         } else {
             for(var i=0;i<this.data.length;++i){
-                if(this.data[i].toLowerCase().indexOf(inputText.toLowerCase()) !== -1){
+                if(this.containsText(this.data[i], inputText)){
                     list.push(this.data[i]);
                     counter++;
                 }
@@ -407,6 +437,26 @@ enyo.kind({
                 }
             }
         }
+    },
+
+    /**
+     * This function check that the longText contains the searchedText. If the
+     * wordStartingMatching variable is true, the function check the beginning of
+     * the word, and if it is false, the function check everywhere in the word.
+     * @param longText the longText which may contains the searchedText
+     * @param searchedText the searched text
+     * @returns true, if the longText contains the searchedText, false otherwise
+     */
+    containsText: function(longText, searchedText){
+        // The text starts with the word
+        if(this.wordStartMatching && longText.toLowerCase().indexOf(searchedText.toLowerCase()) === 0){
+            return true;
+        }
+        // Text contains the word
+        if(!this.wordStartMatching && longText.toLowerCase().indexOf(searchedText.toLowerCase()) !== -1){
+            return true;
+        }
+        return false;
     },
 
     /** This function hides the suggest list */
