@@ -12,6 +12,18 @@
     position: relative;
 }
 
+/* ----------- LEFT ----------- */
+.leftDesktopCol{
+    display: inline-block;
+    vertical-align: top; 
+    width: 315px;
+}
+
+.detailsBox{
+    height: 200px;
+    padding: 5px;
+}
+
 /* ----------- MIDDLE ----------- */
 .documentList{
     display: inline-block;
@@ -26,12 +38,43 @@
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #CFC4C8;
-    display: inline-block;
-    height: 380px;
     margin: 25px 0 15px 30px;
     padding: 15px;
     width: 305px;
     word-wrap: break-word;
+}
+
+.positiveRateButton{
+    background-image: url("../images/positive-rate-icon.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 36px;
+    position: absolute;
+    right: 0;
+    top: 70px;
+    width: 40px;
+}
+
+.negativeRateButton{
+    background-image: url("../images/negative-rate-icon.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 36px;
+    position: absolute;
+    right: 0;
+    top: 105px;
+    width: 40px;
+}
+
+.fullViewButton{
+    background-image: url("../images/full-view-icon.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 25px;
+    position: absolute;
+    right: 10px;
+    top: 35px;
+    width: 25px;
 }
 
 /************* MOBILE VERSION *************/
@@ -89,7 +132,7 @@
 }
 
 /** ----- Details ----- **/
-.detailsBox{
+.detailsMobileBox{
     background-color: wheat;
     height: 140px;
     margin-top: 80px;
@@ -249,7 +292,7 @@
     background-color: lightblue;
 }
 
-.positiveRateButton{
+.positiveMobileRateButton{
     display: inline-block;
     width: 40px;
     height: 36px;
@@ -260,7 +303,7 @@
     cursor: pointer;
 }
 
-.negativeRateButton{
+.negativeMobileRateButton{
     display: inline-block;
     width: 40px;
     height: 36px;
@@ -270,7 +313,7 @@
     margin-left: 25px;
 }
 
-.fullViewButton{
+.fullMobileViewButton{
     display: inline-block;
     width: 25px;
     height: 25px;

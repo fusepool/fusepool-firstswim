@@ -14,6 +14,7 @@ jQuery(document).ready(function () {
                 create: function(){
                     this.inherited(arguments);
                     this.$.openedDoc.hide();
+                    this.hideRateButtons();
                     this.processGETParameters();
                 },
 
@@ -42,14 +43,24 @@ jQuery(document).ready(function () {
                         warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
                     },
                     {
-                        kind: 'DictionaryList',
-                        classes: 'dictionaryList',
-                        entityFilterFunction: 'entityFilter',
-                        name: 'dictionaries',
-                        dictionaryTitle: 'Dictionaries',
-                        noContentLabel: 'No data available',
-                        titleClass: 'dictionariesMainTitle',
-                        showDetailsFunction: 'updateDetails'
+                        classes: 'leftDesktopCol',
+                        components: [
+                            {
+                                kind: 'DetailsBox',
+                                name: 'detailsBox',
+                                classes: 'detailsBox enyo-unselectable'
+                            },
+                            {
+                                kind: 'DictionaryList',
+                                classes: 'dictionaryList',
+                                entityFilterFunction: 'entityFilter',
+                                name: 'dictionaries',
+                                dictionaryTitle: 'Dictionaries',
+                                noContentLabel: 'No data available',
+                                titleClass: 'dictionariesMainTitle',
+                                showDetailsFunction: 'updateDetails'
+                            },                            
+                        ]
                     },
                     {
                         kind: 'DocumentList',
@@ -61,15 +72,59 @@ jQuery(document).ready(function () {
                         noDataLabel: 'No data available'
                     },
                     {
-                        kind: 'OpenedDoc',
-                        name: 'openedDoc',
-                        classes: 'openedDocument',
-                        documentTitleClass: 'documentTitle',
-                        documentContentClass: 'documentContent',
-                        noDataLabel: 'No data available',
-                        loaderClass: 'loader'
+                        name: 'previewDoc',
+                        style: 'display: inline-block; position: relative;',
+                        components: [
+                            {
+                                kind: 'OpenedDoc',
+                                name: 'openedDoc',
+                                classes: 'openedDocument',
+                                documentTitleClass: 'documentTitle',
+                                documentContentClass: 'documentContent',
+                                noDataLabel: 'No data available',
+                                loaderClass: 'loader'
+                            },
+                            { tag: 'div', name: 'posRateButton', classes: 'positiveRateButton', ontap: 'positiveRate' },
+                            { tag: 'div', name: 'negRateButton', classes: 'negativeRateButton', ontap: 'negativeRate' },
+                            { tag: 'div', name: 'fullViewButton', classes: 'fullViewButton', ontap: 'fullView' },
+                            {
+                                kind: 'RatePopup',
+                                name: 'ratePopup',
+                                classes: 'ratePopup',
+                                positiveLabel: 'Rate to positive',
+                                negativeLabel: 'Rate to negative',
+                                placeholderText: 'Category name...',
+                                rateContentClass: 'rateContent',
+                                inputFrameClass: 'searchLabel',
+                                okButtonClass: 'okRateButton'
+                            }
+                        ]
                     }
                 ],
+
+                positiveRate: function(){
+                    this.$.ratePopup.showPopup(true);
+                },
+
+                negativeRate: function(){
+                    this.$.ratePopup.showPopup(false);
+                },
+
+                fullView: function(){
+                    alert('Full view function is coming soon...');
+                },
+
+                hideRateButtons: function(){
+                    this.$.posRateButton.hide();
+                    this.$.negRateButton.hide();
+                    this.$.fullViewButton.hide();
+                },
+
+                showRateButtons: function(){
+                    this.$.posRateButton.show();
+                    this.$.negRateButton.show();
+                    this.$.fullViewButton.show();
+                },
 
                 /**
                  * This function process the get parameters. If there is search word,
@@ -98,6 +153,7 @@ jQuery(document).ready(function () {
                 openDoc: function(document){
                     this.$.openedDoc.openDoc(document);
                     this.$.openedDoc.show();
+                    this.showRateButtons();
                 },
 
                 /**
@@ -292,7 +348,7 @@ jQuery(document).ready(function () {
                 },
 
                 updateDetails: function(details){
-                    console.log(details);
+                    this.$.detailsBox.updateDetails(details);
                 }
             });
         }

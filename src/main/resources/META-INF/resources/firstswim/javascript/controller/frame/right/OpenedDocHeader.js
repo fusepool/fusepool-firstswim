@@ -5,9 +5,9 @@ enyo.kind({
     classes: 'openedDocHeader',
 
     components: [
-        { tag: 'div', classes: 'positiveRateButton', ontap: 'positiveRate' },
-        { tag: 'div', classes: 'negativeRateButton', ontap: 'negativeRate' },
-        { tag: 'div', classes: 'fullViewButton', ontap: 'fullView' },
+        { tag: 'div', classes: 'positiveMobileRateButton', ontap: 'positiveRate' },
+        { tag: 'div', classes: 'negativeMobileRateButton', ontap: 'negativeRate' },
+        { tag: 'div', classes: 'fullMobileViewButton', ontap: 'fullView' },
         {
             kind: 'RatePopup',
             name: 'ratePopup',
