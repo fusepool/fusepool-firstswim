@@ -1,4 +1,4 @@
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.platform)){
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)){
     enyo.depends(
         // -- Utils -- //
             'utils.js',
