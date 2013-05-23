@@ -308,9 +308,8 @@
 /** ----- Document list ----- **/
 .documentMobileList{
     display: block;
-    margin: 20px auto;
+    margin: 20px;
     vertical-align: top;
-    width: 300px;
 }
 
 .documentsMainTitle{
