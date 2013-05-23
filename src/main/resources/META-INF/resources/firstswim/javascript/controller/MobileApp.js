@@ -152,9 +152,9 @@ jQuery(document).ready(function () {
                         }
 
                         var title = 'Fusepool';
-                        this.$.leftPanel.saveBookmark(url, title);
+                        this.$.middlePanel.saveBookmark(url, title);
                     } else {
-                        this.$.leftPanel.saveBookmark();
+                        this.$.middlePanel.saveBookmark();
                     }
                 },
 

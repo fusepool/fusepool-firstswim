@@ -8,7 +8,9 @@ enyo.kind({
 
     published: {
         mainSearchFunction: '',
-        openDocFunction: ''
+        openDocFunction: '',
+        bookmarkFunction: 'createBookmark',
+        popupBookmarkFunction: 'popupBookmark'
     },
 
     components: [
@@ -21,6 +23,15 @@ enyo.kind({
             buttonContent: 'OK',
             searchIconClass: 'searchImage',
             parentSeachFunction: 'updateUI'
+        },
+        {
+            name: 'bookmark',
+            kind: 'Bookmark',
+            buttonClass: 'bookmarkButton',
+            parentTapFunction: 'createBookmark',
+            parentPopupFunction: 'popupBookmark',
+            warningPopupClass: 'bookmarkPopup',
+            warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
         },
         { name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },
         { kind: 'enyo.Scroller', fit: true, touch: true, touchOverscroll: false, components: [
@@ -35,6 +46,19 @@ enyo.kind({
             }
         ]}
     ],
+
+ 
+    createBookmark: function(){
+        this.owner[this.bookmarkFunction]();
+    },
+
+    saveBookmark: function(url, title){
+        this.$.bookmark.saveBookmark(url, title);
+    },
+
+    popupBookmark: function(message){
+        this.owner[this.popupBookmarkFunction](message);
+    },
 
     showEntitiesButton: function(){
         this.$.entitiesButton.show();

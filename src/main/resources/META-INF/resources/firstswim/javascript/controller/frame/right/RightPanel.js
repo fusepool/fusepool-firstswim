@@ -17,7 +17,6 @@ enyo.kind({
                 name: 'openedDoc',
                 classes: 'openedMobileDocument',
                 documentTitleClass: 'documentTitle',
-                documentContentClass: 'documentContent',
                 noDataLabel: 'No data available',
                 loaderClass: 'loader'
             }

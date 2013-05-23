@@ -6,18 +6,14 @@ enyo.kind({
     classes: 'enyo-unselectable',
 
     published: {
-        entityFilterFunction: '',
-        bookmarkFunction: '',
-        popupBookmarkFunction: ''
+        entityFilterFunction: ''
     },
     
     components: [
         {
             kind: 'LeftHeader',
             name: 'leftHeader',
-            classes: 'leftHeader',
-            bookmarkFunction: 'createBookmark',
-            popupBookmarkFunction: 'popupBookmark'
+            classes: 'leftHeader'
         },
         { tag: 'div', components: [
             { name: 'docsButton', classes: 'docsButton', content: 'Documents', ontap: 'searchShow' }
@@ -47,18 +43,6 @@ enyo.kind({
 
     searchShow: function(){
         this.owner.searchShow();
-    },
-
-    createBookmark: function(){
-        this.owner[this.bookmarkFunction]();
-    },
-
-    saveBookmark: function(url, title){
-        this.$.leftHeader.saveBookmark(url, title);
-    },
-
-    popupBookmark: function(message){
-        this.owner[this.popupBookmarkFunction](message);
     },
 
     updateDictionaries: function(dictionaryObject){
