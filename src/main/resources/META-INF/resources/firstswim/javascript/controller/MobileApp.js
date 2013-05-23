@@ -118,6 +118,9 @@ jQuery(document).ready(function () {
                  */
                 reflow: function() {
                     this.inherited(arguments);
+                    if(!isEmpty(this.$.bookmarkPopup.getContent())){
+                        this.changeBMPopupPosition();
+                    }
                     if(this.isMobileSize()){
                         this.$.panels.setIndex(1);
                     } else {
@@ -164,6 +167,25 @@ jQuery(document).ready(function () {
                  */
                 popupBookmark: function(message){
                     this.$.bookmarkPopup.setContent(message);
+                    this.changeBMPopupPosition();
+                },
+
+                /**
+                 * This function calculate the popup position to the middle
+                 */
+                changeBMPopupPosition: function(){
+                    var newWidth = jQuery('#' + this.$.middlePanel.getId()).width()-10;
+                    var popupHeight = jQuery('#' + this.$.bookmarkPopup.getId()).outerHeight();
+
+                    var windowWidth = jQuery(document).width();
+                    var windowHeight = jQuery(document).height();
+
+                    var newLeft = (windowWidth - newWidth) / 2;
+                    var newTop = (windowHeight - popupHeight) / 2;
+
+                    this.$.bookmarkPopup.applyStyle('width', newWidth + 'px');
+                    this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
+                    this.$.bookmarkPopup.applyStyle('top', newTop + 'px');
                     this.$.bookmarkPopup.show();
                 },
 
