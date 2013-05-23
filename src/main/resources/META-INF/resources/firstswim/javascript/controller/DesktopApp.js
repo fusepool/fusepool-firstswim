@@ -171,7 +171,7 @@ jQuery(document).ready(function () {
                         newTop = mainFrame.height() - previewHeight - 15;
                     }
                     // If there isn't enough place on the top
-                    if(newTop < 20){
+                    if(newTop < 50){
                         newTop = 50;
                     }
                     this.$.previewBox.applyStyle('top', newTop + 'px');
