@@ -57,6 +57,7 @@
     height: 382px;
 }
 
+/** ----- Full view button and rate buttons ----- **/
 .fullViewButton{
     background-image: url("../images/full-view-icon.png");
     background-repeat: no-repeat;
@@ -90,6 +91,53 @@
     width: 40px;
 }
 
+/** ----- Entity menu ----- **/
+.entityMenu{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.entityMenuItem{
+    text-align: center;
+    background: #D9D9D9;
+    cursor: pointer;
+    padding: 3px 12px;
+    width: 120px;
+}
+
+.entityMenuItem:hover{
+    background: #CFC4C8;
+}
+
+/** ----- Entity popups ----- **/
+.addEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -45px;
+    width: 250px;
+    height: 90px;
+}
+
+.moveEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -75px;
+    width: 250px;
+    height: 150px;
+}
+
+.removeEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -45px;
+    width: 250px;
+    height: 90px;
+}
+
 /************* MOBILE VERSION *************/
 
 /* ----------- MAIN ----------- */
@@ -102,7 +150,6 @@
 }
 
 /* ----------- LEFT ----------- */
-
 .leftPanel{
     background-color: lightgrey;
     width: 350px;
@@ -365,8 +412,8 @@
     position: relative;
 }
 
-/** ----- Add entity popup ----- **/
-.addEntityPopup{
+/** ----- Entity popups ----- **/
+.addEntityMobilePopup{
     background: white;
     color: black;
     width: 100%;
@@ -375,7 +422,7 @@
     left: 0;
 }
 
-.moveEntityPopup{
+.moveEntityMobilePopup{
     background: white;
     color: black;
     width: 100%;
@@ -384,7 +431,7 @@
     left: 0;
 }
 
-.removeEntityPopup{
+.removeEntityMobilePopup{
     background: white;
     color: black;
     width: 100%;

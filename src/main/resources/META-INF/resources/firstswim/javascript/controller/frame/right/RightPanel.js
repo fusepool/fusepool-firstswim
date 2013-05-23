@@ -31,7 +31,7 @@ enyo.kind({
         {
             kind: 'AddEntityPopup',
             name: 'addEntityPopup',
-            classes: 'addEntityPopup',
+            classes: 'addEntityMobilePopup',
             titleContent: 'Add entity: ',
             okButtonContent: 'OK',
             cancelButtonContent: 'Cancel'
@@ -39,7 +39,7 @@ enyo.kind({
         {
             kind: 'RemoveEntityPopup',
             name: 'removeEntityPopup',
-            classes: 'removeEntityPopup',
+            classes: 'removeEntityMobilePopup',
             titleContent: 'Remove entity: ',
             okButtonContent: 'OK',
             cancelButtonContent: 'Cancel'
@@ -47,7 +47,7 @@ enyo.kind({
         {
             kind: 'MoveEntityPopup',
             name: 'moveEntityPopup',
-            classes: 'moveEntityPopup',
+            classes: 'moveEntityMobilePopup',
             titleContent: 'Move entity: ',
             fromContent: 'From:',
             toContent: 'From:',

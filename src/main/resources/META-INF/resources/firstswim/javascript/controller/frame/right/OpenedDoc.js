@@ -28,15 +28,9 @@ enyo.kind({
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content', allowHtml: true, ondown: 'tapDoc' }
+            { tag: 'div', name: 'content', allowHtml: true }
         ]}
     ],
-
-    tapDoc: function(inSender, inEvent){
-        if(inEvent.which === 3 && this.tapParentFunction !== ''){
-            this.owner[this.tapParentFunction](inSender, inEvent, this.getSelectedText());
-        }
-    },
 
     /** This function returns the trimmed selected text in the window */
     getSelectedText: function(){

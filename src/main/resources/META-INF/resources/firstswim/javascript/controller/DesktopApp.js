@@ -13,8 +13,6 @@ jQuery(document).ready(function () {
 
                 create: function(){
                     this.inherited(arguments);
-                    this.$.openedDoc.hide();
-                    this.hideRateButtons();
                     this.processGETParameters();
                 },
 
@@ -72,68 +70,11 @@ jQuery(document).ready(function () {
                         noDataLabel: 'No data available'
                     },
                     {
+                        kind: 'PreviewBox',
                         name: 'previewBox',
-                        classes: 'previewBox',
-                        components: [
-                            {
-                                kind: 'OpenedDoc',
-                                name: 'openedDoc',
-                                classes: 'openedDocument',
-                                tapParentFunction: 'rightClickText',
-                                documentTitleClass: 'documentTitle',
-                                documentContentClass: 'documentContent',
-                                noDataLabel: 'No data available',
-                                loaderClass: 'loader'
-                            },
-                            { tag: 'div', name: 'posRateButton', classes: 'positiveRateButton', ontap: 'positiveRate' },
-                            { tag: 'div', name: 'negRateButton', classes: 'negativeRateButton', ontap: 'negativeRate' },
-                            { tag: 'div', name: 'fullViewButton', classes: 'fullViewButton', ontap: 'fullView' },
-                            {
-                                kind: 'RatePopup',
-                                name: 'ratePopup',
-                                classes: 'ratePopup',
-                                positiveLabel: 'Rate to positive',
-                                negativeLabel: 'Rate to negative',
-                                placeholderText: 'Category name...',
-                                rateContentClass: 'rateContent',
-                                inputFrameClass: 'searchLabel',
-                                okButtonClass: 'okRateButton'
-                            }
-                        ],
+                        classes: 'previewBox'
                     }
                 ],
-                
-                rightClickText: function(inSender, inEvent, selectedText){
-                    if(!isEmpty(selectedText)){   
-                        console.log(inSender);
-                        console.log(inEvent);
-                        console.log(selectedText);
-                    }
-                },
-
-                positiveRate: function(){
-                    this.$.ratePopup.showPopup(true);
-                },
-
-                negativeRate: function(){
-                    this.$.ratePopup.showPopup(false);
-                },
-
-                fullView: function(){
-                    alert('Full view function is coming soon...');
-                },
-
-                hideRateButtons: function(){
-                    this.$.posRateButton.hide();
-                    this.$.negRateButton.hide();
-                    this.$.fullViewButton.hide();
-                },
-
-                showRateButtons: function(){
-                    this.$.posRateButton.show();
-                    this.$.negRateButton.show();
-                    this.$.fullViewButton.show();
-                },
 
                 /**
                  * This function process the get parameters. If there is search word,
@@ -156,12 +97,14 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function open a document on the preview on the right side.
-                 * @param document the document what user want to see
+                 * This function calculate the position of the previwed document
+                 * and open the document on the right side.
+                 * @param previewDoc the document what user want to see
+                 * @param inEvent mouse over on a short document event
                  */
                 openDoc: function(previewDoc, inEvent){
                     var mainFrame = jQuery('#' + this.getId());
-                    var jQueryDoc = jQuery('#' + this.$.openedDoc.getId());
+                    var jQueryDoc = jQuery('#' + this.$.previewBox.getOpenDocId());
                     var previewHeight = jQueryDoc.outerHeight();
                     var clickTop = inEvent.pageY;
 
@@ -175,9 +118,7 @@ jQuery(document).ready(function () {
                         newTop = 50;
                     }
                     this.$.previewBox.applyStyle('top', newTop + 'px');
-                    this.$.openedDoc.openDoc(previewDoc);
-                    this.$.openedDoc.show();
-                    this.showRateButtons();
+                    this.$.previewBox.openDoc(previewDoc);
                 },
 
                 /**
@@ -376,7 +317,7 @@ jQuery(document).ready(function () {
                 }
             });
         }
-        new DocumentApp().renderInto(document.body);
+        new DocumentApp().renderInto(document.getElementById('main'));
     }
 
     try {
