@@ -40,6 +40,7 @@ jQuery(document).ready(function () {
                         warningPopupClass: 'bookmarkPopup',
                         warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
                     },
+                    { kind: onyx.Popup, name: 'bookmarkPopup', classes: 'bookmarkPopup', allowHtml: true },
                     {
                         classes: 'leftDesktopCol',
                         components: [
@@ -150,6 +151,39 @@ jQuery(document).ready(function () {
                         this.$.bookmark.saveBookmark(url, title);
                     } else {
                         this.$.bookmark.saveBookmark(url, title);
+                    }
+                },
+
+                /**
+                 * Show a bookmark message in a popup
+                 * @param message the message what the function shows
+                 */
+                popupBookmark: function(message){
+                    this.$.bookmarkPopup.setContent(message);
+                    this.changeBMPopupPosition();
+                },
+
+                /**
+                 * This function change the bookmark popup's position to the middle
+                 * of horizontal and a little distance from the top
+                 */
+                changeBMPopupPosition: function(){
+                    var jQBookmark = jQuery('#' + this.$.bookmarkPopup.getId());
+                    var popupWidth = jQBookmark.outerWidth();
+                    var windowWidth = jQuery(document).width();
+                    var newLeft = (windowWidth - popupWidth) / 2;
+                    this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
+                    this.$.bookmarkPopup.show();
+                },
+
+               /**
+                 * This function is called when the screen size is changing.
+                 * This function change the bookmark popup's position.
+                 */
+                reflow: function() {
+                    this.inherited(arguments);
+                    if(!isEmpty(this.$.bookmarkPopup.getContent())){
+                        this.changeBMPopupPosition();
                     }
                 },
 

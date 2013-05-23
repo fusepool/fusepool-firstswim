@@ -27,6 +27,12 @@
 }
 
 /* ----------- MIDDLE ----------- */
+.bookmarkPopup{
+    word-wrap: break-word;
+    width: 600px;
+    top: 100px;
+}
+
 .documentList{
     display: inline-block;
     margin: 20px auto;
@@ -141,8 +147,7 @@
 /************* MOBILE VERSION *************/
 
 /* ----------- MAIN ----------- */
-.bookmarkPopup{
-    position: absolute;
+.bookmarkMobilePopup{
     word-wrap: break-word;
 }
 

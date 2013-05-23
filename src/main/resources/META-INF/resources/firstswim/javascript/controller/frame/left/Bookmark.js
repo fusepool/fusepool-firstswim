@@ -64,4 +64,5 @@ enyo.kind({
         this.$.bookMarkButton.setClasses(this.buttonClass);
         this.$.warningPopup.setClasses(this.warningPopupClass);
     }
+
 });

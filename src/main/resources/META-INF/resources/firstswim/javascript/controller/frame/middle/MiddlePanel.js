@@ -46,7 +46,6 @@ enyo.kind({
             }
         ]}
     ],
-
  
     createBookmark: function(){
         this.owner[this.bookmarkFunction]();

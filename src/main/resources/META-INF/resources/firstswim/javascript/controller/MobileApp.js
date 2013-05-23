@@ -42,7 +42,7 @@ jQuery(document).ready(function () {
                             closeParentFunction: 'searchShow'
                         }
                     ]},
-                    { kind: onyx.Popup, name: 'bookmarkPopup', classes: 'bookmarkPopup', allowHtml: true }
+                    { kind: onyx.Popup, name: 'bookmarkMobilePopup', classes: 'bookmarkPopup', allowHtml: true }
                 ],
 
                 /**
@@ -114,7 +114,8 @@ jQuery(document).ready(function () {
                 /**
                  * This function is called when the screen size is changing or
                  * the user rotate his/her mobile device. This function set the
-                 * actual panel depends on the screen size and update the buttons.
+                 * actual panel depends on the screen size and update the buttons,
+                 * and change the bookmark popup's position.
                  */
                 reflow: function() {
                     this.inherited(arguments);
@@ -171,7 +172,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function calculate the popup position to the middle
+                 * This function calculate the popup position to the 
+                 * middle of the screen
                  */
                 changeBMPopupPosition: function(){
                     var newWidth = jQuery('#' + this.$.middlePanel.getId()).width()-10;
