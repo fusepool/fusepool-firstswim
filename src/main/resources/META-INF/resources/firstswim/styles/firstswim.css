@@ -36,11 +36,9 @@
 
 /* ----------- RIGHT ----------- */
 .previewBox{
-    display: inline-block;
     position: absolute;
     right: 60px;
     top: 100px;
-    margin: 25px 0 15px 30px;
     width: 305px;
 }
 

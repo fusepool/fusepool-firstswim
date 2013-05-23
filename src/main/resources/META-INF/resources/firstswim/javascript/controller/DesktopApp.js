@@ -167,12 +167,12 @@ jQuery(document).ready(function () {
 
                     var newTop = clickTop - previewHeight / 2;
                     // If there isn't enough place on the bottom
-                    if(jQuery(document).height() < clickTop + previewHeight){
-                        newTop = mainFrame.height() - previewHeight - 40;
+                    if(mainFrame.height() < clickTop + previewHeight){
+                        newTop = mainFrame.height() - previewHeight - 15;
                     }
                     // If there isn't enough place on the top
                     if(newTop < 20){
-                        newTop = 40;
+                        newTop = 50;
                     }
                     this.$.previewBox.applyStyle('top', newTop + 'px');
                     this.$.openedDoc.openDoc(previewDoc);
