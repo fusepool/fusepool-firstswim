@@ -1,4 +1,5 @@
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)){
+var mobileRegex = new RegExp(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i);
+if(mobileRegex.test(navigator.platform) || mobileRegex.test(navigator.userAgent)){
     enyo.depends(
         // -- Utils -- //
             'utils.js',
@@ -45,7 +46,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)){
             'frame/middle/documents/DocumentList.js',
             'frame/middle/documents/ShortDocument.js',
         // -- Right -- //
-            'frame/right/OpenedDocHeader.js',
+            'frame/right/DynamicMenu.js',
+            'frame/right/PreviewBox.js',
             'frame/right/OpenedDoc.js',
             'frame/right/popup/AddEntityPopup.js',
             'frame/right/popup/MoveEntityPopup.js',
