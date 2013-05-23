@@ -112,7 +112,7 @@ jQuery(document).ready(function () {
 
                         var newTop = clickTop - previewHeight / 2;
                         // If there isn't enough place on the bottom
-                        if(mainFrame.height() < clickTop + previewHeight){
+                        if(mainFrame.height() < clickTop + previewHeight / 2 + 15){
                             newTop = mainFrame.height() - previewHeight - 15;
                         }
                         // If there isn't enough place on the top
