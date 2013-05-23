@@ -161,7 +161,7 @@ enyo.kind({
                 this.menu.hideMenu();
             }
         }
-    },
+    },            
     
     positiveRate: function(){
         this.$.ratePopup.showPopup(true);
@@ -195,6 +195,10 @@ enyo.kind({
 
     getOpenDocId: function(){
         return this.$.openedDoc.getId();
+    },
+
+    getDocumentURL: function(){
+        return this.$.openedDoc.getDocumentURL();
     }
 
 });

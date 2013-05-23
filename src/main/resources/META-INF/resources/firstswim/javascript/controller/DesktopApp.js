@@ -107,18 +107,20 @@ jQuery(document).ready(function () {
                     var mainFrame = jQuery('#' + this.getId());
                     var jQueryDoc = jQuery('#' + this.$.previewBox.getOpenDocId());
                     var previewHeight = jQueryDoc.outerHeight();
-                    var clickTop = inEvent.pageY;
+                    if(!isEmpty(inEvent)){
+                        var clickTop = inEvent.pageY;
 
-                    var newTop = clickTop - previewHeight / 2;
-                    // If there isn't enough place on the bottom
-                    if(mainFrame.height() < clickTop + previewHeight){
-                        newTop = mainFrame.height() - previewHeight - 15;
+                        var newTop = clickTop - previewHeight / 2;
+                        // If there isn't enough place on the bottom
+                        if(mainFrame.height() < clickTop + previewHeight){
+                            newTop = mainFrame.height() - previewHeight - 15;
+                        }
+                        // If there isn't enough place on the top
+                        if(newTop < 50){
+                            newTop = 50;
+                        }
+                        this.$.previewBox.applyStyle('top', newTop + 'px');                        
                     }
-                    // If there isn't enough place on the top
-                    if(newTop < 50){
-                        newTop = 50;
-                    }
-                    this.$.previewBox.applyStyle('top', newTop + 'px');
                     this.$.previewBox.openDoc(previewDoc);
                 },
 
@@ -137,12 +139,12 @@ jQuery(document).ready(function () {
                         // Search word
                         var url = location + '?search=' + this.searchWord;
                         // Unchecked entities
-                        var entities = this.uncheckedEntities;
+                        var entities = this.$.dictionaries.getUncheckedEntities();
                         for(var i=0;i<entities.length;i++){
                             url += '&entity=' + entities[i];
                         }
                         // Preview document
-                        var documentURL = this.$.openedDoc.getDocumentURL();
+                        var documentURL = this.$.previewBox.getDocumentURL();
                         if(!isEmpty(documentURL)){
                             url += '&openPreview=' + documentURL;
                         }

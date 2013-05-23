@@ -42,7 +42,7 @@ jQuery(document).ready(function () {
                             closeParentFunction: 'searchShow'
                         }
                     ]},
-                    { kind: onyx.Popup, name: 'bookmarkMobilePopup', classes: 'bookmarkPopup', allowHtml: true }
+                    { kind: onyx.Popup, name: 'bookmarkPopup', classes: 'bookmarkMobilePopup', allowHtml: true }
                 ],
 
                 /**
@@ -145,7 +145,7 @@ jQuery(document).ready(function () {
                         // Search word
                         var url = location + '?search=' + this.searchWord;
                         // Unchecked entities
-                        var entities = this.uncheckedEntities;
+                        var entities = this.$.leftPanel.getUncheckedEntities();
                         for(var i=0;i<entities.length;i++){
                             url += '&entity=' + entities[i];
                         }

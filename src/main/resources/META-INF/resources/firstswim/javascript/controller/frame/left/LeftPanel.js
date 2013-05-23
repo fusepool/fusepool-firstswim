@@ -33,6 +33,10 @@ enyo.kind({
         ]}
     ],
 
+    getUncheckedEntities: function(){
+        return this.$.dictionaries.getUncheckedEntities();  
+    },
+
     showDocsButton: function(){
         this.$.docsButton.show();
     },

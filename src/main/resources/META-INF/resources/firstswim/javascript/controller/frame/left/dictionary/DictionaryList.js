@@ -91,6 +91,6 @@ enyo.kind({
 
     responseFilter: function(data){
         this.owner[this.entityFilterFunction](data);
-    }    
+    }
 
 });

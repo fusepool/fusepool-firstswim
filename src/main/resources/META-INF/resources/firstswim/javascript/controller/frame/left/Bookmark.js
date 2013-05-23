@@ -5,7 +5,6 @@ enyo.kind({
     published: {
         url: '',
         title: '',
-        useHttpPrefix: true,
         parentTapFunction: '',
         parentPopupFunction: '',
         buttonClass: '',
@@ -35,7 +34,7 @@ enyo.kind({
             title = document.title;
         }
 
-        if(this.useHttpPrefix && url.substr(0,7) !== 'http://'){
+        if(url.substr(0,7) !== 'http://'){
             url = 'http://' + url;
         }
 
