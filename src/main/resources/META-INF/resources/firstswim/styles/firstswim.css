@@ -3,8 +3,7 @@
 /* ----------- MAIN ----------- */
 #docApp{
     border: 1px solid #D9D9D9;
-    margin: 15px auto;
-    width: 1000px;
+    margin: 15px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -17,11 +16,14 @@
     display: inline-block;
     vertical-align: top; 
     width: 315px;
+    margin-right: 30px;
 }
 
 .detailsBox{
+    background-color: #EDDDC7;
     height: 200px;
-    padding: 5px;
+    margin: 10px;
+    padding: 10px;
 }
 
 /* ----------- MIDDLE ----------- */
@@ -29,19 +31,43 @@
     display: inline-block;
     margin: 20px auto;
     vertical-align: top;
-    width: 300px;
+    width: 420px;
 }
 
 /* ----------- RIGHT ----------- */
+.previewBox{
+    display: inline-block;
+    position: absolute;
+    right: 60px;
+    top: 100px;
+    margin: 25px 0 15px 30px;
+    width: 305px;
+}
+
 .openedDocument{
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
     border: 1px solid #CFC4C8;
-    margin: 25px 0 15px 30px;
     padding: 15px;
-    width: 305px;
     word-wrap: break-word;
+    height: 380px;
+    width: 315px;
+}
+
+.documentContent{
+    height: 382px;
+}
+
+.fullViewButton{
+    background-image: url("../images/full-view-icon.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 25px;
+    position: absolute;
+    right: -20px;
+    top: 10px;
+    width: 25px;
 }
 
 .positiveRateButton{
@@ -50,8 +76,8 @@
     cursor: pointer;
     height: 36px;
     position: absolute;
-    right: 0;
-    top: 70px;
+    right: -30px;
+    top: 50px;
     width: 40px;
 }
 
@@ -61,20 +87,9 @@
     cursor: pointer;
     height: 36px;
     position: absolute;
-    right: 0;
-    top: 105px;
+    right: -30px;
+    top: 90px;
     width: 40px;
-}
-
-.fullViewButton{
-    background-image: url("../images/full-view-icon.png");
-    background-repeat: no-repeat;
-    cursor: pointer;
-    height: 25px;
-    position: absolute;
-    right: 10px;
-    top: 35px;
-    width: 25px;
 }
 
 /************* MOBILE VERSION *************/
@@ -146,12 +161,14 @@
 }
 
 .detailsImage{
-    width: 90px;
+    margin-top: 10px;
+    width: 130px;
 }
 
 .detailsContent{
-    display: inline-block;
-    font-size: 10px;
+    font-size: 12px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 /** ----- Documents button ----- **/
@@ -267,7 +284,6 @@
     height: 95px;
     margin-bottom: 20px;
     padding: 15px 5px 0px 5px;
-    width: 100%;
 }
 
 .openDocButton{

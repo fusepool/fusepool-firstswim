@@ -59,7 +59,7 @@ jQuery(document).ready(function () {
                                 noContentLabel: 'No data available',
                                 titleClass: 'dictionariesMainTitle',
                                 showDetailsFunction: 'updateDetails'
-                            },                            
+                            }                          
                         ]
                     },
                     {
@@ -72,13 +72,14 @@ jQuery(document).ready(function () {
                         noDataLabel: 'No data available'
                     },
                     {
-                        name: 'previewDoc',
-                        style: 'display: inline-block; position: relative;',
+                        name: 'previewBox',
+                        classes: 'previewBox',
                         components: [
                             {
                                 kind: 'OpenedDoc',
                                 name: 'openedDoc',
                                 classes: 'openedDocument',
+                                tapParentFunction: 'rightClickText',
                                 documentTitleClass: 'documentTitle',
                                 documentContentClass: 'documentContent',
                                 noDataLabel: 'No data available',
@@ -98,9 +99,17 @@ jQuery(document).ready(function () {
                                 inputFrameClass: 'searchLabel',
                                 okButtonClass: 'okRateButton'
                             }
-                        ]
+                        ],
                     }
                 ],
+                
+                rightClickText: function(inSender, inEvent, selectedText){
+                    if(!isEmpty(selectedText)){   
+                        console.log(inSender);
+                        console.log(inEvent);
+                        console.log(selectedText);
+                    }
+                },
 
                 positiveRate: function(){
                     this.$.ratePopup.showPopup(true);
@@ -150,8 +159,23 @@ jQuery(document).ready(function () {
                  * This function open a document on the preview on the right side.
                  * @param document the document what user want to see
                  */
-                openDoc: function(document){
-                    this.$.openedDoc.openDoc(document);
+                openDoc: function(previewDoc, inEvent){
+                    var mainFrame = jQuery('#' + this.getId());
+                    var jQueryDoc = jQuery('#' + this.$.openedDoc.getId());
+                    var previewHeight = jQueryDoc.outerHeight();
+                    var clickTop = inEvent.pageY;
+
+                    var newTop = clickTop - previewHeight / 2;
+                    // If there isn't enough place on the bottom
+                    if(jQuery(document).height() < clickTop + previewHeight){
+                        newTop = mainFrame.height() - previewHeight - 40;
+                    }
+                    // If there isn't enough place on the top
+                    if(newTop < 20){
+                        newTop = 40;
+                    }
+                    this.$.previewBox.applyStyle('top', newTop + 'px');
+                    this.$.openedDoc.openDoc(previewDoc);
                     this.$.openedDoc.show();
                     this.showRateButtons();
                 },

@@ -5,6 +5,7 @@ enyo.kind({
     published: {
         documentURL: '',
         noDataLabel: '',
+        tapParentFunction: '',
         documentTitleClass: '',
         documentContentClass: '',
         loaderClass: ''
@@ -27,9 +28,15 @@ enyo.kind({
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content', allowHtml: true, ondown: 'tapDoc' }
         ]}
     ],
+
+    tapDoc: function(inSender, inEvent){
+        if(inEvent.which === 3 && this.tapParentFunction !== ''){
+            this.owner[this.tapParentFunction](inSender, inEvent, this.getSelectedText());
+        }
+    },
 
     /** This function returns the trimmed selected text in the window */
     getSelectedText: function(){
@@ -41,7 +48,11 @@ enyo.kind({
         } else if (document.selection) {
             result = document.selection.createRange().text;
         }
-        return jQuery.trim(result + '');
+        result = result + '';
+        if(jQuery){
+            result = jQuery.trim(result + '');
+        }
+        return result;
     },
 
     clearDoc: function(){

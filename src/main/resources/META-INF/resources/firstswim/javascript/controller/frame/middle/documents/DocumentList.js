@@ -49,8 +49,8 @@ enyo.kind({
         this.$.title.show();
     },
 
-    openDoc: function(url){
-        this.owner[this.openDocFunction](url);
+    openDoc: function(url, inEvent){
+        this.owner[this.openDocFunction](url, inEvent);
     }
 
 });

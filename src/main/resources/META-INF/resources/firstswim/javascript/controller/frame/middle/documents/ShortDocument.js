@@ -11,18 +11,13 @@ enyo.kind({
     },
 
     components: [
-        { onenter: 'overMouse', components: [
-            { tag: 'div', name: 'content' },
-//            { tag: 'div', name: 'openButton', ontap: 'openDoc' }
+        { onenter: 'openDoc', components: [
+            { tag: 'div', name: 'content' }
         ]}
     ],
 
-    overMouse: function(){
-        this.openDoc();
-    },
-
-    openDoc: function(){
-        this.owner[this.parentFunction](this.url);
+    openDoc: function(inSender, inEvent){
+        this.owner[this.parentFunction](this.url, inEvent);
     },
 
     create: function(){
@@ -32,7 +27,6 @@ enyo.kind({
 
     rendered: function(){
         this.$.content.setClasses(this.contentClass);
-//        this.$.openButton.setClasses(this.openButtonClass);
     }
 
 });
