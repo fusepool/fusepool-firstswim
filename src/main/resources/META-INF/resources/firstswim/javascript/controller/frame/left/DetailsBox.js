@@ -19,8 +19,8 @@ enyo.kind({
     },
 
     components: [
+        { tag: 'div', name: 'detailsTitle' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
-            { tag: 'div', name: 'detailsTitle' },
             { kind: enyo.Image, name: 'detailsImage' },
             { tag: 'div', name: 'detailsContent' }
         ]}

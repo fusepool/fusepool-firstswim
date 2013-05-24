@@ -28,7 +28,7 @@
 }
 
 .detailsScroll{
-    height: 200px;
+    height: 186px;
 }
 
 .detailsTitle{
@@ -229,12 +229,13 @@
 }
 
 .detailsMobileScroll{
-    height: 140px;
+    height: 100px;
 }
 
 .detailsMobileTitle{
     font-size: 19px;
-    margin: 14px 0 18px 0;
+    margin-bottom: 8px;
+    padding-top: 8px;
     text-align: center;
 }
 
