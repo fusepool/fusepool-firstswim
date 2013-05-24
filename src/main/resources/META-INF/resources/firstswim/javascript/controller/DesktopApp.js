@@ -47,7 +47,11 @@ jQuery(document).ready(function () {
                             {
                                 kind: 'DetailsBox',
                                 name: 'detailsBox',
-                                classes: 'detailsBox enyo-unselectable'
+                                classes: 'detailsBox enyo-unselectable',
+                                scrollerClass: 'detailsScroll',
+                                titleClass: 'detailsTitle',
+                                imageClass: 'detailsImage',
+                                contentClass: 'detailsContent'
                             },
                             {
                                 kind: 'DictionaryList',

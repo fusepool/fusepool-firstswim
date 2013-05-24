@@ -20,7 +20,7 @@ enyo.kind({
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'cbChange' },
-        { tag: 'span', name: 'entityLabel', onmouseout: 'clearDetails', onmouseover: 'getDetails', ontap: 'tapEntity' }
+        { tag: 'span', name: 'entityLabel', onmouseover: 'getDetails', ontap: 'tapEntity' }
     ],
 
     getDetails: function(){
@@ -89,6 +89,7 @@ enyo.kind({
                 title = this.o.value;
             }
         });
+        title = this.deleteSpeechMarks(title);
         return title;
     },
 
@@ -97,10 +98,26 @@ enyo.kind({
         rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#comment> ?o').each(function(){
             content = this.o.value;
         });
+        content = this.deleteSpeechMarks(content);
         return content;
     },
 
-    cbChange: function(inSender, inEvent){
+    /**
+     * Delete speech marks (") form the first and last character of text
+     * @param text the text what the function check
+     */
+    deleteSpeechMarks: function(text){
+        var result = text;
+        if(result.charAt(0) === '"'){
+            result = result.substr(1);
+        }
+        if(result.charAt(result.length-1) === '"'){
+            result = result.substr(0, result.length-1);
+        }
+        return result;
+    },
+
+    cbChange: function(inSender){
         var cbValue = inSender.getValue();
         this.filterEntity(cbValue);
     },

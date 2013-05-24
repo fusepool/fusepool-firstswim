@@ -19,11 +19,34 @@
     margin-right: 30px;
 }
 
+/** ----- Details box ----- **/
 .detailsBox{
     background-color: #EDDDC7;
     height: 200px;
     margin: 10px;
     padding: 10px;
+}
+
+.detailsScroll{
+    height: 200px;
+}
+
+.detailsTitle{
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.detailsImage{
+    margin-top: 10px;
+    width: 130px;
+}
+
+.detailsContent{
+    font-size: 12px;
+    margin-bottom: 8px;
+    margin-top: 8px;
 }
 
 /* ----------- MIDDLE ----------- */
@@ -41,6 +64,8 @@
 }
 
 /* ----------- RIGHT ----------- */
+
+/** ----- Preview document ----- **/
 .previewBox{
     position: absolute;
     right: 60px;
@@ -181,29 +206,34 @@
     font-style: italic;
 }
 
-/** ----- Details ----- **/
+/** ----- Details box ----- **/
 .detailsMobileBox{
     background-color: wheat;
     height: 140px;
     margin-top: 80px;
 }
 
-.detailsTitle{
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 8px;
+.detailsMobileScroll{
+    height: 140px;
+}
+
+.detailsMobileTitle{
+    font-size: 19px;
+    margin: 14px 0 18px 0;
     text-align: center;
 }
 
-.detailsImage{
-    margin-top: 10px;
+.detailsMobileImage{
+    display: block;
+    margin: 10px auto;
     width: 130px;
 }
 
-.detailsContent{
+.detailsMobileContent{
     font-size: 12px;
     margin-bottom: 8px;
     margin-top: 8px;
+    padding: 7px;
 }
 
 /** ----- Documents button ----- **/

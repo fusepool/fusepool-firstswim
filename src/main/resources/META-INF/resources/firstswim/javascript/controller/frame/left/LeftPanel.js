@@ -18,7 +18,15 @@ enyo.kind({
         { tag: 'div', components: [
             { name: 'docsButton', classes: 'docsButton', content: 'Documents', ontap: 'searchShow' }
         ]},
-        { kind: 'DetailsBox', name: 'detailsBox', classes: 'detailsMobileBox enyo-unselectable' },
+        {
+            kind: 'DetailsBox',
+            name: 'detailsBox',
+            classes: 'detailsMobileBox enyo-unselectable',
+            scrollerClass: 'detailsMobileScroll',
+            titleClass: 'detailsMobileTitle',
+            imageClass: 'detailsMobileImage',
+            contentClass: 'detailsMobileContent'
+        },
         { kind: 'enyo.Scroller', fit: true, touch: true, touchOverscroll: false, components: [
             {
                 kind: 'DictionaryList',
