@@ -20,7 +20,7 @@ enyo.kind({
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'cbChange' },
-        { tag: 'span', name: 'entityLabel', onmouseover: 'getDetails', ontap: 'tapEntity' }
+        { tag: 'span', name: 'entityLabel', onmouseover: 'getDetails' }
     ],
 
     getDetails: function(){
@@ -119,11 +119,6 @@ enyo.kind({
 
     cbChange: function(inSender){
         var cbValue = inSender.getValue();
-        this.filterEntity(cbValue);
-    },
-
-    tapEntity: function(){
-        var cbValue = this.changeCheckbox();
         this.filterEntity(cbValue);
     },
 
