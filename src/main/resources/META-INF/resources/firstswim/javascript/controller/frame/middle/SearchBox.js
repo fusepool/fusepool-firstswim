@@ -22,7 +22,7 @@ enyo.kind({
                 jsonProperty: 'sbsuggester',
                 onEnterParentFunction: 'search',
                 postWordInURL: true,
-                url: 'http://platform.fusepool.info:8080/solr/default/suggester/sbsuggest?df=id&wt=json',
+                url: 'http://platform.fusepool.info/solr/default/suggester/sbsuggest?df=id&wt=json',
                 wordParamName: 'q',
                 wordStartMatching: true
             },
