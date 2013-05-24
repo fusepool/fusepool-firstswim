@@ -3,6 +3,7 @@ if(mobileRegex.test(navigator.platform) || mobileRegex.test(navigator.userAgent)
     enyo.depends(
         // -- Utils -- //
             'utils.js',
+            'ClosablePopup.js',
         // -- Autosuggest -- //
             '../autosuggest/autosuggest.js',
         // -- Left panel -- //
@@ -33,6 +34,7 @@ if(mobileRegex.test(navigator.platform) || mobileRegex.test(navigator.userAgent)
     enyo.depends(
         // -- Utils -- //
             'utils.js',
+            'ClosablePopup.js',
         // -- Autosuggest -- //
             '../autosuggest/autosuggest.js',
         // -- Left panel -- //

@@ -42,7 +42,7 @@ jQuery(document).ready(function () {
                             closeParentFunction: 'searchShow'
                         }
                     ]},
-                    { kind: onyx.Popup, name: 'bookmarkPopup', classes: 'bookmarkMobilePopup', allowHtml: true }
+                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkMobilePopup' }
                 ],
 
                 /**
@@ -176,19 +176,12 @@ jQuery(document).ready(function () {
                  * middle of the screen
                  */
                 changeBMPopupPosition: function(){
-                    var newWidth = jQuery('#' + this.$.middlePanel.getId()).width()-10;
-                    var popupHeight = jQuery('#' + this.$.bookmarkPopup.getId()).outerHeight();
-
+                    var newWidth = jQuery('#' + this.$.middlePanel.getId()).width()-30;
                     var windowWidth = jQuery(document).width();
-                    var windowHeight = jQuery(document).height();
-
                     var newLeft = (windowWidth - newWidth) / 2;
-                    var newTop = (windowHeight - popupHeight) / 2;
 
                     this.$.bookmarkPopup.applyStyle('width', newWidth + 'px');
                     this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
-                    this.$.bookmarkPopup.applyStyle('top', newTop + 'px');
-                    this.$.bookmarkPopup.show();
                 },
 
                 /**

@@ -40,7 +40,7 @@ jQuery(document).ready(function () {
                         warningPopupClass: 'bookmarkPopup',
                         warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
                     },
-                    { kind: onyx.Popup, name: 'bookmarkPopup', classes: 'bookmarkPopup', allowHtml: true },
+                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup' },
                     {
                         classes: 'leftDesktopCol',
                         components: [
@@ -62,7 +62,7 @@ jQuery(document).ready(function () {
                                 noContentLabel: 'No data available',
                                 titleClass: 'dictionariesMainTitle',
                                 showDetailsFunction: 'updateDetails'
-                            }                          
+                            }
                         ]
                     },
                     {

@@ -51,9 +51,22 @@
 
 /* ----------- MIDDLE ----------- */
 .bookmarkPopup{
+    position: absolute;
     word-wrap: break-word;
     width: 600px;
     top: 100px;
+}
+
+.popupCloseButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/close_button.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    z-index: 9999;
 }
 
 .documentList{
@@ -173,7 +186,9 @@
 
 /* ----------- MAIN ----------- */
 .bookmarkMobilePopup{
+    position: absolute;
     word-wrap: break-word;
+    top: 100px;
 }
 
 /* ----------- LEFT ----------- */
