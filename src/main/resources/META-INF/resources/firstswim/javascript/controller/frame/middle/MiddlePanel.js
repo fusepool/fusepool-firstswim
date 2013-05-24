@@ -18,7 +18,6 @@ enyo.kind({
             kind: 'SearchBox',
             name: 'searchBox',
             placeholder: 'Search in documents',
-            mobile: true,
             buttonClass: 'searchButton',
             buttonContent: 'OK',
             searchIconClass: 'searchImage',

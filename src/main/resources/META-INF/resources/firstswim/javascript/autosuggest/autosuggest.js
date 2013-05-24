@@ -17,25 +17,28 @@ enyo.kind({
 
     /** The global variables */
     published: {
-        backendRefresh: false,
-        backendFormat: 'json',
-        countElements: 0,
-        currentElement: -1,
-        data: null,
+        backendRefresh: false, // Refreshing from backend or from the local/global list
         backInputFieldClass: 'autoSuggest_back_input',
+        countElements: 0, // Count of the suggest elements
+        currentElement: -1, // The current element which is selected in the suggest list
+        data: null, // The local data which contains the actual suggest list
+        format: 'json', // Format of the backend refreshing ( json or rdf )
         inputFieldClass: 'autoSuggest_input',
-        wordStartMatching: false,
-        mobile: false,
+        jsonProperty: '', // The property name which contains the suggest list in the response
         maxElements: 20,
-        onEnterParentFunction: '',
+        maxElemParamName: '', // The name of the max element's parameter
+        onEnterParentFunction: '', // Parent function which runs when the user push the enter
         placeholder: '',
-        rdfRowName: '',
-        startCharacter: 1,
+        postWordInURL: false, // Post the search word in the end of the URL (or in the body)
+        rdfRowName: '', // Name of the rdf row in the result
+        startCharacter: 1, // The autosuggest runs from this character
         suggestDivClass: 'autoSuggest_suggestDiv',
-        tableName: null,
-        url: '',
-        useGlobalData: true,
-        where: null
+        tableName: null, // Table name, which contains the suggest words
+        url: '', // URL for backend refreshing
+        useGlobalData: true, 
+        wordStartMatching: false,
+        wordParamName: 'text', // The name of the search text's parameter
+        where: null // JSON object which contains a table's columns and values
     },
 
     /**
@@ -78,10 +81,14 @@ enyo.kind({
         var request = new enyo.Ajax({
             method: 'POST',
             url: this.url,
-            postBody: postBody,
             handleAs: format,
             headers: headers
         });
+        if(!this.postWordInURL){
+            request.postBody = postBody;
+        } else {
+            request.url += '&' + postBody;
+        }
         request.response(this, function(inSender, inResponse) {
             this.processResponse(inResponse);
         });
@@ -98,7 +105,17 @@ enyo.kind({
                 this.data = this.rdfToArray(inResponse);
                 this.onTextChange();
             } else if(this.format === 'json'){
-                this.data = inResponse;
+                if(!this.isEmptyParam(this.jsonProperty)){
+                    var object = inResponse[this.jsonProperty];
+                    this.data = [];
+                    if(!this.isEmptyParam(object)){
+                        for (var key in object) {
+                            this.data.push(key);
+                        }                        
+                    }
+                } else {
+                    this.data = inResponse;
+                }
                 this.onTextChange();
             }
         } else {
@@ -143,7 +160,10 @@ enyo.kind({
      */
     generatePostBodyText: function(){
         var inputText = this.$.inputField.getValue();
-        var result = 'text=' + inputText + '&maxElem=' + this.maxElements;
+        var result = this.wordParamName + '=' + inputText;
+        if(!this.isEmptyParam(this.maxElemParamName)){
+            result += '&' + this.maxElemParamName + '=' + this.maxElements;
+        }
         if(!this.isEmptyParam(this.tableName)){
             result += '&table=' + this.tableName;
         }
@@ -366,17 +386,12 @@ enyo.kind({
                 return;
             }
 
-            /** Mobile version complete the input text with the first element of
-                the filtered list */
-            if(this.mobile){
-                this.completeBackInput(list[0]);
-            } else {                
-                this.countElements = list.length;
-                for(var i=0;i<list.length;++i){
-                    this.addSuggestElement(list[i]);
-                }
-                this.showSuggest();
+            this.completeBackInput(list[0]);
+            this.countElements = list.length;
+            for(var i=0;i<list.length;++i){
+                this.addSuggestElement(list[i]);
             }
+            this.showSuggest();
 
         } else {
             this.clearBackInput();
@@ -386,16 +401,14 @@ enyo.kind({
 
     /**
      * This function clear the background input
-     * (it is important on mobile devices).
      */
     clearBackInput: function(){
         this.$.backInputField.hasNode().value = '';
     },
 
     /**
-     * In mobile devices there isn't suggest list, the application show the first
-     * suggest in the background input. This function put the suggest word to the
-     * background input with case sensitive.
+     * The application show the first suggest in the background input.
+     * This function put the suggest word to the background input with case sensitive.
      * @param word the word what the function puts
      */
     completeBackInput: function(word){

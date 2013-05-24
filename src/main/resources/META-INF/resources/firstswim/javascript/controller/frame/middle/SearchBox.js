@@ -8,7 +8,6 @@ enyo.kind({
         placeholder: '',
         inputClass: '',
         searchIconClass: '',
-        mobile: false,
         buttonVisible: true,
         buttonContent: '',
         buttonClass: '',
@@ -20,11 +19,12 @@ enyo.kind({
         { name: 'decorator', classes: 'decorator', components: [
             { name: 'searchInput', kind: 'AutoSuggest',
                 backendRefresh: true,
-                wordStartMatching: true,
-                format: 'rdf',
+                jsonProperty: 'sbsuggester',
                 onEnterParentFunction: 'search',
-                rdfRowName: '<http://www.w3.org/2000/01/rdf-schema#label>',
-                url: 'http://82.141.158.251/rdftest/rdf.php'
+                postWordInURL: true,
+                url: 'http://platform.fusepool.info:8080/solr/default/suggester/sbsuggest?df=id&wt=json',
+                wordParamName: 'q',
+                wordStartMatching: true
             },
             { name: 'searchIcon', tag: 'div' }
         ]},
@@ -42,7 +42,6 @@ enyo.kind({
 
     rendered: function(){
         this.$.searchInput.updatePlaceholder(this.placeholder);
-        this.$.searchInput.setMobile(this.mobile);
         this.$.searchInput.setClasses(this.inputClass);
         this.$.searchIcon.setClasses(this.searchIconClass);
         if(this.buttonVisible){

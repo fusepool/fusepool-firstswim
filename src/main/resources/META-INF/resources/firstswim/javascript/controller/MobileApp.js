@@ -22,7 +22,7 @@ jQuery(document).ready(function () {
                 },
 
                 components: [
-                    { kind: 'Panels', name: 'panels', draggable: false, fit: true, arrangerKind: 'CollapsingArranger', components: [
+                    { kind: 'Panels', name: 'panels', fit: true, arrangerKind: 'CollapsingArranger', components: [
                         {
                             kind: 'LeftPanel',
                             name: 'leftPanel',
