@@ -47,7 +47,7 @@ jQuery(document).ready(function () {
                         warningPopupClass: 'bookmarkPopup',
                         warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
                     },
-                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup' },
+                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
                     {
                         classes: 'leftDesktopCol',
                         components: [
@@ -186,7 +186,7 @@ jQuery(document).ready(function () {
                     if(!isEmpty(this.$.bookmarkPopup.getContent())){
                         var jQBookmark = jQuery('#' + this.$.bookmarkPopup.getId());
                         var popupWidth = jQBookmark.outerWidth();
-                        var windowWidth = jQuery(document).width();
+                        var windowWidth = jQuery('#' + this.getId()).width();
                         var newLeft = (windowWidth - popupWidth) / 2;
                         this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
                         this.$.bookmarkPopup.show();

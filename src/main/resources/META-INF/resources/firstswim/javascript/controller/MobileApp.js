@@ -42,7 +42,7 @@ jQuery(document).ready(function () {
                             closeParentFunction: 'searchShow'
                         }
                     ]},
-                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkMobilePopup' }
+                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkMobilePopup', closeButtonClasses: 'popupCloseButton' }
                 ],
 
                 /**
