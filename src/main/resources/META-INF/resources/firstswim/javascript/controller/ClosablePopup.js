@@ -19,6 +19,12 @@ enyo.kind({
         { name: 'closeButton', ontap: 'close' }
     ],
 
+    updateWidth: function(newWidth, margin){
+        this.applyStyle('width', newWidth + 'px');
+        var popupWidth = newWidth - margin / 2;
+        this.$.popup.applyStyle('width', popupWidth + 'px');
+    },
+
     getContent: function(){
         return this.$.popup.getContent();
     },

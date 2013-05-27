@@ -174,6 +174,7 @@ jQuery(document).ready(function () {
                  * @param message the message what the function shows
                  */
                 popupBookmark: function(message){
+                    this.$.bookmarkPopup.show();
                     this.$.bookmarkPopup.setContent(message);
                     this.changeBMPopupPosition();
                 },
@@ -189,7 +190,6 @@ jQuery(document).ready(function () {
                         var windowWidth = jQuery('#' + this.getId()).width();
                         var newLeft = (windowWidth - popupWidth) / 2;
                         this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
-                        this.$.bookmarkPopup.show();
                     }
                 },
 

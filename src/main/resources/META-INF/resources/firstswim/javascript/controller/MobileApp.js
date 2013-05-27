@@ -171,6 +171,7 @@ jQuery(document).ready(function () {
                  * @param message the message what the function shows
                  */
                 popupBookmark: function(message){
+                    this.$.bookmarkPopup.show();
                     this.$.bookmarkPopup.setContent(message);
                     this.changeBMPopupPosition();
                 },
@@ -180,11 +181,12 @@ jQuery(document).ready(function () {
                  * middle of the screen
                  */
                 changeBMPopupPosition: function(){
-                    var newWidth = jQuery('#' + this.$.middlePanel.getId()).width()-30;
+                    var margin = 30;
+                    var newWidth = jQuery('#' + this.$.middlePanel.getId()).width() - margin;
                     var windowWidth = jQuery(document).width();
                     var newLeft = (windowWidth - newWidth) / 2;
-
-                    this.$.bookmarkPopup.applyStyle('width', newWidth + 'px');
+                    
+                    this.$.bookmarkPopup.updateWidth(newWidth, margin);
                     this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
                 },
 
