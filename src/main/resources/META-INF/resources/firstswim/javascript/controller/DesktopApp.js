@@ -16,6 +16,13 @@ jQuery(document).ready(function () {
                     this.processGETParameters();
                 },
 
+                rendered: function(){
+                    this.inherited(arguments);
+                    this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
+                    this.changeBMPopupPosition();
+                    this.changePreviewBoxSize();
+                },
+
                 published: {
                     searchWord: '',
                     uncheckedEntities: []
@@ -108,10 +115,11 @@ jQuery(document).ready(function () {
                  * @param inEvent mouse over on a short document event
                  */
                 openDoc: function(previewDoc, inEvent){
-                    var mainFrame = jQuery('#' + this.getId());
-                    var jQueryDoc = jQuery('#' + this.$.previewBox.getOpenDocId());
-                    var previewHeight = jQueryDoc.outerHeight();
+                    // After mouse hovering
                     if(!isEmpty(inEvent)){
+                        var mainFrame = jQuery('#' + this.getId());
+                        var jQueryDoc = jQuery('#' + this.$.previewBox.getOpenDocId());
+                        var previewHeight = jQueryDoc.outerHeight();
                         var clickTop = inEvent.pageY;
 
                         var newTop = clickTop - previewHeight / 2;
@@ -174,22 +182,39 @@ jQuery(document).ready(function () {
                  * of horizontal and a little distance from the top
                  */
                 changeBMPopupPosition: function(){
-                    var jQBookmark = jQuery('#' + this.$.bookmarkPopup.getId());
-                    var popupWidth = jQBookmark.outerWidth();
-                    var windowWidth = jQuery(document).width();
-                    var newLeft = (windowWidth - popupWidth) / 2;
-                    this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
-                    this.$.bookmarkPopup.show();
+                    if(!isEmpty(this.$.bookmarkPopup.getContent())){
+                        var jQBookmark = jQuery('#' + this.$.bookmarkPopup.getId());
+                        var popupWidth = jQBookmark.outerWidth();
+                        var windowWidth = jQuery(document).width();
+                        var newLeft = (windowWidth - popupWidth) / 2;
+                        this.$.bookmarkPopup.applyStyle('left', newLeft + 'px');
+                        this.$.bookmarkPopup.show();
+                    }
                 },
 
                /**
                  * This function is called when the screen size is changing.
-                 * This function change the bookmark popup's position.
+                 * This function calls the bookmark popup changer function and the
+                 * preview box size changer function.
                  */
-                reflow: function() {
+                resizeHandler: function() {
                     this.inherited(arguments);
-                    if(!isEmpty(this.$.bookmarkPopup.getContent())){
-                        this.changeBMPopupPosition();
+                    this.changeBMPopupPosition();
+                    this.changePreviewBoxSize();
+                },
+
+                /**
+                 * This function reduct the preview box height if there is'nt enough
+                 * place for that. Otherwise set the default height for the box.
+                 */
+                changePreviewBoxSize: function(){
+                    var windowHeight = jQuery(window).height();
+                    var newHeight = windowHeight - 110;
+
+                    if(newHeight < this.previewOriginHeight){
+                        this.$.previewBox.changeHeight(newHeight);
+                    } else {
+                        this.$.previewBox.changeHeight(this.previewOriginHeight);
                     }
                 },
 

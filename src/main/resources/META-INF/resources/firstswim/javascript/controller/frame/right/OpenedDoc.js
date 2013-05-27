@@ -32,6 +32,11 @@ enyo.kind({
         ]}
     ],
 
+    changeHeight: function(newHeight){
+        this.applyStyle('height', newHeight + 'px');
+        this.$.content.applyStyle('height', newHeight + 'px');
+    },
+
     /** This function returns the trimmed selected text in the window */
     getSelectedText: function(){
         var result = '';

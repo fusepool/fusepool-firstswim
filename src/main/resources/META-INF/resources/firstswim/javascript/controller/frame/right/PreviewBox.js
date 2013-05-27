@@ -146,6 +146,10 @@ enyo.kind({
         }
     ],
 
+    changeHeight: function(newHeight){
+        this.$.openedDoc.changeHeight(newHeight);
+    },
+
     addEntity: function(){
         this.$.entityMenu.hide();
     },
