@@ -435,10 +435,10 @@
 .ratePopup{
     background: white;
     color: black;
-    width: 100%;
+    width: 330px;
     height: 65px;
     top: 0;
-    left: 0;
+    right: 10px;
 }
 
 /** ----- Opened document ----- **/

@@ -70,7 +70,7 @@ jQuery(document).ready(function () {
                  * 800 pixels, otherwise false
                  */
                 isMobileSize: function(){
-                    return window.innerWidth <= 800;
+                    return jQuery(window).width() <= 800;
                 },
 
                 /** This function shows the middle panel */
@@ -123,7 +123,11 @@ jQuery(document).ready(function () {
                         this.changeBMPopupPosition();
                     }
                     if(this.isMobileSize()){
-                        this.$.panels.setIndex(1);
+                        // If the 3. panel is the active, it means that the user's
+                        // keyboard appears on the mobile device -> we have to do nothing
+                        if(this.$.panels.getIndex() !== 2){
+                            this.$.panels.setIndex(1);   
+                        }
                     } else {
                         this.$.panels.setIndex(0);
                     }
