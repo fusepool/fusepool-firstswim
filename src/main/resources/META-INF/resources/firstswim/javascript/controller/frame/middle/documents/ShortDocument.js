@@ -5,13 +5,14 @@ enyo.kind({
     published: {
         url: '',
         shortContent: null,
+        openDocEvent: '',
         parentFunction: '',
         contentClass: '',
         openButtonClass: ''
     },
 
     components: [
-        { onenter: 'openDoc', components: [
+        { name: 'shortDoc', components: [
             { tag: 'div', name: 'content' }
         ]}
     ],
@@ -22,6 +23,7 @@ enyo.kind({
 
     create: function(){
         this.inherited(arguments);
+        this.$.shortDoc[this.openDocEvent] = 'openDoc';
         this.$.content.setContent(this.shortContent);
     },
 

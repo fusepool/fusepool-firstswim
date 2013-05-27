@@ -76,6 +76,7 @@ jQuery(document).ready(function () {
                         kind: 'DocumentList',
                         name: 'documents',
                         openDocFunction: 'openDoc',
+                        openDocEvent: 'onenter',
                         classes: 'documentList',
                         titleClass: 'documentsMainTitle',
                         titleContent: 'Documents',

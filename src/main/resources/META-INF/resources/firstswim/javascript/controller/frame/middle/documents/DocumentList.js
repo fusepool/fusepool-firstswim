@@ -7,7 +7,8 @@ enyo.kind({
         titleClass: '',
         titleContent: '',
         noDataLabel: '',
-        openDocFunction: ''
+        openDocFunction: '',
+        openDocEvent: 'ontap'
     },
 
     create: function(){
@@ -34,6 +35,7 @@ enyo.kind({
                     kind: 'ShortDocument',
                     classes: 'shortDocumentContainer',
                     contentClass: 'shortDocument',
+                    openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
                     url: documents[i].url,
