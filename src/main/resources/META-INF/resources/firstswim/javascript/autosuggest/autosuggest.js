@@ -1,5 +1,5 @@
 /**
- * AutoSuggest 1.6
+ * AutoSuggest 1.7
  * Created by Adam Nagy, GeoX Kft.
  */
 
