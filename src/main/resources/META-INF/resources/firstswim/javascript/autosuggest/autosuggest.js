@@ -1,5 +1,5 @@
 /**
- * AutoSuggest 1.8
+ * AutoSuggest 1.8.1
  * Created by Adam Nagy, GeoX Kft.
  */
 
@@ -288,8 +288,9 @@ enyo.kind({
             for(var i=0;i<this.countElements;++i){
                 if(i === this.currentElement){
                     suggestDiv.children[i].addClass('over');
-                    var elementText = suggestDiv.children[i].getContent();
+                    var elementText = suggestDiv.children[i].clearContent;
                     this.$.inputField.setValue(elementText);
+                    this.$.backInputField.setValue(elementText);
                 } else {
                     suggestDiv.children[i].removeClass('over');
                 }
@@ -304,14 +305,14 @@ enyo.kind({
      */
     moveDown: function(){
         var suggestDiv = this.$.suggestDiv;
-        var inputField = this.$.inputField.hasNode();
         if(this.countElements > 0 && this.currentElement < this.countElements - 1){
             this.currentElement++;
             for(var i=0;i<this.countElements;++i){
                 if(i === this.currentElement){
                     suggestDiv.children[i].addClass('over');
-                    var elementText = suggestDiv.children[i].getContent();
-                    inputField.value = elementText;
+                    var elementText = suggestDiv.children[i].clearContent;
+                    this.$.inputField.setValue(elementText);
+                    this.$.backInputField.setValue(elementText);
                 } else {
                     suggestDiv.children[i].removeClass('over');
                 }
@@ -339,6 +340,7 @@ enyo.kind({
             container: this.$.suggestDiv,
             allowHtml: true,
             content: content,
+            clearContent: element,
             onmouseover: 'mouseOver',
             onmouseout: 'mouseOut',
             onmousedown: 'mouseDown'
@@ -405,6 +407,7 @@ enyo.kind({
             this.showSuggest();
 
         } else {
+            this.countElements = 0;
             this.clearBackInput();
             this.hideSuggest();
         }
