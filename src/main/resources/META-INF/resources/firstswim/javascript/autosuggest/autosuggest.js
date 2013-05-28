@@ -1,5 +1,5 @@
 /**
- * AutoSuggest 1.7
+ * AutoSuggest 1.8
  * Created by Adam Nagy, GeoX Kft.
  */
 
@@ -320,14 +320,25 @@ enyo.kind({
     },
 
     /**
-     * This function add a new item to the suggest list
+     * This function add a new item to the suggest list. The item contains the input
+     * text, and these characters will be bold in the user interface
      * @param element the new list item's content
+     * @param inputText the content of the input field
      */
-    addSuggestElement: function(element){
+    addSuggestElement: function(element, inputText){
+        var startBoldIndex = element.indexOf(inputText.toLowerCase());
+        var endBoldIndex = inputText.length;
+
+        var begin = element.substr(0, startBoldIndex);
+        var bolded = '<b>' + element.substr(startBoldIndex, endBoldIndex) + '</b>';
+        var end = element.substr(endBoldIndex);
+        var content = begin + bolded + end;
+
         this.createComponent({
             tag: 'div',
             container: this.$.suggestDiv,
-            content: element,
+            allowHtml: true,
+            content: content,
             onmouseover: 'mouseOver',
             onmouseout: 'mouseOut',
             onmousedown: 'mouseDown'
@@ -389,7 +400,7 @@ enyo.kind({
             this.completeBackInput(list[0]);
             this.countElements = list.length;
             for(var i=0;i<list.length;++i){
-                this.addSuggestElement(list[i]);
+                this.addSuggestElement(list[i], inputText);
             }
             this.showSuggest();
 
