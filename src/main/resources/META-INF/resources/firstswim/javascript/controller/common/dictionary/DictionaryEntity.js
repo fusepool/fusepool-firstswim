@@ -19,10 +19,13 @@ enyo.kind({
     },
 
     components: [
-        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'cbChange' },
+        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'filterEntity' },
         { tag: 'span', name: 'entityLabel', onmouseover: 'getDetails' }
     ],
 
+    /**
+     * This function send an ajax request to get an entity's details
+     */
     getDetails: function(){
         var request = new enyo.Ajax({
             method: 'GET',
@@ -38,6 +41,11 @@ enyo.kind({
         });
     },
 
+    /**
+     * This functions runs when the ajax response is arrived about the details.
+     * It makes an rdf object, and call the details creator function.
+     * @param rdfResponse the ajax response about the details
+     */
     processDetailsResponse: function(rdfResponse){
         // Delete bad type rows
         var textArray = rdfResponse.split('\n');
@@ -51,7 +59,15 @@ enyo.kind({
         var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
         var rdf = jQuery.rdf();
         rdf.load(parsedData, {});
+        this.createDetails(rdf);
+    },
 
+    /**
+     * This function create details object from the rdf object, and call the
+     * parent's details showing function.
+     * @param rdf the rdf object which contains details informations
+     */
+    createDetails: function(rdf){
         var content = this.getContent(rdf);
         var title = this.getTitle(rdf);
         var image = this.getImage(rdf);
@@ -60,11 +76,11 @@ enyo.kind({
         this.owner.owner[this.showDetailsFunction](details);
     },
 
-    clearDetails: function(){
-        var details = { content: '', title: '', image: '' };
-        this.owner.owner[this.showDetailsFunction](details);
-    },
-
+    /**
+     * This function search the details's image in an rdf object.
+     * @param rdf the rdf object
+     * @return the image's URL (if it's not exist, an empty text)
+     */
     getImage: function(rdf){
         var pictures = [];
         rdf.where('?s <http://xmlns.com/foaf/0.1/depiction> ?o').each(function(){
@@ -82,6 +98,11 @@ enyo.kind({
         return '';
     },
 
+    /**
+     * This function search the details's title in an rdf object.
+     * @param rdf the rdf object
+     * @return the title without speech marks (if it's not exist, an empty text)
+     */
     getTitle: function(rdf){
         var title = '';
         rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
@@ -93,6 +114,11 @@ enyo.kind({
         return title;
     },
 
+    /**
+     * This function search the details's content in an rdf object.
+     * @param rdf the rdf object
+     * @return the content without speech marks (if it's not exist, an empty text)
+     */
     getContent: function(rdf){
         var content = '';
         rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#comment> ?o').each(function(){
@@ -117,20 +143,15 @@ enyo.kind({
         return result;
     },
 
-    cbChange: function(inSender){
+    /**
+     * This function is called when the user check/uncheck the checkbox.
+     * It call's the parent filter function with the entity, and the
+     * checked/unchecked parameter
+     * @param inSender the checkbox
+     */
+    filterEntity: function(inSender){
         var cbValue = inSender.getValue();
-        this.filterEntity(cbValue);
-    },
-
-    filterEntity: function(cbValue){
         this.owner.owner[this.parentFunction](this.entityText, cbValue);
-    },
-
-    changeCheckbox: function(){
-        var checkBox = this.$.entityCheckbox;
-        var newValue = !checkBox.getValue();
-        checkBox.setValue(newValue);
-        return newValue;
     }
 
 });
