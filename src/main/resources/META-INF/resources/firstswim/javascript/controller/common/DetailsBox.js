@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class DetailsBox
+*/
+enyo.kind(
+/** @lends DetailsBox.prototype */
+{
 
     name: 'DetailsBox',
     kind: enyo.Control,

@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class DocumentList
+*/
+enyo.kind(
+/** @lends DocumentList.prototype */
+{
     name: 'DocumentList',
     kind: enyo.Control,
 

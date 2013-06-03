@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class ShortDocument
+*/
+enyo.kind(
+/** @lends ShortDocument.prototype */
+{
     name: 'ShortDocument',
     kind: enyo.Control,
 

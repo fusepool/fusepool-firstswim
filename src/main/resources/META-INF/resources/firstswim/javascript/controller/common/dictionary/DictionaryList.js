@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class DictionaryList
+*/
+enyo.kind(
+/** @lends DictionaryList.prototype */
+{
     name: 'DictionaryList',
     kind: enyo.Control,
 

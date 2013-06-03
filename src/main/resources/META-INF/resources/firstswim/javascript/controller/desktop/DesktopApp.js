@@ -5,8 +5,13 @@ jQuery(document).ready(function () {
         createUI();
 
         /** This function create the user interface with the all components */
-        function createUI(){            
-            enyo.kind({
+        function createUI(){
+            /**
+            * @class DocumentApp
+            */
+            enyo.kind(
+            /** @lends DocumentApp.prototype */
+            {
                 name: 'DocumentApp',
                 id: 'docApp',
                 kind: enyo.Control,
@@ -16,6 +21,10 @@ jQuery(document).ready(function () {
                     this.processGETParameters();
                 },
 
+                /**
+                 * After the rendering, the program calculate and set the
+                 * bookmark popup position and the preview box size.
+                 */
                 rendered: function(){
                     this.inherited(arguments);
                     this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
@@ -378,6 +387,10 @@ jQuery(document).ready(function () {
                     this.$.documents.updateList(documents);
                 },
 
+                /**
+                 * This function calls the details box content update function.
+                 * @param details the new details object.
+                 */
                 updateDetails: function(details){
                     this.$.detailsBox.updateDetails(details);
                 }

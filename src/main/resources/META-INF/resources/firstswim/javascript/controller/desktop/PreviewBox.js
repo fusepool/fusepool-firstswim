@@ -1,5 +1,9 @@
-enyo.kind({
-
+/**
+* @class PreviewBox
+*/
+enyo.kind(
+/** @lends PreviewBox.prototype */
+{
     kind: enyo.Control,
     name: 'PreviewBox',
 
@@ -14,8 +18,18 @@ enyo.kind({
         this.hideRateButtons();
     },
 
+    /**
+     * This function creates the entity menu, which will be showed when the user
+     * select a text in the preview document and after this click with the right
+     * click.
+     */
     createMenu: function(){
-        enyo.kind({ 
+        /**
+        * @class MenuController
+        */
+        enyo.kind(
+        /** @lends MenuController.prototype */
+        { 
             kind: enyo.Control,
             name: 'MenuController',
             classes: 'entityMenu',
@@ -62,21 +76,38 @@ enyo.kind({
                 }
             ],
 
+            /**
+             * This function is called when the user push the "Add entity" menu
+             * item. The addEntityPopup will be showed with the selected text.
+             */
             addEntity: function(){
                 this.hideMenu();
                 this.$.addEntityPopup.addEntity(this.selectedText);
             },
 
+            /**
+             * This function is called when the user push the "Remove entity" menu
+             * item. The removeEntityPopup will be showed with the selected text.
+             */
             removeEntity: function(){
                 this.hideMenu();
                 this.$.removeEntityPopup.removeEntity(this.selectedText);
             },
 
+            /**
+             * This function is called when the user push the "Move entity" menu
+             * item. The moveEntityPopup will be showed with the selected text.
+             */
             moveEntity: function(){
                 this.hideMenu();
                 this.$.moveEntityPopup.moveEntity(this.selectedText);
             },
 
+            /**
+             * This function show the entity menu to the mouse position.
+             * @param inEvent the event which contains the position of the mouse
+             * @param selectedText the selected text what the user selected
+             */
             showMenu: function(inEvent, selectedText){
                 this.selectedText = selectedText;
                 this.clickTop = inEvent.pageY;
@@ -108,6 +139,9 @@ enyo.kind({
                 this.$.entityMenu.show();
             },
 
+            /**
+             * This function hide the entity menu.
+             */
             hideMenu: function(){
                 this.$.entityMenu.hide();
             }
@@ -122,10 +156,8 @@ enyo.kind({
         {
             kind: 'OpenedDoc',
             name: 'openedDoc',
-            ondown: 'rightClickText',
+            ondown: 'clickText',
             classes: 'openedDocument',
-            tapParentFunction: 'rightClickText',
-            documentTitleClass: 'documentTitle',
             documentContentClass: 'documentContent',
             noDataLabel: 'No data available',
             loaderClass: 'loader'
@@ -146,15 +178,23 @@ enyo.kind({
         }
     ],
 
+    /**
+     * This function changes the height of the opened document.
+     * @param newHeight the document's new height
+     */
     changeHeight: function(newHeight){
         this.$.openedDoc.changeHeight(newHeight);
     },
 
-    addEntity: function(){
-        this.$.entityMenu.hide();
-    },
-                
-    rightClickText: function(inSender, inEvent){
+    /**
+     * This function runs when the user click on the previewed document. If the
+     * popup menu exists and the user clicked with right button, and the
+     * selected text length's is good the entity menu will be showed. If the user
+     * click with other button (and the menu exists) the entity menu will be hided.
+     * @param inSender the previewed document
+     * @param inEvent the event which contains information about the mouse
+     */
+    clickText: function(inSender, inEvent){
         if(!isEmpty(this.menu)){
             if(inEvent.which === 3){
                 var selectedText = this.$.openedDoc.getSelectedText();
@@ -166,41 +206,72 @@ enyo.kind({
             }
         }
     },            
-    
+
+    /**
+     * This function runs when the user push the "positive rate" button. It shows
+     * the rate popup with true (positive) parameter.
+     */
     positiveRate: function(){
         this.$.ratePopup.showPopup(true);
     },
 
+    /**
+     * This function runs when the user push the "negative rate" button. It shows
+     * the rate popup with false (negative) parameter.
+     */
     negativeRate: function(){
         this.$.ratePopup.showPopup(false);
     },
 
+    /**
+     * This function runs when the user push the "full view" button.
+     */
     fullView: function(){
         alert('Full view function is coming soon...');
     },
 
+    /**
+     * This function hides the positive and negative rate buttons and the full
+     * view button.
+     */
     hideRateButtons: function(){
         this.$.posRateButton.hide();
         this.$.negRateButton.hide();
         this.$.fullViewButton.hide();
     },
 
+    /**
+     * This function shows the positive and negative rate buttons and the full
+     * view button.
+     */
     showRateButtons: function(){
         this.$.posRateButton.show();
         this.$.negRateButton.show();
         this.$.fullViewButton.show();
     },
 
+    /**
+     * This function call the opened doc's openDoc function and shows the buttons.
+     * @param previewDoc the previewed document
+     */
     openDoc: function(previewDoc){
         this.$.openedDoc.openDoc(previewDoc);
         this.$.openedDoc.show();
         this.showRateButtons();
     },
 
+    /**
+     * This function returns with the opened document id in the DOM.
+     * @returns the id
+     */
     getOpenDocId: function(){
         return this.$.openedDoc.getId();
     },
 
+    /**
+     * This function returns with opened document's document URL.
+     * @returns the URL
+     */
     getDocumentURL: function(){
         return this.$.openedDoc.getDocumentURL();
     }

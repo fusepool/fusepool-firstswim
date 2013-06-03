@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class DictionaryEntity
+*/
+enyo.kind(
+/** @lends DictionaryEntity.prototype */
+{
     tag: 'div',
     name: 'DictionaryEntity',
 

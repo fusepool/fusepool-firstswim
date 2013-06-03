@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+ * @class DynamicMenu
+ */
+enyo.kind(
+/** @lends DynamicMenu.prototype */
+{
     tag: 'div',
     name: 'DynamicMenu',
 
@@ -35,8 +40,9 @@ enyo.kind({
     /**
      * This function called when the user push any menu item. It has to exist
      * the menuitem's function name.
+     * @param inSender the pushed menu item
      */
-    tapMenu: function(inSender, inEvent){
+    tapMenu: function(inSender){
         this.owner[inSender.functionName]();
     }
 });

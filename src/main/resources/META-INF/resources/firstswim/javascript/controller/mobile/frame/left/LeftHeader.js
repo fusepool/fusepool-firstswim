@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class LeftHeader
+*/
+enyo.kind(
+/** @lends LeftHeader.prototype */
+{
 
     name: 'LeftHeader',
     kind: enyo.Control,

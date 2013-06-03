@@ -1,12 +1,15 @@
-enyo.kind({
+/**
+* @class OpenedDoc
+*/
+enyo.kind(
+/** @lends OpenedDoc.prototype */
+{
     tag: 'div',
     name: 'OpenedDoc',
 
     published: {
         documentURL: '',
         noDataLabel: '',
-        tapParentFunction: '',
-        documentTitleClass: '',
         documentContentClass: '',
         loaderClass: ''
     },
@@ -141,6 +144,9 @@ enyo.kind({
         this.rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
             docText = this.o.value;
         });
+        if(docText === ''){
+            docText = this.noDataLabel;
+        }
         this.showDoc(docText);
     },
 

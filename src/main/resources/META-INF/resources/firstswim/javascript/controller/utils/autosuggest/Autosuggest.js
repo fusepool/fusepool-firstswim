@@ -1,9 +1,13 @@
 /**
- * AutoSuggest 1.8.1
+ * Autosuggest component
  * Created by Adam Nagy, GeoX Kft.
- */
-
-enyo.kind({
+ * 
+ * @class AutoSuggest
+ * @version 1.8.1.
+*/
+enyo.kind(
+/** @lends AutoSuggest.prototype */
+{
     name: 'AutoSuggest',
     kind: enyo.Control,
     classes: 'suggestMain',

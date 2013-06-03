@@ -4,9 +4,17 @@ jQuery(document).ready(function () {
 
         createUI();
 
-        /** This function create the user interface with the all components */
-        function createUI(){            
-            enyo.kind({
+        /*
+         * This function create the user interface with the all components
+         */
+        function createUI(){
+
+           /**
+            * @class DocumentMobileApp
+            */
+            enyo.kind(
+            /** @lends DocumentMobileApp.prototype */
+            {
                 name: 'DocumentMobileApp',
                 kind: enyo.Control,
                 layoutKind: 'FittableRowsLayout',

@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class SearchBox
+*/
+enyo.kind(
+/** @lends SearchBox.prototype */        
+{
     name: 'SearchBox',
     kind: enyo.Control,
     tag: 'div',

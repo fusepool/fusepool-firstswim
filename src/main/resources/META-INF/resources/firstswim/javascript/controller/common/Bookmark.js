@@ -1,4 +1,9 @@
-enyo.kind({
+/**
+* @class Bookmark
+*/
+enyo.kind(
+/** @lends Bookmark.prototype */
+{
     name: 'Bookmark',
     kind: enyo.Control,
 
