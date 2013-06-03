@@ -84,7 +84,7 @@ enyo.kind(
     /**
      * This function call the opened document's document opening function with
      * the document's URL
-     * @param documentURL the URL of the document
+     * @param {String} documentURL the URL of the document
      */
     openDoc: function(documentURL){
         this.$.openedDoc.openDoc(documentURL);
@@ -92,7 +92,7 @@ enyo.kind(
 
     /**
      * This function returns the opened doc's document URL
-     * @returns the document URL
+     * @return {String} the document URL
      */
     getDocumentURL: function(){
         return this.$.openedDoc.getDocumentURL();

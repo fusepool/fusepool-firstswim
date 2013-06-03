@@ -74,8 +74,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function returns true, if the screen size is maximum 
-                 * 800 pixels, otherwise false
+                 * This function check that the window width is a mobile size
+                 * @return {Boolean} true, if the screen size is maximum 800 pixels, otherwise false
                  */
                 isMobileSize: function(){
                     return jQuery(window).width() <= 800;
@@ -94,7 +94,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function open a document on the preview on the right side.
                  * If the screen is little, shows only the right panel.
-                 * @param documentURL the document what user want to see
+                 * @param {String} documentURL the document what user want to see
                  */
                 openDoc: function(documentURL){
                     if(this.isMobileSize()){
@@ -176,7 +176,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * Show a bookmark message in a popup
-                 * @param message the message what the function shows
+                 * @param {String} message the message what the function shows
                  */
                 popupBookmark: function(message){
                     this.$.bookmarkPopup.show();
@@ -200,8 +200,8 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function call the ajax search if the search word is not empty
-                 * @param searchWord the search word
-                 * @param uncheckedEntities the unchecked entities on the left side
+                 * @param {String} searchWord the search word
+                 * @param {Array} uncheckedEntities the unchecked entities on the left side
                  */
                 search: function(searchWord, uncheckedEntities){
                     this.searchWord = searchWord;
@@ -217,8 +217,8 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function send an ajax request for searching
-                 * @param searchWord the search word
-                 * @param uncheckedEntities the unchecked entities on the left side
+                 * @param {String} searchWord the search word
+                 * @param {Array} uncheckedEntities the unchecked entities on the left side
                  */
                 ajaxSearch: function(searchWord, uncheckedEntities){
                     var request = new enyo.Ajax({
@@ -238,9 +238,9 @@ jQuery(document).ready(function () {
                 /**
                  * This function runs after the ajax search's finish. This function call
                  * the entity list updater and the document updater functions
-                 * @param searchResponse the search response from the backend
-                 * @param searchWord the searched word
-                 * @param uncheckedEntities the unchecked entities on the left side
+                 * @param {String} searchResponse the search response from the backend
+                 * @param {String} searchWord the searched word
+                 * @param {Array} uncheckedEntities the unchecked entities on the left side
                  */
                 processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
                     var rdf = this.createRdfObject(searchResponse);
@@ -253,7 +253,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function update the document list. It is called when the user
                  * check/uncheck an entity on the left side.
-                 * @param searchResponse the search response,
+                 * @param {String} searchResponse the search response,
                  *  which contains the new document list
                  */
                 entityFilter: function(searchResponse){
@@ -264,8 +264,8 @@ jQuery(document).ready(function () {
                 /**
                  * This funtion create an rdf object from the search response
                  * with the rdfquery lib
-                 * @param searchResponse search response from the backend
-                 * @returns the created rdf object
+                 * @param {String} searchResponse search response from the backend
+                 * @return {Object} the created rdf object
                  */
                 createRdfObject: function(searchResponse){
                     // Delete rows, which contains long type (it causes error)
@@ -285,9 +285,9 @@ jQuery(document).ready(function () {
 
                 /**
                  * This functions group and sort the entities update the entity list on the left side
-                 * @param rdf the rdf object which contains the new entity list
-                 * @param searchWord the searched word
-                 * @param uncheckedEntities unchecked entities
+                 * @param {Object} rdf the rdf object which contains the new entity list
+                 * @param {String} searchWord the searched word
+                 * @param {Array} uncheckedEntities unchecked entities
                  */
                 updateEntityList: function(rdf, searchWord, uncheckedEntities){
                     // categories
@@ -329,9 +329,9 @@ jQuery(document).ready(function () {
                 /**
                  * This function delete all entites in an array which are equal
                  * with an entity after an index
-                 * @param array the array
-                 * @param entity the checked entity
-                 * @param fromIndex the start index in the array
+                 * @param {Array} array the array
+                 * @param {String} entity the checked entity
+                 * @param {Number} fromIndex the start index in the array
                  */
                 deteleLaterEntities: function(array, entity, fromIndex){
                     for(var i=fromIndex+1;i<array.length;i++){
@@ -347,7 +347,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function update the document list on the middle
-                 * @param rdf the rdf object which contains the new document list
+                 * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
                     var documents = [];

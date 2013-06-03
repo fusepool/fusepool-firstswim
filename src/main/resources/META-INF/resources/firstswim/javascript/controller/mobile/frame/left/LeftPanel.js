@@ -48,7 +48,7 @@ enyo.kind(
 
     /**
      * This functions returns with the unchecked entities of the dictionaries.
-     * @returns the unchecked entities
+     * @return {Array} the unchecked entities
      */
     getUncheckedEntities: function(){
         return this.$.dictionaries.getUncheckedEntities();  
@@ -78,7 +78,7 @@ enyo.kind(
 
     /**
      * This function update the dictionary list from a dictionary object.
-     * @param dictionaryObject the new dictionary list object
+     * @param {Object} dictionaryObject the new dictionary list object
      */
     updateDictionaries: function(dictionaryObject){
         this.$.dictionaries.updateList(dictionaryObject);
@@ -86,7 +86,7 @@ enyo.kind(
 
     /**
      * This function calls the details box update function with a new details object
-     * @param detailsObject the new object
+     * @param {Object} detailsObject the new object
      */
     updateDetails: function(detailsObject){
         this.$.detailsBox.updateDetails(detailsObject);
@@ -95,7 +95,7 @@ enyo.kind(
     /**
      * This function runs when the user check/uncheck an entity on the left side.
      * It calls the parent's function which update the document list.
-     * @param searchResponse the new search response
+     * @param {String} searchResponse the new search response
      */
     entityFilter: function(searchResponse){
         this.owner[this.entityFilterFunction](searchResponse);

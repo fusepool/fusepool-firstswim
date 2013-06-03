@@ -52,8 +52,8 @@ enyo.kind(
      * manually. If any the parameters are empty, the function use the default
      * URL and title. If the URL doesn't start with the "http://" text, it concatenates
      * this text with the URL.
-     * @param url the URL of the bookmark
-     * @param title the title of the bookmark
+     * @param {String} url the URL of the bookmark
+     * @param {String} title the title of the bookmark
      */
     saveBookmark: function(url, title){
         if(isEmpty(url)){

@@ -43,7 +43,7 @@ enyo.kind(
     /**
      * This function is called when the window size is changing and it should
      * change the opened document's height.
-     * @param newHeight the new height in pixels
+     * @param {Number} newHeight the new height in pixels
      */
     changeHeight: function(newHeight){
         this.applyStyle('height', newHeight + 'px');
@@ -51,7 +51,8 @@ enyo.kind(
     },
 
     /**
-     * This function returns the trimmed selected text in the window.
+     * This function returns the selected text in the window.
+     * @return {String} the trimmed selected text
      */
     getSelectedText: function(){
         var result = '';
@@ -79,7 +80,7 @@ enyo.kind(
 
     /**
      * This function shows a document.
-     * @param docText the document's content
+     * @param {String} docText the document's content
      */
     showDoc: function(docText){
         if(docText !== ''){
@@ -95,7 +96,7 @@ enyo.kind(
     /**
      * This function clear the document content, shows the loader and send an
      * open doc request to a URL.
-     * @param documentURL the request URL
+     * @param {String} documentURL the request URL
      */
     openDoc: function(documentURL){
         this.clearDoc();
@@ -117,7 +118,7 @@ enyo.kind(
      * This function runs when the response of the open doc ajax event is arrived.
      * It processes the response data, delete the bad type rows, parse it and call
      * the document show function.
-     * @param data the response data
+     * @param {String} data the response data
      */
     processOpenDocResponse: function(data){
         // Delete bad type rows, and replace new lines to spaces

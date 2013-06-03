@@ -49,7 +49,7 @@ enyo.kind(
     /**
      * This functions runs when the ajax response is arrived about the details.
      * It makes an rdf object, and call the details creator function.
-     * @param rdfResponse the ajax response about the details
+     * @param {String} rdfResponse the ajax response about the details
      */
     processDetailsResponse: function(rdfResponse){
         // Delete bad type rows
@@ -70,7 +70,7 @@ enyo.kind(
     /**
      * This function create details object from the rdf object, and call the
      * parent's details showing function.
-     * @param rdf the rdf object which contains details informations
+     * @param {Object} rdf the rdf object which contains details informations
      */
     createDetails: function(rdf){
         var content = this.getContent(rdf);
@@ -83,8 +83,8 @@ enyo.kind(
 
     /**
      * This function search the details's image in an rdf object.
-     * @param rdf the rdf object
-     * @return the image's URL (if it's not exist, an empty text)
+     * @param {Object} rdf the rdf object
+     * @return {String} the image's URL (if it's not exist, an empty text)
      */
     getImage: function(rdf){
         var pictures = [];
@@ -105,8 +105,8 @@ enyo.kind(
 
     /**
      * This function search the details's title in an rdf object.
-     * @param rdf the rdf object
-     * @return the title without speech marks (if it's not exist, an empty text)
+     * @param {Object} rdf the rdf object
+     * @return {String} the title without speech marks (if it's not exist, an empty text)
      */
     getTitle: function(rdf){
         var title = '';
@@ -121,8 +121,8 @@ enyo.kind(
 
     /**
      * This function search the details's content in an rdf object.
-     * @param rdf the rdf object
-     * @return the content without speech marks (if it's not exist, an empty text)
+     * @param {Object} rdf the rdf object
+     * @return {String} the content without speech marks (if it's not exist, an empty text)
      */
     getContent: function(rdf){
         var content = '';
@@ -135,7 +135,8 @@ enyo.kind(
 
     /**
      * Delete speech marks (") form the first and last character of text
-     * @param text the text what the function check
+     * @param {String} text the text what the function check
+     * @return {String} the string without " characters
      */
     deleteSpeechMarks: function(text){
         var result = text;
@@ -152,7 +153,7 @@ enyo.kind(
      * This function is called when the user check/uncheck the checkbox.
      * It call's the parent filter function with the entity, and the
      * checked/unchecked parameter
-     * @param inSender the checkbox
+     * @param {Object} inSender the checkbox component
      */
     filterEntity: function(inSender){
         var cbValue = inSender.getValue();

@@ -1,5 +1,5 @@
 /**
- * Autosuggest component
+ * Autosuggest component.
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
@@ -59,7 +59,7 @@ enyo.kind(
 
     /** 
      * This function updates the input field's placeholer
-     * @param placeHolderText the new placeholder
+     * @param {String} placeHolderText the new placeholder
      */
     updatePlaceholder: function(placeHolderText){
         this.$.inputField.setPlaceholder(placeHolderText);
@@ -67,7 +67,7 @@ enyo.kind(
 
     /**
      * This function put a new text to the input
-     * @param newValue the new value
+     * @param {String} newValue the new value
      */
     updateInputValue: function(newValue){
         this.$.inputField.setValue(newValue);
@@ -101,7 +101,7 @@ enyo.kind(
 
     /**
      * This function process the answer after the ajax request.
-     * @param inResponse the reponse what is come from the backend
+     * @param {String} inResponse the reponse what is come from the backend
      */
     processResponse: function(inResponse){
         if(inResponse !== 'error'){
@@ -130,7 +130,7 @@ enyo.kind(
     /**
      * This function parse an rdf text to an string array,
      * which contains the suggest elements
-     * @param response the rdf response from the backend
+     * @param {String} response the rdf response from the backend
      */
     rdfToArray: function(response){
         try {
@@ -161,6 +161,7 @@ enyo.kind(
      * This function generate the post body text for the ajax request. The postBody
      * contains the input text and the number of max elements. The table name and
      * the where property is optional.
+     * @return {String} the generated post body text
      */
     generatePostBodyText: function(){
         var inputText = this.$.inputField.getValue();
@@ -181,6 +182,7 @@ enyo.kind(
      * Return the format for the request. The possible
      * formats: json and rdf. If the format variable
      * is not same any formats of these, the function return with json
+     * @return {String} the request format
      */
     generateRequestFormat: function(){
         if(this.format === 'json'){
@@ -195,6 +197,7 @@ enyo.kind(
     /**
      * Return the header for the request. It is important for rdf format
      * requests. The default is null.
+     * @return {Object} header object
      */
     generateHeader: function(){
         if(this.format === 'rdf'){
@@ -209,7 +212,10 @@ enyo.kind(
         this.hideSuggest();
     },
 
-    /** This function returns the input field's value */
+    /**
+     * This function returns the input field's value
+     * @return {String} the input field's value
+     */
     getText: function(){
         return this.$.inputField.getValue();
     },
@@ -226,7 +232,8 @@ enyo.kind(
 
     /**
      * This function return true, if the parameter is empty, false otherwise
-     * @param parameter the text what the function check
+     * @param {Object} parameter the text what the function check
+     * @return {Boolean} true if the parameter is empty, false otherwise
      */
     isEmptyParam: function(parameter){
         if(typeof parameter === 'undefined' || parameter === null || parameter === ''){
@@ -237,8 +244,8 @@ enyo.kind(
 
     /**
      * This function runs when the user push button on the suggest list
-     * @param inSender the suggest list
-     * @param inEvent pushed button event
+     * @param {Object} inSender the suggest list
+     * @param {Object} inEvent pushed button event
      */
     keyDown: function(inSender, inEvent){
         switch(inEvent.keyCode){
@@ -263,8 +270,8 @@ enyo.kind(
     /**
      * This function runs when the user change the input field's content, and
      * control the autosuggest event
-     * @param inSender the input field
-     * @param inEvent the input change event which contains the pressed button
+     * @param {Object} inSender the input field
+     * @param {Object} inEvent the input change event which contains the pressed button
      */
     keyUp: function(inSender, inEvent){
         var keyCode = inEvent.keyCode;
@@ -327,8 +334,8 @@ enyo.kind(
     /**
      * This function add a new item to the suggest list. The item contains the input
      * text, and these characters will be bold in the user interface
-     * @param element the new list item's content
-     * @param inputText the content of the input field
+     * @param {String} element the new list item's content
+     * @param {String} inputText the content of the input field
      */
     addSuggestElement: function(element, inputText){
         var startBoldIndex = element.indexOf(inputText.toLowerCase());
@@ -354,7 +361,7 @@ enyo.kind(
     /**
      * The user move the mouse over a suggest element and this function 'select'
      * this element on the list
-     * @param inSender the selected list element
+     * @param {Object} inSender the selected list element
      */
     mouseOver: function(inSender){
         inSender.addClass('over');
@@ -363,7 +370,7 @@ enyo.kind(
     /**
      * The user move the mouse out a suggest element and this function 'unselect'
      * this element on the list
-     * @param inSender the unselected list element
+     * @param {Object} inSender the unselected list element
      */
     mouseOut: function(inSender){
         inSender.removeClass('over');
@@ -372,7 +379,7 @@ enyo.kind(
     /**
      * This function update the input field and hide the suggest list when the
      * user click any item on the list
-     * @param inSender the selected list element
+     * @param {Object} inSender the selected list element
      */
     mouseDown: function(inSender){
         this.$.inputField.setValue(inSender.getContent());
@@ -427,7 +434,7 @@ enyo.kind(
     /**
      * The application show the first suggest in the background input.
      * This function put the suggest word to the background input with case sensitive.
-     * @param word the word what the function puts
+     * @param {String} word the word what the function puts
      */
     completeBackInput: function(word){
         var inputText = this.$.inputField.getValue();
@@ -440,8 +447,8 @@ enyo.kind(
      * This function check that which elements are matched to the input field's
      * content. It can use global data and own data. This function is used when
      * the there are no refreshing from backend.
-     * @param inputText input field's content
-     * @param list the created filtered list which is returned by the function
+     * @param {String} inputText input field's content
+     * @param {Array} list the created filtered list which is returned by the function
      */
     getMatches: function(inputText, list){
         var counter = 0;
@@ -474,9 +481,9 @@ enyo.kind(
      * This function check that the longText contains the searchedText. If the
      * wordStartingMatching variable is true, the function check the beginning of
      * the word, and if it is false, the function check everywhere in the word.
-     * @param longText the longText which may contains the searchedText
-     * @param searchedText the searched text
-     * @returns true, if the longText contains the searchedText, false otherwise
+     * @param {String} longText the longText which may contains the searchedText
+     * @param {String} searchedText the searched text
+     * @return {Boolean} true, if the longText contains the searchedText, false otherwise
      */
     containsText: function(longText, searchedText){
         // The text starts with the word

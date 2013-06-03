@@ -105,8 +105,8 @@ enyo.kind(
 
             /**
              * This function show the entity menu to the mouse position.
-             * @param inEvent the event which contains the position of the mouse
-             * @param selectedText the selected text what the user selected
+             * @param {Object} inEvent the event which contains the position of the mouse
+             * @param {String} selectedText the selected text what the user selected
              */
             showMenu: function(inEvent, selectedText){
                 this.selectedText = selectedText;
@@ -180,7 +180,7 @@ enyo.kind(
 
     /**
      * This function changes the height of the opened document.
-     * @param newHeight the document's new height
+     * @param {Number} newHeight the document's new height
      */
     changeHeight: function(newHeight){
         this.$.openedDoc.changeHeight(newHeight);
@@ -191,8 +191,8 @@ enyo.kind(
      * popup menu exists and the user clicked with right button, and the
      * selected text length's is good the entity menu will be showed. If the user
      * click with other button (and the menu exists) the entity menu will be hided.
-     * @param inSender the previewed document
-     * @param inEvent the event which contains information about the mouse
+     * @param {Object} inSender the previewed document
+     * @param {Object} inEvent the event which contains information about the mouse
      */
     clickText: function(inSender, inEvent){
         if(!isEmpty(this.menu)){
@@ -252,7 +252,7 @@ enyo.kind(
 
     /**
      * This function call the opened doc's openDoc function and shows the buttons.
-     * @param previewDoc the previewed document
+     * @param {Object} previewDoc the previewed document
      */
     openDoc: function(previewDoc){
         this.$.openedDoc.openDoc(previewDoc);
@@ -262,7 +262,7 @@ enyo.kind(
 
     /**
      * This function returns with the opened document id in the DOM.
-     * @returns the id
+     * @return {String} the id
      */
     getOpenDocId: function(){
         return this.$.openedDoc.getId();
@@ -270,7 +270,7 @@ enyo.kind(
 
     /**
      * This function returns with opened document's document URL.
-     * @returns the URL
+     * @return {String} the URL
      */
     getDocumentURL: function(){
         return this.$.openedDoc.getDocumentURL();

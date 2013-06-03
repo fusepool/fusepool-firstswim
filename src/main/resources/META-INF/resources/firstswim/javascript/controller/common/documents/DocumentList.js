@@ -35,7 +35,7 @@ enyo.kind(
     /**
      * This function update the document list from a documents object. This
      * object contains the short documents.
-     * @param documents the document list object
+     * @param {Array} documents the document list object
      */
     updateList: function(documents){
         this.documents = documents;
@@ -66,8 +66,8 @@ enyo.kind(
      * This function is called when the user would like to open a document to
      * preview. It calls a parent function, which can call the preview box to
      * open a document.
-     * @param url the request URL of the preview opening
-     * @param inEvent the user mouse event (it is important in the desktop version)
+     * @param {String} url the request URL of the preview opening
+     * @param {Object} inEvent the user mouse event (it is important in the desktop version)
      */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);

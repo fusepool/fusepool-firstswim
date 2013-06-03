@@ -55,7 +55,7 @@ enyo.kind(
 
     /**
      * This function update the input's text.
-     * @param inputText the new input text
+     * @param {String} inputText the new input text
      */
     updateInput: function(inputText){
         this.$.searchInput.updateInputValue(inputText);

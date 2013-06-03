@@ -37,7 +37,7 @@ enyo.kind(
      * This function update the dictionary list from a dictionary object. This
      * object contains a searchword, a dictionary array and the unchecked entites
      * from the past.
-     * @param dictionaryObject the dictionary object
+     * @param {Object} dictionaryObject the dictionary object
      */
     updateList: function(dictionaryObject){
         this.searchWord = dictionaryObject.searchWord;
@@ -73,7 +73,7 @@ enyo.kind(
      * This function is called by a "child" dictionary, because the user would like
      * to see a details of an entity. This function call the parent's function,
      * which show the details.
-     * @param details the details object
+     * @param {Object} details the details object
      */
     updateDetails: function(details){
         this.owner[this.showDetailsFunction](details);
@@ -100,6 +100,7 @@ enyo.kind(
     /**
      * This function create a request URL for the filtering from the searchword
      * and the unchecked entities.
+     * @return {String} the created request URL
      */
     createFilterRequestURL: function(){
         if(!isEmpty(this.searchWord)){
@@ -118,7 +119,7 @@ enyo.kind(
     /**
      * This function is called when the response of the filter request is arrived.
      * It calls the parent function to update the user interface.
-     * @param data the response data
+     * @param {String} data the response data
      */
     responseFilter: function(data){
         this.owner[this.entityFilterFunction](data);

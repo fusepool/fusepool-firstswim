@@ -60,8 +60,8 @@ enyo.kind(
     /**
      * This functions calls the bookmark's save bookmark function
      * with an URL and a title
-     * @param url the new bookmark url
-     * @param title the new bookmark title
+     * @param {String} url the new bookmark url
+     * @param {String} title the new bookmark title
      */
     saveBookmark: function(url, title){
         this.$.bookmark.saveBookmark(url, title);
@@ -70,7 +70,7 @@ enyo.kind(
     /**
      * This function calls the parent's function, which shows a warning message
      * about the bookmark in a new popup
-     * @param message the warning message
+     * @param {String} message the warning message
      */
     popupBookmark: function(message){
         this.owner[this.popupBookmarkFunction](message);
@@ -100,8 +100,8 @@ enyo.kind(
 
     /**
      * This function calls the parent's user interface update function.
-     * @param searchWord the latest search word
-     * @param uncheckedEntities the unchecked entities
+     * @param {String} searchWord the latest search word
+     * @param {Array} uncheckedEntities the unchecked entities
      */
     updateUI: function(searchWord, uncheckedEntities){
         this.owner[this.mainSearchFunction](searchWord, uncheckedEntities);
@@ -109,7 +109,7 @@ enyo.kind(
 
     /**
      * This function calls the document list's update function.
-     * @param documents the new list of documents
+     * @param {Array} documents the new list of documents
      */
     updateDocuments: function(documents){
         this.$.documents.updateList(documents);
@@ -117,7 +117,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's openDoc funcion with the document URL
-     * @param documentURL url of the document what the user want to see
+     * @param {String} documentURL url of the document what the user want to see
      */
     openDoc: function(documentURL){
         this.owner[this.openDocFunction](documentURL);
@@ -125,7 +125,7 @@ enyo.kind(
 
     /**
      * This function update the searchbox's input text.
-     * @param inputText the new input text
+     * @param {String} inputText the new input text
      */
     updateInput: function(inputText){
         this.$.searchBox.updateInput(inputText);

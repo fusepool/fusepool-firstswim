@@ -25,7 +25,7 @@ enyo.kind(
      * This function create an enyo component from an menuItem object, with a
      * parent function name, which means that this function will be called when
      * the user push the menuitem.
-     * @param menuItem the object which contains data about a menu item
+     * @param {Object} menuItem the object which contains data about a menu item
      */
     addMenuItem: function(menuItem){
         this.createComponent({
@@ -40,7 +40,7 @@ enyo.kind(
     /**
      * This function called when the user push any menu item. It has to exist
      * the menuitem's function name.
-     * @param inSender the pushed menu item
+     * @param {Object} inSender the pushed menu item
      */
     tapMenu: function(inSender){
         this.owner[inSender.functionName]();

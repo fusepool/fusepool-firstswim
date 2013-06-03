@@ -25,8 +25,8 @@ enyo.kind(
 
     /**
      * This function set the popup's width
-     * @param newWidth the new width in pixels
-     * @param margin left and right margin in pixels
+     * @param {Number} newWidth the new width in pixels
+     * @param {Number} margin left and right margin in pixels
      */
     updateWidth: function(newWidth, margin){
         this.applyStyle('width', newWidth + 'px');
@@ -36,7 +36,7 @@ enyo.kind(
 
     /**
      * This function return the popup's content
-     * @returns the content
+     * @return {String} the content
      */
     getContent: function(){
         return this.$.popup.getContent();
@@ -44,7 +44,7 @@ enyo.kind(
 
     /**
      * This function set the popup's content. It shows all about the popups.
-     * @param content the popup's new content
+     * @param {String} content the popup's new content
      */
     setContent: function(content){
         this.$.popup.setContent(content);

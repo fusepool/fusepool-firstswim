@@ -37,8 +37,8 @@ enyo.kind(
      * This function runs when the user do a same event with the openDocEvent
      * event (like ontap, ontouch, onenter, etc). It calls the parent's function,
      * which can open a document to preview.
-     * @param inSender the component where the event is created (shortDoc)
-     * @param inEvent the event which is created (inEvent is important in the desktop version)
+     * @param {Object} inSender the component where the event is created (shortDoc)
+     * @param {Object} inEvent the event which is created (inEvent is important in the desktop version)
      */
     openDoc: function(inSender, inEvent){
         this.owner[this.parentFunction](this.url, inEvent);

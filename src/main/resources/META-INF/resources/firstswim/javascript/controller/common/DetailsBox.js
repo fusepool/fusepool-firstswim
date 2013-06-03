@@ -37,7 +37,7 @@ enyo.kind(
 
     /**
      * This function update the details box from a details object.
-     * @param detailsObject the object which conatins a title, a content and an image
+     * @param {Object} detailsObject the object which conatins a title, a content and an image
      */
     updateDetails: function(detailsObject){
         this.scrollToTop();
