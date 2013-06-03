@@ -7,11 +7,21 @@ enyo.kind({
         menuItems: null
     },
 
+    /**
+     * When the component is created, this function iterate the menuItems list
+     * and call the addMenuItem function for every element.
+     */
     create: function(){
         this.inherited(arguments);
         enyo.forEach(this.menuItems, this.addMenuItem, this);
     },
 
+    /**
+     * This function create an enyo component from an menuItem object, with a
+     * parent function name, which means that this function will be called when
+     * the user push the menuitem.
+     * @param menuItem the object which contains data about a menu item
+     */
     addMenuItem: function(menuItem){
         this.createComponent({
             tag: 'div',
@@ -22,6 +32,10 @@ enyo.kind({
         });
     },
 
+    /**
+     * This function called when the user push any menu item. It has to exist
+     * the menuitem's function name.
+     */
     tapMenu: function(inSender, inEvent){
         this.owner[inSender.functionName]();
     }

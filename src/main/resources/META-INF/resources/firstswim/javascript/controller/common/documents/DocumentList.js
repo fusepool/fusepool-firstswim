@@ -11,14 +11,15 @@ enyo.kind({
         openDocEvent: 'ontap'
     },
 
+    /**
+     * When the component is created the program set the title's properties and
+     * hides it.
+     */
     create: function(){
         this.inherited(arguments);
         this.$.title.setContent(this.titleContent);
-        this.$.title.hide();
-    },
-
-    rendered: function(){
         this.$.title.setClasses(this.titleClass);
+        this.$.title.hide();
     },
 
     components: [
@@ -26,6 +27,11 @@ enyo.kind({
         { tag: 'div', name: 'list' }
     ],
 
+    /**
+     * This function update the document list from a documents object. This
+     * object contains the short documents.
+     * @param documents the document list object
+     */
     updateList: function(documents){
         this.documents = documents;
         this.$.list.destroyClientControls();
@@ -51,6 +57,13 @@ enyo.kind({
         this.$.title.show();
     },
 
+    /**
+     * This function is called when the user would like to open a document to
+     * preview. It calls a parent function, which can call the preview box to
+     * open a document.
+     * @param url the request URL of the preview opening
+     * @param inEvent the user mouse event (it is important in the desktop version)
+     */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
     }

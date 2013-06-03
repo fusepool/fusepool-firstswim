@@ -11,6 +11,11 @@ enyo.kind({
         loaderClass: ''
     },
 
+    /**
+     * When this component is created, it overwrite the right click listener
+     * because the desktop version contains a popup menu, and the program hides
+     * the default popup menu. The content's and loader's property will be set.
+     */
     create: function(){
         this.inherited(arguments);
         this.$.loader.hide();
@@ -32,12 +37,19 @@ enyo.kind({
         ]}
     ],
 
+    /**
+     * This function is called when the window size is changing and it should
+     * change the opened document's height.
+     * @param newHeight the new height in pixels
+     */
     changeHeight: function(newHeight){
         this.applyStyle('height', newHeight + 'px');
         this.$.content.applyStyle('height', newHeight + 'px');
     },
 
-    /** This function returns the trimmed selected text in the window */
+    /**
+     * This function returns the trimmed selected text in the window.
+     */
     getSelectedText: function(){
         var result = '';
         if (window.getSelection) {
@@ -54,11 +66,18 @@ enyo.kind({
         return result;
     },
 
+    /**
+     * This function clear the document's content.
+     */
     clearDoc: function(){
         this.documentContent = '';
         this.$.content.setContent('');
     },
 
+    /**
+     * This function shows a document.
+     * @param docText the document's content
+     */
     showDoc: function(docText){
         if(docText !== ''){
             var documentContent = docText.replace(/\|/g,'<br/>');
@@ -70,6 +89,11 @@ enyo.kind({
         this.$.loader.hide();
     },
 
+    /**
+     * This function clear the document content, shows the loader and send an
+     * open doc request to a URL.
+     * @param documentURL the request URL
+     */
     openDoc: function(documentURL){
         this.clearDoc();
         this.$.loader.show();
@@ -86,6 +110,12 @@ enyo.kind({
         });
     },
 
+    /**
+     * This function runs when the response of the open doc ajax event is arrived.
+     * It processes the response data, delete the bad type rows, parse it and call
+     * the document show function.
+     * @param data the response data
+     */
     processOpenDocResponse: function(data){
         // Delete bad type rows, and replace new lines to spaces
         var textArray = data.split('\n');
@@ -114,6 +144,9 @@ enyo.kind({
         this.showDoc(docText);
     },
 
+    /**
+     * This function scrolls the scrollbar to the top.
+     */
     scrollToTop: function(){
         this.$.scroller.render();
         this.$.scroller.top = 0;

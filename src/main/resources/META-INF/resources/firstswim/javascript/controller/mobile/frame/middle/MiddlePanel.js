@@ -78,8 +78,8 @@ enyo.kind({
         this.$.documents.updateList(documents);
     },
 
-    openDoc: function(document){
-        this.owner[this.openDocFunction](document);
+    openDoc: function(documentURL){
+        this.owner[this.openDocFunction](documentURL);
     },
 
     updateInput: function(inputText){

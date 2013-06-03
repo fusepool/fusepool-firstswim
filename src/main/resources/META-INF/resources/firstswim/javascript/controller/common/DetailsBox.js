@@ -10,6 +10,10 @@ enyo.kind({
         contentClass: ''
     },
 
+    /**
+     * When this component is created it sets the scroller's, the title's,
+     * the image's and the content's properties.
+     */
     create: function(){
         this.inherited(arguments);
         this.$.scroller.setClasses(this.scrollerClass);
@@ -26,6 +30,10 @@ enyo.kind({
         ]}
     ],
 
+    /**
+     * This function update the details box from a details object.
+     * @param detailsObject the object which conatins a title, a content and an image
+     */
     updateDetails: function(detailsObject){
         this.scrollToTop();
         this.$.detailsTitle.setContent(detailsObject.title);
@@ -39,6 +47,9 @@ enyo.kind({
         this.$.detailsContent.setContent(detailsObject.content);
     },
 
+    /**
+     * This function scrolls the scrollbar to the top.
+     */
     scrollToTop: function(){
         this.$.scroller.render();
         this.$.scroller.top = 0;

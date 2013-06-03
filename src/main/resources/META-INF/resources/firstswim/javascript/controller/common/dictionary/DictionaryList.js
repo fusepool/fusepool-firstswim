@@ -12,14 +12,15 @@ enyo.kind({
         uncheckedEntities: []
     },
 
+    /**
+     * When the component is created the program set the title's properties and
+     * hides it.
+     */
     create: function(){
         this.inherited(arguments);
         this.$.title.setContent(this.dictionaryTitle);
-        this.$.title.hide();
-    },
-
-    rendered: function(){
         this.$.title.setClasses(this.titleClass);
+        this.$.title.hide();
     },
     
     components: [
@@ -27,6 +28,12 @@ enyo.kind({
         { tag: 'div', name: 'list' }
     ],
 
+    /**
+     * This function update the dictionary list from a dictionary object. This
+     * object contains a searchword, a dictionary array and the unchecked entites
+     * from the past.
+     * @param dictionaryObject the dictionary object
+     */
     updateList: function(dictionaryObject){
         this.searchWord = dictionaryObject.searchWord;
         this.uncheckedEntities = dictionaryObject.uncheckedEntities;
@@ -57,10 +64,20 @@ enyo.kind({
         this.$.title.show();
     },
 
+    /**
+     * This function is called by a "child" dictionary, because the user would like
+     * to see a details of an entity. This function call the parent's function,
+     * which show the details.
+     * @param details the details object
+     */
     updateDetails: function(details){
         this.owner[this.showDetailsFunction](details);
     },
 
+    /**
+     * This function is called when the unchecked entity list is not empty in
+     * the updateList function. It filters the document list.
+     */
     filter: function(){
         var url = this.createFilterRequestURL();
         var request = new enyo.Ajax({
@@ -75,6 +92,10 @@ enyo.kind({
         });
     },
 
+    /**
+     * This function create a request URL for the filtering from the searchword
+     * and the unchecked entities.
+     */
     createFilterRequestURL: function(){
         if(!isEmpty(this.searchWord)){
             var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
@@ -89,6 +110,11 @@ enyo.kind({
         }
     },
 
+    /**
+     * This function is called when the response of the filter request is arrived.
+     * It calls the parent function to update the user interface.
+     * @param data the response data
+     */
     responseFilter: function(data){
         this.owner[this.entityFilterFunction](data);
     }

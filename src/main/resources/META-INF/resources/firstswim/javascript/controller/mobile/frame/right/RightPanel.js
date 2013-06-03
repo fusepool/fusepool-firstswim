@@ -67,8 +67,8 @@ enyo.kind({
         this.owner[this.closeParentFunction]();
     },
 
-    openDoc: function(document){
-        this.$.openedDoc.openDoc(document);
+    openDoc: function(documentURL){
+        this.$.openedDoc.openDoc(documentURL);
     },
 
     getDocumentURL: function(){

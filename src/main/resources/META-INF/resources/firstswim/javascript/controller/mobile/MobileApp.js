@@ -86,13 +86,13 @@ jQuery(document).ready(function () {
                 /**
                  * This function open a document on the preview on the right side.
                  * If the screen is little, shows only the right panel.
-                 * @param document the document what user want to see
+                 * @param documentURL the document what user want to see
                  */
-                openDoc: function(document){
+                openDoc: function(documentURL){
                     if(this.isMobileSize()){
                         this.$.panels.setIndex(2);
                     }
-                    this.$.rightPanel.openDoc(document);
+                    this.$.rightPanel.openDoc(documentURL);
                 },
 
                 /**
