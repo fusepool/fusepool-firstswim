@@ -56,6 +56,12 @@ jQuery(document).ready(function () {
                                 parentSeachFunction: 'search'
                             },
                             {
+                                content: 'Login',
+                                ontap: 'login',
+                                classes: 'loginButton'
+                            },
+                            { kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
+                            {
                                 name: 'bookmark',
                                 kind: 'Bookmark',
                                 buttonClass: 'bookmarkButton',
@@ -107,6 +113,10 @@ jQuery(document).ready(function () {
                         ]
                     }
                 ],
+
+                login: function(){
+                    this.$.loginPopup.showLogin();
+                },
 
                 /**
                  * This function process the get parameters. If there is search word,

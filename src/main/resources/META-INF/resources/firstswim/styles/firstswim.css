@@ -15,6 +15,71 @@ body{
     position: relative;
 }
 
+/* ----------- Login ----------- */
+.loginButton{
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.loginButton:hover{
+    color: #EDDDC7;
+}
+
+.loginPopup{
+    left: 400px;
+    position: absolute;
+    top: 110px;
+    width: 430px;
+    word-wrap: break-word;
+}
+
+.loginPopupDiv{
+    font-size: 14px;
+    width: 415px;
+}
+
+.loginCloseButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/close_button.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    right: -12px;
+    top: -10px;
+    z-index: 9999;
+}
+
+.loginTable{
+    margin: 10px auto 20px;
+}
+
+.loginTableLeftCol{
+    width: 130px;
+}
+
+.loginTable input{
+    width: 175px;
+}
+
+.loginButtons{
+    margin: 0 auto 20px;
+    width: 130px;
+}
+
+.loginBackBtn, .signInBtn{
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.signUpBtn{
+    display: inline-block;
+    cursor: pointer;
+}
+
 /* ----------- Top message box ----------- */
 .topMessageBox{
     padding: 15px;
