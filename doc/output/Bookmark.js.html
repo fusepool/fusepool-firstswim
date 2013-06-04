@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: common/Bookmark.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: common/Bookmark.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* @class Bookmark
+*/
+enyo.kind(
+/** @lends Bookmark.prototype */
+{
+    name: 'Bookmark',
+    kind: enyo.Control,
+
+    published: {
+        url: '',
+        title: '',
+        parentTapFunction: '',
+        parentPopupFunction: '',
+        buttonClass: '',
+        noBrowserSupportText: '',
+        warningPopupClass: '',
+        warningPopupContent: ''
+    },
+
+    /**
+     * When this component is created this function set the button's and the
+     * popup's properties.
+     */
+    create: function(){
+        this.inherited(arguments);
+        this.$.bookMarkButton.setClasses(this.buttonClass);
+        this.$.warningPopup.setClasses(this.warningPopupClass);
+    },
+
+    components: [
+        { tag: 'div', name: 'bookMarkButton', ontap: 'tapBookmarkButton' },
+        { kind: onyx.Popup, name: 'warningPopup', allowHtml: true }
+    ],
+
+    /**
+     * This function runs when the user push the bookmark button. If the
+     * parentTapFunction is not empty, it calls the parent's function, otherwise
+     * calls the own saveBookmark function.
+     */
+    tapBookmarkButton: function(){
+        if(this.parentTapFunction !== ''){
+            this.owner[this.parentTapFunction]();
+        } else {
+            this.saveBookmark(this.url, this.title);
+        }
+    },
+
+    /**
+     * This function save a bookmark with an URL and title if it is possible.
+     * Otherwise show a warning popup with an opportunity to save the bookmark
+     * manually. If any the parameters are empty, the function use the default
+     * URL and title. If the URL doesn't start with the "http://" text, it concatenates
+     * this text with the URL.
+     * @param {String} url the URL of the bookmark
+     * @param {String} title the title of the bookmark
+     */
+    saveBookmark: function(url, title){
+        if(isEmpty(url)){
+            url = window.location.href;
+        }
+        if(isEmpty(title)){
+            title = document.title;
+        }
+
+        if(url.substr(0,7) !== 'http://'){
+            url = 'http://' + url;
+        }
+
+        if (window.sidebar){ // firefox
+            window.sidebar.addPanel(title, url, '');
+        } else if(window.opera && window.print){ // opera
+            var elem = document.createElement('a');
+            elem.setAttribute('href', url);
+            elem.setAttribute('title', title);
+            elem.setAttribute('rel', 'sidebar');
+            elem.click();
+        } else if(document.all) { // ie
+            window.external.AddFavorite(url, title);
+        } else {
+            var content = this.warningPopupContent + url;
+            if(this.parentPopupFunction !== ''){
+                this.owner[this.parentPopupFunction](content);
+            } else {
+                this.$.warningPopup.setContent(content);
+                this.$.warningPopup.show();
+            }
+        }
+    }
+
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 08:34:37 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

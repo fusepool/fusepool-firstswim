@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: common/dictionary/Dictionary.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: common/dictionary/Dictionary.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* @class Dictionary
+*/
+enyo.kind(
+/** @lends Dictionary.prototype */
+{
+    name: 'Dictionary',
+    kind: enyo.Control,
+
+    published: {
+        nameClass: '',
+        dictionaryName: '',
+        entityList: null,
+        showDetailsFunction: '',
+        uncheckedEntities: []
+    },
+
+    components: [
+        { tag: 'div', name: 'nameDiv' },
+        { tag: 'div', name: 'list' }
+    ],
+
+    /**
+     * The create function set the css classes, the contents and create an entity
+     * list into the dictonary.
+     */
+    create: function(){
+        this.inherited(arguments);
+        this.$.nameDiv.setClasses(this.nameClass);
+        this.$.nameDiv.setContent(this.dictionaryName);
+        for(var i=0;i&lt;this.entityList.length;++i){
+            var unchecked = this.isUncheckedEntity(this.entityList[i]);
+            this.$.list.createComponent({
+                kind: 'DictionaryEntity',
+                classes: 'detailsDiv',
+                entityTextClass: 'entityText enyo-unselectable',
+                detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
+                entityText: this.entityList[i],
+                parentFunction: 'updateEntities',
+                showDetailsFunction: 'updateDetails',
+                unchecked: unchecked
+            });
+        }
+    },
+
+    /**
+     * After the user over the mouse an entity, the program gets the details about
+     * the chosen entity, and this function is called for update the details box.
+     * @param {Object} details the details object, which contains information about the entity
+     */
+    updateDetails: function(details){
+        this.owner.owner[this.showDetailsFunction](details);
+    },
+
+    /**
+     * This function decide that an entity is unchecked or not (the unchecked
+     * list contains the entity or not).
+     * @param {String} entity the checked entity
+     * @return {Boolean} true, if it is unchecked, false otherwise
+     */
+    isUncheckedEntity: function(entity){
+        if(this.uncheckedEntities.indexOf(entity) !== -1){
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * This function is called when the user checked/unchecked one entity.
+     * It handles the unchecked entity list and call the parent filter function.
+     * @param {String} entity the chosen entity
+     * @param {Boolean} checked the entity is checked or not
+     */
+    updateEntities: function(entity, checked){
+        if(checked){
+            // Remove element
+            var index = this.uncheckedEntities.indexOf(entity);
+            this.uncheckedEntities.splice(index, 1);
+        } else {
+            // Add element
+            this.uncheckedEntities.push(entity);
+        }
+        this.owner.owner.filter();
+    }
+
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 08:34:37 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

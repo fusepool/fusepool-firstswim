@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: common/dictionary/DictionaryList.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: common/dictionary/DictionaryList.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+* @class DictionaryList
+*/
+enyo.kind(
+/** @lends DictionaryList.prototype */
+{
+    name: 'DictionaryList',
+    kind: enyo.Control,
+
+    published: {
+        dictionaryTitle: '',
+        noContentLabel: '',
+        entityFilterFunction: '',
+        titleClass: '',
+        searchWord: '',
+        showDetailsFunction: '',
+        uncheckedEntities: []
+    },
+
+    /**
+     * When the component is created the program set the title's properties and
+     * hides it.
+     */
+    create: function(){
+        this.inherited(arguments);
+        this.$.title.setContent(this.dictionaryTitle);
+        this.$.title.setClasses(this.titleClass);
+        this.$.title.hide();
+    },
+    
+    components: [
+        { tag: 'div', name: 'title' },
+        { tag: 'div', name: 'list' }
+    ],
+
+    /**
+     * This function update the dictionary list from a dictionary object. This
+     * object contains a searchword, a dictionary array and the unchecked entites
+     * from the past.
+     * @param {Object} dictionaryObject the dictionary object
+     */
+    updateList: function(dictionaryObject){
+        this.searchWord = dictionaryObject.searchWord;
+        this.uncheckedEntities = dictionaryObject.uncheckedEntities;
+        if(isEmpty(this.uncheckedEntities)){
+            this.uncheckedEntities = [];
+        }
+        var dictionaries = dictionaryObject.dictionaries;
+        this.$.list.destroyClientControls();
+        if(dictionaries.length > 0){
+            for(var i=0;i&lt;dictionaries.length;++i){
+                this.$.list.createComponent({
+                    kind: 'Dictionary',
+                    nameClass: 'dictionaryName',
+                    dictionaryName: dictionaries[i].name,
+                    entityList: dictionaries[i].entities,
+                    uncheckedEntities: this.uncheckedEntities,
+                    showDetailsFunction: 'updateDetails'
+                });
+            }
+            this.$.list.render();
+            if(this.uncheckedEntities.length > 0){
+                this.filter();
+            }
+        } else {
+            this.$.list.setContent(this.noContentLabel);
+            this.$.list.render();
+        }
+        this.$.title.show();
+    },
+
+    /**
+     * This function is called by a "child" dictionary, because the user would like
+     * to see a details of an entity. This function call the parent's function,
+     * which show the details.
+     * @param {Object} details the details object
+     */
+    updateDetails: function(details){
+        this.owner[this.showDetailsFunction](details);
+    },
+
+    /**
+     * This function is called when the unchecked entity list is not empty in
+     * the updateList function. It filters the document list.
+     */
+    filter: function(){
+        var url = this.createFilterRequestURL();
+        var request = new enyo.Ajax({
+            method: 'GET',
+            url: url,
+            handleAs: 'text',
+            headers: { Accept: 'application/rdf+xml' }
+        });
+        request.go();
+        request.response(this, function(inSender, inResponse) {
+            this.responseFilter(inResponse);
+        });
+    },
+
+    /**
+     * This function create a request URL for the filtering from the searchword
+     * and the unchecked entities.
+     * @return {String} the created request URL
+     */
+    createFilterRequestURL: function(){
+        if(!isEmpty(this.searchWord)){
+            var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
+            var entities = this.uncheckedEntities;
+            for(var i=0;i&lt;entities.length;i++){
+                url += '&subject=http://dbpedia.org/resource/' + entities[i];
+            }
+            url = replaceAll(url, ' ', '_');
+            return url;
+        } else {
+            return '';
+        }
+    },
+
+    /**
+     * This function is called when the response of the filter request is arrived.
+     * It calls the parent function to update the user interface.
+     * @param {String} data the response data
+     */
+    responseFilter: function(data){
+        this.owner[this.entityFilterFunction](data);
+    }
+
+});</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 08:34:37 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

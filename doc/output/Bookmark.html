@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Bookmark</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Class: Bookmark</h1>
+    
+    
+
+
+
+<section>
+    
+<header>
+    <h2>
+    Bookmark
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <h4 class="name" id="Bookmark"><span class="type-signature"></span>new Bookmark<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Bookmark.js.html">common/Bookmark.js</a>, <a href="Bookmark.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        When this component is created this function set the button's and thepopup's properties.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Bookmark.js.html">common/Bookmark.js</a>, <a href="Bookmark.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="saveBookmark"><span class="type-signature"></span>saveBookmark<span class="signature">(url, title)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        This function save a bookmark with an URL and title if it is possible.Otherwise show a warning popup with an opportunity to save the bookmarkmanually. If any the parameters are empty, the function use the defaultURL and title. If the URL doesn't start with the "http://" text, it concatenatesthis text with the URL.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">the URL of the bookmark</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">the title of the bookmark</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Bookmark.js.html">common/Bookmark.js</a>, <a href="Bookmark.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="tapBookmarkButton"><span class="type-signature"></span>tapBookmarkButton<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        This function runs when the user push the bookmark button. If theparentTapFunction is not empty, it calls the parent's function, otherwisecalls the own saveBookmark function.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Bookmark.js.html">common/Bookmark.js</a>, <a href="Bookmark.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 08:34:37 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
