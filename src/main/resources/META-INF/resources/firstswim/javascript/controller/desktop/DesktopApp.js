@@ -13,7 +13,6 @@ jQuery(document).ready(function () {
             /** @lends DocumentApp.prototype */
             {
                 name: 'DocumentApp',
-                id: 'docApp',
                 kind: enyo.Control,
 
                 create: function(){
@@ -39,62 +38,73 @@ jQuery(document).ready(function () {
 
                 components: [
                     {
-                        kind: 'SearchBox',
-                        name: 'searchBox',
-                        placeholder: 'Search in documents',
-                        buttonClass: 'searchButton',
-                        buttonContent: 'OK',
-                        searchIconClass: 'searchImage',
-                        parentSeachFunction: 'search'
+                        kind: 'TopMessageBox',
+                        name: 'topMessageBox',
+                        classes: 'topMessageBox'
                     },
                     {
-                        name: 'bookmark',
-                        kind: 'Bookmark',
-                        buttonClass: 'bookmarkButton',
-                        parentTapFunction: 'createBookmark',
-                        parentPopupFunction: 'popupBookmark',
-                        warningPopupClass: 'bookmarkPopup',
-                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
-                    },
-                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
-                    {
-                        classes: 'leftDesktopCol',
-                        components: [
+                        tag: 'div',
+                        classes: 'docApp',
+                        components: [                            
                             {
-                                kind: 'DetailsBox',
-                                name: 'detailsBox',
-                                classes: 'detailsBox enyo-unselectable',
-                                scrollerClass: 'detailsScroll',
-                                titleClass: 'detailsTitle',
-                                imageClass: 'detailsImage',
-                                contentClass: 'detailsContent'
+                                kind: 'SearchBox',
+                                name: 'searchBox',
+                                placeholder: 'Search in documents',
+                                buttonClass: 'searchButton',
+                                buttonContent: 'OK',
+                                searchIconClass: 'searchImage',
+                                parentSeachFunction: 'search'
                             },
                             {
-                                kind: 'DictionaryList',
-                                classes: 'dictionaryList',
-                                entityFilterFunction: 'entityFilter',
-                                name: 'dictionaries',
-                                dictionaryTitle: 'Dictionaries',
-                                noContentLabel: 'No data available',
-                                titleClass: 'dictionariesMainTitle',
-                                showDetailsFunction: 'updateDetails'
+                                name: 'bookmark',
+                                kind: 'Bookmark',
+                                buttonClass: 'bookmarkButton',
+                                parentTapFunction: 'createBookmark',
+                                parentPopupFunction: 'popupBookmark',
+                                warningPopupClass: 'bookmarkPopup',
+                                warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
+                            },
+                            { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
+                            {
+                                classes: 'leftDesktopCol',
+                                components: [
+                                    {
+                                        kind: 'DetailsBox',
+                                        name: 'detailsBox',
+                                        classes: 'detailsBox enyo-unselectable',
+                                        scrollerClass: 'detailsScroll',
+                                        titleClass: 'detailsTitle',
+                                        imageClass: 'detailsImage',
+                                        contentClass: 'detailsContent'
+                                    },
+                                    {
+                                        kind: 'DictionaryList',
+                                        classes: 'dictionaryList',
+                                        entityFilterFunction: 'entityFilter',
+                                        name: 'dictionaries',
+                                        dictionaryTitle: 'Dictionaries',
+                                        noContentLabel: 'No data available',
+                                        titleClass: 'dictionariesMainTitle',
+                                        showDetailsFunction: 'updateDetails'
+                                    }
+                                ]
+                            },
+                            {
+                                kind: 'DocumentList',
+                                name: 'documents',
+                                openDocFunction: 'openDoc',
+                                openDocEvent: 'onenter',
+                                classes: 'documentList',
+                                titleClass: 'documentsMainTitle',
+                                titleContent: 'Documents',
+                                noDataLabel: 'No data available'
+                            },
+                            {
+                                kind: 'PreviewBox',
+                                name: 'previewBox',
+                                classes: 'previewBox'
                             }
                         ]
-                    },
-                    {
-                        kind: 'DocumentList',
-                        name: 'documents',
-                        openDocFunction: 'openDoc',
-                        openDocEvent: 'onenter',
-                        classes: 'documentList',
-                        titleClass: 'documentsMainTitle',
-                        titleContent: 'Documents',
-                        noDataLabel: 'No data available'
-                    },
-                    {
-                        kind: 'PreviewBox',
-                        name: 'previewBox',
-                        classes: 'previewBox'
                     }
                 ],
 
@@ -132,10 +142,18 @@ jQuery(document).ready(function () {
                         var previewHeight = jQueryDoc.outerHeight();
                         var clickTop = inEvent.pageY;
 
-                        var newTop = clickTop - previewHeight / 2;
+                        var topMessage = jQuery('#' + this.$.topMessageBox.getId());
+                        var topMessageVisible = topMessage.is(':visible');
+                        var topMessageHeight = 0;
+                        if(topMessageVisible){
+                            topMessageHeight = topMessage.outerHeight();
+                            alert(topMessageHeight);
+                        }
+
+                        var newTop = clickTop - topMessageHeight - previewHeight / 2;
                         // If there isn't enough place on the bottom
-                        if(mainFrame.height() < clickTop + previewHeight / 2 + 15){
-                            newTop = mainFrame.height() - previewHeight - 15;
+                        if(mainFrame.height() < clickTop + previewHeight / 2 + 30){
+                            newTop = mainFrame.height() - topMessageHeight - previewHeight - 30;
                         }
                         // If there isn't enough place on the top
                         if(newTop < 50){

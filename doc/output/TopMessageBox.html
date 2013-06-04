@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: SearchBox</title>
+    <title>JSDoc: Class: TopMessageBox</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Class: SearchBox</h1>
+    <h1 class="page-title">Class: TopMessageBox</h1>
     
     
 
@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-    SearchBox
+    TopMessageBox
     </h2>
     
 </header>  
@@ -39,7 +39,7 @@
     
         
 <dt>
-    <h4 class="name" id="SearchBox"><span class="type-signature"></span>new SearchBox<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TopMessageBox"><span class="type-signature"></span>new TopMessageBox<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -76,7 +76,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SearchBox.js.html">common/SearchBox.js</a>, <a href="SearchBox.js.html#line1">line 1</a>
+        <a href="TopMessageBox.js.html">desktop/TopMessageBox.js</a>, <a href="TopMessageBox.js.html#line1">line 1</a>
     </li></ul></dd>
     
     
@@ -122,6 +122,75 @@
         <dl>
             
 <dt>
+    <h4 class="name" id="close"><span class="type-signature"></span>close<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        This function close the top message box.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="TopMessageBox.js.html">desktop/TopMessageBox.js</a>, <a href="TopMessageBox.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">()</span><span class="type-signature"></span></h4>
     
     
@@ -130,7 +199,7 @@
     
     
     <div class="description">
-        When this component is created this function set the button's,the input's and the icon's properties.
+        In the beginning this messagebox is not visible.
     </div>
     
 
@@ -163,7 +232,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SearchBox.js.html">common/SearchBox.js</a>, <a href="SearchBox.js.html#line27">line 27</a>
+        <a href="TopMessageBox.js.html">desktop/TopMessageBox.js</a>, <a href="TopMessageBox.js.html#line13">line 13</a>
     </li></ul></dd>
     
     
@@ -191,7 +260,7 @@
         
             
 <dt>
-    <h4 class="name" id="search"><span class="type-signature"></span>search<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateMessage"><span class="type-signature"></span>updateMessage<span class="signature">(newMessage)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -199,76 +268,7 @@
     
     
     <div class="description">
-        This function hide the input's suggest list, clear the backend input.It call the parent's search function.
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SearchBox.js.html">common/SearchBox.js</a>, <a href="SearchBox.js.html#line68">line 68</a>
-    </li></ul></dd>
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="updateInput"><span class="type-signature"></span>updateInput<span class="signature">(inputText)</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        This function update the input's text.
+        This function update the message box's content.
     </div>
     
 
@@ -302,7 +302,7 @@
 	
         <tr>
             
-                <td class="name"><code>inputText</code></td>
+                <td class="name"><code>newMessage</code></td>
             
             
             <td class="type">
@@ -318,7 +318,7 @@
             
             
             
-            <td class="description last">the new input text</td>
+            <td class="description last">the box's new content</td>
         </tr>
 	
 	
@@ -349,7 +349,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="SearchBox.js.html">common/SearchBox.js</a>, <a href="SearchBox.js.html#line60">line 60</a>
+        <a href="TopMessageBox.js.html">desktop/TopMessageBox.js</a>, <a href="TopMessageBox.js.html#line27">line 27</a>
     </li></ul></dd>
     
     

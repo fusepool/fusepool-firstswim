@@ -40,7 +40,6 @@
             /** @lends DocumentApp.prototype */
             {
                 name: 'DocumentApp',
-                id: 'docApp',
                 kind: enyo.Control,
 
                 create: function(){
@@ -66,62 +65,73 @@
 
                 components: [
                     {
-                        kind: 'SearchBox',
-                        name: 'searchBox',
-                        placeholder: 'Search in documents',
-                        buttonClass: 'searchButton',
-                        buttonContent: 'OK',
-                        searchIconClass: 'searchImage',
-                        parentSeachFunction: 'search'
+                        kind: 'TopMessageBox',
+                        name: 'topMessageBox',
+                        classes: 'topMessageBox'
                     },
                     {
-                        name: 'bookmark',
-                        kind: 'Bookmark',
-                        buttonClass: 'bookmarkButton',
-                        parentTapFunction: 'createBookmark',
-                        parentPopupFunction: 'popupBookmark',
-                        warningPopupClass: 'bookmarkPopup',
-                        warningPopupContent: '&lt;br/>Your browser doesn\'t support add bookmark via Javascript.&lt;br/>&lt;br/>Please insert manually this URL:&lt;br/>&lt;br/>'
-                    },
-                    { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
-                    {
-                        classes: 'leftDesktopCol',
-                        components: [
+                        tag: 'div',
+                        classes: 'docApp',
+                        components: [                            
                             {
-                                kind: 'DetailsBox',
-                                name: 'detailsBox',
-                                classes: 'detailsBox enyo-unselectable',
-                                scrollerClass: 'detailsScroll',
-                                titleClass: 'detailsTitle',
-                                imageClass: 'detailsImage',
-                                contentClass: 'detailsContent'
+                                kind: 'SearchBox',
+                                name: 'searchBox',
+                                placeholder: 'Search in documents',
+                                buttonClass: 'searchButton',
+                                buttonContent: 'OK',
+                                searchIconClass: 'searchImage',
+                                parentSeachFunction: 'search'
                             },
                             {
-                                kind: 'DictionaryList',
-                                classes: 'dictionaryList',
-                                entityFilterFunction: 'entityFilter',
-                                name: 'dictionaries',
-                                dictionaryTitle: 'Dictionaries',
-                                noContentLabel: 'No data available',
-                                titleClass: 'dictionariesMainTitle',
-                                showDetailsFunction: 'updateDetails'
+                                name: 'bookmark',
+                                kind: 'Bookmark',
+                                buttonClass: 'bookmarkButton',
+                                parentTapFunction: 'createBookmark',
+                                parentPopupFunction: 'popupBookmark',
+                                warningPopupClass: 'bookmarkPopup',
+                                warningPopupContent: '&lt;br/>Your browser doesn\'t support add bookmark via Javascript.&lt;br/>&lt;br/>Please insert manually this URL:&lt;br/>&lt;br/>'
+                            },
+                            { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
+                            {
+                                classes: 'leftDesktopCol',
+                                components: [
+                                    {
+                                        kind: 'DetailsBox',
+                                        name: 'detailsBox',
+                                        classes: 'detailsBox enyo-unselectable',
+                                        scrollerClass: 'detailsScroll',
+                                        titleClass: 'detailsTitle',
+                                        imageClass: 'detailsImage',
+                                        contentClass: 'detailsContent'
+                                    },
+                                    {
+                                        kind: 'DictionaryList',
+                                        classes: 'dictionaryList',
+                                        entityFilterFunction: 'entityFilter',
+                                        name: 'dictionaries',
+                                        dictionaryTitle: 'Dictionaries',
+                                        noContentLabel: 'No data available',
+                                        titleClass: 'dictionariesMainTitle',
+                                        showDetailsFunction: 'updateDetails'
+                                    }
+                                ]
+                            },
+                            {
+                                kind: 'DocumentList',
+                                name: 'documents',
+                                openDocFunction: 'openDoc',
+                                openDocEvent: 'onenter',
+                                classes: 'documentList',
+                                titleClass: 'documentsMainTitle',
+                                titleContent: 'Documents',
+                                noDataLabel: 'No data available'
+                            },
+                            {
+                                kind: 'PreviewBox',
+                                name: 'previewBox',
+                                classes: 'previewBox'
                             }
                         ]
-                    },
-                    {
-                        kind: 'DocumentList',
-                        name: 'documents',
-                        openDocFunction: 'openDoc',
-                        openDocEvent: 'onenter',
-                        classes: 'documentList',
-                        titleClass: 'documentsMainTitle',
-                        titleContent: 'Documents',
-                        noDataLabel: 'No data available'
-                    },
-                    {
-                        kind: 'PreviewBox',
-                        name: 'previewBox',
-                        classes: 'previewBox'
                     }
                 ],
 
@@ -159,10 +169,18 @@
                         var previewHeight = jQueryDoc.outerHeight();
                         var clickTop = inEvent.pageY;
 
-                        var newTop = clickTop - previewHeight / 2;
+                        var topMessage = jQuery('#' + this.$.topMessageBox.getId());
+                        var topMessageVisible = topMessage.is(':visible');
+                        var topMessageHeight = 0;
+                        if(topMessageVisible){
+                            topMessageHeight = topMessage.outerHeight();
+                            alert(topMessageHeight);
+                        }
+
+                        var newTop = clickTop - topMessageHeight - previewHeight / 2;
                         // If there isn't enough place on the bottom
-                        if(mainFrame.height() &lt; clickTop + previewHeight / 2 + 15){
-                            newTop = mainFrame.height() - previewHeight - 15;
+                        if(mainFrame.height() &lt; clickTop + previewHeight / 2 + 30){
+                            newTop = mainFrame.height() - topMessageHeight - previewHeight - 30;
                         }
                         // If there isn't enough place on the top
                         if(newTop &lt; 50){
@@ -442,13 +460,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="AutoSuggest.html">AutoSuggest</a></li><li><a href="Bookmark.html">Bookmark</a></li><li><a href="ClosablePopup.html">ClosablePopup</a></li><li><a href="DetailsBox.html">DetailsBox</a></li><li><a href="Dictionary.html">Dictionary</a></li><li><a href="DictionaryEntity.html">DictionaryEntity</a></li><li><a href="DictionaryList.html">DictionaryList</a></li><li><a href="DocumentApp.html">DocumentApp</a></li><li><a href="DocumentList.html">DocumentList</a></li><li><a href="DocumentMobileApp.html">DocumentMobileApp</a></li><li><a href="DynamicMenu.html">DynamicMenu</a></li><li><a href="LeftHeader.html">LeftHeader</a></li><li><a href="LeftPanel.html">LeftPanel</a></li><li><a href="MenuController.html">MenuController</a></li><li><a href="MiddlePanel.html">MiddlePanel</a></li><li><a href="OpenedDoc.html">OpenedDoc</a></li><li><a href="OpenedDocHeader.html">OpenedDocHeader</a></li><li><a href="PreviewBox.html">PreviewBox</a></li><li><a href="RightPanel.html">RightPanel</a></li><li><a href="SearchBox.html">SearchBox</a></li><li><a href="ShortDocument.html">ShortDocument</a></li><li><a href="TopMessageBox.html">TopMessageBox</a></li></ul><h3>Global</h3><ul><li><a href="global.html#GetURLParameter">GetURLParameter</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#replaceAll">replaceAll</a></li><li><a href="global.html#textLengthBetween">textLengthBetween</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 08:34:37 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Tue Jun 04 2013 09:20:27 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>
