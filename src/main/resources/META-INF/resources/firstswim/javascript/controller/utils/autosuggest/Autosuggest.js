@@ -3,7 +3,7 @@
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
- * @version 1.8.2
+ * @version 1.8.3
 */
 enyo.kind(
 /** @lends AutoSuggest.prototype */
@@ -383,6 +383,7 @@ enyo.kind(
      */
     mouseDown: function(inSender){
         this.$.inputField.setValue(inSender.clearContent);
+        this.$.backInputField.setValue(inSender.clearContent);
         this.hideSuggest();
     },
 
