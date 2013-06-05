@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils/ClosablePopup.js</title>
+    <title>JSDoc: Source: desktop/LoginPopup.js</title>
     
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Source: utils/ClosablePopup.js</h1>
+    <h1 class="page-title">Source: desktop/LoginPopup.js</h1>
     
     
 
@@ -26,55 +26,88 @@
     <section>
         <article>
             <pre class="prettyprint source"><code>/**
-* @class ClosablePopup
+* @class LoginPopup
 */
 enyo.kind(
-/** @lends ClosablePopup.prototype */
+/** @lends LoginPopup.prototype */
 {
-    name: 'ClosablePopup',
+    kind: enyo.Control,
+    name: 'LoginPopup',
+    classes: 'loginPopup',
 
     published: {
-        popupClasses: '',
-        closeButtonClasses: ''
+        realSignUp: false // change the field or real sign up query to server
     },
 
     create: function(){
         this.inherited(arguments);
-        this.$.popup.setClasses(this.popupClasses);
-        this.$.closeButton.setClasses(this.closeButtonClasses);
+        this.$.emailRow.hide();
+        this.$.passwordConfirmRow.hide();
+        this.$.loginBackBtn.hide();
         this.close();
     },
-
+  
     components: [
-        { name: 'popup', kind: onyx.Popup, allowHtml: true, onHide: 'close' },
-        { name: 'closeButton', ontap: 'close' }
+        { name: 'popup', classes: 'loginPopupDiv', kind: onyx.Popup, onHide: 'close', components: [
+            { tag: 'table', classes: 'loginTable', components: [
+                { tag: 'tr', components: [
+                    { tag: 'td', classes: 'loginTableLeftCol', content: 'Username: ' },
+                    { tag: 'td', components: [{ name: 'usernameInput', kind: enyo.Input }]}
+                ]},
+                { tag: 'tr', name: 'emailRow', components: [
+                    { tag: 'td', content: 'E-mail address: ' },
+                    { tag: 'td', components: [{ name: 'email', kind: enyo.Input }]}
+                ]},
+                { tag: 'tr', components: [
+                    { tag: 'td', content: 'Password: ' },
+                    { tag: 'td', components: [{ name: 'passwordInput', type: 'password', kind: enyo.Input }]}
+                ]},
+                { tag: 'tr', name: 'passwordConfirmRow', components: [
+                    { tag: 'td', content: 'Password confirm: ' },
+                    { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
+                ]}
+            ]},
+            { tag: 'div', classes: 'loginButtons', components: [
+                { content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap: 'back' },
+                { content: 'Sign In', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
+                { content: 'Sign Up', classes: 'signUpBtn', ontap: 'signUp' }
+            ]}
+        ]},
+        { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }
     ],
 
-    /**
-     * This function set the popup's width
-     * @param {Number} newWidth the new width in pixels
-     * @param {Number} margin left and right margin in pixels
-     */
-    updateWidth: function(newWidth, margin){
-        this.applyStyle('width', newWidth + 'px');
-        var popupWidth = newWidth - margin / 2;
-        this.$.popup.applyStyle('width', popupWidth + 'px');
+    back: function(){
+        this.$.loginBackBtn.hide();
+        this.$.signInBtn.show();
+        this.$.emailRow.hide();
+        this.$.passwordConfirmRow.hide();
+        this.realSignUp = false;
+    },
+
+    signIn: function(){
+        alert('authenticate is coming soon...');
+    },
+
+    signUp: function(){
+        if(this.realSignUp){
+            alert('Real sign up coming soon...');
+        } else {
+            this.realSignUp = true;
+            this.showRegisterFields();
+        }
+    },
+
+    showRegisterFields: function(){
+        this.$.loginBackBtn.show();
+        this.$.signInBtn.hide();
+        this.$.emailRow.show();
+        this.$.passwordConfirmRow.show();
     },
 
     /**
-     * This function return the popup's content
-     * @return {String} the content
+     * This function shows all about the popups.
      */
-    getContent: function(){
-        return this.$.popup.getContent();
-    },
-
-    /**
-     * This function set the popup's content. It shows all about the popups.
-     * @param {String} content the popup's new content
-     */
-    setContent: function(content){
-        this.$.popup.setContent(content);
+    showLogin: function(){
         this.$.popup.show();
         this.$.closeButton.show();
         this.show();
@@ -87,7 +120,7 @@ enyo.kind(
     close: function(){
         this.hide();
         this.$.closeButton.hide();
-    }
+    }    
 
 });</code></pre>
         </article>
