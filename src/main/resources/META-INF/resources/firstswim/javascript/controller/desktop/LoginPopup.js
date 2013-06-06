@@ -49,6 +49,10 @@ enyo.kind(
         { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }
     ],
 
+    /**
+     * This function is called when the tap the "Back" button on the registration
+     * popup hide the registration's components and shows the login's componens.
+     */
     back: function(){
         this.$.loginBackBtn.hide();
         this.$.signInBtn.show();
@@ -57,10 +61,18 @@ enyo.kind(
         this.realSignUp = false;
     },
 
+    /**
+     * This funtion runs when the user push the "Sign In" button.
+     */
     signIn: function(){
         alert('authenticate is coming soon...');
     },
 
+    /**
+     * This function called when the tap the "Sign Up" button. If the registration
+     * panel is active, the ajax request will be sent in the future, otherwise
+     * it shows the registration's fields.
+     */
     signUp: function(){
         if(this.realSignUp){
             alert('Real sign up coming soon...');
@@ -70,6 +82,9 @@ enyo.kind(
         }
     },
 
+    /**
+     * This function shows all fields of the registration.
+     */
     showRegisterFields: function(){
         this.$.loginBackBtn.show();
         this.$.signInBtn.hide();
