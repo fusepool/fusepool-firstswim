@@ -48,6 +48,13 @@ enyo.kind(
      */
     setContent: function(content){
         this.$.popup.setContent(content);
+        this.open();
+    },
+
+    /**
+     * This function shows the popup and the close button.
+     */
+    open: function(){
         this.$.popup.show();
         this.$.closeButton.show();
         this.show();
