@@ -28,6 +28,7 @@ enyo.kind(
                 kind: 'DictionaryList',
                 classes: 'dictionaryMobileList',
 				entityCheckboxClass: 'dictionaryMobileCheckbox',
+				scrollerClass: 'dictionaryListMobileScroll',
                 entityFilterFunction: 'entityFilter',
                 name: 'dictionaries',
                 /*dictionaryTitle: 'Dictionaries',*//*LL*/

@@ -91,6 +91,7 @@ jQuery(document).ready(function () {
 										name: 'dictionaries',
 										dictionaryTitle: 'DICTIONARIES',
 										noContentLabel: 'No data available',
+										scrollerClass: 'dictionaryListScroll',
 										titleClass: 'dictionariesMainTitle',
 										showDetailsFunction: 'updateDetails'
 									},

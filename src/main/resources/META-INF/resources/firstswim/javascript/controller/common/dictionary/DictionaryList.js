@@ -9,6 +9,7 @@ enyo.kind(
 
     published: {
         dictionaryTitle: '',
+		scrollerClass: '',
         noContentLabel: '',
         entityFilterFunction: '',
 		entityCheckboxClass: '',
@@ -24,6 +25,7 @@ enyo.kind(
      */
     create: function(){
         this.inherited(arguments);
+        this.$.scroller.setClasses(this.scrollerClass);
         this.$.title.setContent(this.dictionaryTitle);
         this.$.title.setClasses(this.titleClass);
         this.$.title.hide();
@@ -31,7 +33,7 @@ enyo.kind(
     
     components: [
 		{ tag: 'div', name: 'title' },
-		{ kind: 'enyo.Scroller', fit: true, classes: 'dictionaryListScroller', touch: false, touchOverscroll: false, components: [
+		{ kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
 			{ name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
 				{ tag: 'div', name: 'list' }
 			]}
