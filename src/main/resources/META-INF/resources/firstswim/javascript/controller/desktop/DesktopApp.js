@@ -3,6 +3,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
+		enyo.Scroller.touchScrolling=false;
 
         /** This function create the user interface with the all components */
         function createUI(){
@@ -28,7 +29,7 @@ jQuery(document).ready(function () {
                     this.inherited(arguments);
                     this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
                     this.changeBMPopupPosition();
-                    this.changePreviewBoxSize();
+                /*  this.changePreviewBoxSize();		// we don't need this currently */
                 },
 
                 published: {
@@ -45,70 +46,84 @@ jQuery(document).ready(function () {
                     {
                         tag: 'div',
                         classes: 'docApp',
-                        components: [                            
-                            {
-                                kind: 'SearchBox',
-                                name: 'searchBox',
-                                placeholder: 'Search in documents',
-                                buttonClass: 'searchButton',
-                                buttonContent: 'OK',
-                                searchIconClass: 'searchImage',
-                                parentSeachFunction: 'search'
-                            },
-                            {
-                                content: 'Login',
-                                ontap: 'login',
-                                classes: 'loginButton'
-                            },
-                            { kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
-                            {
-                                name: 'bookmark',
-                                kind: 'Bookmark',
-                                buttonClass: 'bookmarkButton',
-                                parentTapFunction: 'createBookmark',
-                                parentPopupFunction: 'popupBookmark',
-                                warningPopupClass: 'bookmarkPopup',
-                                warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
-                            },
+                        components: [
+							{ name: 'Toolbar', classes: 'toolbar', components: [
+								{ name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
+									{
+										name: 'mainLogo',
+										classes: 'mainLogo'
+									},
+									{
+										kind: 'SearchBox',
+										name: 'searchBox',
+										placeholder: 'Search in documents',
+										buttonClass: 'searchButton',
+										buttonContent: 'OK',
+										searchIconClass: 'searchImage',
+										parentSeachFunction: 'search'
+									}
+								]},
+								{
+									content: 'Login',
+									ontap: 'login',
+									classes: 'loginButton'
+								},
+								{ kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
+								{
+									name: 'bookmark',
+									kind: 'Bookmark',
+									buttonClass: 'bookmarkButton',
+									parentTapFunction: 'createBookmark',
+									parentPopupFunction: 'popupBookmark',
+									warningPopupClass: 'bookmarkPopup',
+									warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
+								}
+							]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
                             {
                                 classes: 'leftDesktopCol',
                                 components: [
-                                    {
-                                        kind: 'DetailsBox',
-                                        name: 'detailsBox',
-                                        classes: 'detailsBox enyo-unselectable',
-                                        scrollerClass: 'detailsScroll',
-                                        titleClass: 'detailsTitle',
-                                        imageClass: 'detailsImage',
-                                        contentClass: 'detailsContent'
-                                    },
-                                    {
-                                        kind: 'DictionaryList',
-                                        classes: 'dictionaryList',
-                                        entityFilterFunction: 'entityFilter',
-                                        name: 'dictionaries',
-                                        dictionaryTitle: 'Dictionaries',
-                                        noContentLabel: 'No data available',
-                                        titleClass: 'dictionariesMainTitle',
-                                        showDetailsFunction: 'updateDetails'
-                                    }
+									{
+										kind: 'DictionaryList',
+										classes: 'dictionaryList',
+										entityCheckboxClass: 'dictionaryCheckbox',
+										entityFilterFunction: 'entityFilter',
+										name: 'dictionaries',
+										dictionaryTitle: 'DICTIONARIES',
+										noContentLabel: 'No data available',
+										titleClass: 'dictionariesMainTitle',
+										showDetailsFunction: 'updateDetails'
+									},
+									{
+										kind: 'DetailsBox',
+										name: 'detailsBox',
+										classes: 'detailsBox enyo-unselectable',
+										detailsMainTitle: 'DETAILS',
+										mainTitleClass: 'detailsMainTitle',
+										scrollerClass: 'detailsScroll',
+										titleClass: 'detailsTitle',
+										imageClass: 'detailsImage',
+										contentClass: 'detailsContent'
+									}
                                 ]
                             },
                             {
                                 kind: 'DocumentList',
                                 name: 'documents',
                                 openDocFunction: 'openDoc',
-                                openDocEvent: 'onenter',
+                                openDocEvent: 'ontap',
                                 classes: 'documentList',
+								scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
-                                titleContent: 'Documents',
+                                titleContent: 'DOCUMENTS',
                                 noDataLabel: 'No data available'
                             },
                             {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
-                                classes: 'previewBox'
+                                classes: 'previewBox',
+								previewBoxMainTitle: 'PREVIEW',
+								previewBoxMainTitleClass: 'previewBoxMainTitle'
                             }
                         ]
                     }
@@ -159,7 +174,7 @@ jQuery(document).ready(function () {
                             topMessageHeight = topMessage.outerHeight();
                             alert(topMessageHeight);
                         }
-
+						/* We don't need this currently, layout has been changed
                         var newTop = clickTop - topMessageHeight - previewHeight / 2;
                         // If there isn't enough place on the bottom
                         if(mainFrame.height() < clickTop + previewHeight / 2 + 30){
@@ -169,7 +184,8 @@ jQuery(document).ready(function () {
                         if(newTop < 50){
                             newTop = 50;
                         }
-                        this.$.previewBox.applyStyle('top', newTop + 'px');                        
+                        this.$.previewBox.applyStyle('top', newTop + 'px');
+						*/
                     }
                     this.$.previewBox.openDoc(previewDoc);
                 },
@@ -238,7 +254,7 @@ jQuery(document).ready(function () {
                 resizeHandler: function() {
                     this.inherited(arguments);
                     this.changeBMPopupPosition();
-                    this.changePreviewBoxSize();
+                    /* this.changePreviewBoxSize();		// we don't need this currently */
                 },
 
                 /**
@@ -426,7 +442,7 @@ jQuery(document).ready(function () {
         }
         new DocumentApp().renderInto(document.getElementById('main'));
     }
-
+	
     try {
         initialization();
     } catch(e) {

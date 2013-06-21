@@ -11,6 +11,7 @@ enyo.kind(
         dictionaryTitle: '',
         noContentLabel: '',
         entityFilterFunction: '',
+		entityCheckboxClass: '',
         titleClass: '',
         searchWord: '',
         showDetailsFunction: '',
@@ -29,8 +30,12 @@ enyo.kind(
     },
     
     components: [
-        { tag: 'div', name: 'title' },
-        { tag: 'div', name: 'list' }
+		{ tag: 'div', name: 'title' },
+		{ kind: 'enyo.Scroller', fit: true, classes: 'dictionaryListScroller', touch: false, touchOverscroll: false, components: [
+			{ name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
+				{ tag: 'div', name: 'list' }
+			]}
+		]}
     ],
 
     /**
@@ -52,6 +57,7 @@ enyo.kind(
                 this.$.list.createComponent({
                     kind: 'Dictionary',
                     nameClass: 'dictionaryName',
+					entityCheckboxClass: this.entityCheckboxClass,
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities,
                     uncheckedEntities: this.uncheckedEntities,

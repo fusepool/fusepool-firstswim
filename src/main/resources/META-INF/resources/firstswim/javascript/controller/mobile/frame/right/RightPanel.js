@@ -25,11 +25,11 @@ enyo.kind(
                 loaderClass: 'loader'
             }
         ]},
-        { kind: 'onyx.Toolbar', components: [
-            { kind: 'onyx.Button', name: 'backButton', content: 'Back', ontap: 'back' },
-            { kind: 'onyx.Button', name: 'addButton', content: 'Add', ontap: 'addEntity' },
-            { kind: 'onyx.Button', name: 'moveButton', content: 'Move', ontap: 'moveEntity' },
-            { kind: 'onyx.Button', name: 'removeButton', content: 'Remove', ontap: 'removeEntity' }
+        { name: 'openedDocMobileToolbar', classes: 'openedDocMobileToolbar', components: [
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'backButton', content: 'Back', ontap: 'back' },
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'addButton', content: 'Add', ontap: 'addEntity' },
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'moveButton', content: 'Move', ontap: 'moveEntity' },
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'removeButton', content: 'Remove', ontap: 'removeEntity' }
         ]},
         {
             kind: 'AddEntityPopup',

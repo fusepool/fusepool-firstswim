@@ -10,6 +10,7 @@ enyo.kind(
     published: {
         entityText: '',
         entityTextClass: '',
+		entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
         unchecked: false,
@@ -19,13 +20,14 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.$.entityCheckbox.setValue(!this.unchecked);
+        this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
     },
 
     components: [
         { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'filterEntity' },
-        { tag: 'span', name: 'entityLabel', onmouseover: 'getDetails' }
+        { tag: 'span', name: 'entityLabel', ontap: 'getDetails' }
     ],
 
     /**

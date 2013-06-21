@@ -8,7 +8,9 @@ enyo.kind(
     name: 'PreviewBox',
 
     published: {
-        menu: null
+        menu: null,
+        previewBoxMainTitle: '',
+        previewBoxMainTitleClass: '',
     },
 
     create: function(){
@@ -16,6 +18,8 @@ enyo.kind(
         this.createMenu();
         this.$.openedDoc.hide();
         this.hideRateButtons();
+        this.$.previewBoxMainTitle.setContent(this.previewBoxMainTitle);
+        this.$.previewBoxMainTitle.setClasses(this.previewBoxMainTitleClass);
     },
 
     /**
@@ -153,6 +157,7 @@ enyo.kind(
     },
 
     components: [
+		{ name: 'previewBoxMainTitle' },
         {
             kind: 'OpenedDoc',
             name: 'openedDoc',
@@ -160,11 +165,14 @@ enyo.kind(
             classes: 'openedDocument',
             documentContentClass: 'documentContent',
             noDataLabel: 'No data available',
-            loaderClass: 'loader'
+            loaderClass: 'loader',
+			openedDocScrollerClass: 'openedDocScroll'
         },
-        { tag: 'div', name: 'posRateButton', classes: 'positiveRateButton', ontap: 'positiveRate' },
-        { tag: 'div', name: 'negRateButton', classes: 'negativeRateButton', ontap: 'negativeRate' },
-        { tag: 'div', name: 'fullViewButton', classes: 'fullViewButton', ontap: 'fullView' },
+		{ name: 'previewToolbar', classes: 'previewToolbar', components: [
+			{ tag: 'div', name: 'posRateButton', classes: 'positiveRateButton', ontap: 'positiveRate' },
+			{ tag: 'div', name: 'negRateButton', classes: 'negativeRateButton', ontap: 'negativeRate' },
+			{ tag: 'div', name: 'fullViewButton', classes: 'fullViewButton', ontap: 'fullView' }
+		]},
         {
             kind: 'RatePopup',
             name: 'ratePopup',

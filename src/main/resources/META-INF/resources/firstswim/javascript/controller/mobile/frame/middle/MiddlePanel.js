@@ -30,24 +30,26 @@ enyo.kind(
         {
             name: 'bookmark',
             kind: 'Bookmark',
-            buttonClass: 'bookmarkButton',
+            buttonClass: 'bookmarkMobileButton',
             parentTapFunction: 'createBookmark',
             parentPopupFunction: 'popupBookmark',
             warningPopupClass: 'bookmarkPopup',
             warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
         },
         { name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },
-        { kind: 'enyo.Scroller', fit: true, touch: true, touchOverscroll: false, components: [
+       /* { kind: 'enyo.Scroller', fit: true, touchOverscroll: false, components: [*/
             {
                 kind: 'DocumentList',
                 name: 'documents',
+				titleClass: '',
                 openDocFunction: 'openDoc',
                 classes: 'documentMobileList',
+				scrollerClass: 'documentListMobileScroll',
                 titleClass: 'documentsMainTitle',
-                titleContent: 'Documents',
+                titleContent: 'DOCUMENTS',
                 noDataLabel: 'No data available'
             }
-        ]}
+      /*  ]}*/
     ],
  
     /**

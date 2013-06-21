@@ -11,7 +11,8 @@ enyo.kind(
         documentURL: '',
         noDataLabel: '',
         documentContentClass: '',
-        loaderClass: ''
+        loaderClass: '',
+		openedDocScrollerClass: '',
     },
 
     /**
@@ -31,10 +32,11 @@ enyo.kind(
         this.scrollToTop();
         this.$.content.setClasses(this.documentContentClass);
         this.$.loader.setClasses(this.loaderClass);
+        this.$.scroller.setClasses(this.openedDocScrollerClass);
     },
 
     components: [
-        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
+        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { name: 'loader' },
             { tag: 'div', name: 'content', allowHtml: true }
         ]}

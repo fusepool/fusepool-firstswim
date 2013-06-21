@@ -15,14 +15,27 @@ enyo.kind(
     },
     
     components: [
-        {
+      /*  {
             kind: 'LeftHeader',
             name: 'leftHeader',
             classes: 'leftHeader'
-        },
+        },*/
         { tag: 'div', components: [
             { name: 'docsButton', classes: 'docsButton', content: 'Documents', ontap: 'searchShow' }
         ]},
+     /*   { kind: 'enyo.Scroller', classes: 'dictionaryListMobileScroller', fit: true, touchOverscroll: false, components: [*/
+            {
+                kind: 'DictionaryList',
+                classes: 'dictionaryMobileList',
+				entityCheckboxClass: 'dictionaryMobileCheckbox',
+                entityFilterFunction: 'entityFilter',
+                name: 'dictionaries',
+                /*dictionaryTitle: 'Dictionaries',*//*LL*/
+                noContentLabel: 'No data available',
+                titleClass: 'dictionariesMainTitle',
+                showDetailsFunction: 'updateDetails'
+            }
+    /*    ]}*/,
         {
             kind: 'DetailsBox',
             name: 'detailsBox',
@@ -31,19 +44,7 @@ enyo.kind(
             titleClass: 'detailsMobileTitle',
             imageClass: 'detailsMobileImage',
             contentClass: 'detailsMobileContent'
-        },
-        { kind: 'enyo.Scroller', fit: true, touch: true, touchOverscroll: false, components: [
-            {
-                kind: 'DictionaryList',
-                classes: 'dictionaryList',
-                entityFilterFunction: 'entityFilter',
-                name: 'dictionaries',
-                dictionaryTitle: 'Dictionaries',
-                noContentLabel: 'No data available',
-                titleClass: 'dictionariesMainTitle',
-                showDetailsFunction: 'updateDetails'
-            }
-        ]}
+        }
     ],
 
     /**

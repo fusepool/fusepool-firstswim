@@ -11,8 +11,11 @@ enyo.kind(
     published: {
         scrollerClass: '',
         titleClass: '',
+		detailsMainTitle: '',
+		mainTitleClass: '',
         imageClass: '',
-        contentClass: ''
+        contentClass: '',
+        touchScroll: true
     },
 
     /**
@@ -22,16 +25,21 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.$.scroller.setClasses(this.scrollerClass);
+        this.$.detailsMainTitle.setContent(this.detailsMainTitle);
+        this.$.detailsMainTitle.setClasses(this.mainTitleClass);
         this.$.detailsTitle.setClasses(this.titleClass);
         this.$.detailsImage.setClasses(this.imageClass);
         this.$.detailsContent.setClasses(this.contentClass);
     },
 
     components: [
-        { tag: 'div', name: 'detailsTitle' },
-        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touch: true, touchOverscroll: false, components: [
-            { kind: enyo.Image, name: 'detailsImage' },
-            { tag: 'div', name: 'detailsContent' }
+		{ name: 'detailsMainTitle' },
+        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
+			{ name: 'detailsPanel', classes: 'detailsPanel', components: [
+				{ tag: 'div', name: 'detailsTitle' },
+				{ kind: enyo.Image, name: 'detailsImage' },
+				{ tag: 'div', name: 'detailsContent' }
+			]}
         ]}
     ],
 

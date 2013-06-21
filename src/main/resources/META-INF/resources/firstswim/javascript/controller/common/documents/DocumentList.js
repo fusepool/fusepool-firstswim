@@ -9,6 +9,7 @@ enyo.kind(
 
     published: {
         documents: null,
+        scrollerClass: '',
         titleClass: '',
         titleContent: '',
         noDataLabel: '',
@@ -17,7 +18,7 @@ enyo.kind(
     },
 
     /**
-     * When the component is created the program set the title's properties and
+     * When the component is created the program sets the title's properties and
      * hides it.
      */
     create: function(){
@@ -25,11 +26,14 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.title.hide();
+        this.$.scroller.setClasses(this.scrollerClass);
     },
 
     components: [
-        { tag: 'div', name: 'title' },
-        { tag: 'div', name: 'list' }
+		{ tag: 'div', name: 'title' },
+        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
+			{ tag: 'div', name: 'list' }
+		]}
     ],
 
     /**
