@@ -154,12 +154,13 @@ body{
 	top: 75px;
 	bottom: 10px;
 	left: 10px;
-	width: 30%;
+	width: 420px;
     /*-vertical-align: top;*/
 }
 
 /* ----- Details box ----- */
 .detailsBox {
+	position: absolute;
 	top: 290px;
 	bottom: 0px;
 	left: 0px;
@@ -241,16 +242,16 @@ body{
 .documentList{
 	position: absolute;
 	top: 75px;
-	left: 30%;
+	left: 450px;
 	bottom: 10px;
-    padding-left: 10px;
     display: inline-block;
-    width: auto;
+    width: 490px;
 }
 
 .documentListScroll {
 	background-color: #e3e3e3;
 	border: 1px #cccccc solid;
+    position: absolute;
     top: 50px;
 	bottom: 0px;
 	left: 0px;
