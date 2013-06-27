@@ -229,7 +229,8 @@ jQuery(document).ready(function () {
                         headers: { Accept: 'application/rdf+xml' }
                     });
                     request.go({
-                        search: searchWord
+                        search: searchWord,
+                        xPropObj: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first'
                     });
                     request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
