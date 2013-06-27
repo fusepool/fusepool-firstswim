@@ -304,7 +304,7 @@ jQuery(document).ready(function () {
                     });
                     request.go({
                         search: searchWord,
-                        xPropObj: 'http://www.w3.org/1999/02/22-rdf-syntax-ns%23first'
+                        xPropObj: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#first'
                     });
                     request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
