@@ -117,6 +117,7 @@ enyo.kind(
             for(var i=0;i<entities.length;i++){
                 url += '&subject=http://dbpedia.org/resource/' + entities[i];
             }
+            url += '&xPropObj=http://www.w3.org/1999/02/22-rdf-syntax-ns%23first';
             url = replaceAll(url, ' ', '_');
             return url;
         } else {
