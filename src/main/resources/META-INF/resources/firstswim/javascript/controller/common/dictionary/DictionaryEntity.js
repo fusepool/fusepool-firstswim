@@ -10,7 +10,7 @@ enyo.kind(
     published: {
         entityText: '',
         entityTextClass: '',
-		entityCheckboxClass: '',
+        entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
         unchecked: false,

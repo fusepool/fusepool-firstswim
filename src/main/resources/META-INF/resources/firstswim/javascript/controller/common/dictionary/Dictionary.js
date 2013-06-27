@@ -12,7 +12,7 @@ enyo.kind(
         dictionaryName: '',
         entityList: null,
         showDetailsFunction: '',
-		entityCheckboxClass: '',
+        entityCheckboxClass: '',
         uncheckedEntities: []
     },
 
@@ -37,7 +37,7 @@ enyo.kind(
                 classes: 'detailsDiv',
                 entityTextClass: 'entityText enyo-unselectable',
                 entityCheckboxClass: this.entityCheckboxClass,
-				detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
+                detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
                 entityText: this.entityList[i],
                 parentFunction: 'updateEntities',
                 showDetailsFunction: 'updateDetails',
