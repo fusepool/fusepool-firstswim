@@ -286,36 +286,7 @@ jQuery(document).ready(function () {
                         this.uncheckedEntities = uncheckedEntities;
                     }
                     if(!isEmpty(searchWord)){
-//                        this.ajaxSearch(searchWord, uncheckedEntities);
-                        this.fakeAjaxSearch(searchWord, uncheckedEntities);
-                    }
-                },
-
-                fakeAjaxSearch: function(searchWord, uncheckedEntities){
-
-                    var dictionaries = [];
-                    var entites = [];
-                    entites.push("egy");
-                    entites.push("kettő");
-                    entites.push("három");
-                    entites.push("négy");
-                    dictionaries.push({ name: "first", entities: entites });
-                    dictionaries.push({ name: "second", entities: entites });
-
-                    var dictionaryObject = { searchWord: searchWord, uncheckedEntities: uncheckedEntities, dictionaries: dictionaries };
-                    this.$.dictionaries.updateList(dictionaryObject);
-                    
-                    if(isEmpty(uncheckedEntities) || uncheckedEntities.length === 0){
-
-                        var documents = [];
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "ááááááááá"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "bbbb"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "ccccc"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "dddddddd"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "eeeeeeee"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "fffffff"});
-                        documents.push({ url: "http://platform.fusepool.info/ecs/content/17b97f6decacabddab6e4a82a506379b.meta?0.049866667421384236", shortContent:  "ggggggggggg"});
-                        this.$.documents.updateList(documents);
+                        this.ajaxSearch(searchWord, uncheckedEntities);
                     }
                 },
 
@@ -373,8 +344,6 @@ jQuery(document).ready(function () {
                  */
                 createRdfObject: function(searchResponse){
                     // Delete rows, which contains long type (it causes error)
-                    try {
-                        console.log(searchResponse);
                     var textArray = searchResponse.split('\n');
                     var newText = '';
                     for(var i=0;i<textArray.length;i++){
@@ -386,9 +355,6 @@ jQuery(document).ready(function () {
                     var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
                     var rdf = jQuery.rdf();
                     rdf.load(parsedData, {});
-                    } catch(e){
-                        console.log(e);
-                    }
                     return rdf;
                 },
 

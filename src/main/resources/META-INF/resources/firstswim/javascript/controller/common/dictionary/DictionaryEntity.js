@@ -34,28 +34,18 @@ enyo.kind(
      * This function send an ajax request to get an entity's details
      */
     getDetails: function(){
-        this.getFakeDetails();
-//        var request = new enyo.Ajax({
-//            method: 'GET',
-//            url: this.detailsURL,
-//            handleAs: 'text',
-//            headers: { Accept: 'application/rdf+xml' }
-//        });
-//        request.go({
-//            id : 'http://dbpedia.org/resource/' + replaceAll(this.entityText, ' ', '_')
-//        });
-//        request.response(this, function(inSender, inResponse) {
-//            this.processDetailsResponse(inResponse);
-//        });
-    },
-
-    getFakeDetails: function(){
-        var content = "Empire of Japan was a Japanese political entity that existed since the Meiji Restoration on 3 January 1868 until the enforcement of the Constitution of the State of Japan on 3 May 1947. The country's rapid industrialization and militarization under the slogan Fukoku Kyōhei led to its emergence as a world power eventually culminating with its membership in the Axis alliance and the conquest of a large part of the Asia-Pacific region.";
-        var title = "Empire of Japan";
-        var image = "http://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Tokugawa_family_crest.svg/200px-Tokugawa_family_crest.svg.png";
-
-        var details = { content: content, title: title, image: image };
-        this.owner.owner[this.showDetailsFunction](details);
+        var request = new enyo.Ajax({
+            method: 'GET',
+            url: this.detailsURL,
+            handleAs: 'text',
+            headers: { Accept: 'application/rdf+xml' }
+        });
+        request.go({
+            id : 'http://dbpedia.org/resource/' + replaceAll(this.entityText, ' ', '_')
+        });
+        request.response(this, function(inSender, inResponse) {
+            this.processDetailsResponse(inResponse);
+        });
     },
 
     /**
