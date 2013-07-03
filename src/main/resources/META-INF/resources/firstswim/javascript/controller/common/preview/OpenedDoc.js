@@ -106,7 +106,7 @@ enyo.kind(
         this.documentURL = documentURL;
         var request = new enyo.Ajax({
             method: 'GET',
-            url: documentURL + '.meta',
+            url: 'http://platform.fusepool.info/ecs/meta?iri=' + documentURL,
             handleAs: 'text',
             headers: { Accept: 'application/rdf+xml' }
         });
