@@ -395,6 +395,11 @@ jQuery(document).ready(function () {
                     this.$.dictionaries.updateLists(dictionaryObject);
                 },
 
+                /**
+                 * This function search the checked entities in an rdf object
+                 * @param {Object} rdf the rdf object
+                 * @returns {Array} the checked entity list
+                 */
                 checkedEntitiesFromRdf: function(rdf){
                     var checkedEntities = [];
 

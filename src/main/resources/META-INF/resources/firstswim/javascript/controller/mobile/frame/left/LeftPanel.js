@@ -11,7 +11,7 @@ enyo.kind(
     classes: 'enyo-unselectable',
 
     published: {
-        entityFilterFunction: ''
+        searchFunction: ''
     },
     
     components: [
@@ -25,11 +25,11 @@ enyo.kind(
         ]},
      /*   { kind: 'enyo.Scroller', classes: 'dictionaryListMobileScroller', fit: true, touchOverscroll: false, components: [*/
             {
-                kind: 'DictionaryList',
+                kind: 'DictionaryController',
                 classes: 'dictionaryMobileList',
-				entityCheckboxClass: 'dictionaryMobileCheckbox',
-				scrollerClass: 'dictionaryListMobileScroll',
-                entityFilterFunction: 'entityFilter',
+                entityCheckboxClass: 'dictionaryMobileCheckbox',
+                scrollerClass: 'dictionaryListMobileScroll',
+                searchFunction: 'search',
                 name: 'dictionaries',
                 /*dictionaryTitle: 'Dictionaries',*//*LL*/
                 noContentLabel: 'No data available',
@@ -83,7 +83,7 @@ enyo.kind(
      * @param {Object} dictionaryObject the new dictionary list object
      */
     updateDictionaries: function(dictionaryObject){
-        this.$.dictionaries.updateList(dictionaryObject);
+        this.$.dictionaries.updateLists(dictionaryObject);
     },
 
     /**
@@ -95,12 +95,13 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user check/uncheck an entity on the left side.
-     * It calls the parent's function which update the document list.
-     * @param {String} searchResponse the new search response
+     * This function calls the parent's search function with searchword and the
+     * checked entity list.
+     * @param {String} searchWord the last search word
+     * @param {String} checkedEntities the actual checked entities
      */
-    entityFilter: function(searchResponse){
-        this.owner[this.entityFilterFunction](searchResponse);
+    search: function(searchWord, checkedEntities){
+        this.owner[this.searchFunction](searchWord, checkedEntities);
     }
 
 });
