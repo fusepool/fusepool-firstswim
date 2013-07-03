@@ -71,8 +71,6 @@ enyo.kind(
      * @return {Boolean} true, if it is checked, false otherwise
      */
     isCheckedEntity: function(entity){
-        console.log(this.checkedEntities);
-        console.log(entity);
         if(this.checkedEntities.indexOf(entity) !== -1){
             return true;
         }
