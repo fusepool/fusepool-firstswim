@@ -1,22 +1,22 @@
 /**
-* @class DictionaryList
+* @class DictionaryController
 */
 enyo.kind(
-/** @lends DictionaryList.prototype */
+/** @lends DictionaryController.prototype */
 {
-    name: 'DictionaryList',
+    name: 'DictionaryController',
     kind: enyo.Control,
 
     published: {
         dictionaryTitle: '',
         scrollerClass: '',
         noContentLabel: '',
-        entityFilterFunction: '',
+        searchFunction: '',
         entityCheckboxClass: '',
         titleClass: '',
         searchWord: '',
         showDetailsFunction: '',
-        uncheckedEntities: []
+        checkedEntities: []
     },
 
     /**
@@ -28,16 +28,17 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.title.setContent(this.dictionaryTitle);
         this.$.title.setClasses(this.titleClass);
-        this.$.title.hide();
     },
     
     components: [
-		{ tag: 'div', name: 'title' },
-		{ kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-			{ name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
-				{ tag: 'div', name: 'list' }
-			]}
-		]}
+        { tag: 'div', name: 'title' },
+        { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
+                { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
+                    { tag: 'div', name: 'checkedList' },
+                    { classes: 'clear' },
+                    { tag: 'div', name: 'list' }
+                ]}
+        ]}
     ],
 
     /**
@@ -46,35 +47,12 @@ enyo.kind(
      * from the past.
      * @param {Object} dictionaryObject the dictionary object
      */
-    updateList: function(dictionaryObject){
+    updateLists: function(dictionaryObject){
         this.searchWord = dictionaryObject.searchWord;
-        this.uncheckedEntities = dictionaryObject.uncheckedEntities;
-        if(isEmpty(this.uncheckedEntities)){
-            this.uncheckedEntities = [];
-        }
-        var dictionaries = dictionaryObject.dictionaries;
-        this.$.list.destroyClientControls();
-        if(dictionaries.length > 0){
-            for(var i=0;i<dictionaries.length;++i){
-                this.$.list.createComponent({
-                    kind: 'Dictionary',
-                    nameClass: 'dictionaryName',
-                    entityCheckboxClass: this.entityCheckboxClass,
-                    dictionaryName: dictionaries[i].name,
-                    entityList: dictionaries[i].entities,
-                    uncheckedEntities: this.uncheckedEntities,
-                    showDetailsFunction: 'updateDetails'
-                });
-            }
-            this.$.list.render();
-            if(this.uncheckedEntities.length > 0){
-                this.filter();
-            }
-        } else {
-            this.$.list.setContent(this.noContentLabel);
-            this.$.list.render();
-        }
-        this.$.title.show();
+        this.checkedEntities = dictionaryObject.checkedEntities;
+
+        this.updateCheckedDictionaries();
+        this.updateDictionaryList(dictionaryObject.dictionaries);
     },
 
     /**
@@ -88,49 +66,59 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the unchecked entity list is not empty in
-     * the updateList function. It filters the document list.
+     * This function calls the parent's search function with searchword and the
+     * checked entity list.
+     * @param {String} entity the last checked/unchecked entity
+     * @param {String} checked the entity was checked or unchecked
      */
-    filter: function(){
-        var url = this.createFilterRequestURL();
-        var request = new enyo.Ajax({
-            method: 'GET',
-            url: url,
-            handleAs: 'text',
-            headers: { Accept: 'application/rdf+xml' }
-        });
-        request.go();
-        request.response(this, function(inSender, inResponse) {
-            this.responseFilter(inResponse);
-        });
-    },
-
-    /**
-     * This function create a request URL for the filtering from the searchword
-     * and the unchecked entities.
-     * @return {String} the created request URL
-     */
-    createFilterRequestURL: function(){
-        if(!isEmpty(this.searchWord)){
-            var url = 'http://platform.fusepool.info/ecs/?search=' + this.searchWord;
-            var entities = this.uncheckedEntities;
-            for(var i=0;i<entities.length;i++){
-                url += '&subject=http://dbpedia.org/resource/' + entities[i];
-            }
-            url = replaceAll(url, ' ', '_');
-            return url;
+    filter: function(entity, checked){
+        if(checked){
+            this.checkedEntities.push(entity);
         } else {
-            return '';
+            var index = this.checkedEntities.indexOf(entity);
+            this.checkedEntities.splice(index, 1);
         }
+        this.owner[this.searchFunction](this.searchWord, this.checkedEntities);
     },
 
-    /**
-     * This function is called when the response of the filter request is arrived.
-     * It calls the parent function to update the user interface.
-     * @param {String} data the response data
-     */
-    responseFilter: function(data){
-        this.owner[this.entityFilterFunction](data);
+    updateCheckedDictionaries: function(){
+        this.$.checkedList.destroyClientControls();
+        for(var i=0; i<this.checkedEntities.length; i++){
+            this.$.checkedList.createComponent({
+                kind: 'DictionaryEntity',
+                classes: 'detailsDiv',
+                entityTextClass: 'entityText enyo-unselectable',
+                entityCheckboxClass: this.entityCheckboxClass,
+                detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
+                entityText: this.checkedEntities[i],
+                parentFunction: 'filter',
+                showDetailsFunction: 'updateDetails',
+                checked: true
+            });
+        }
+        this.$.checkedList.render();
+    },
+
+    updateDictionaryList: function(dictionaries){
+        this.$.list.destroyClientControls();
+        if(dictionaries.length > 0){
+            for(var i=0;i<dictionaries.length;++i){
+                this.$.list.createComponent({
+                    kind: 'Dictionary',
+                    nameClass: 'dictionaryName',
+                    entityCheckboxClass: this.entityCheckboxClass,
+                    dictionaryName: dictionaries[i].name,
+                    entityList: dictionaries[i].entities,
+                    searchFunction: 'filter',
+                    checkedEntities: this.uncheckedEntities,
+                    showDetailsFunction: 'updateDetails'
+                });
+            }
+            this.$.list.render();
+        } else {
+            this.$.list.setContent(this.noContentLabel);
+            this.$.list.render();
+        }
     }
 
 });

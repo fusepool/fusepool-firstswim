@@ -11,9 +11,10 @@ enyo.kind(
         nameClass: '',
         dictionaryName: '',
         entityList: null,
+        searchFunction: '',
         showDetailsFunction: '',
         entityCheckboxClass: '',
-        uncheckedEntities: []
+        checkedEntities: []
     },
 
     components: [
@@ -31,7 +32,7 @@ enyo.kind(
         this.$.nameDiv.setClasses(this.nameClass);
         this.$.nameDiv.setContent(this.dictionaryName);
         for(var i=0;i<this.entityList.length;++i){
-            var unchecked = this.isUncheckedEntity(this.entityList[i]);
+            var checked = this.isCheckedEntity(this.entityList[i]);
             this.$.list.createComponent({
                 kind: 'DictionaryEntity',
                 classes: 'detailsDiv',
@@ -41,7 +42,7 @@ enyo.kind(
                 entityText: this.entityList[i],
                 parentFunction: 'updateEntities',
                 showDetailsFunction: 'updateDetails',
-                unchecked: unchecked
+                checked: checked
             });
         }
     },
@@ -56,13 +57,13 @@ enyo.kind(
     },
 
     /**
-     * This function decide that an entity is unchecked or not (the unchecked
+     * This function decide that an entity is checked or not (the checked
      * list contains the entity or not).
-     * @param {String} entity the checked entity
-     * @return {Boolean} true, if it is unchecked, false otherwise
+     * @param {String} entity the entity what the function check
+     * @return {Boolean} true, if it is checked, false otherwise
      */
-    isUncheckedEntity: function(entity){
-        if(this.uncheckedEntities.indexOf(entity) !== -1){
+    isCheckedEntity: function(entity){
+        if(this.checkedEntities.indexOf(entity) !== -1){
             return true;
         }
         return false;
@@ -75,15 +76,7 @@ enyo.kind(
      * @param {Boolean} checked the entity is checked or not
      */
     updateEntities: function(entity, checked){
-        if(checked){
-            // Remove element
-            var index = this.uncheckedEntities.indexOf(entity);
-            this.uncheckedEntities.splice(index, 1);
-        } else {
-            // Add element
-            this.uncheckedEntities.push(entity);
-        }
-        this.owner.owner.filter();
+        this.owner.owner[this.searchFunction](entity, checked);
     }
 
 });

@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
-		enyo.Scroller.touchScrolling=false;
+        enyo.Scroller.touchScrolling=false;
 
         /** This function create the user interface with the all components */
         function createUI(){
@@ -34,7 +34,7 @@ jQuery(document).ready(function () {
 
                 published: {
                     searchWord: '',
-                    uncheckedEntities: []
+                    checkedEntities: []
                 },
 
                 components: [
@@ -47,65 +47,65 @@ jQuery(document).ready(function () {
                         tag: 'div',
                         classes: 'docApp',
                         components: [
-							{ name: 'Toolbar', classes: 'toolbar', components: [
-								{ name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
-									{
-										name: 'mainLogo',
-										classes: 'mainLogo'
-									},
-									{
-										kind: 'SearchBox',
-										name: 'searchBox',
-										placeholder: 'Search in documents',
-										buttonClass: 'searchButton',
-										buttonContent: 'OK',
-										searchIconClass: 'searchImage',
-										parentSeachFunction: 'search'
-									}
-								]},
-								{
-									content: 'Login',
-									ontap: 'login',
-									classes: 'loginButton'
-								},
-								{ kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
-								{
-									name: 'bookmark',
-									kind: 'Bookmark',
-									buttonClass: 'bookmarkButton',
-									parentTapFunction: 'createBookmark',
-									parentPopupFunction: 'popupBookmark',
-									warningPopupClass: 'bookmarkPopup',
-									warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
-								}
-							]},
+                            { name: 'Toolbar', classes: 'toolbar', components: [
+                                { name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
+                                        {
+                                                name: 'mainLogo',
+                                                classes: 'mainLogo'
+                                        },
+                                        {
+                                                kind: 'SearchBox',
+                                                name: 'searchBox',
+                                                placeholder: 'Search in documents',
+                                                buttonClass: 'searchButton',
+                                                buttonContent: 'OK',
+                                                searchIconClass: 'searchImage',
+                                                parentSeachFunction: 'search'
+                                        }
+                                ]},
+                                {
+                                        content: 'Login',
+                                        ontap: 'login',
+                                        classes: 'loginButton'
+                                },
+                                { kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
+                                {
+                                        name: 'bookmark',
+                                        kind: 'Bookmark',
+                                        buttonClass: 'bookmarkButton',
+                                        parentTapFunction: 'createBookmark',
+                                        parentPopupFunction: 'popupBookmark',
+                                        warningPopupClass: 'bookmarkPopup',
+                                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
+                                }
+                            ]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
                             {
                                 classes: 'leftDesktopCol',
                                 components: [
-									{
-										kind: 'DictionaryList',
-										classes: 'dictionaryList',
-										entityCheckboxClass: 'dictionaryCheckbox',
-										entityFilterFunction: 'entityFilter',
-										name: 'dictionaries',
-										dictionaryTitle: 'DICTIONARIES',
-										noContentLabel: 'No data available',
-										scrollerClass: 'dictionaryListScroll',
-										titleClass: 'dictionariesMainTitle',
-										showDetailsFunction: 'updateDetails'
-									},
-									{
-										kind: 'DetailsBox',
-										name: 'detailsBox',
-										classes: 'detailsBox enyo-unselectable',
-										detailsMainTitle: 'DETAILS',
-										mainTitleClass: 'detailsMainTitle',
-										scrollerClass: 'detailsScroll',
-										titleClass: 'detailsTitle',
-										imageClass: 'detailsImage',
-										contentClass: 'detailsContent'
-									}
+                                    {
+                                            kind: 'DictionaryController',
+                                            classes: 'dictionaryList',
+                                            entityCheckboxClass: 'dictionaryCheckbox',
+                                            searchFunction: 'search',
+                                            name: 'dictionaries',
+                                            dictionaryTitle: 'DICTIONARIES',
+                                            noContentLabel: 'No data available',
+                                            scrollerClass: 'dictionaryListScroll',
+                                            titleClass: 'dictionariesMainTitle',
+                                            showDetailsFunction: 'updateDetails'
+                                    },
+                                    {
+                                            kind: 'DetailsBox',
+                                            name: 'detailsBox',
+                                            classes: 'detailsBox enyo-unselectable',
+                                            detailsMainTitle: 'DETAILS',
+                                            mainTitleClass: 'detailsMainTitle',
+                                            scrollerClass: 'detailsScroll',
+                                            titleClass: 'detailsTitle',
+                                            imageClass: 'detailsImage',
+                                            contentClass: 'detailsContent'
+                                    }
                                 ]
                             },
                             {
@@ -114,7 +114,7 @@ jQuery(document).ready(function () {
                                 openDocFunction: 'openDoc',
                                 openDocEvent: 'ontap',
                                 classes: 'documentList',
-								scrollerClass: 'documentListScroll',
+                                scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
                                 titleContent: 'DOCUMENTS',
                                 noDataLabel: 'No data available'
@@ -123,8 +123,8 @@ jQuery(document).ready(function () {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
                                 classes: 'previewBox',
-								previewBoxMainTitle: 'PREVIEW',
-								previewBoxMainTitleClass: 'previewBoxMainTitle'
+                                previewBoxMainTitle: 'PREVIEW',
+                                previewBoxMainTitleClass: 'previewBoxMainTitle'
                             }
                         ]
                     }
@@ -141,12 +141,7 @@ jQuery(document).ready(function () {
                  */
                 processGETParameters: function(){
                     // Search
-                    this.searchWord = GetURLParameter('search')[0];
-                    this.uncheckedEntities = GetURLParameter('entity');
-                    if(!isEmpty(this.searchWord)){
-                        this.$.searchBox.updateInput(this.searchWord);
-                        this.search(this.searchWord, this.uncheckedEntities);
-                    }
+                    this.search(GetURLParameter('search')[0], GetURLParameter('entity'));
                     // Open Document
                     var openPreview = GetURLParameter('openPreview')[0];
                     if(!isEmpty(openPreview)){
@@ -206,7 +201,7 @@ jQuery(document).ready(function () {
                         // Search word
                         var url = location + '?search=' + this.searchWord;
                         // Unchecked entities
-                        var entities = this.$.dictionaries.getUncheckedEntities();
+                        var entities = this.getCheckedEntities();
                         for(var i=0;i<entities.length;i++){
                             url += '&entity=' + entities[i];
                         }
@@ -276,38 +271,50 @@ jQuery(document).ready(function () {
                 /**
                  * This function call the ajax search if the search word is not empty
                  * @param {String} searchWord the search word
-                 * @param {Array} uncheckedEntities the unchecked entities on the left side
+                 * @param {Array} checkedEntities the checked entities on the left side
                  */
-                search: function(searchWord, uncheckedEntities){
+                search: function(searchWord, checkedEntities){
                     this.searchWord = searchWord;
-                    if(isEmpty(uncheckedEntities)){
-                        this.uncheckedEntities = [];
-                    } else {
-                        this.uncheckedEntities = uncheckedEntities;
-                    }
+                    this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
-                        this.ajaxSearch(searchWord, uncheckedEntities);
+                        this.$.searchBox.updateInput(this.searchWord);
+                        this.ajaxSearch(searchWord, checkedEntities);
                     }
                 },
 
                 /**
                  * This function send an ajax request for searching
                  * @param {String} searchWord the search word
-                 * @param {String} uncheckedEntities the unchecked entities on the left side
+                 * @param {String} checkedEntities the checked entities on the left side
                  */
-                ajaxSearch: function(searchWord, uncheckedEntities){
+                ajaxSearch: function(searchWord, checkedEntities){
+                    var url = this.createSearchURL(searchWord, checkedEntities);
                     var request = new enyo.Ajax({
                         method: 'GET',
-                        url: 'http://platform.fusepool.info/ecs/',
+                        url: url,
                         handleAs: 'text',
                         headers: { Accept: 'application/rdf+xml' }
                     });
-                    request.go({
-                        search: searchWord
-                    });
+                    request.go();
                     request.response(this, function(inSender, inResponse) {
-                        this.processSearchResponse(inResponse, searchWord, uncheckedEntities);
+                        this.processSearchResponse(inResponse, searchWord);
                     });
+                },
+
+                /**
+                 * This function create a request URL for the filtering from the searchword
+                 * and the unchecked entities.
+                 * @param {String} searchWord the search word
+                 * @param {String} checkedEntities the checked entities on the left side
+                 * @return {String} the created request URL
+                 */
+                createSearchURL: function(searchWord, checkedEntities){
+                    var url = 'http://platform.fusepool.info/ecs/?search=' + searchWord;
+                    for(var i=0;i<checkedEntities.length;i++){
+                        url += '&subject=http://dbpedia.org/resource/' + checkedEntities[i];
+                    }
+                    url = replaceAll(url, ' ', '_');
+                    return url;
                 },
 
                 /**
@@ -315,24 +322,10 @@ jQuery(document).ready(function () {
                  * the entity list updater and the document updater functions
                  * @param {Object} searchResponse the search response from the backend
                  * @param {String} searchWord the searched word
-                 * @param {Array} uncheckedEntities the unchecked entities on the left side
                  */
-                processSearchResponse: function(searchResponse, searchWord, uncheckedEntities){
+                processSearchResponse: function(searchResponse, searchWord){
                     var rdf = this.createRdfObject(searchResponse);
-                    this.updateEntityList(rdf, searchWord, uncheckedEntities);
-                    if(isEmpty(uncheckedEntities) || uncheckedEntities.length === 0){
-                        this.updateDocumentList(rdf);
-                    }
-                },
-
-                /**
-                 * This function update the document list. It is called when the user
-                 * check/uncheck an entity on the left side.
-                 * @param {String} searchResponse the search response,
-                 *  which contains the new document list
-                 */
-                entityFilter: function(searchResponse){
-                    var rdf = this.createRdfObject(searchResponse);
+                    this.updateEntityList(rdf, searchWord);
                     this.updateDocumentList(rdf);
                 },
 
@@ -362,9 +355,10 @@ jQuery(document).ready(function () {
                  * This functions group and sort the entities update the entity list on the left side
                  * @param {Object} rdf the rdf object which contains the new entity list
                  * @param {String} searchWord the searched word
-                 * @param {Array} uncheckedEntities unchecked entities
                  */
-                updateEntityList: function(rdf, searchWord, uncheckedEntities){
+                updateEntityList: function(rdf, searchWord){
+                    var checkedEntities = this.getCheckedEntities(rdf);
+
                     // categories
                     var categories = [];
                     rdf.where('?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o').each(function(){
@@ -397,8 +391,24 @@ jQuery(document).ready(function () {
                             dictionaries.push({ name: categoryName, entities: entities });
                         }
                     }
-                    var dictionaryObject = { searchWord: searchWord, uncheckedEntities: uncheckedEntities, dictionaries: dictionaries };
-                    this.$.dictionaries.updateList(dictionaryObject);
+                    var dictionaryObject = { searchWord: searchWord, checkedEntities: checkedEntities, dictionaries: dictionaries };
+                    this.$.dictionaries.updateLists(dictionaryObject);
+                },
+
+                getCheckedEntities: function(rdf){
+                    var checkedEntities = [];
+
+                    var subject = '';
+                    rdf.where('?s ?p <http://fusepool.eu/ontologies/ecs#ContentStoreView>').each(function(){
+                        subject = '<' + this.s.value + '>';
+                    });
+                    rdf.where(subject + ' <http://fusepool.eu/ontologies/ecs#subject> ?o').each(function(){
+                        // Entity
+                        var entityText = replaceAll(this.o.value + '', '_', ' ');
+                        var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
+                        checkedEntities.push(entityName);
+                    });
+                    return checkedEntities;
                 },
 
                 /**

@@ -68,7 +68,7 @@ enyo.kind(
     search: function(){
         this.$.searchInput.clearBackInput();
         this.$.searchInput.hideSuggest();
-        this.owner[this.parentSeachFunction](this.$.searchInput.getText());
+        this.owner[this.parentSeachFunction](this.$.searchInput.getText(), []);
     }
 
 });

@@ -13,20 +13,20 @@ enyo.kind(
         entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
-        unchecked: false,
+        checked: false,
         showDetailsFunction: ''
     },
 
     create: function(){
         this.inherited(arguments);
-        this.$.entityCheckbox.setValue(!this.unchecked);
+        this.$.entityCheckbox.setValue(this.checked);
         this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
     },
 
     components: [
-        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'filterEntity' },
+        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
         { tag: 'span', name: 'entityLabel', ontap: 'getDetails' }
     ],
 
@@ -157,7 +157,7 @@ enyo.kind(
      * checked/unchecked parameter
      * @param {Object} inSender the checkbox component
      */
-    filterEntity: function(inSender){
+    checkboxChange: function(inSender){
         var cbValue = inSender.getValue();
         this.owner.owner[this.parentFunction](this.entityText, cbValue);
     }

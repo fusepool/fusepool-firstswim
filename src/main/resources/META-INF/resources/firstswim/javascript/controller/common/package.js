@@ -5,7 +5,7 @@ enyo.depends(
     // -- Dictionary -- //
         'dictionary/DictionaryEntity.js',
         'dictionary/Dictionary.js',
-        'dictionary/DictionaryList.js',
+        'dictionary/DictionaryController.js',
     // -- Documents -- //
         'documents/DocumentList.js',
         'documents/ShortDocument.js',
