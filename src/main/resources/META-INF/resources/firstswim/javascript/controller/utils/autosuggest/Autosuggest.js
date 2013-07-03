@@ -70,7 +70,9 @@ enyo.kind(
      * @param {String} newValue the new value
      */
     updateInputValue: function(newValue){
-        this.$.inputField.setValue(newValue);
+        if(this.$.inputField.getValue() !== newValue){
+            this.$.inputField.setValue(newValue);            
+        }
     },
 
     /**
