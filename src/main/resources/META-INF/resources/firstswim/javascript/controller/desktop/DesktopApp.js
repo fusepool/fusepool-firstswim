@@ -357,7 +357,7 @@ jQuery(document).ready(function () {
                  * @param {String} searchWord the searched word
                  */
                 updateEntityList: function(rdf, searchWord){
-                    var checkedEntities = this.getCheckedEntities(rdf);
+                    var checkedEntities = this.checkedEntitiesFromRdf(rdf);
 
                     // categories
                     var categories = [];
@@ -395,7 +395,7 @@ jQuery(document).ready(function () {
                     this.$.dictionaries.updateLists(dictionaryObject);
                 },
 
-                getCheckedEntities: function(rdf){
+                checkedEntitiesFromRdf: function(rdf){
                     var checkedEntities = [];
 
                     var subject = '';
