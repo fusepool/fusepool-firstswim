@@ -81,6 +81,9 @@ enyo.kind(
         this.owner[this.searchFunction](this.searchWord, this.checkedEntities);
     },
 
+    /**
+     * This function update the checked entity list
+     */
     updateCheckedDictionaries: function(){
         this.$.checkedList.destroyClientControls();
         for(var i=0; i<this.checkedEntities.length; i++){
@@ -99,6 +102,10 @@ enyo.kind(
         this.$.checkedList.render();
     },
 
+    /**
+     * This function update the dictionary list
+     * @param {Array} dictionaries list of the new dictionaries
+     */
     updateDictionaryList: function(dictionaries){
         this.$.list.destroyClientControls();
         if(dictionaries.length > 0){
@@ -110,7 +117,7 @@ enyo.kind(
                     dictionaryName: dictionaries[i].name,
                     entityList: dictionaries[i].entities,
                     searchFunction: 'filter',
-                    checkedEntities: this.uncheckedEntities,
+                    checkedEntities: this.checkedEntities,
                     showDetailsFunction: 'updateDetails'
                 });
             }

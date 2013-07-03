@@ -31,19 +31,27 @@ enyo.kind(
         this.inherited(arguments);
         this.$.nameDiv.setClasses(this.nameClass);
         this.$.nameDiv.setContent(this.dictionaryName);
+
+        var countOfElements = 0;
         for(var i=0;i<this.entityList.length;++i){
             var checked = this.isCheckedEntity(this.entityList[i]);
-            this.$.list.createComponent({
-                kind: 'DictionaryEntity',
-                classes: 'detailsDiv',
-                entityTextClass: 'entityText enyo-unselectable',
-                entityCheckboxClass: this.entityCheckboxClass,
-                detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
-                entityText: this.entityList[i],
-                parentFunction: 'updateEntities',
-                showDetailsFunction: 'updateDetails',
-                checked: checked
-            });
+            if(!checked){          
+                countOfElements++;
+                this.$.list.createComponent({
+                    kind: 'DictionaryEntity',
+                    classes: 'detailsDiv',
+                    entityTextClass: 'entityText enyo-unselectable',
+                    entityCheckboxClass: this.entityCheckboxClass,
+                    detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
+                    entityText: this.entityList[i],
+                    parentFunction: 'updateEntities',
+                    showDetailsFunction: 'updateDetails',
+                    checked: false
+                });
+            }
+        }
+        if(countOfElements === 0){
+            this.hide();
         }
     },
 
@@ -63,6 +71,8 @@ enyo.kind(
      * @return {Boolean} true, if it is checked, false otherwise
      */
     isCheckedEntity: function(entity){
+        console.log(this.checkedEntities);
+        console.log(entity);
         if(this.checkedEntities.indexOf(entity) !== -1){
             return true;
         }
