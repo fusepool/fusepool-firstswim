@@ -291,11 +291,15 @@ jQuery(document).ready(function () {
                     var url = this.createSearchURL(searchWord, checkedEntities);
                     var request = new enyo.Ajax({
                         method: 'GET',
-                        url: url,
+                        url: 'http://platform.fusepool.info/ecs/',
                         handleAs: 'text',
                         headers: { Accept: 'application/rdf+xml' }
                     });
-                    request.go();
+                    request.go({
+                        search: searchWord,
+                        subject: this.getCheckedEntities(checkedEntities)
+                        }
+                    );
                     request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord);
                     });
@@ -316,6 +320,17 @@ jQuery(document).ready(function () {
                     url = replaceAll(url, ' ', '_');
                     return url;
                 },
+
+                getCheckedEntities: function(checkedEntities){
+                    entities = [];
+                    for(var i=0;i<checkedEntities.length;i++){
+                        url = 'http://dbpedia.org/resource/' + checkedEntities[i];
+//                        replaceAll(url, ' ', '_');
+                        entities.push(url);
+                    }
+                    return entities;
+                },
+
 
                 /**
                  * This function runs after the ajax search's finish. This function call
