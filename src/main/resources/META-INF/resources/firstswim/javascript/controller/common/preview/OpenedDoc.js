@@ -142,11 +142,21 @@ enyo.kind(
         newText = newText.substring(0, newText.length-1);
 
         var parsedData = new DOMParser().parseFromString(newText,'text/xml');
-        this.rdf = jQuery.rdf();
-        this.rdf.load(parsedData, {});
+        var rdf = jQuery.rdf();
+        rdf.load(parsedData, {});
+
+        // rdf dump examples
+        console.log('------------------------------------------------------- JSON OBJECT -------------------------------------------------------');
+        console.log(rdf.databank.dump()); // <-- correct code, you get a json object
+        console.log('------------------------------------------------------- TEXT OF JSON OBJECT -------------------------------------------------------');
+        console.log(rdf.databank.dump({serialize: true})); // <-- correct code, you get a string from json object
+        console.log('------------------------------------------------------- TEXT OF RDF/XML -------------------------------------------------------');
+        console.log(rdf.databank.dump({format:'application/rdf+xml', serialize: true})); // <-- correct code, you get xml format
+        console.log('------------------------------------------------------- WRONG CODE -------------------------------------------------------');
+        console.log(jQuery.rdf.dump(rdf.databank)); // <-- wrong code, you get empty object, don't use ist
 
         var docText = '';
-        this.rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
+        rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
             docText = this.o.value;
         });
         if(docText === ''){

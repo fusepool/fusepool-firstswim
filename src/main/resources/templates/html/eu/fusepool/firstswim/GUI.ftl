@@ -8,6 +8,7 @@
     <title>FirstSwim</title>
     <!-- jquery and rdfquery -->
     <script src="firstswim/javascript/jquery/jquery.js" type="text/javascript"></script>
+    <script src="firstswim/javascript/jquery/jquery.json.js" type="text/javascript"></script>
     <script src="firstswim/javascript/jquery/rdfquery.js" type="text/javascript"></script>
     <!-- underscore -->
     <script src="firstswim/javascript/underscore/underscore.js" type="text/javascript"></script>
