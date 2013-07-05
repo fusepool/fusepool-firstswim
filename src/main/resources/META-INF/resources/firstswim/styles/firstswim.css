@@ -54,6 +54,7 @@ body{
 }
 
 .mainLogo {
+    cursor: pointer;
 	width: 271px;
 	height: 138px;
 	z-index: 1000;

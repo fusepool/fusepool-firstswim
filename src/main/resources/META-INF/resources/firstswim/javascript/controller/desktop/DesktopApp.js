@@ -51,7 +51,8 @@ jQuery(document).ready(function () {
                                 { name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
                                         {
                                                 name: 'mainLogo',
-                                                classes: 'mainLogo'
+                                                classes: 'mainLogo',
+                                                ontap: 'clickLogo'
                                         },
                                         {
                                                 kind: 'SearchBox',
@@ -130,8 +131,20 @@ jQuery(document).ready(function () {
                     }
                 ],
 
+                /**
+                 * This function is called, when the user click the login button.
+                 * It shows the login popup window.
+                 */
                 login: function(){
                     this.$.loginPopup.showLogin();
+                },
+
+                /**
+                 * This function is called when the user click on the logo.
+                 * It navigates to the fusepool main site
+                 */
+                clickLogo: function(){
+                    window.open(CONSTANTS.FUSEPOOL_MAIN_URL);
                 },
 
                 /**
