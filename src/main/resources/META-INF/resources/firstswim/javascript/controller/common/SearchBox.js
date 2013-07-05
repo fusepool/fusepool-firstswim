@@ -44,7 +44,7 @@ enyo.kind(
                 jsonProperty: 'sbsuggester',
                 onEnterParentFunction: 'search',
                 postWordInURL: true,
-                url: 'http://platform.fusepool.info/solr/default/suggester/sbsuggest?df=id&wt=json',
+                url: CONSTANTS.AUTOSUGGEST_URL,
                 wordParamName: 'q',
                 wordStartMatching: true
             },

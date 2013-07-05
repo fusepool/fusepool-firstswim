@@ -1,3 +1,12 @@
+var BASE_URL = 'http://platform.fusepool.info/';
+var CONSTANTS = {
+    SEARCH_URL: BASE_URL + 'ecs/',
+    DETAILS_URL: BASE_URL + 'entityhub/site/dbpedia/entity',
+    OPEN_DOC_URL: BASE_URL + 'ecs/meta',
+    AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
+    DBPEDIA_URL: 'http://dbpedia.org/resource/'
+};
+
 /**
  * Check the data is empty
  * @param {Object} data the data what the function checks

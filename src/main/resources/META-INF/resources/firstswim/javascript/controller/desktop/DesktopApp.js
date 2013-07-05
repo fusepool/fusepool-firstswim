@@ -288,49 +288,35 @@ jQuery(document).ready(function () {
                  * @param {String} checkedEntities the checked entities on the left side
                  */
                 ajaxSearch: function(searchWord, checkedEntities){
-                    var url = this.createSearchURL(searchWord, checkedEntities);
                     var request = new enyo.Ajax({
                         method: 'GET',
-                        url: 'http://platform.fusepool.info/ecs/',
+                        url: CONSTANTS.SEARCH_URL,
                         handleAs: 'text',
                         headers: { Accept: 'application/rdf+xml' }
                     });
                     request.go({
                         search: searchWord,
-                        subject: this.getCheckedEntities(checkedEntities)
-                        }
-                    );
+                        subject: this.createCheckedEntitiesURL(checkedEntities)
+                    });
                     request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord);
                     });
                 },
 
                 /**
-                 * This function create a request URL for the filtering from the searchword
-                 * and the unchecked entities.
-                 * @param {String} searchWord the search word
-                 * @param {String} checkedEntities the checked entities on the left side
-                 * @return {String} the created request URL
+                 * This function create the "checked entities" array for the search URL
+                 * @param {Array} checkedEntities array of checked entities
+                 * @returns {Array} the result array, which contains 
                  */
-                createSearchURL: function(searchWord, checkedEntities){
-                    var url = 'http://platform.fusepool.info/ecs/?search=' + searchWord;
+                createCheckedEntitiesURL: function(checkedEntities){
+                    var entities = [];
                     for(var i=0;i<checkedEntities.length;i++){
-                        url += '&subject=http://dbpedia.org/resource/' + checkedEntities[i];
-                    }
-                    url = replaceAll(url, ' ', '_');
-                    return url;
-                },
-
-                getCheckedEntities: function(checkedEntities){
-                    entities = [];
-                    for(var i=0;i<checkedEntities.length;i++){
-                        url = 'http://dbpedia.org/resource/' + checkedEntities[i];
-//                        replaceAll(url, ' ', '_');
+                        var url = CONSTANTS.DBPEDIA_URL + checkedEntities[i];
+                        url = replaceAll(url, ' ', '_');
                         entities.push(url);
                     }
                     return entities;
                 },
-
 
                 /**
                  * This function runs after the ajax search's finish. This function call

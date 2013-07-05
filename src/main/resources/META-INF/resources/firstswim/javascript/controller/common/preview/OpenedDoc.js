@@ -12,7 +12,7 @@ enyo.kind(
         noDataLabel: '',
         documentContentClass: '',
         loaderClass: '',
-		openedDocScrollerClass: '',
+        openedDocScrollerClass: ''
     },
 
     /**
@@ -106,11 +106,13 @@ enyo.kind(
         this.documentURL = documentURL;
         var request = new enyo.Ajax({
             method: 'GET',
-            url: 'http://platform.fusepool.info/ecs/meta?iri=' + documentURL,
+            url: CONSTANTS.OPEN_DOC_URL,
             handleAs: 'text',
             headers: { Accept: 'application/rdf+xml' }
         });
-        request.go();
+        request.go({
+            iri : documentURL
+        });
         request.response(this, function(inSender, inResponse) {
             this.processOpenDocResponse(inResponse);
         });

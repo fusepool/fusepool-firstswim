@@ -92,7 +92,7 @@ enyo.kind(
                 classes: 'detailsDiv',
                 entityTextClass: 'entityText enyo-unselectable',
                 entityCheckboxClass: this.entityCheckboxClass,
-                detailsURL: 'http://platform.fusepool.info/entityhub/site/dbpedia/entity',
+                detailsURL: CONSTANTS.DETAILS_URL,
                 entityText: this.checkedEntities[i],
                 parentFunction: 'filter',
                 showDetailsFunction: 'updateDetails',
