@@ -1,4 +1,4 @@
-var BASE_URL = 'http://platform.fusepool.com/';
+var BASE_URL = 'http://platform.fusepool.info/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'entityhub/site/dbpedia/entity',
