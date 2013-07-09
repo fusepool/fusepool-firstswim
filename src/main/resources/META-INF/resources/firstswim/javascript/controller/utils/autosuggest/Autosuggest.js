@@ -3,7 +3,7 @@
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
- * @version 1.8.3
+ * @version 1.8.4
 */
 enyo.kind(
 /** @lends AutoSuggest.prototype */
@@ -55,6 +55,29 @@ enyo.kind(
         this.$.inputField.setClasses(this.inputFieldClass);
         this.$.suggestDiv.setClasses(this.suggestDivClass);
         this.hideSuggest();
+    },
+
+    /**
+     * This functions runs after the rendering.
+     */
+    rendered: function(){
+        this.updateBackInput();
+    },
+
+    /**
+     * This function update the back input field after the rendering. If the user
+     * focus on the back input, the program set the focus to the front input.
+     * It requires jQuery.
+     */
+    updateBackInput: function(){
+        if(jQuery){
+            var backInput = jQuery('#' + this.$.backInputField.getId());
+            backInput.attr('readonly', 'true');
+            var frontInput = jQuery('#' + this.$.inputField.getId());
+            backInput.focus(function(){
+                frontInput.focus();
+            });
+        }
     },
 
     /** 
