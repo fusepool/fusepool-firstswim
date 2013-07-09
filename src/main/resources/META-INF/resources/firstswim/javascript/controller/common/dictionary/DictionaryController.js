@@ -104,7 +104,8 @@ enyo.kind(
                 entityTextClass: 'entityText enyo-unselectable',
                 entityCheckboxClass: this.entityCheckboxClass,
                 detailsURL: CONSTANTS.DETAILS_URL,
-                entityText: this.checkedEntities[i],
+                entityId: this.checkedEntities[i].id,
+                entityText: this.checkedEntities[i].text,
                 parentFunction: 'filter',
                 showDetailsFunction: 'updateDetails',
                 checked: true

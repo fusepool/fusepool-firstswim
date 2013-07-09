@@ -8,6 +8,7 @@ enyo.kind(
     name: 'DictionaryEntity',
 
     published: {
+        entityId: '',
         entityText: '',
         entityTextClass: '',
         entityCheckboxClass: '',
@@ -41,7 +42,7 @@ enyo.kind(
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
-            id: CONSTANTS.DBPEDIA_URL + replaceAll(this.entityText, ' ', '_')
+            id: CONSTANTS.DETAILS_SUBJECT_URL + replaceAll(this.entityId, ' ', '_')
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);
