@@ -9,7 +9,10 @@ enyo.kind(
 
     published: {
         dictionaryTitle: '',
-        scrollerClass: '',
+        openClasses: '',
+        closeClasses: '',
+        openScrollerClass: '',
+        closeScrollerClass: '',
         noContentLabel: '',
         searchFunction: '',
         entityCheckboxClass: '',
@@ -25,7 +28,8 @@ enyo.kind(
      */
     create: function(){
         this.inherited(arguments);
-        this.$.scroller.setClasses(this.scrollerClass);
+        this.setClasses(this.openClasses);
+        this.$.scroller.setClasses(this.openScrollerClass);
         this.$.title.setContent(this.dictionaryTitle);
         this.$.title.setClasses(this.titleClass);
         this.$.checkedDiv.hide();
@@ -34,15 +38,15 @@ enyo.kind(
     components: [
         { tag: 'div', name: 'title' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-                { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
-                    { tag: 'div', name: 'checkedDiv', components: [
-                        { tag: 'div', name: 'checkedList' },
-                        { classes: 'clear' },
-                        { tag: 'div', name: 'separator', classes: 'entitySeparator' }
-                    ]},
+            { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
+                { tag: 'div', name: 'checkedDiv', components: [
+                    { tag: 'div', name: 'checkedList' },
                     { classes: 'clear' },
-                    { tag: 'div', name: 'list' }
-                ]}
+                    { tag: 'div', name: 'separator', classes: 'entitySeparator' }
+                ]},
+                { classes: 'clear' },
+                { tag: 'div', name: 'list' }
+            ]}
         ]}
     ],
 
@@ -67,6 +71,8 @@ enyo.kind(
      * @param {Object} details the details object
      */
     updateDetails: function(details){
+        this.setClasses(this.closeClasses);
+        this.$.scroller.setClasses(this.closeScrollerClass);
         this.owner[this.showDetailsFunction](details);
     },
 

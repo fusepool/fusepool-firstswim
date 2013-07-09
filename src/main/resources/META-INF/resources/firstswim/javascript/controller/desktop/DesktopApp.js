@@ -86,13 +86,15 @@ jQuery(document).ready(function () {
                                 components: [
                                     {
                                             kind: 'DictionaryController',
-                                            classes: 'dictionaryList',
+                                            openClasses: 'dictionaryListOpen',
+                                            closeClasses: 'dictionaryListClose',
+                                            openScrollerClass: 'dictionaryListScrollOpen',
+                                            closeScrollerClass: 'dictionaryListScrollClose',
                                             entityCheckboxClass: 'dictionaryCheckbox',
                                             searchFunction: 'search',
                                             name: 'dictionaries',
                                             dictionaryTitle: 'DICTIONARIES',
                                             noContentLabel: 'No data available',
-                                            scrollerClass: 'dictionaryListScroll',
                                             titleClass: 'dictionariesMainTitle',
                                             showDetailsFunction: 'updateDetails'
                                     },
@@ -373,6 +375,10 @@ jQuery(document).ready(function () {
                 updateEntityList: function(rdf, searchWord){
                     var checkedEntities = this.checkedEntitiesFromRdf(rdf);
 
+                    rdf.where('?s ?p ?o').each(function(){
+                        console.log(this.s.value + "-" + this.p.value + "-" + this.o.value);
+                    });
+
                     // categories
                     var categories = [];
                     rdf.where('?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o').each(function(){
@@ -406,7 +412,24 @@ jQuery(document).ready(function () {
                         }
                     }
                     var dictionaryObject = { searchWord: searchWord, checkedEntities: checkedEntities, dictionaries: dictionaries };
+//                    dictionaryObject = this.fakeDictionaryObject();
                     this.$.dictionaries.updateLists(dictionaryObject);
+                },
+
+                /**
+                 * This function create fake dictionary object for testing
+                 */
+                fakeDictionaryObject: function(){
+                    result = {};
+                    result.searchWord = 'japan';
+                    var checkedEntities = ['New Zealand', 'Sebastian Vettel'];
+                    result.checkedEntities = checkedEntities;
+                    var dictionaries = [];
+                    var entities = [ 'egy', 'kettő', 'három'];
+                    dictionaries.push({ name: 'Egy', entities: entities });
+                    dictionaries.push({ name: 'Kettő', entities: entities });
+                    result.dictionaries = dictionaries;
+                    return result;
                 },
 
                 /**

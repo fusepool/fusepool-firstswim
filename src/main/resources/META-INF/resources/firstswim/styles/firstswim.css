@@ -161,11 +161,11 @@ body{
 
 /* ----- Details box ----- */
 .detailsBox {
-	position: absolute;
-	top: 290px;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
+    position: absolute;
+    top: 290px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .detailsMainTitle {
@@ -457,41 +457,74 @@ body{
 }
 
 /* ----- Dictionary and entity list ----- */
-.dictionaryList{
+.dictionaryListOpen{
     display: inline-block;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 290px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+}
+
+.dictionaryListClose{
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 290px;
 }
 
 .dictionaryListPanel {
-	margin: 12px 20px 20px 20px;
+    margin: 12px 20px 20px 20px;
 }
 
-.dictionaryListScroll{
+.dictionaryListScrollOpen{
     background-color: #ffffff;
-	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	position: absolute;
-	top: 50px;
-	left: 0px;
-	right: 0px;
-	height: 245px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
 }
 
-.dictionaryListMobileScroll{
+.dictionaryListScrollClose{
     background-color: #ffffff;
-	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	height: 250px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    height: 245px;
+}
+
+.dictionaryListMobileScrollOpen{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+}
+
+.dictionaryListMobileScrollClose{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 250px;
 }
 
 .dictionariesMainTitle{

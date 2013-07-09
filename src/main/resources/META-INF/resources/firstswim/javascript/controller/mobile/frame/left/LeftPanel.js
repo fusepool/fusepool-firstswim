@@ -26,9 +26,9 @@ enyo.kind(
      /*   { kind: 'enyo.Scroller', classes: 'dictionaryListMobileScroller', fit: true, touchOverscroll: false, components: [*/
             {
                 kind: 'DictionaryController',
-                classes: 'dictionaryMobileList',
+                openScrollerClass: 'dictionaryListMobileScrollOpen',
+                closeScrollerClass: 'dictionaryListMobileScrollClose',
                 entityCheckboxClass: 'dictionaryMobileCheckbox',
-                scrollerClass: 'dictionaryListMobileScroll',
                 searchFunction: 'search',
                 name: 'dictionaries',
                 /*dictionaryTitle: 'Dictionaries',*//*LL*/

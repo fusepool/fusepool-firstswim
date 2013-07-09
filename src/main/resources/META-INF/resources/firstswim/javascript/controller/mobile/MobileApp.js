@@ -319,7 +319,24 @@ jQuery(document).ready(function () {
                         }
                     }
                     var dictionaryObject = { searchWord: searchWord, checkedEntities: checkedEntities, dictionaries: dictionaries };
+//                    dictionaryObject = this.fakeDictionaryObject();
                     this.$.leftPanel.updateDictionaries(dictionaryObject);
+                },
+
+                /**
+                 * This function create fake dictionary object for testing
+                 */
+                fakeDictionaryObject: function(){
+                    result = {};
+                    result.searchWord = 'japan';
+                    var checkedEntities = ['New Ireland', 'South Korea', 'Sebastian Vettel'];
+                    result.checkedEntities = checkedEntities;
+                    var dictionaries = [];
+                    var entities = [ 'egy', 'kettő', 'három'];
+                    dictionaries.push({ name: 'Egy', entities: entities });
+                    dictionaries.push({ name: 'Kettő', entities: entities });
+                    result.dictionaries = dictionaries;
+                    return result;
                 },
 
                 /**
