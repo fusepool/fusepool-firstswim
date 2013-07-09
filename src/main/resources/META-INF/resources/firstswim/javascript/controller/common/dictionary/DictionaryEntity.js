@@ -10,16 +10,19 @@ enyo.kind(
     published: {
         entityId: '',
         entityText: '',
+        mainClass: '',
         entityTextClass: '',
         entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
         checked: false,
-        showDetailsFunction: ''
+        showDetailsFunction: '',
+        detailsStart: false
     },
 
     create: function(){
         this.inherited(arguments);
+        this.$.main.setClasses(this.mainClass);
         this.$.entityCheckbox.setValue(this.checked);
         this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
         this.$.entityLabel.setContent(this.entityText);
@@ -27,14 +30,31 @@ enyo.kind(
     },
 
     components: [
-        { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
-        { tag: 'span', name: 'entityLabel', ontap: 'getDetails' }
+        { tag: 'div', name: 'main', onenter: 'preDetails', onmouseout: 'stopDetails', components: [
+            { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
+            { tag: 'span', name: 'entityLabel', ontap: 'checkboxChange' }
+        ]}
     ],
+
+    preDetails: function(){
+        this.detailsStart = true;
+        var main = this;
+        setTimeout(function(){
+            if(main.detailsStart){
+                main.getDetails();
+            }
+        }, 1000);
+    },
+
+    stopDetails: function(){
+        this.detailsStart = false;
+    },
 
     /**
      * This function send an ajax request to get an entity's details
      */
     getDetails: function(){
+        console.log('get details');
         var request = new enyo.Ajax({
             method: 'GET',
             url: this.detailsURL,
@@ -160,7 +180,7 @@ enyo.kind(
      */
     checkboxChange: function(inSender){
         var cbValue = inSender.getValue();
-        this.owner.owner[this.parentFunction](this.entityText, cbValue);
+        this.owner.owner[this.parentFunction](this.entityId, this.entityText, cbValue);
     }
 
 });

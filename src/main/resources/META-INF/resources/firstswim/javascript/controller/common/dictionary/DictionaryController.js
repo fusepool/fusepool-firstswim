@@ -79,17 +79,36 @@ enyo.kind(
     /**
      * This function calls the parent's search function with searchword and the
      * checked entity list.
-     * @param {String} entity the last checked/unchecked entity
+     * @param {String} entityId id of the last checked/unchecked entity
+     * @param {String} entityText text of the last checked/unchecked entity
      * @param {String} checked the entity was checked or unchecked
      */
-    filter: function(entity, checked){
+    filter: function(entityId, entityText, checked){
+        var entityObject = {id: entityId, text: entityText};
         if(checked){
-            this.checkedEntities.push(entity);
+            this.checkedEntities.push(entityObject);
         } else {
-            var index = this.checkedEntities.indexOf(entity);
-            this.checkedEntities.splice(index, 1);
+            var index = this.indexOfEntity(entityObject);
+            if(index !== -1){
+                this.checkedEntities.splice(index, 1);   
+            }
         }
         this.owner[this.searchFunction](this.searchWord, this.checkedEntities);
+    },
+
+    /**
+     * This function search an entity object in the list of checked entities and
+     * return with the array index.
+     * @param {Object} entityObject the searched entity object
+     * @returns the array index if the list contains the entity, -1 otherwise
+     */
+    indexOfEntity: function(entityObject){
+        for(var i=0;i<this.checkedEntities.length;i++){
+            if(this.checkedEntities[i].id === entityObject.id){
+                return i;
+            }
+        }
+        return -1;
     },
 
     /**
@@ -100,7 +119,7 @@ enyo.kind(
         for(var i=0; i<this.checkedEntities.length; i++){
             this.$.checkedList.createComponent({
                 kind: 'DictionaryEntity',
-                classes: 'detailsDiv',
+                mainClass: 'detailsDiv',
                 entityTextClass: 'entityText enyo-unselectable',
                 entityCheckboxClass: this.entityCheckboxClass,
                 detailsURL: CONSTANTS.DETAILS_URL,

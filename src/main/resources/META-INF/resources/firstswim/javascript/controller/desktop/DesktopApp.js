@@ -311,7 +311,7 @@ jQuery(document).ready(function () {
                     });
                     request.go({
                         search: searchWord,
-                        subject: this.createCheckedEntitiesURL(checkedEntities)
+                        subject: this.getCheckedEntitesID(checkedEntities)
                     });
                     request.response(this, function(inSender, inResponse) {
                         this.processSearchResponse(inResponse, searchWord);
@@ -319,18 +319,17 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function create the "checked entities" array for the search URL
-                 * @param {Array} checkedEntities array of checked entities
-                 * @returns {Array} the result array, which contains 
+                 * This function create an array from the id-s of the checked
+                 * entites for the search query
+                 * @param {Array} checkedEntities the original checked entities
+                 * @returns {Array} the id-s of the checked entities
                  */
-                createCheckedEntitiesURL: function(checkedEntities){
-                    var entities = [];
+                getCheckedEntitesID: function(checkedEntities){
+                    var result = [];
                     for(var i=0;i<checkedEntities.length;i++){
-                        var url = CONSTANTS.DETAILS_SUBJECT_URL + checkedEntities[i].id;
-                        url = replaceAll(url, ' ', '_');
-                        entities.push(url);
+                        result.push(checkedEntities[i].id);
                     }
-                    return entities;
+                    return result;
                 },
 
                 /**
@@ -373,7 +372,6 @@ jQuery(document).ready(function () {
                  * @param {String} searchWord the searched word
                  */
                 updateEntityList: function(rdf, searchWord){
-                    
                     var checkedEntities = this.checkedEntitiesFromRdf(rdf);
                     var categories = this.getCategories(rdf);
 
@@ -396,7 +394,7 @@ jQuery(document).ready(function () {
                                 var entityText = replaceAll(category[j].entity + '', '_', ' ');
                                 var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
 
-                                entities.push({ id: entityId, text: entityName });
+                                entities.push({id: entityId, text:entityName });
                             }
                             dictionaries.push({ name: categoryName, entities: entities });
                         }
@@ -441,42 +439,22 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function create fake dictionary object for testing
-                 */
-                fakeDictionaryObject: function(){
-                    result = {};
-                    result.searchWord = 'japan';
-                    var checkedEntities = ['New Zealand', 'Sebastian Vettel'];
-                    result.checkedEntities = checkedEntities;
-                    var dictionaries = [];
-                    var entities = [ 'egy', 'kettő', 'három'];
-                    dictionaries.push({ name: 'Egy', entities: entities });
-                    dictionaries.push({ name: 'Kettő', entities: entities });
-                    result.dictionaries = dictionaries;
-                    return result;
-                },
-
-                /**
-                 * This function search the checked entities in an rdf object
+                 * This function search the checked entities in an rdf object and
+                 * return with it
                  * @param {Object} rdf the rdf object
                  * @returns {Array} the checked entity list
                  */
                 checkedEntitiesFromRdf: function(rdf){
-                    rdf.where('?s ?p ?o').each(function(){
-                        console.log(this.s.value + '-' + this.p.value + '-' + this.o.value);
-                    });
-                    
                     var checkedEntities = [];
-                    var subject = '';
-                    rdf.where('?s ?p <http://fusepool.eu/ontologies/ecs#ContentStoreView>').each(function(){
-                        subject = '<' + this.s.value + '>';
+                    var ids = [];
+                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#subject> ?o').each(function(){
+                        ids.push(this.o.value + '');
                     });
-                    rdf.where(subject + ' <http://fusepool.eu/ontologies/ecs#subject> ?o').each(function(){
-                        // Entity
-                        var entityText = replaceAll(this.o.value + '', '_', ' ');
-                        var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
-                        checkedEntities.push(entityName);
-                    });
+                    for(var i=0;i<ids.length;i++){
+                        rdf.where('<'+ ids[i] +'> <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
+                            checkedEntities.push({id: ids[i], text: this.o.value});
+                        });
+                    }
                     return checkedEntities;
                 },
 
