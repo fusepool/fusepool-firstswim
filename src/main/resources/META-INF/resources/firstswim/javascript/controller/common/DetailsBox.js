@@ -11,8 +11,8 @@ enyo.kind(
     published: {
         scrollerClass: '',
         titleClass: '',
-		detailsMainTitle: '',
-		mainTitleClass: '',
+        detailsMainTitle: '',
+        mainTitleClass: '',
         imageClass: '',
         contentClass: '',
         touchScroll: true
@@ -30,6 +30,7 @@ enyo.kind(
         this.$.detailsTitle.setClasses(this.titleClass);
         this.$.detailsImage.setClasses(this.imageClass);
         this.$.detailsContent.setClasses(this.contentClass);
+        this.hide();
     },
 
     components: [
@@ -58,6 +59,7 @@ enyo.kind(
             this.$.detailsImage.show();
         }
         this.$.detailsContent.setContent(detailsObject.content);
+        this.show();
     },
 
     /**
