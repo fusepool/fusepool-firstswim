@@ -28,13 +28,18 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.title.setContent(this.dictionaryTitle);
         this.$.title.setClasses(this.titleClass);
+        this.$.checkedDiv.hide();
     },
     
     components: [
         { tag: 'div', name: 'title' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
                 { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
-                    { tag: 'div', name: 'checkedList' },
+                    { tag: 'div', name: 'checkedDiv', components: [
+                        { tag: 'div', name: 'checkedList' },
+                        { classes: 'clear' },
+                        { tag: 'div', name: 'separator', classes: 'entitySeparator' }
+                    ]},
                     { classes: 'clear' },
                     { tag: 'div', name: 'list' }
                 ]}
@@ -98,6 +103,11 @@ enyo.kind(
                 showDetailsFunction: 'updateDetails',
                 checked: true
             });
+        }
+        if(this.checkedEntities.length > 0){
+            this.$.checkedDiv.show();
+        } else {
+            this.$.checkedDiv.hide();
         }
         this.$.checkedList.render();
     },

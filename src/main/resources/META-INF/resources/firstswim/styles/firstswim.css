@@ -730,6 +730,14 @@ body{
 
 /************* COMMON *************/
 
+/* ----- Entity ----- */
+.entitySeparator{
+    width: 100%;
+    height: 1px;
+    background-color: #9ba09f;
+    margin-top: 15px;
+}
+
 .popupCloseButton {
     width: 30px;
     height: 30px;
