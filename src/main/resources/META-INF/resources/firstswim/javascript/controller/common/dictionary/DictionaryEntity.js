@@ -50,7 +50,7 @@ enyo.kind(
                     main.stopDetails();
                     main.getDetails();
                 }
-            }, 1000);
+            }, 400);
         }
     },
 
