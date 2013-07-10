@@ -159,24 +159,8 @@ enyo.kind(
         rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#comment> ?o').each(function(){
             content = this.o.value;
         });
-        content = this.deleteSpeechMarks(content);
+        content = deleteSpeechMarks(content);
         return content;
-    },
-
-    /**
-     * Delete speech marks (") form the first and last character of text
-     * @param {String} text the text what the function check
-     * @return {String} the string without " characters
-     */
-    deleteSpeechMarks: function(text){
-        var result = text;
-        if(result.charAt(0) === '"'){
-            result = result.substr(1);
-        }
-        if(result.charAt(result.length-1) === '"'){
-            result = result.substr(0, result.length-1);
-        }
-        return result;
     },
 
     /**

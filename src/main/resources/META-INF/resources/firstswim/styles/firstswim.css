@@ -637,10 +637,15 @@ body{
 }
 
 .shortDocument{
-	background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
+    background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
     border-bottom: 5px solid #cacaca;
     font-size: 13px;
     padding: 10px 10px 10px 53px;
+}
+
+.shortDocumentTitle{
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 .shortDocument:hover {

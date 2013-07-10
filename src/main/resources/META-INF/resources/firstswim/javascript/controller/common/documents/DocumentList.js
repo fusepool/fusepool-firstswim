@@ -49,11 +49,13 @@ enyo.kind(
                 this.createComponent({
                     kind: 'ShortDocument',
                     classes: 'shortDocumentContainer',
+                    titleClass: 'shortDocumentTitle',
                     contentClass: 'shortDocument',
                     openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
                     url: documents[i].url,
+                    title: documents[i].title,
                     shortContent: documents[i].shortContent,
                     parentFunction: 'openDoc'
                 });

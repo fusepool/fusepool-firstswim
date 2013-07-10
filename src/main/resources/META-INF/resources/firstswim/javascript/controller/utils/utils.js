@@ -75,3 +75,19 @@ function replaceAll(text, from, to){
         return '';
     }
 }
+
+/**
+ * Delete speech marks (") form the first and last character of text
+ * @param {String} text the text what the function check
+ * @return {String} the string without " characters
+ */
+function deleteSpeechMarks(text){
+    var result = text;
+    if(result.charAt(0) === '"'){
+        result = result.substr(1);
+    }
+    if(result.charAt(result.length-1) === '"'){
+        result = result.substr(0, result.length-1);
+    }
+    return result;
+}

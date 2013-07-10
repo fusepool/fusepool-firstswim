@@ -483,10 +483,34 @@ jQuery(document).ready(function () {
                  */
                 updateDocumentList: function(rdf){
                     var documents = [];
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?o').each(function(){
-                        documents.push({ url: this.s.value, shortContent:  this.o.value});
+                    var main = this;
+                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
+                        .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
+                            var url = this.s.value + '';
+                            var content = deleteSpeechMarks(this.preview.value + '');
+                            var title = deleteSpeechMarks(this.title.value + '');
+                            if(this.title.lang + '' === 'en' && !main.containsDocument(documents, content, title)){
+                                documents.push({url: url, shortContent: content, title: title});
+                            }
                     });
                     this.$.documents.updateList(documents);
+                },
+
+                /**
+                 * This function decide that a document list contains a document,
+                 * which has a same content and same title with another.
+                 * @param {Array} documents the list of documents
+                 * @param {String} content content of the other document
+                 * @param {String} title title of the other document
+                 * @returns {Boolean} true, if the list contains, false otherwise
+                 */
+                containsDocument: function(documents, content, title){
+                    for(var i=0;i<documents.length;i++){
+                        if(documents[i].shortContent === content && documents[i].title === title){
+                            return true;
+                        }
+                    }
+                    return false;
                 },
 
                 /**

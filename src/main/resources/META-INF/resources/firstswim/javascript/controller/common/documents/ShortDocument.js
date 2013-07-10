@@ -9,7 +9,9 @@ enyo.kind(
 
     published: {
         url: '',
-        shortContent: null,
+        title: '',
+        titleClass: '',
+        shortContent: '',
         openDocEvent: '',
         parentFunction: '',
         contentClass: '',
@@ -22,13 +24,16 @@ enyo.kind(
      */
     create: function(){
         this.inherited(arguments);
+        this.$.shortDoc.setClasses(this.contentClass);
         this.$.shortDoc[this.openDocEvent] = 'openDoc';
+        this.$.title.setContent(this.title);
+        this.$.title.setClasses(this.titleClass);
         this.$.content.setContent(this.shortContent);
-        this.$.content.setClasses(this.contentClass);
     },
 
     components: [
         { name: 'shortDoc', components: [
+            { tag: 'div', name: 'title' },
             { tag: 'div', name: 'content' }
         ]}
     ],
