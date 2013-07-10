@@ -32,20 +32,31 @@ enyo.kind(
     components: [
         { tag: 'div', name: 'main', onenter: 'preDetails', onmouseout: 'stopDetails', components: [
             { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
-            { tag: 'span', name: 'entityLabel', ontap: 'checkboxChange' }
+            { tag: 'span', name: 'entityLabel', ontap: 'entityClick', onenter: 'preDetails', onmouseout: 'stopDetails' }
         ]}
     ],
 
+    /**
+     * This function is called when the user hover the mouse over an entity.
+     * It waits for one second and if the user didn't leave the entity, it calls
+     * the details function.
+     */
     preDetails: function(){
-        this.detailsStart = true;
-        var main = this;
-        setTimeout(function(){
-            if(main.detailsStart){
-                main.getDetails();
-            }
-        }, 1000);
+        if(!this.detailsStart){
+            this.detailsStart = true;
+            var main = this;
+            setTimeout(function(){
+                if(main.detailsStart){
+                    main.stopDetails();
+                    main.getDetails();
+                }
+            }, 1000);
+        }
     },
 
+    /**
+     * It stopped the details if the user move out the mouse from the entity.
+     */
     stopDetails: function(){
         this.detailsStart = false;
     },
@@ -54,7 +65,6 @@ enyo.kind(
      * This function send an ajax request to get an entity's details
      */
     getDetails: function(){
-        console.log('get details');
         var request = new enyo.Ajax({
             method: 'GET',
             url: this.detailsURL,
@@ -62,7 +72,7 @@ enyo.kind(
             headers: { Accept: 'application/rdf+xml' }
         });
         request.go({
-            id: CONSTANTS.DETAILS_SUBJECT_URL + replaceAll(this.entityId, ' ', '_')
+            iri: this.entityId
         });
         request.response(this, function(inSender, inResponse) {
             this.processDetailsResponse(inResponse);
@@ -134,11 +144,8 @@ enyo.kind(
     getTitle: function(rdf){
         var title = '';
         rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
-            if(this.o.lang === 'en'){
-                title = this.o.value;
-            }
+            title = this.o.value + '';
         });
-        title = this.deleteSpeechMarks(title);
         return title;
     },
 
@@ -174,12 +181,28 @@ enyo.kind(
 
     /**
      * This function is called when the user check/uncheck the checkbox.
-     * It call's the parent filter function with the entity, and the
-     * checked/unchecked parameter
+     * It calls the callParent function.
      * @param {Object} inSender the checkbox component
      */
     checkboxChange: function(inSender){
         var cbValue = inSender.getValue();
+        this.callParent(cbValue);
+    },
+
+    /**
+     * This function is called when the user click on an entity.
+     */
+    entityClick: function(){
+        var cbValue = !this.$.entityCheckbox.getValue();
+        this.callParent(cbValue);
+    },
+
+    /**
+     * This function calls the parent's search function with the clicked entity
+     * and the new checkbox value.
+     * @param {Boolean} cbValue new checkbox value
+     */
+    callParent: function(cbValue){
         this.owner.owner[this.parentFunction](this.entityId, this.entityText, cbValue);
     }
 
