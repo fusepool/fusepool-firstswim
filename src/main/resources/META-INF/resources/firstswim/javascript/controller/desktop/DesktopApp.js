@@ -487,13 +487,29 @@ jQuery(document).ready(function () {
                     rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
                         .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
                             var url = this.s.value + '';
-                            var content = deleteSpeechMarks(this.preview.value + '');
+                            var content = main.getContentForDocumentId(rdf, url);
                             var title = deleteSpeechMarks(this.title.value + '');
                             if(this.title.lang + '' === 'en' && !main.containsDocument(documents, content, title)){
                                 documents.push({url: url, shortContent: content, title: title});
                             }
                     });
                     this.$.documents.updateList(documents);
+                },
+
+                /**
+                 * This function search content for a document in an rdf object.
+                 * @param {Object} rdf the rdf object
+                 * @param {String} url of the document
+                 * @returns {String} content of the document (might be empty)
+                 */
+                getContentForDocumentId: function(rdf, url){
+                    var content = '';
+                    rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
+                        if(this.o.lang + '' === 'en'){
+                            content = deleteSpeechMarks(this.o.value + '');
+                        }
+                    });
+                    return content;
                 },
 
                 /**
