@@ -87,11 +87,12 @@ enyo.kind(
     },
 
     /**
-     * This function calls the details box update function with a new details object
-     * @param {Object} detailsObject the new object
+     * This function calls the details box content update function.
+     * @param {String} title the title of the details
+     * @param {Object} addressObject the address object
      */
-    updateDetails: function(detailsObject){
-        this.$.detailsBox.updateDetails(detailsObject);
+    updateDetails: function(title, addressObject){
+        this.$.detailsBox.updateDetails(title, addressObject);
     },
 
     /**

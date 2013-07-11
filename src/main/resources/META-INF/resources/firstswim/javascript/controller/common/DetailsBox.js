@@ -49,9 +49,11 @@ enyo.kind(
     updateDetails: function(title, addressObject){
         this.scrollToTop();
         this.$.detailsTitle.setContent(title);
-        this.$.country.setContent(this.getCountryCode(addressObject.country));
-        this.$.local.setContent(addressObject.locality);
-        this.$.street.setContent(addressObject.street);
+        if(!isEmpty(addressObject)){   
+            this.$.country.setContent(this.getCountryCode(addressObject.country));
+            this.$.local.setContent(addressObject.locality);
+            this.$.street.setContent(addressObject.street);
+        }
         this.show();
     },
 

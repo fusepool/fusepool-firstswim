@@ -90,7 +90,7 @@ enyo.kind(
         if(!isEmpty(addressID)){
             this.getAddresses(addressID, title);   
         } else {
-            showDetails(title);
+            this.showDetails(title);
         }
     },
 
