@@ -38,7 +38,7 @@ enyo.kind(
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content' }
         ]}
     ],
 
@@ -83,16 +83,33 @@ enyo.kind(
     /**
      * This function shows a document.
      * @param {String} docText the document's content
+     * @param {String} title the document's title
      */
-    showDoc: function(docText){
+    showDoc: function(docText, title){
+        jQuery("#" + this.$.content.getId()).empty();
+        var content = '';
         if(docText !== ''){
             var documentContent = docText.replace(/\|/g,'<br/>');
-            this.$.content.setContent(documentContent);
+            content = documentContent;
         } else {
-            this.$.content.setContent(this.noDataLabel);
+            content = this.noDataLabel;
         }
         this.scrollToTop();
         this.$.loader.hide();
+
+        this.renderPreviewTemplate(title, content);
+    },
+
+    /**
+     * This function render the preview document content with Handlebars template.
+     * @param {String} title the title of the document
+     * @param {String} content the content of the document
+     */
+    renderPreviewTemplate: function(title, content){
+        var templateScript = $("#preview-template").html(); 
+        var template = Handlebars.compile(templateScript);
+        var shoesData = { title: title, content: content };
+        $("#" + this.$.content.getId()).append(template(shoesData));
     },
 
     /**
@@ -110,9 +127,7 @@ enyo.kind(
             handleAs: 'text',
             headers: { Accept: 'application/rdf+xml' }
         });
-        request.go({
-            iri : documentURL
-        });
+        request.go({ iri : documentURL });
         request.response(this, function(inSender, inResponse) {
             this.processOpenDocResponse(inResponse);
         });
@@ -145,8 +160,6 @@ enyo.kind(
         var rdf = jQuery.rdf();
         rdf.load(parsedData, {});
 
-        console.log(rdf.databank.dump()); // <-- correct code, you get a json object
-
         var docText = '';
         rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
             docText = this.o.value;
@@ -154,7 +167,7 @@ enyo.kind(
         if(docText === ''){
             docText = this.noDataLabel;
         }
-        this.showDoc(docText);
+        this.showDoc(docText, "This will be the title");
     },
 
     /**

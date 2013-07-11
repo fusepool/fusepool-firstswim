@@ -10,7 +10,7 @@ enyo.kind(
     published: {
         menu: null,
         previewBoxMainTitle: '',
-        previewBoxMainTitleClass: '',
+        previewBoxMainTitleClass: ''
     },
 
     create: function(){

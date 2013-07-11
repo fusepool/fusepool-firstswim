@@ -12,6 +12,8 @@
     <script src="firstswim/javascript/jquery/rdfquery.js" type="text/javascript"></script>
     <!-- underscore -->
     <script src="firstswim/javascript/underscore/underscore.js" type="text/javascript"></script>
+    <!-- handlebars -->
+    <script src="firstswim/javascript/handlebars/handlebars.js" type="text/javascript"></script>
     <!-- enyojs -->
     <script src="firstswim/javascript/enyo/enyo.js" type="text/javascript"></script>
     <script src="firstswim/javascript/lib/layout/package.js" type="text/javascript"></script>
