@@ -13,8 +13,6 @@ enyo.kind(
         titleClass: '',
         detailsMainTitle: '',
         mainTitleClass: '',
-        imageClass: '',
-        contentClass: '',
         touchScroll: true
     },
 
@@ -28,38 +26,42 @@ enyo.kind(
         this.$.detailsMainTitle.setContent(this.detailsMainTitle);
         this.$.detailsMainTitle.setClasses(this.mainTitleClass);
         this.$.detailsTitle.setClasses(this.titleClass);
-        this.$.detailsImage.setClasses(this.imageClass);
-        this.$.detailsContent.setClasses(this.contentClass);
         this.hide();
     },
 
     components: [
-		{ name: 'detailsMainTitle' },
+        { name: 'detailsMainTitle' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-			{ name: 'detailsPanel', classes: 'detailsPanel', components: [
-				{ tag: 'div', name: 'detailsTitle' },
-				{ kind: enyo.Image, name: 'detailsImage' },
-				{ tag: 'div', name: 'detailsContent' }
-			]}
+            { name: 'detailsPanel', classes: 'detailsPanel', components: [
+                { tag: 'div', name: 'detailsTitle' },
+                { tag: 'div', name: 'country' },
+                { tag: 'div', name: 'local' },
+                { tag: 'div', name: 'street' }
+            ]}
         ]}
     ],
 
     /**
-     * This function update the details box from a details object.
-     * @param {Object} detailsObject the object which conatins a title, a content and an image
+     * This function updates the content of the details
+     * @param {String} title the title of the details
+     * @param {Object} addressObject the address object
      */
-    updateDetails: function(detailsObject){
+    updateDetails: function(title, addressObject){
         this.scrollToTop();
-        this.$.detailsTitle.setContent(detailsObject.title);
-        var image = detailsObject.image;
-        if(isEmpty(image)){
-            this.$.detailsImage.hide();
-        } else {
-            this.$.detailsImage.setSrc(image);
-            this.$.detailsImage.show();
-        }
-        this.$.detailsContent.setContent(detailsObject.content);
+        this.$.detailsTitle.setContent(title);
+        this.$.country.setContent(this.getCountryCode(addressObject.country));
+        this.$.local.setContent(addressObject.locality);
+        this.$.street.setContent(addressObject.street);
         this.show();
+    },
+
+    /**
+     * This functions returns the country code from a URL
+     * @param {String} countryURL the url
+     * @returns {String} the country code
+     */
+    getCountryCode: function(countryURL){
+        return countryURL.substring(countryURL.lastIndexOf('/')+1);
     },
 
     /**

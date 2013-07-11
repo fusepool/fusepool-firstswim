@@ -3,6 +3,7 @@ var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
+    ADDRESS_URL: BASE_URL + 'ecs/meta',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com'

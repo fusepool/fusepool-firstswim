@@ -40,6 +40,7 @@ enyo.kind(
                 this.$.list.createComponent({
                     kind: 'DictionaryEntity',
                     mainClass: 'detailsDiv',
+                    addressURL: CONSTANTS.ADDRESS_URL,
                     entityTextClass: 'entityText enyo-unselectable',
                     entityCheckboxClass: this.entityCheckboxClass,
                     detailsURL: CONSTANTS.DETAILS_URL,
@@ -58,11 +59,13 @@ enyo.kind(
 
     /**
      * After the user over the mouse an entity, the program gets the details about
-     * the chosen entity, and this function is called for update the details box.
-     * @param {Object} details the details object, which contains information about the entity
+     * the chosen entity, and this function is called for update the details box
+     * with the details title and an address object.
+     * @param {String} title the title of the details
+     * @param {Object} addressObject the address objects
      */
-    updateDetails: function(details){
-        this.owner.owner[this.showDetailsFunction](details);
+    updateDetails: function(title, addressObject){
+        this.owner.owner[this.showDetailsFunction](title, addressObject);
     },
 
     /**

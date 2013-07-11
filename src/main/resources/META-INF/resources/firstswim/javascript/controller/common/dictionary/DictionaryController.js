@@ -65,15 +65,16 @@ enyo.kind(
     },
 
     /**
-     * This function is called by a "child" dictionary, because the user would like
-     * to see a details of an entity. This function call the parent's function,
-     * which show the details.
-     * @param {Object} details the details object
+     * After the user over the mouse an entity, the program gets the details about
+     * the chosen entity, and this function is called for update the details box
+     * with the details title and an address object.
+     * @param {String} title the title of the details
+     * @param {Object} addressObject the address objects
      */
-    updateDetails: function(details){
+    updateDetails: function(title, addressObject){
         this.setClasses(this.closeClasses);
         this.$.scroller.setClasses(this.closeScrollerClass);
-        this.owner[this.showDetailsFunction](details);
+        this.owner[this.showDetailsFunction](title, addressObject);
     },
 
     /**
@@ -120,6 +121,7 @@ enyo.kind(
             this.$.checkedList.createComponent({
                 kind: 'DictionaryEntity',
                 mainClass: 'detailsDiv',
+                addressURL: CONSTANTS.ADDRESS_URL,
                 entityTextClass: 'entityText enyo-unselectable',
                 entityCheckboxClass: this.entityCheckboxClass,
                 detailsURL: CONSTANTS.DETAILS_URL,
