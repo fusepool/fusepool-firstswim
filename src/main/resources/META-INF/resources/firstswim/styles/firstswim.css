@@ -49,12 +49,11 @@ body{
 
 .toolbarCenter {
 	position: relative;
-	margin: auto;
 	width: 980px;
 }
 
 .mainLogo {
-    cursor: pointer;
+	cursor: pointer;
 	width: 271px;
 	height: 138px;
 	z-index: 1000;
@@ -62,6 +61,7 @@ body{
 	position: absolute;
 	top: 5px;
 	left: 0px;
+	
 }
 
 /* ----------- Login ----------- */
@@ -155,7 +155,7 @@ body{
 	top: 75px;
 	bottom: 10px;
 	left: 10px;
-	width: 420px;
+	width: 320px;
     /*-vertical-align: top;*/
 }
 
@@ -243,10 +243,10 @@ body{
 .documentList{
 	position: absolute;
 	top: 75px;
-	left: 450px;
+	left: 350px;
 	bottom: 10px;
     display: inline-block;
-    width: 490px;
+    width: 590px;
 }
 
 .documentListScroll {
@@ -632,7 +632,7 @@ body{
 .shortDocumentContainer{
 	cursor: pointer;
     position: relative;
-	margin: 20px;
+	margin: 10px;
 	word-wrap: break-word;
 }
 
@@ -794,7 +794,7 @@ body{
 }
 
 .searchBox {
-	margin: auto;
+	margin-left: 350px;
 	padding: 15px 0px 0px 0px;
     width: 400px;
     position: relative;
