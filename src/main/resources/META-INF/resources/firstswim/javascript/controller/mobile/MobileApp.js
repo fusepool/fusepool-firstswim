@@ -155,7 +155,7 @@ jQuery(document).ready(function () {
                         // Unchecked entities
                         var entities = this.getCheckedEntities();
                         for(var i=0;i<entities.length;i++){
-                            url += '&entity=' + entities[i];
+                            url += '&entity=' + entities[i].id;
                         }
                         // Preview document
                         var documentURL = this.$.rightPanel.getDocumentURL();
