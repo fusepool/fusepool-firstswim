@@ -32,7 +32,6 @@ enyo.kind(
                 searchFunction: 'search',
                 name: 'dictionaries',
                 /*dictionaryTitle: 'Dictionaries',*//*LL*/
-                noContentLabel: 'No data available',
                 titleClass: 'dictionariesMainTitle',
                 showDetailsFunction: 'updateDetails'
             }

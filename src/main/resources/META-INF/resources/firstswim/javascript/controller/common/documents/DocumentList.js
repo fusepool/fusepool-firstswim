@@ -44,7 +44,9 @@ enyo.kind(
      * and shows the loader.
      */
     startSearching: function(){
+        this.$.list.setContent('');
         this.$.list.destroyClientControls();
+        this.$.list.render();
         this.$.loader.show();
     },
 

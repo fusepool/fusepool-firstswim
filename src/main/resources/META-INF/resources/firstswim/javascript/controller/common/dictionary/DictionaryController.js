@@ -13,7 +13,6 @@ enyo.kind(
         closeClasses: '',
         openScrollerClass: '',
         closeScrollerClass: '',
-        noContentLabel: '',
         searchFunction: '',
         entityCheckboxClass: '',
         titleClass: '',
@@ -159,11 +158,8 @@ enyo.kind(
                     showDetailsFunction: 'updateDetails'
                 });
             }
-            this.$.list.render();
-        } else {
-            this.$.list.setContent(this.noContentLabel);
-            this.$.list.render();
         }
+        this.$.list.render();
     }
 
 });

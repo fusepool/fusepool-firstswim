@@ -94,7 +94,6 @@ jQuery(document).ready(function () {
                                             searchFunction: 'search',
                                             name: 'dictionaries',
                                             dictionaryTitle: 'DICTIONARIES',
-                                            noContentLabel: 'No data available',
                                             titleClass: 'dictionariesMainTitle',
                                             showDetailsFunction: 'updateDetails'
                                     },
