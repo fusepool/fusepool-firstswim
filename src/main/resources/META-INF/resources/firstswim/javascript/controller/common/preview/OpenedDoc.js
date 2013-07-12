@@ -107,8 +107,8 @@ enyo.kind(
     renderPreviewTemplate: function(title, content){
         var templateScript = $("#preview-template").html(); 
         var template = Handlebars.compile(templateScript);
-        var shoesData = { title: title, content: content };
-        $("#" + this.$.content.getId()).append(template(shoesData));
+        var previewData = { title: title, content: content };
+        $("#" + this.$.content.getId()).append(template(previewData));
     },
 
     /**
