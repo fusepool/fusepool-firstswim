@@ -48,7 +48,7 @@ enyo.kind(
                 wordParamName: 'q',
                 wordStartMatching: true
             },
-            { name: 'searchIcon', tag: 'div' }
+            { name: 'searchIcon', tag: 'div', ontap: 'search' }
         ]},
         { name: 'searchButton', kind: onyx.Button, ontap: 'search' }
     ],

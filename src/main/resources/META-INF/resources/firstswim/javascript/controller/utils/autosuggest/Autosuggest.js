@@ -3,7 +3,7 @@
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
- * @version 1.8.4
+ * @version 1.8.5
 */
 enyo.kind(
 /** @lends AutoSuggest.prototype */
@@ -61,7 +61,9 @@ enyo.kind(
      * This functions runs after the rendering.
      */
     rendered: function(){
+        this.inherited(arguments);
         this.updateBackInput();
+        this.$.inputField.focus();
     },
 
     /**
