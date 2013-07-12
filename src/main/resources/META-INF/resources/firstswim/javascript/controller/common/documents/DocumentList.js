@@ -23,18 +23,30 @@ enyo.kind(
      */
     create: function(){
         this.inherited(arguments);
+        this.$.loader.hide();
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.title.hide();
+        this.$.loader.setClasses(this.loaderClass);
         this.$.scroller.setClasses(this.scrollerClass);
     },
 
     components: [
-		{ tag: 'div', name: 'title' },
+        { tag: 'div', name: 'title' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-			{ tag: 'div', name: 'list' }
-		]}
+            { name: 'loader' },
+            { tag: 'div', name: 'list' }
+        ]}
     ],
+
+    /**
+     * This function runs, when the user start a searching. It clears the list
+     * and shows the loader.
+     */
+    startSearching: function(){
+        this.$.list.destroyClientControls();
+        this.$.loader.show();
+    },
 
     /**
      * This function update the document list from a documents object. This
@@ -60,9 +72,11 @@ enyo.kind(
                     parentFunction: 'openDoc'
                 });
             }
+            this.$.loader.hide();
             this.$.list.render();
         } else {
             this.$.list.setContent(this.noDataLabel);
+            this.$.loader.hide();
             this.$.list.render();
         }
         this.$.title.show();

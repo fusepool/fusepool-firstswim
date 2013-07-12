@@ -203,6 +203,7 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
+                        this.$.middlePanel.startSearching();
                         this.$.middlePanel.updateInput(this.searchWord);
                         this.ajaxSearch(searchWord, checkedEntities);
                     }

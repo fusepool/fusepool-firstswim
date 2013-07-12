@@ -115,6 +115,7 @@ jQuery(document).ready(function () {
                                 openDocFunction: 'openDoc',
                                 openDocEvent: 'ontap',
                                 classes: 'documentList',
+                                loaderClass: 'loader',
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
                                 titleContent: 'DOCUMENTS',
@@ -290,6 +291,7 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
+                        this.$.documents.startSearching();
                         this.$.searchBox.updateInput(this.searchWord);
                         this.ajaxSearch(searchWord, checkedEntities);
                     }

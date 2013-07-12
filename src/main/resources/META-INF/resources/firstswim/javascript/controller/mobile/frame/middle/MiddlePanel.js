@@ -41,16 +41,24 @@ enyo.kind(
             {
                 kind: 'DocumentList',
                 name: 'documents',
-				titleClass: '',
                 openDocFunction: 'openDoc',
                 classes: 'documentMobileList',
-				scrollerClass: 'documentListMobileScroll',
+                scrollerClass: 'documentListMobileScroll',
                 titleClass: 'documentsMainTitle',
+                loaderClass: 'loader',
                 titleContent: 'DOCUMENTS',
                 noDataLabel: 'No data available'
             }
       /*  ]}*/
     ],
+
+    /**
+     * This function runs, when the user start a searching. It calls the document
+     * list's startSearching function
+     */
+    startSearching: function(){
+        this.$.documents.startSearching();
+    },
  
     /**
      * This function calls the parent's create bookmark function.
