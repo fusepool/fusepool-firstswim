@@ -392,7 +392,10 @@ jQuery(document).ready(function () {
                                 var entityText = replaceAll(category[j].entity + '', '_', ' ');
                                 var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
 
-                                entities.push({id: entityId, text:entityName });
+                                var entity = {id: entityId, text:entityName };
+                                if(!this.containsEntity(entities, entity)){
+                                    entities.push(entity);
+                                }
                             }
                             dictionaries.push({ name: categoryName, entities: entities });
                         }
@@ -443,6 +446,7 @@ jQuery(document).ready(function () {
                  * @returns {Array} the checked entity list
                  */
                 checkedEntitiesFromRdf: function(rdf){
+                    var main = this;
                     var checkedEntities = [];
                     var ids = [];
                     rdf.where('?s <http://fusepool.eu/ontologies/ecs#subject> ?o').each(function(){
@@ -450,10 +454,28 @@ jQuery(document).ready(function () {
                     });
                     for(var i=0;i<ids.length;i++){
                         rdf.where('<'+ ids[i] +'> <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
-                            checkedEntities.push({id: ids[i], text: this.o.value});
+                            var entity = {id: ids[i], text: this.o.value};
+                            if(!main.containsEntity(checkedEntities, entity)){
+                                checkedEntities.push(entity);   
+                            }
                         });
                     }
                     return checkedEntities;
+                },
+
+                /**
+                 * This function decide that an entity list contains an entity or not
+                 * @param {Array} entities the array of the entitites
+                 * @param {String} entity the entity
+                 * @returns {Boolean} true, if the list contains the entity, false otherwise
+                 */
+                containsEntity: function(entities, entity){
+                    for(var i=0;i<entities.length;i++){
+                        if(entities[i].id === entity.id || entities[i].text.toUpperCase() === entity.text.toUpperCase()){
+                            return true;
+                        }
+                    }
+                    return false;
                 },
 
                 /**

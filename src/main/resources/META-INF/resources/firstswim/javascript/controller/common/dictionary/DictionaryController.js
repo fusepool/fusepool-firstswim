@@ -105,7 +105,7 @@ enyo.kind(
      */
     indexOfEntity: function(entityObject){
         for(var i=0;i<this.checkedEntities.length;i++){
-            if(this.checkedEntities[i].id === entityObject.id){
+            if(this.checkedEntities[i].id === entityObject.id || this.checkedEntities[i].text.toUpperCase() === entityObject.text.toUpperCase()){
                 return i;
             }
         }

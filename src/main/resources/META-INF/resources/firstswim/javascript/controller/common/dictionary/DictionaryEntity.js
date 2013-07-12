@@ -90,7 +90,7 @@ enyo.kind(
         if(!isEmpty(addressID)){
             this.getAddresses(addressID, title);   
         } else {
-            this.showDetails(title);
+            this.showDetails(title, null);
         }
     },
 
@@ -127,8 +127,16 @@ enyo.kind(
         this.showDetails(title, addressObject);
     },
 
+    /**
+     * This function calls the parent's function to show the new details in the
+     * details box.
+     * @param {String} title the title of the details
+     * @param {Object} addressObject the address of the details
+     */
     showDetails: function(title, addressObject){
-        this.owner.owner[this.showDetailsFunction](title, addressObject);
+        if(!isEmpty(this.owner)){
+            this.owner.owner[this.showDetailsFunction](title, addressObject);
+        }
     },
 
     /**

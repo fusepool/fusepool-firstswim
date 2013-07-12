@@ -34,8 +34,7 @@ enyo.kind(
 
         var countOfElements = 0;
         for(var i=0;i<this.entityList.length;++i){
-            var checked = this.isCheckedEntity(this.entityList[i]);
-            if(!checked){          
+            if(!this.isCheckedEntity(this.entityList[i])){
                 countOfElements++;
                 this.$.list.createComponent({
                     kind: 'DictionaryEntity',
@@ -76,7 +75,7 @@ enyo.kind(
      */
     isCheckedEntity: function(entity){
         for(var i=0;i<this.checkedEntities.length;i++){
-            if(this.checkedEntities[i].text === entity.text){
+            if(this.checkedEntities[i].id === entity.id || this.checkedEntities[i].text.toUpperCase() === entity.text.toUpperCase()){
                 return true;
             }
         }
