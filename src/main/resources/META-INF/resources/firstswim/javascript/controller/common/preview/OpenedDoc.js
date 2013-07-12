@@ -35,7 +35,7 @@ enyo.kind(
         this.$.scroller.setClasses(this.openedDocScrollerClass);
 
         // load the preview templates
-        jQuery("#templates").load("templates.html");
+        jQuery("#templates").load(CONSTANTS.TEMPLATES_URL);
     },
 
     components: [
@@ -98,7 +98,6 @@ enyo.kind(
         }
         this.scrollToTop();
         this.$.loader.hide();
-
         this.renderPreviewTemplate(title, content);
     },
 
