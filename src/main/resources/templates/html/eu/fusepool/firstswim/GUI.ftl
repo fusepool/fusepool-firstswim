@@ -28,4 +28,11 @@
       <div id="main"></div>
       <div id="menu"></div>
   </body>
+
+  <!-- handlebars template -->
+  <script id="preview-template" type="text/x-handlebars-template">
+    <h2>{{title}}</h2>
+    <div>{{{content}}}</div>
+  </script>
+
 </html>

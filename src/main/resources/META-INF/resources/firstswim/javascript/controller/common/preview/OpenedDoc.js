@@ -38,7 +38,7 @@ enyo.kind(
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content' }
+            { tag: 'div', name: 'content', allowHtml: true }
         ]}
     ],
 
@@ -76,8 +76,8 @@ enyo.kind(
      * This function clear the document's content.
      */
     clearDoc: function(){
-        this.documentContent = '';
-        this.$.content.setContent('');
+        this.$.content.destroyClientControls();
+        this.$.content.render();
     },
 
     /**
@@ -86,7 +86,6 @@ enyo.kind(
      * @param {String} title the document's title
      */
     showDoc: function(docText, title){
-        jQuery("#" + this.$.content.getId()).empty();
         var content = '';
         if(docText !== ''){
             var documentContent = docText.replace(/\|/g,'<br/>');
@@ -140,34 +139,66 @@ enyo.kind(
      * @param {String} data the response data
      */
     processOpenDocResponse: function(data){
-        // Delete bad type rows, and replace new lines to spaces
+        var rdf = this.createPreviewRdfObject(data);
+
+        var docText = this.getContent(rdf);
+        if(docText === ''){
+            docText = this.noDataLabel;
+        }
+        var title = this.getTitle(rdf);
+        this.showDoc(docText, title);
+    },
+
+    /**
+     * This function create rdf for preview document from the reponse data
+     * @param {String} data the response data
+     */
+    createPreviewRdfObject: function(data){
+        // new lines to spaces
         var textArray = data.split('\n');
         var newText = '';
         for(var i=0;i<textArray.length;i++){
             var row = textArray[i];
-            if(row.indexOf('http://www.w3.org/2001/XMLSchema#base64Binary') === -1){
-                newText += textArray[i];
-                if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
-                    newText += '|';
-                } else {
-                    newText += ' ';
-                }
+            newText += textArray[i];
+            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                newText += '|';
+            } else {
+                newText += ' ';
             }
         }
         newText = newText.substring(0, newText.length-1);
-
         var parsedData = new DOMParser().parseFromString(newText,'text/xml');
         var rdf = jQuery.rdf();
         rdf.load(parsedData, {});
+        return rdf;
+    },
 
-        var docText = '';
+    /**
+     * This function search the content in the rdf object.
+     * @param {Object} rdf the rdf object
+     * @returns {String} content, might by empty
+     */
+    getContent: function(rdf){
+        var content = '';
         rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
-            docText = this.o.value;
+            content = this.o.value + '';
         });
-        if(docText === ''){
-            docText = this.noDataLabel;
-        }
-        this.showDoc(docText, "This will be the title");
+        return content;
+    },
+
+    /**
+     * This function search the title in the rdf object.
+     * @param {Object} rdf the rdf object
+     * @returns {String} title, might by empty
+     */
+    getTitle: function(rdf){
+        var title = '';
+        rdf.where('?s <http://purl.org/dc/terms/title> ?o').each(function(){
+            if(this.o.lang === 'en'){
+                title = deleteSpeechMarks(this.o.value + '');
+            }
+        });
+        return title;
     },
 
     /**
