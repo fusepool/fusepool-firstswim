@@ -182,6 +182,14 @@ enyo.kind(
      */
     getContent: function(rdf){
         var content = '';
+        rdf.where('?s <http://purl.org/dc/terms/abstract> ?o').each(function(){
+            if(this.o.lang === 'en'){
+                content = deleteSpeechMarks(this.o.value + '');
+            }
+        });
+        if(!isEmpty(content)){
+            return content;
+        }
         rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
             content = this.o.value + '';
         });
