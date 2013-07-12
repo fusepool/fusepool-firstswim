@@ -220,7 +220,7 @@ enyo.kind(
      * the rate popup with true (positive) parameter.
      */
     positiveRate: function(){
-        this.$.ratePopup.showPopup(true);
+//        this.$.ratePopup.showPopup(true);
     },
 
     /**
@@ -228,7 +228,7 @@ enyo.kind(
      * the rate popup with false (negative) parameter.
      */
     negativeRate: function(){
-        this.$.ratePopup.showPopup(false);
+//        this.$.ratePopup.showPopup(false);
     },
 
     /**
@@ -255,7 +255,7 @@ enyo.kind(
     showRateButtons: function(){
         this.$.posRateButton.show();
         this.$.negRateButton.show();
-        this.$.fullViewButton.show();
+//        this.$.fullViewButton.show();
     },
 
     /**
