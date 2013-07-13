@@ -10,7 +10,7 @@ public class FirstSwimMenuItem extends NavigationLink {
     
     public FirstSwimMenuItem() {
         super("fusepool-firstswim", 
-                "/fusepool-firstswim", 
+                "/firstswim", 
                 "The Fusepool FirstSwim GUI provider.", 300);
     }
     

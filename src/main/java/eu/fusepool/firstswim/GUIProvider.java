@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 @Component
 @Service(Object.class)
 @Property(name="javax.ws.rs", boolValue=true)
-@Path("fusepool-firstswim")
+@Path("firstswim")
 public class GUIProvider {
     
     /**
