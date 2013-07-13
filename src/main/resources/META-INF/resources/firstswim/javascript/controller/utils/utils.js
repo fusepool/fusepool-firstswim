@@ -1,4 +1,4 @@
-var BASE_URL = 'http://platform.fusepool.info/';
+var BASE_URL = 'http://beta.fusepool.com/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
