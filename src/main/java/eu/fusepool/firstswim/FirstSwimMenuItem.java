@@ -9,7 +9,7 @@ import org.apache.stanbol.commons.web.base.NavigationLink;
 public class FirstSwimMenuItem extends NavigationLink {
     
     public FirstSwimMenuItem() {
-        super("fusepool-firstswim", 
+        super("firstswim", 
                 "/firstswim", 
                 "The Fusepool FirstSwim GUI provider.", 300);
     }
