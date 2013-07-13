@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
                                             entityCheckboxClass: 'dictionaryCheckbox',
                                             searchFunction: 'search',
                                             name: 'dictionaries',
-                                            dictionaryTitle: 'DICTIONARIES',
+                                            dictionaryTitle: 'Entries',
                                             titleClass: 'dictionariesMainTitle',
                                             showDetailsFunction: 'updateDetails'
                                     },
@@ -101,7 +101,7 @@ jQuery(document).ready(function () {
                                             kind: 'DetailsBox',
                                             name: 'detailsBox',
                                             classes: 'detailsBox enyo-unselectable',
-                                            detailsMainTitle: 'DETAILS',
+                                            detailsMainTitle: 'Details',
                                             mainTitleClass: 'detailsMainTitle',
                                             scrollerClass: 'detailsScroll',
                                             titleClass: 'detailsTitle',
@@ -117,7 +117,7 @@ jQuery(document).ready(function () {
                                 loaderClass: 'loader',
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
-                                titleContent: 'DOCUMENTS',
+                                titleContent: 'Documents',
                                 noDataLabel: 'No data available'
                             },
                             {
