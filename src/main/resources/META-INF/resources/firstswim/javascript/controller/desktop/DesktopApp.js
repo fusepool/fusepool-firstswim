@@ -93,7 +93,7 @@ jQuery(document).ready(function () {
                                             entityCheckboxClass: 'dictionaryCheckbox',
                                             searchFunction: 'search',
                                             name: 'dictionaries',
-                                            dictionaryTitle: 'Entries',
+                                            dictionaryTitle: 'Entities',
                                             titleClass: 'dictionariesMainTitle',
                                             showDetailsFunction: 'updateDetails'
                                     },
@@ -124,7 +124,7 @@ jQuery(document).ready(function () {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
                                 classes: 'previewBox',
-                                previewBoxMainTitle: 'PREVIEW',
+                                previewBoxMainTitle: 'Preview',
                                 previewBoxMainTitleClass: 'previewBoxMainTitle'
                             }
                         ]
