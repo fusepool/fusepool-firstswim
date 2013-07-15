@@ -103,7 +103,7 @@ enyo.kind(
      * add entity popup with the selected text.
      */
     addEntity: function(){
-        this.$.addEntityPopup.addEntity(this.$.openedDoc.getSelectedText());
+//        this.$.addEntityPopup.addEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
@@ -111,7 +111,7 @@ enyo.kind(
      * move entity popup with the selected text.
      */
     moveEntity: function(){
-        this.$.moveEntityPopup.moveEntity(this.$.openedDoc.getSelectedText());
+//        this.$.moveEntityPopup.moveEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
@@ -119,7 +119,7 @@ enyo.kind(
      * remove entity popup with the selected text.
      */
     removeEntity: function(){
-        this.$.removeEntityPopup.removeEntity(this.$.openedDoc.getSelectedText());
+//        this.$.removeEntityPopup.removeEntity(this.$.openedDoc.getSelectedText());
     }
 
 });
