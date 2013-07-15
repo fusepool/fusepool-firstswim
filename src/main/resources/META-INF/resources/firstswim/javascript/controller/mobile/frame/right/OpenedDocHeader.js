@@ -12,7 +12,7 @@ enyo.kind(
     components: [
         { tag: 'div', classes: 'positiveMobileRateButton', ontap: 'positiveRate' },
         { tag: 'div', classes: 'negativeMobileRateButton', ontap: 'negativeRate' },
-        { tag: 'div', classes: 'fullMobileViewButton', ontap: 'fullView' },
+        { tag: 'div', classes: 'fullMobileViewButton', style: 'display:none', ontap: 'fullView' },
         {
             kind: 'RatePopup',
             name: 'ratePopup',
