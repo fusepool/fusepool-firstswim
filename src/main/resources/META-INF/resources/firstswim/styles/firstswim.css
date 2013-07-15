@@ -741,6 +741,7 @@ body{
 	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
     padding: 15px;
     word-wrap: break-word;
+    font-size: 12px;
 }
 
 .loader{
