@@ -561,6 +561,12 @@ jQuery(document).ready(function () {
             });
         }
         new DocumentApp().renderInto(document.getElementById('main'));
+        renderTemplateDiv();
+        
+        function renderTemplateDiv(){
+            // load the preview templates
+            jQuery("#templates").load(CONSTANTS.TEMPLATES_URL);
+        }
     }
 	
     try {

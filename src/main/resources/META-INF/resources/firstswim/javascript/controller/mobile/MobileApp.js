@@ -465,6 +465,16 @@ jQuery(document).ready(function () {
             });
         }
         new DocumentMobileApp().renderInto(document.body);
+        renderTemplateDiv();
+        
+        function renderTemplateDiv(){
+            var innerDiv = document.createElement('div');
+            innerDiv.id = 'templates';
+            document.body.appendChild(innerDiv);
+            // load the preview templates
+            jQuery("#templates").load(CONSTANTS.TEMPLATES_URL);
+        }
+
     }
 
     try {
