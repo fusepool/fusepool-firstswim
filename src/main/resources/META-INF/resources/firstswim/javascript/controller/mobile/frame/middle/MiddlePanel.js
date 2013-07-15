@@ -36,30 +36,31 @@ enyo.kind(
             warningPopupClass: 'bookmarkPopup',
             warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
         },
-        { name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },
-       /* { kind: 'enyo.Scroller', fit: true, touchOverscroll: false, components: [*/
-            {
-                kind: 'DocumentList',
-                name: 'documents',
-                openDocFunction: 'openDoc',
-                classes: 'documentMobileList',
-                scrollerClass: 'documentListMobileScroll',
-                titleClass: 'documentsMainTitle',
-                loaderClass: 'loader',
-                titleContent: 'DOCUMENTS',
-                noDataLabel: 'No data available'
-            }
-      /*  ]}*/
+        /*{ name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },*/
+		{
+			kind: 'DocumentList',
+			name: 'documents',
+			openDocFunction: 'openDoc',
+			classes: 'documentMobileList',
+			scrollerClass: 'documentListMobileScroll',
+			titleClass: 'documentsMainTitle',
+			loaderClass: 'loader',
+			titleContent: 'DOCUMENTS',
+			noDataLabel: 'No data available'
+		},
+        { name: 'documentListMobileToolbar', classes: 'documentListMobileToolbar', components: [
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' }
+        ]}		
     ],
+	
+	/**
+	 * This function runs, when the user start a searching. It calls the document
+	 * list's startSearching function
+	 */
+	startSearching: function(){
+		this.$.documents.startSearching();
+	},
 
-    /**
-     * This function runs, when the user start a searching. It calls the document
-     * list's startSearching function
-     */
-    startSearching: function(){
-        this.$.documents.startSearching();
-    },
- 
     /**
      * This function calls the parent's create bookmark function.
      */

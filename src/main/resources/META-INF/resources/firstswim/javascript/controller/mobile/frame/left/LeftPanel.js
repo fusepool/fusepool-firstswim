@@ -15,27 +15,16 @@ enyo.kind(
     },
     
     components: [
-      /*  {
-            kind: 'LeftHeader',
-            name: 'leftHeader',
-            classes: 'leftHeader'
-        },*/
-        { tag: 'div', components: [
-            { name: 'docsButton', classes: 'docsButton', content: 'Documents', ontap: 'searchShow' }
-        ]},
-     /*   { kind: 'enyo.Scroller', classes: 'dictionaryListMobileScroller', fit: true, touchOverscroll: false, components: [*/
-            {
-                kind: 'DictionaryController',
-                openScrollerClass: 'dictionaryListMobileScrollOpen',
-                closeScrollerClass: 'dictionaryListMobileScrollClose',
-                entityCheckboxClass: 'dictionaryMobileCheckbox',
-                searchFunction: 'search',
-                name: 'dictionaries',
-                /*dictionaryTitle: 'Dictionaries',*//*LL*/
-                titleClass: 'dictionariesMainTitle',
-                showDetailsFunction: 'updateDetails'
-            }
-    /*    ]}*/,
+		{
+			kind: 'DictionaryController',
+			openScrollerClass: 'dictionaryListMobileScrollOpen',
+			closeScrollerClass: 'dictionaryListMobileScrollClose',
+			entityCheckboxClass: 'dictionaryMobileCheckbox',
+			searchFunction: 'search',
+			name: 'dictionaries',
+			titleClass: 'dictionariesMainTitle',
+			showDetailsFunction: 'updateDetails'
+		},
         {
             kind: 'DetailsBox',
             name: 'detailsBox',
@@ -44,7 +33,10 @@ enyo.kind(
             titleClass: 'detailsMobileTitle',
             imageClass: 'detailsMobileImage',
             contentClass: 'detailsMobileContent'
-        }
+        },
+        { name: 'entitiesMobileToolbar', classes: 'entitiesMobileToolbar', components: [
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'docsButton', content: 'Documents', ontap: 'searchShow' }
+        ]}
     ],
 
     /**

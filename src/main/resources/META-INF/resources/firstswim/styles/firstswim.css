@@ -49,13 +49,12 @@ body{
 
 .toolbarCenter {
 	position: relative;
-	width: 980px;
 }
 
 .mainLogo {
 	cursor: pointer;
 	width: 271px;
-	height: 138px;
+	height: 111px;
 	z-index: 1000;
 	background-image: url("../images/logo_only_turq.png");
 	position: absolute;
@@ -417,8 +416,8 @@ body{
 	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
 	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
 	position: absolute;
-	top: 255px;
-	bottom: 0px;
+	top: 235px;
+	bottom: 54px;
 	left: 0px;
 	right: 0px;
 }
@@ -512,7 +511,7 @@ body{
     top: 0px;
     left: 0px;
     right: 0px;
-    bottom: 0;
+    bottom: 54px;
 }
 
 .dictionaryListMobileScrollClose{
@@ -524,7 +523,7 @@ body{
     top: 0px;
     left: 0px;
     right: 0px;
-    height: 250px;
+    height: 230px;
 }
 
 .dictionariesMainTitle{
@@ -567,6 +566,21 @@ body{
 .entityText:hover{
 }
 
+/* ------ entitiesToolbar ------ */
+
+.entitiesMobileToolbar{
+	background: #eaeaea;
+	background-image: none;
+	border: none;
+	color: inherit;
+	padding: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 54px;
+}
+
 /* ----------- MIDDLE ----------- */
 
 /* ----- Bookmark ----- */
@@ -607,7 +621,7 @@ body{
 	top: 70px;
 	left: 0px;
 	right: 0px;
-	bottom: 0px;
+	bottom: 54px;
     display: inline-block;
 	background-color: #eaeaea;
 }
@@ -662,6 +676,20 @@ body{
     top: -15px;
     cursor: pointer;
 }
+/* ------ DocumentList Toolbar ------ */
+
+.documentListMobileToolbar{
+	background: #eaeaea;
+	background-image: none;
+	border: none;
+	color: inherit;
+	padding: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 54px;
+}
 
 /* ----------- RIGHT ----------- */
 .rightPanel{
@@ -672,6 +700,7 @@ body{
 .openedDocHeader{
     height: 70px;
     background-color: #eaeaea;
+	text-align: right;
 }
 
 .positiveMobileRateButton{
@@ -728,6 +757,7 @@ body{
 	border: none;
 	color: inherit;
 	padding: 10px;
+	text-align: right;
 }
 
 .docButtonToolBar{
@@ -794,7 +824,7 @@ body{
 }
 
 .searchBox {
-	margin-left: 350px;
+	margin: auto;
 	padding: 15px 0px 0px 0px;
     width: 400px;
     position: relative;
@@ -808,7 +838,7 @@ body{
     position: absolute;
     right: 35px;
     top: 25px;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .searchButton {
