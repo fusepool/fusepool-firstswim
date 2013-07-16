@@ -22,6 +22,7 @@ jQuery(document).ready(function () {
 
                 create: function(){
                     this.inherited(arguments);
+                    renderTemplateDiv();
                     this.processGETParameters();
                 },
 
