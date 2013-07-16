@@ -155,7 +155,11 @@ jQuery(document).ready(function () {
                         // Unchecked entities
                         var entities = this.getCheckedEntities();
                         for(var i=0;i<entities.length;i++){
-                            url += '&entity=' + entities[i].id;
+                            if(!isEmpty(entities[i].id)){
+                                url += '&entity=' + entities[i].id;
+                            } else {
+                                url += '&entity=' + entities[i];
+                            }
                         }
                         // Preview document
                         var documentURL = this.$.rightPanel.getDocumentURL();
@@ -239,7 +243,11 @@ jQuery(document).ready(function () {
                 getCheckedEntitesID: function(checkedEntities){
                     var result = [];
                     for(var i=0;i<checkedEntities.length;i++){
-                        result.push(checkedEntities[i].id);
+                        if(!isEmpty(checkedEntities[i].id)){
+                            result.push(checkedEntities[i].id);
+                        } else {
+                            result.push(checkedEntities[i]);
+                        }
                     }
                     return result;
                 },
