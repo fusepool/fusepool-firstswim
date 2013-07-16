@@ -30,21 +30,21 @@ enyo.kind(
      * This function shows the rate popup with true (poistive) parameter.
      */
     positiveRate: function(){
-        this.$.ratePopup.showPopup(true);
+//        this.$.ratePopup.showPopup(true);
     },
 
     /**
      * This function shows the rate popup with false (negative) parameter.
      */
     negativeRate: function(){
-        this.$.ratePopup.showPopup(false);
+//        this.$.ratePopup.showPopup(false);
     },
 
     /**
      * This function will open a document in full view.
      */
     fullView: function(){
-        alert('Full view function is coming soon...');
+//        alert('Full view function is coming soon...');
     }
 
 });
