@@ -1,5 +1,5 @@
 var appPackage = 'desktop/package.js';
-var mobileRegex = new RegExp(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i);
+var mobileRegex = new RegExp(/Android|webOS|hpwOS|iPhone|iPad|iPod|BlackBerry/i);
 if(mobileRegex.test(navigator.platform) || mobileRegex.test(navigator.userAgent)){
     appPackage = 'mobile/package.js';
 }
