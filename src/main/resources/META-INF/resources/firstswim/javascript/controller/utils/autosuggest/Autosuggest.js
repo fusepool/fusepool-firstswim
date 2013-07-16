@@ -202,7 +202,8 @@ enyo.kind(
         if(!this.isEmptyParam(this.where)){
             result += '&where=' + JSON.stringify();
         }
-        return result;
+        return jQuery.trim(result); // <-- is should be removed
+//        return result;
     },
 
     /**
@@ -419,7 +420,8 @@ enyo.kind(
      * suggest list.
      */
     onTextChange: function(){
-        var inputText = this.$.inputField.getValue();
+//        var inputText = this.$.inputField.getValue();
+        var inputText = jQuery.trim(this.$.inputField.getValue()); // <-- is should be removed
         var suggestDiv = this.$.suggestDiv;
         this.currentElement = -1;
         suggestDiv.destroyClientControls();
