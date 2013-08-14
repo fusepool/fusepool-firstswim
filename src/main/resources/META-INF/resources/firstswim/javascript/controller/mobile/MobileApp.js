@@ -28,7 +28,8 @@ jQuery(document).ready(function () {
 
                 published: {
                     searchWord: '',
-                    checkedEntities: []
+                    checkedEntities: [],
+                    lang: 'en'
                 },
 
                 components: [
@@ -266,24 +267,25 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This funtion create an rdf object from the search response
-                 * with the rdfquery lib
+                 * This funtion create an rdf object from the search response. The rdf query can't parse text, if any property
+                 * contains " mark. We have to modify response: replace " marks to '' in every property.
                  * @param {String} searchResponse search response from the backend
                  * @return {Object} the created rdf object
                  */
                 createRdfObject: function(searchResponse){
-                    // Delete rows, which contains long type (it causes error)
-                    var textArray = searchResponse.split('\n');
-                    var newText = '';
-                    for(var i=0;i<textArray.length;i++){
-                        if(textArray[i].indexOf('http://www.w3.org/2001/XMLSchema#long') === -1){
-                            newText += textArray[i] + '\n';
+                    var rdf = null;
+                    try {
+                        var textArray = searchResponse.split('\n');
+                        var newText = '';
+                        for(var i=0;i<textArray.length;i++){
+                            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<') + '\n';
                         }
+                        var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
+                        rdf = jQuery.rdf();
+                        rdf.load(parsedData, {});
+                    } catch(e){
+                        console.log('There was an error in RDF object parsing: ' + e);
                     }
-                    // Convert rdf text to rdf object
-                    var parsedData = new DOMParser().parseFromString(newText, 'text/xml' );
-                    var rdf = jQuery.rdf();
-                    rdf.load(parsedData, {});
                     return rdf;
                 },
 
@@ -431,8 +433,10 @@ jQuery(document).ready(function () {
                             var url = this.s.value + '';
                             var content = main.getContentForDocumentId(rdf, url);
                             var title = deleteSpeechMarks(this.title.value + '');
-                            if(this.title.lang + '' === 'en' && !main.containsDocument(documents, content, title)){
-                                documents.push({url: url, shortContent: content, title: title});
+                            if(!main.containsDocument(documents, content, title)){
+                                if(this.title.lang + '' === main.lang || isEmpty(this.title.lang)){
+                                    documents.push({url: url, shortContent: content, title: title});
+                                }
                             }
                     });
                     this.$.middlePanel.updateDocuments(documents);
@@ -445,12 +449,18 @@ jQuery(document).ready(function () {
                  * @returns {String} content of the document (might be empty)
                  */
                 getContentForDocumentId: function(rdf, url){
+                    var main = this;
                     var content = '';
                     rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
-                        if(this.o.lang + '' === 'en'){
+                        if(this.o.lang + '' === main.lang){
                             content = deleteSpeechMarks(this.o.value + '');
                         }
                     });
+                    if(isEmpty(content)){
+                        rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
+                            content = deleteSpeechMarks(this.o.value + '');
+                        });
+                    }
                     return content;
                 },
 

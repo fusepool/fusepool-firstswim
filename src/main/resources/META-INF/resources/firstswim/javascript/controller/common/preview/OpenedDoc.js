@@ -12,7 +12,8 @@ enyo.kind(
         noDataLabel: '',
         documentContentClass: '',
         loaderClass: '',
-        openedDocScrollerClass: ''
+        openedDocScrollerClass: '',
+        lang: 'en'
     },
 
     /**
@@ -149,7 +150,7 @@ enyo.kind(
     },
 
     /**
-     * This function create rdf for preview document from the reponse data
+     * This function create rdf for preview document from the reponse data.
      * @param {String} data the response data
      */
     createPreviewRdfObject: function(data){
@@ -158,7 +159,7 @@ enyo.kind(
         var newText = '';
         for(var i=0;i<textArray.length;i++){
             var row = textArray[i];
-            newText += textArray[i];
+            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<');
             if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
                 newText += '|';
             } else {
@@ -179,8 +180,9 @@ enyo.kind(
      */
     getContent: function(rdf){
         var content = '';
+        var main = this;
         rdf.where('?s <http://purl.org/dc/terms/abstract> ?o').each(function(){
-            if(this.o.lang === 'en'){
+            if(this.o.lang === main.lang || isEmpty(this.o.lang)){
                 content = deleteSpeechMarks(this.o.value + '');
             }
         });
@@ -200,8 +202,9 @@ enyo.kind(
      */
     getTitle: function(rdf){
         var title = '';
+        var main = this;
         rdf.where('?s <http://purl.org/dc/terms/title> ?o').each(function(){
-            if(this.o.lang === 'en'){
+            if(this.o.lang === main.lang || isEmpty(this.o.lang)){
                 title = deleteSpeechMarks(this.o.value + '');
             }
         });

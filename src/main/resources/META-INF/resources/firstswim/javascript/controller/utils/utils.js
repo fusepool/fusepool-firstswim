@@ -67,12 +67,55 @@ function GetURLParameter(paramName){
  * @param {String} text what the function checks
  * @param {String} from replacing text
  * @param {String} to purpose text
+ * @param {Boolean} decodeURI decode URI or not
  * @return {String} if the text is not empty, the replaced text with trim, else an empty text
  */
-function replaceAll(text, from, to){
+function replaceAll(text, from, to, decodeURI){
     if(!isEmpty(text)){
         var re = new RegExp(from, 'g');
-        return decodeURIComponent(text.replace(re, to).trim());
+        var replacedText = text.replace(re, to).trim();
+        if(!isEmpty(decodeURI) && decodeURI){
+            return decodeURIComponent(replacedText);
+        }
+        return replacedText;
+    } else {
+        return '';
+    }
+}
+
+/**
+ * Replace all characters in a text, which matched another character and the position is
+ * between in the startTag and endTag.
+ * @param {String} text what the function checks
+ * @param {String} fromText replacing text
+ * @param {String} toText purpose text
+ * @param {String} startTag the start character of the replacing
+ * @param {String} endTag the end character of replacing
+ * @return {String} if the text is not empty, the replaced text with trim, else an empty text
+ */
+function replaceAllInTags(text, fromText, toText, startTag, endTag){
+    var resultText = '';
+    if(!isEmpty(text)){
+        var startIndex;
+        if(!isEmpty(startTag)){
+            startIndex = text.indexOf(startTag);
+        } else {
+            startIndex = 0;
+        }
+        var endIndex;
+        if(!isEmpty(endTag)){
+            endIndex = text.lastIndexOf(endTag);
+        } else {
+            endIndex = text.length;
+        }
+        for(var i=0;i<text.length;i++){
+            if(startIndex < i && i < endIndex && text[i] === fromText){
+                resultText += toText;
+            } else {
+                resultText += text[i];
+            }
+        }
+        return resultText;
     } else {
         return '';
     }
