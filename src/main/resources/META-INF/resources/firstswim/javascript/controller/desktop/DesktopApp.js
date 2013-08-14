@@ -106,7 +106,7 @@ jQuery(document).ready(function () {
                                             detailsMainTitle: 'Details',
                                             mainTitleClass: 'detailsMainTitle',
                                             scrollerClass: 'detailsScroll',
-                                            titleClass: 'detailsTitle',
+                                            titleClass: 'detailsTitle'
                                     }
                                 ]
                             },
@@ -120,7 +120,9 @@ jQuery(document).ready(function () {
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
                                 titleContent: 'Documents',
-                                noDataLabel: 'No data available'
+                                noDataLabel: 'No data available',
+                                moreButtonClass: 'moreButton',
+                                moreDocumentsFunction: 'moreDocuments'
                             },
                             {
                                 kind: 'PreviewBox',
@@ -298,16 +300,24 @@ jQuery(document).ready(function () {
                     if(!isEmpty(searchWord)){
                         this.$.documents.startSearching();
                         this.$.searchBox.updateInput(this.searchWord);
-                        this.ajaxSearch(searchWord, checkedEntities);
+
+                        var request = this.createSearchRequest(searchWord, checkedEntities);
+                        request.response(this, function(inSender, inResponse) {
+                            this.processSearchResponse(inResponse, searchWord);
+                        });
                     }
                 },
 
                 /**
-                 * This function send an ajax request for searching
+                 * This function create an ajax request for searching
                  * @param {String} searchWord the search word
                  * @param {String} checkedEntities the checked entities on the left side
+                 * @param {Number} offset the offset of the documents (e.g. offset = 10 --> documents in 10-20)
                  */
-                ajaxSearch: function(searchWord, checkedEntities){
+                createSearchRequest: function(searchWord, checkedEntities, offset){
+                    if(isEmpty(offset)){
+                        offset = 0;
+                    }
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: CONSTANTS.SEARCH_URL,
@@ -316,10 +326,22 @@ jQuery(document).ready(function () {
                     });
                     request.go({
                         search: searchWord,
-                        subject: this.getCheckedEntitesID(checkedEntities)
+                        subject: this.getCheckedEntitesID(checkedEntities),
+                        offset: offset
                     });
+                    return request;
+                },
+
+                /**
+                 * This function send a request for more documents.
+                 * @param {Number} offset the offset of the document (offset = 10 --> document in 10-20)
+                 */
+                moreDocuments: function(offset){
+                    var request = this.createSearchRequest(this.searchWord, this.checkedEntities, offset);
                     request.response(this, function(inSender, inResponse) {
-                        this.processSearchResponse(inResponse, searchWord);
+                        var rdf = this.createRdfObject(inResponse);
+                        var documents = this.createDocumentList(rdf);
+                        this.$.documents.addMoreDocuments(documents);
                     });
                 },
 
@@ -514,6 +536,16 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
+                    var documents = this.createDocumentList(rdf);
+                    this.$.documents.updateList(documents);
+                },
+
+                /**
+                 * This function create the document list from the rdf object.
+                 * @param {Object} rdf the rdf object, which contains the documents
+                 * @returns {Array} the document list
+                 */
+                createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
                     rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
@@ -527,7 +559,7 @@ jQuery(document).ready(function () {
                                 }
                             }
                     });
-                    this.$.documents.updateList(documents);
+                    return documents;
                 },
 
                 /**

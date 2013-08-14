@@ -44,8 +44,10 @@ jQuery(document).ready(function () {
                         },
                         {
                             kind: 'MiddlePanel',
+                            name: 'middlePanel',
                             mainSearchFunction: 'search',
-                            openDocFunction: 'openDoc'
+                            openDocFunction: 'openDoc',
+                            moreDocumentsFunction: 'moreDocuments'
                         },
                         {
                             kind: 'RightPanel',
@@ -211,16 +213,23 @@ jQuery(document).ready(function () {
                     if(!isEmpty(searchWord)){
                         this.$.middlePanel.startSearching();
                         this.$.middlePanel.updateInput(this.searchWord);
-                        this.ajaxSearch(searchWord, checkedEntities);
+
+                        var request = this.createSearchRequest(searchWord, checkedEntities);
+                        request.response(this, function(inSender, inResponse) {
+                            this.processSearchResponse(inResponse, searchWord);
+                        });
                     }
                 },
-
                 /**
-                 * This function send an ajax request for searching
+                 * This function create an ajax request for searching
                  * @param {String} searchWord the search word
-                 * @param {Array} checkedEntities the checked entities on the left side
+                 * @param {String} checkedEntities the checked entities on the left side
+                 * @param {Number} offset the offset of the documents (e.g. offset = 10 --> documents in 10-20)
                  */
-                ajaxSearch: function(searchWord, checkedEntities){
+                createSearchRequest: function(searchWord, checkedEntities, offset){
+                    if(isEmpty(offset)){
+                        offset = 0;
+                    }
                     var request = new enyo.Ajax({
                         method: 'GET',
                         url: CONSTANTS.SEARCH_URL,
@@ -229,10 +238,22 @@ jQuery(document).ready(function () {
                     });
                     request.go({
                         search: searchWord,
-                        subject: this.getCheckedEntitesID(checkedEntities)
+                        subject: this.getCheckedEntitesID(checkedEntities),
+                        offset: offset
                     });
+                    return request;
+                },
+
+                /**
+                 * This function send a request for more documents.
+                 * @param {Number} offset the offset of the document (offset = 10 --> document in 10-20)
+                 */
+                moreDocuments: function(offset){
+                    var request = this.createSearchRequest(this.searchWord, this.checkedEntities, offset);
                     request.response(this, function(inSender, inResponse) {
-                        this.processSearchResponse(inResponse, searchWord, checkedEntities);
+                        var rdf = this.createRdfObject(inResponse);
+                        var documents = this.createDocumentList(rdf);
+                        this.$.middlePanel.addMoreDocuments(documents);
                     });
                 },
 
@@ -426,6 +447,16 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
+                    var documents = this.createDocumentList(rdf);
+                    this.$.middlePanel.updateDocuments(documents);
+                },
+
+                /**
+                 * This function create the document list from the rdf object.
+                 * @param {Object} rdf the rdf object, which contains the documents
+                 * @returns {Array} the document list
+                 */
+                createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
                     rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
@@ -439,7 +470,7 @@ jQuery(document).ready(function () {
                                 }
                             }
                     });
-                    this.$.middlePanel.updateDocuments(documents);
+                    return documents;
                 },
 
                 /**

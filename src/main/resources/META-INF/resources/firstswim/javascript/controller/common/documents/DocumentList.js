@@ -8,13 +8,16 @@ enyo.kind(
     kind: enyo.Control,
 
     published: {
+        offset: 0,
         documents: null,
         scrollerClass: '',
         titleClass: '',
         titleContent: '',
         noDataLabel: '',
         openDocFunction: '',
-        openDocEvent: 'ontap'
+        openDocEvent: 'ontap',
+        moreButtonClass: '',
+        moreDocumentsFunction: ''
     },
 
     /**
@@ -29,16 +32,30 @@ enyo.kind(
         this.$.title.hide();
         this.$.loader.setClasses(this.loaderClass);
         this.$.scroller.setClasses(this.scrollerClass);
+        this.$.moreButton.setClasses(this.moreButtonClass);
+        this.$.moreButton.hide();
     },
 
     components: [
         { tag: 'div', name: 'title' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
+            { tag: 'div', name: 'list' },
             { name: 'loader' },
-            { tag: 'div', name: 'list' }
+            { kind: onyx.Button, name: 'moreButton', content: 'More', ontap: 'moreBtnPress' }
         ]}
     ],
 
+    onScroll: function(inSender, inEvent){
+        console.log(inSender.scrollTop);
+        console.log(inEvent);
+    },
+
+    moreBtnPress: function(){
+        this.offset += 10;
+        this.owner[this.moreDocumentsFunction](this.offset);
+        this.$.loader.show();
+        this.$.moreButton.hide();
+    },
     /**
      * This function runs, when the user start a searching. It clears the list
      * and shows the loader.
@@ -48,6 +65,7 @@ enyo.kind(
         this.$.list.destroyClientControls();
         this.$.list.render();
         this.$.loader.show();
+        this.$.moreButton.hide();
     },
 
     /**
@@ -76,12 +94,40 @@ enyo.kind(
             }
             this.$.loader.hide();
             this.$.list.render();
+            this.$.moreButton.show();
         } else {
             this.$.list.setContent(this.noDataLabel);
             this.$.loader.hide();
             this.$.list.render();
         }
         this.$.title.show();
+        this.scrollToTop();
+    },
+
+    /**
+     * This function add more documents to the existing document list.
+     * @param {Array} documents the new item of documents
+     */
+    addMoreDocuments: function(documents){
+        this.documents.push(documents);
+        for(var i=0;i<documents.length;++i){
+            this.createComponent({
+                kind: 'ShortDocument',
+                classes: 'shortDocumentContainer',
+                titleClass: 'shortDocumentTitle',
+                contentClass: 'shortDocument',
+                openDocEvent: this.openDocEvent,
+                openButtonClass: 'openDocButton',
+                container: this.$.list,
+                url: documents[i].url,
+                title: documents[i].title,
+                shortContent: documents[i].shortContent,
+                parentFunction: 'openDoc'
+            });
+        }
+        this.$.loader.hide();
+        this.$.list.render();
+        this.$.moreButton.show();
     },
 
     /**
@@ -93,6 +139,16 @@ enyo.kind(
      */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
+    },
+
+    /**
+     * This functions scroll to the top.
+     */
+    scrollToTop: function(){
+        this.$.scroller.top = 0;
+        this.$.scroller.setScrollTop(0);
+        this.$.scroller.scrollTo(0,0);
+        this.render();
     }
 
 });

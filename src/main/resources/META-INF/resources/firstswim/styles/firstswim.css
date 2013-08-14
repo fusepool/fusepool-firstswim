@@ -258,6 +258,11 @@ body{
 	right: 0px;
 }
 
+.moreButton{
+    display: block; 
+    margin: 20px auto 20px auto;
+}
+
 /* ----------- RIGHT ----------- */
 
 /* ----- Preview document ----- */

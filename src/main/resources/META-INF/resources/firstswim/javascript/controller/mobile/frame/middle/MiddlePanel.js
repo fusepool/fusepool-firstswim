@@ -14,7 +14,8 @@ enyo.kind(
         mainSearchFunction: '',
         openDocFunction: '',
         bookmarkFunction: 'createBookmark',
-        popupBookmarkFunction: 'popupBookmark'
+        popupBookmarkFunction: 'popupBookmark',
+        moreDocumentsFunction: ''
     },
 
     components: [
@@ -46,7 +47,9 @@ enyo.kind(
 			titleClass: 'documentsMainTitle',
 			loaderClass: 'loader',
 			titleContent: 'DOCUMENTS',
-			noDataLabel: 'No data available'
+			noDataLabel: 'No data available',
+                        moreButtonClass: 'moreButton',
+                        moreDocumentsFunction: 'moreDocuments'
 		},
         { name: 'documentListMobileToolbar', classes: 'documentListMobileToolbar', components: [
             { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' }
@@ -124,6 +127,22 @@ enyo.kind(
      */
     updateDocuments: function(documents){
         this.$.documents.updateList(documents);
+    },
+
+    /**
+     * This function calls the documents's addMoreDocuments function with the new documents.
+     * @param {Array} documents the new list of documents
+     */
+    addMoreDocuments: function(documents){
+        this.$.documents.addMoreDocuments(documents);
+    },
+
+    /**
+     * This function calls the parent's moreDocuments function.
+     * @param {Number} offset the offset of the documents
+     */
+    moreDocuments: function(offset){
+        this.owner[this.moreDocumentsFunction](offset);
     },
 
     /**
