@@ -86,17 +86,11 @@ enyo.kind(
      * @param {String} docText the document's content
      * @param {String} title the document's title
      */
-    showDoc: function(docText, title){
-        var content = '';
-        if(docText !== ''){
-            var documentContent = docText.replace(/\|/g,'<br/>');
-            content = documentContent;
-        } else {
-            content = this.noDataLabel;
-        }
+    showDoc: function(doc){
+
         this.scrollToTop();
         this.$.loader.hide();
-        this.renderPreviewTemplate(title, content);
+        this.renderPreviewTemplate(doc);
     },
 
     /**
@@ -104,11 +98,11 @@ enyo.kind(
      * @param {String} title the title of the document
      * @param {String} content the content of the document
      */
-    renderPreviewTemplate: function(title, content){
+    renderPreviewTemplate: function(doc){
         var templateScript = $("#preview-template").html(); 
         var template = Handlebars.compile(templateScript);
-        var previewData = { title: title, content: content };
-        $("#" + this.$.content.getId()).append(template(previewData));
+        console.debug(doc);
+        $("#" + this.$.content.getId()).append(template(doc));
     },
 
     /**
@@ -141,12 +135,29 @@ enyo.kind(
     processOpenDocResponse: function(data){
         var rdf = this.createPreviewRdfObject(data);
 
+        var rdfObj = rdf.databank.dump();
+        //find patent name
+        var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
+        var doc = _.pick(rdfObj, docName);
+
+        var getName = /(#|\/)([^#\/]*)$/ 
+
+        var docDetails = _.object(_.toArray(_.map(doc[docName], function (item,index) {
+            var arr = [];
+            regex = getName.exec(index);
+            if (regex) {arr[0] = regex[2];} else {arr[0] = index;};
+            arr[1] = _.map(item, function(subitem){return subitem.value});
+            return arr;
+        })));
+
         var docText = this.getContent(rdf);
         if(docText === ''){
             docText = this.noDataLabel;
+        } else {
+            docText = docText.replace(/\|/g,'<br/>');
         }
         var title = this.getTitle(rdf);
-        this.showDoc(docText, title);
+        this.showDoc({content: docText, title: title, details: docDetails});
     },
 
     /**
