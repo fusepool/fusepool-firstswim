@@ -101,7 +101,6 @@ enyo.kind(
     renderPreviewTemplate: function(doc){
         var templateScript = $("#preview-template").html(); 
         var template = Handlebars.compile(templateScript);
-        console.debug(doc);
         $("#" + this.$.content.getId()).append(template(doc));
     },
 
@@ -127,21 +126,16 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the response of the open doc ajax event is arrived.
-     * It processes the response data, delete the bad type rows, parse it and call
-     * the document show function.
-     * @param {String} data the response data
+     * This functions gets the details of a document and preprocess for direct 
+     * use by the template. 
+     * @param {Object} rdf the data as an rdf object
      */
-    processOpenDocResponse: function(data){
-        var rdf = this.createPreviewRdfObject(data);
-
+    processDocDetails: function(rdf){
         var rdfObj = rdf.databank.dump();
-        //find patent name
         var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
         var doc = _.pick(rdfObj, docName);
 
         var getName = /(#|\/)([^#\/]*)$/ 
-
         var docDetails = _.object(_.toArray(_.map(doc[docName], function (item,index) {
             var arr = [];
             regex = getName.exec(index);
@@ -150,6 +144,18 @@ enyo.kind(
             return arr;
         })));
 
+        return docDetails;
+    },
+
+    /**
+     * This function runs when the response of the open doc ajax event is arrived.
+     * It processes the response data, delete the bad type rows, parse it and call
+     * the document show function.
+     * @param {String} data the response data
+     */
+    processOpenDocResponse: function(data){
+        var rdf = this.createPreviewRdfObject(data);
+        var docDetails = this.processDocDetails(rdf); 
         var docText = this.getContent(rdf);
         if(docText === ''){
             docText = this.noDataLabel;
