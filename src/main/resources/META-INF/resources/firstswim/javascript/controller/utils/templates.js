@@ -12,9 +12,9 @@ Handlebars.registerHelper('getRDF', function(url) {
     });
     request.go({ iri: url });
     answer = request.response(this, function(inSender, inResponse) {
-        answer = inResponse;
+        rdf = createRdfObjectFromText(inResponse);
+        answer = getPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label')
         $("#"+id).html(answer)
-        console.log(id + answer);
     });
 
     return "<p id=\""+id+"\">"+ " ... " +"</p>";

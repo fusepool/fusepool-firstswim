@@ -7,8 +7,8 @@ var CONSTANTS = {
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
-    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html'
-//    TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html'
+//    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html'
+    TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html'
 };
 
 /**
