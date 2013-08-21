@@ -7,7 +7,8 @@ var CONSTANTS = {
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
-    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html'
+//    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html'
+    TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html'
 };
 
 /**
@@ -136,3 +137,17 @@ function deleteSpeechMarks(text){
     }
     return result;
 }
+
+/**
+ * Stub which helps debugging of code in console.
+ */
+
+var _log = console.log;
+console.log = function () {
+    this._last = [].slice.call(arguments);
+    _log.apply(console, arguments);
+};
+
+console.last = function() {
+    return this._last;
+};

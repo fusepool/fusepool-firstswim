@@ -101,6 +101,7 @@ enyo.kind(
     renderPreviewTemplate: function(doc){
         var templateScript = $("#preview-template").html(); 
         var template = Handlebars.compile(templateScript);
+        console.log(doc);
         $("#" + this.$.content.getId()).append(template(doc));
     },
 
@@ -144,6 +145,7 @@ enyo.kind(
             return arr;
         })));
 
+        docDetails['documentURL'] = [docName];
         return docDetails;
     },
 
