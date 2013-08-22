@@ -642,10 +642,19 @@ body{
 }
 
 .documentsMainTitle{
-	color: #777777;
-	font-size: 16px;
-	margin: 18px 0px 0px 10px;
-	text-shadow: 1px 1px 0px #fafafa;
+    display: inline-block;
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 5px 0px 10px;
+    text-shadow: 1px 1px 0px #fafafa;
+}
+
+.documentsCount{
+    display: inline-block;
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 0;
+    text-shadow: 1px 1px 0px #fafafa;
 }
 
 .shortDocumentContainer{

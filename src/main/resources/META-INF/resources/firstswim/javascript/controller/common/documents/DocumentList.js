@@ -12,6 +12,7 @@ enyo.kind(
         documents: null,
         scrollerClass: '',
         titleClass: '',
+        documentsCountClass: '',
         titleContent: '',
         noDataLabel: '',
         openDocFunction: '',
@@ -29,7 +30,7 @@ enyo.kind(
         this.$.loader.hide();
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
-        this.$.title.hide();
+        this.$.documentsCount.setClasses(this.documentsCountClass);
         this.$.loader.setClasses(this.loaderClass);
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.moreButton.setClasses(this.moreButtonClass);
@@ -38,6 +39,7 @@ enyo.kind(
 
     components: [
         { tag: 'div', name: 'title' },
+        { tag: 'div', name: 'documentsCount' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
             { name: 'loader' },
@@ -102,6 +104,14 @@ enyo.kind(
         }
         this.$.title.show();
         this.scrollToTop();
+    },
+
+    /**
+     * This function update the counts text with the new count value
+     * @param {Number} count the count of documents
+     */
+    updateCounts: function(count){
+        this.$.documentsCount.setContent(count);
     },
 
     /**
