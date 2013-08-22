@@ -253,8 +253,8 @@ enyo.kind(
      * view button.
      */
     showRateButtons: function(){
-        this.$.posRateButton.show();
-        this.$.negRateButton.show();
+//        this.$.posRateButton.show();
+//        this.$.negRateButton.show();
 //        this.$.fullViewButton.show();
     },
 
