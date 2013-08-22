@@ -3,7 +3,7 @@
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
- * @version 1.8.5
+ * @version 1.9.0
 */
 enyo.kind(
 /** @lends AutoSuggest.prototype */
@@ -15,7 +15,7 @@ enyo.kind(
     /** The input field and the suggest div components */
     components: [
         { kind: onyx.Input, name: 'backInputField' },
-        { kind: onyx.Input, name: 'inputField', onkeydown: 'keyDown', onkeyup: 'keyUp', onblur: 'hideSuggest' },
+        { kind: onyx.Input, name: 'inputField', onkeydown: 'keyDown', onkeyup: 'keyUp', onblur: 'onBlurInput' },
         { kind: enyo.Control, name: 'suggestDiv' }
     ],
 
@@ -26,6 +26,7 @@ enyo.kind(
         countElements: 0, // Count of the suggest elements
         currentElement: -1, // The current element which is selected in the suggest list
         data: null, // The local data which contains the actual suggest list
+        finishFilling: false, // It shows that the user stops the filling or not
         format: 'json', // Format of the backend refreshing ( json or rdf )
         inputFieldClass: 'autoSuggest_input',
         jsonProperty: '', // The property name which contains the suggest list in the response
@@ -131,7 +132,7 @@ enyo.kind(
      * @param {String} inResponse the reponse what is come from the backend
      */
     processResponse: function(inResponse){
-        if(inResponse !== 'error'){
+        if(inResponse !== 'error' && !this.finishFilling){
             if(this.format === 'rdf'){
                 this.data = this.rdfToArray(inResponse);
                 this.onTextChange();
@@ -284,12 +285,14 @@ enyo.kind(
                 this.moveDown();
                 break;
             case 13: // enter
+                this.finishFilling = true;
                 this.hideSuggest();
                 if(this.onEnterParentFunction !== ''){
                     this.owner[this.onEnterParentFunction]();
                 }
                 break;
             case 27: // escape
+                this.finishFilling = true;
                 this.hideSuggest();
                 break;
         }
@@ -302,6 +305,7 @@ enyo.kind(
      * @param {Object} inEvent the input change event which contains the pressed button
      */
     keyUp: function(inSender, inEvent){
+        this.finishFilling = false;
         var keyCode = inEvent.keyCode;
         if (keyCode < 32 && keyCode !== 8 || keyCode >= 33 && keyCode < 46 || keyCode >= 112 && keyCode <= 123){
             // Arrows, Page up, Page down, F1-F12, Home, End, Insert -- Nothing to do
@@ -525,6 +529,15 @@ enyo.kind(
             return true;
         }
         return false;
+    },
+
+    /**
+     * This function runs, when the user leave the input field. It hides the suggest list and clear the bg input.
+     */
+    onBlurInput: function(){
+        this.finishFilling = true;
+        this.clearBackInput();
+        this.hideSuggest();
     },
 
     /** This function hides the suggest list */
