@@ -34,12 +34,17 @@ enyo.kind(
         this.$.loader.setClasses(this.loaderClass);
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.moreButton.setClasses(this.moreButtonClass);
+        this.$.activateSliders.hide();
         this.$.moreButton.hide();
     },
 
     components: [
         { tag: 'div', name: 'title' },
         { tag: 'div', name: 'documentsCount' },
+        { tag: 'div', name: 'activateSliders', classes: 'activateSliders', components: [
+            { tag: 'div', classes: 'sliderText', content: 'Ratings:' },
+            { kind: enyo.Checkbox, ontap: 'activateChecking' }
+        ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
             { name: 'loader' },
@@ -47,11 +52,22 @@ enyo.kind(
         ]}
     ],
 
-    onScroll: function(inSender, inEvent){
-        console.log(inSender.scrollTop);
-        console.log(inEvent);
+    /**
+     * This function runs when the user activate/unactivate the ratings bar.
+     * @param {Object} inSender the activator checkbox
+     */
+    activateChecking: function(inSender){
+        var checked = !inSender.checked;
+        var shortDocuments = this.$.list.children;
+        for(var i=0;i<shortDocuments.length;i++){
+            shortDocuments[i].updateRatings(checked);
+        }
     },
 
+    /**
+     * This function runs when the user push the 'More' button. It shows the loader, hides the 'More' button and
+     * send and ajax request with the new offset value.
+     */
     moreBtnPress: function(){
         this.offset += 10;
         this.owner[this.moreDocumentsFunction](this.offset);
@@ -97,6 +113,7 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.moreButton.show();
+            this.$.activateSliders.show();
         } else {
             this.$.list.setContent(this.noDataLabel);
             this.$.loader.hide();

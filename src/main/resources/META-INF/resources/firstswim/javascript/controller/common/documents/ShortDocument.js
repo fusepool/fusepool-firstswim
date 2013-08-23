@@ -31,9 +31,26 @@ enyo.kind(
         this.$.content.setContent(this.shortContent);
     },
 
+    /**
+     * After the rendering, the positive/negative slider will be initialized.
+     */
+    rendered: function(){
+        this.inherited(arguments);
+        var sliderId = this.$.rateSlider.getId();
+	jQuery("#" + sliderId).slider({
+            value: 1,
+            min: 0,
+            orientation: 'vertical',
+            max: 2,
+            step: 1
+	});
+        this.$.rateSlider.hide();
+    },
+
     components: [
         { name: 'shortDoc', components: [
             { tag: 'div', name: 'title' },
+            { tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' },
             { tag: 'div', name: 'content' }
         ]}
     ],
@@ -47,6 +64,18 @@ enyo.kind(
      */
     openDoc: function(inSender, inEvent){
         this.owner[this.parentFunction](this.url, inEvent);
+    },
+
+    /**
+     * This function shows the slider bar if the activated parameter is true, hides the bar otherwise
+     * @param {Boolean} activated show the slidebar or not
+     */
+    updateRatings: function(activated){
+        if(activated){
+            this.$.rateSlider.show();
+        } else {
+            this.$.rateSlider.hide();
+        }
     }
 
 });

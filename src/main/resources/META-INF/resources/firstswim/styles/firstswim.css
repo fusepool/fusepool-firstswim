@@ -240,22 +240,32 @@ body{
 }
 
 .documentList{
-	position: absolute;
-	top: 75px;
-	left: 350px;
-	bottom: 10px;
+    position: absolute;
+    top: 75px;
+    left: 350px;
+    bottom: 10px;
     display: inline-block;
     width: 590px;
 }
 
+.activateSliders{
+    display: inline-block;
+    margin-left: 350px;
+}
+
+.sliderText{
+    display: inline-block;
+    font-size: 14px;
+}
+
 .documentListScroll {
-	background-color: #e3e3e3;
-	border: 1px #cccccc solid;
+    background-color: #e3e3e3;
+    border: 1px #cccccc solid;
     position: absolute;
     top: 50px;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
 }
 
 .moreButton{
@@ -672,8 +682,16 @@ body{
 }
 
 .shortDocumentTitle{
+    display: inline-block;
     font-weight: bold;
     margin-bottom: 10px;
+    width: 430px;
+}
+
+.rateSlider{
+    display: inline-block;
+    height: 45px;
+    margin: 20px 0 0 25px;
 }
 
 .shortDocument:hover {
