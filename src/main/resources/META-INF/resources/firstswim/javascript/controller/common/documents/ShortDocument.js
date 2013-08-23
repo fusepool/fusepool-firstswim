@@ -74,6 +74,7 @@ enyo.kind(
      * @param {Boolean} activated show the slidebar or not
      */
     updateRatings: function(activated){
+        this.showSlidebar = activated;
         if(activated){
             this.$.rateSlider.show();
         } else {
