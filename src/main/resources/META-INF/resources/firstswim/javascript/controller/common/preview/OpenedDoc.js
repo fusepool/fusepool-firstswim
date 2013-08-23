@@ -87,7 +87,6 @@ enyo.kind(
      * @param {String} title the document's title
      */
     showDoc: function(doc){
-
         this.scrollToTop();
         this.$.loader.hide();
         this.renderPreviewTemplate(doc);
@@ -101,7 +100,6 @@ enyo.kind(
     renderPreviewTemplate: function(doc){
         var templateScript = $("#preview-template").html(); 
         var template = Handlebars.compile(templateScript);
-        console.log(doc);
         $("#" + this.$.content.getId()).append(template(doc));
     },
 
