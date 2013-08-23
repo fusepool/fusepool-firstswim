@@ -43,7 +43,7 @@ enyo.kind(
         { tag: 'div', name: 'documentsCount' },
         { tag: 'div', name: 'activateSliders', classes: 'activateSliders', components: [
             { tag: 'div', classes: 'sliderText', content: 'Ratings:' },
-            { kind: enyo.Checkbox, ontap: 'activateChecking' }
+            { kind: enyo.Checkbox, name: 'activateCB', ontap: 'activateChecking' }
         ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
@@ -99,6 +99,7 @@ enyo.kind(
                 this.createComponent({
                     kind: 'ShortDocument',
                     classes: 'shortDocumentContainer',
+                    showSlidebar: this.$.activateCB.getValue(),
                     titleClass: 'shortDocumentTitle',
                     contentClass: 'shortDocument',
                     openDocEvent: this.openDocEvent,
@@ -117,6 +118,7 @@ enyo.kind(
         } else {
             this.$.list.setContent(this.noDataLabel);
             this.$.loader.hide();
+            this.$.activateSliders.hide();
             this.$.list.render();
         }
         this.$.title.show();
@@ -141,6 +143,7 @@ enyo.kind(
             this.createComponent({
                 kind: 'ShortDocument',
                 classes: 'shortDocumentContainer',
+                showSlidebar: this.$.activateCB.getValue(),
                 titleClass: 'shortDocumentTitle',
                 contentClass: 'shortDocument',
                 openDocEvent: this.openDocEvent,

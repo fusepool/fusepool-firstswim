@@ -14,6 +14,7 @@ enyo.kind(
         shortContent: '',
         openDocEvent: '',
         parentFunction: '',
+        showSlidebar: false,
         contentClass: '',
         openButtonClass: ''
     },
@@ -44,7 +45,9 @@ enyo.kind(
             max: 2,
             step: 1
 	});
-        this.$.rateSlider.hide();
+        if(!this.showSlidebar){
+            this.$.rateSlider.hide();   
+        }
     },
 
     components: [
