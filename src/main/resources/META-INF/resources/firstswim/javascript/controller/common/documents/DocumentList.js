@@ -42,7 +42,7 @@ enyo.kind(
         { tag: 'div', name: 'title' },
         { tag: 'div', name: 'documentsCount' },
         { tag: 'div', name: 'activateSliders', classes: 'activateSliders', components: [
-            { tag: 'div', classes: 'sliderText', content: 'Ratings:' },
+            { tag: 'div', classes: 'sliderText', content: 'Classify:' },
             { kind: enyo.Checkbox, name: 'activateCB', ontap: 'activateChecking' }
         ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
