@@ -14,6 +14,9 @@ enyo.kind(
         shortContent: '',
         openDocEvent: '',
         parentFunction: '',
+        prevCheckVal: 1,
+        addCheckFunction: '',
+        removeCheckFunction: '',
         showSlidebar: false,
         contentClass: '',
         openButtonClass: ''
@@ -37,13 +40,17 @@ enyo.kind(
      */
     rendered: function(){
         this.inherited(arguments);
+        var main = this;
         var sliderId = this.$.rateSlider.getId();
-	jQuery("#" + sliderId).slider({
+	jQuery('#' + sliderId).slider({
             value: 1,
             min: 0,
             orientation: 'vertical',
             max: 2,
-            step: 1
+            step: 1,
+            slide: function(event, ui) {
+                main.checking(ui.value);
+            }
 	});
         if(!this.showSlidebar){
             this.$.rateSlider.hide();   
@@ -80,6 +87,20 @@ enyo.kind(
         } else {
             this.$.rateSlider.hide();
         }
+    },
+
+    /**
+     * This function runs when the slides the bar. It calls the parent addCheck or removeCheck function
+     * @param {Number} newCheckVal the new value of the bar.
+     */
+    checking: function(newCheckVal){
+        if(this.prevCheckVal === 1){
+            this.owner[this.addCheckFunction]();
+        }
+        if(newCheckVal === 1){
+            this.owner[this.removeCheckFunction]();
+        }
+        this.prevCheckVal = newCheckVal;
     }
 
 });

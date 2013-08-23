@@ -9,6 +9,7 @@ enyo.kind(
 
     published: {
         offset: 0,
+        checkedDocs: 0,
         documents: null,
         scrollerClass: '',
         titleClass: '',
@@ -43,7 +44,8 @@ enyo.kind(
         { tag: 'div', name: 'documentsCount' },
         { tag: 'div', name: 'activateSliders', classes: 'activateSliders', components: [
             { tag: 'div', classes: 'sliderText', content: 'Classify:' },
-            { kind: enyo.Checkbox, name: 'activateCB', ontap: 'activateChecking' }
+            { kind: enyo.Checkbox, name: 'activateCB', ontap: 'activateChecking' },
+            { tag: 'div', name: 'checkedNumbers', classes: 'checkedNumbers' }
         ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
@@ -92,6 +94,10 @@ enyo.kind(
      * @param {Array} documents the document list object
      */
     updateList: function(documents){
+        this.offset = 0;
+        this.checkedDocs = 0;
+        this.updateCheckedNumber();
+
         this.documents = documents;
         this.$.list.destroyClientControls();
         if(documents.length > 0){
@@ -99,6 +105,8 @@ enyo.kind(
                 this.createComponent({
                     kind: 'ShortDocument',
                     classes: 'shortDocumentContainer',
+                    addCheckFunction: 'addCheck',
+                    removeCheckFunction: 'removeCheck',
                     showSlidebar: this.$.activateCB.getValue(),
                     titleClass: 'shortDocumentTitle',
                     contentClass: 'shortDocument',
@@ -138,11 +146,14 @@ enyo.kind(
      * @param {Array} documents the new item of documents
      */
     addMoreDocuments: function(documents){
+        this.updateCheckedNumber();
         this.documents.push(documents);
         for(var i=0;i<documents.length;++i){
             this.createComponent({
                 kind: 'ShortDocument',
                 classes: 'shortDocumentContainer',
+                addCheckFunction: 'addCheck',
+                removeCheckFunction: 'removeCheck',
                 showSlidebar: this.$.activateCB.getValue(),
                 titleClass: 'shortDocumentTitle',
                 contentClass: 'shortDocument',
@@ -172,6 +183,14 @@ enyo.kind(
     },
 
     /**
+     * This function updates the checkedNumber text with the offset and the checkedNumbers.
+     */
+    updateCheckedNumber: function(){
+        var all = this.offset + 10;
+        this.$.checkedNumbers.setContent(this.checkedDocs + '/' + all);
+    },
+
+    /**
      * This functions scroll to the top.
      */
     scrollToTop: function(){
@@ -179,6 +198,24 @@ enyo.kind(
         this.$.scroller.setScrollTop(0);
         this.$.scroller.scrollTo(0,0);
         this.render();
+    },
+
+    /**
+     * This function increses the number of checked documents and updates the
+     * checked number text.
+     */
+    addCheck: function(){
+        this.checkedDocs++;
+        this.updateCheckedNumber();
+    },
+
+    /**
+     * This function decreases the number of checked documents and updates the
+     * checked number text.
+     */
+    removeCheck: function(){
+        this.checkedDocs--;
+        this.updateCheckedNumber();
     }
 
 });
