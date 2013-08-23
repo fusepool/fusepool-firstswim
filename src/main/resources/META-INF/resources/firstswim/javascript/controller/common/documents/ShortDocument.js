@@ -99,6 +99,11 @@ enyo.kind(
         }
         if(newCheckVal === 1){
             this.owner[this.removeCheckFunction]();
+            this.$.rateSlider.applyStyle('background-color', 'white');
+        } else if(newCheckVal === 2){
+            this.$.rateSlider.applyStyle('background-color', 'lightgreen');
+        } else {
+            this.$.rateSlider.applyStyle('background-color', 'lightcoral');
         }
         this.prevCheckVal = newCheckVal;
     }

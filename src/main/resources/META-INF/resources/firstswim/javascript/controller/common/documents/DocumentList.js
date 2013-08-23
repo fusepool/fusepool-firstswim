@@ -36,6 +36,7 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.moreButton.setClasses(this.moreButtonClass);
         this.$.activateSliders.hide();
+        this.$.checkedNumbers.hide();
         this.$.moreButton.hide();
     },
 
@@ -60,6 +61,11 @@ enyo.kind(
      */
     activateChecking: function(inSender){
         var checked = !inSender.checked;
+        if(checked){
+            this.$.checkedNumbers.show();
+        } else {
+            this.$.checkedNumbers.hide();
+        }
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
             shortDocuments[i].updateRatings(checked);
