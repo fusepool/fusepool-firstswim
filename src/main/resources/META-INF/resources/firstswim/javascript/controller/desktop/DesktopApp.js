@@ -575,10 +575,11 @@ jQuery(document).ready(function () {
                             }
 
                             if(!main.containsDocument(documents, content, title)){
-                                if(this.title.lang + '' === main.lang || isEmpty(this.title.lang)){
+                                if(isEmpty(this.title) || isEmpty(this.title.lang) || this.title.lang + '' === main.lang){
                                     documents.push({url: url, shortContent: content, title: title});
                                 }
                             }
+
                     });
                     return documents;
                 },
