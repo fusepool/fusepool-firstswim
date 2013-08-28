@@ -568,7 +568,12 @@ jQuery(document).ready(function () {
                         .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
                             var url = this.s.value + '';
                             var content = main.getContentForDocumentId(rdf, url);
-                            var title = deleteSpeechMarks(this.title.value + '');
+
+                            var title = '';
+                            if(!isEmpty(this.title)){
+                                title = deleteSpeechMarks(this.title.value + '');
+                            }
+
                             if(!main.containsDocument(documents, content, title)){
                                 if(this.title.lang + '' === main.lang || isEmpty(this.title.lang)){
                                     documents.push({url: url, shortContent: content, title: title});

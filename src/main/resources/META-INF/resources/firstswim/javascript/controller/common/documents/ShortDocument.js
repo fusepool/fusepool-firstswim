@@ -31,7 +31,7 @@ enyo.kind(
         this.inherited(arguments);
         this.$.shortDoc.setClasses(this.contentClass);
         this.$.shortDoc[this.openDocEvent] = 'openDoc';
-//        this.$.title.setContent(this.title);
+        this.$.title.setContent(this.title);
         this.$.title.setClasses(this.titleClass);
         this.$.content.setContent(this.shortContent);
     },
