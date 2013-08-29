@@ -10,6 +10,7 @@ enyo.kind(
     published: {
         offset: 0,
         checkedDocs: 0,
+        minClassifyDoc: 3, // process button showing number
         documents: null,
         scrollerClass: '',
         titleClass: '',
@@ -36,6 +37,7 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.moreButton.setClasses(this.moreButtonClass);
         this.$.activateSliders.hide();
+        this.$.processButton.hide();
         this.$.checkedNumbers.hide();
         this.$.moreButton.hide();
     },
@@ -46,7 +48,8 @@ enyo.kind(
         { tag: 'div', name: 'activateSliders', classes: 'activateSliders', components: [
             { tag: 'div', classes: 'sliderText', content: 'Classify:' },
             { kind: enyo.Checkbox, name: 'activateCB', ontap: 'activateChecking' },
-            { tag: 'div', name: 'checkedNumbers', classes: 'checkedNumbers' }
+            { tag: 'div', name: 'checkedNumbers', classes: 'checkedNumbers' },
+            { kind: onyx.Button, name: 'processButton', classes: 'processClassifyButton', content: 'Process', ontap: 'processClassify' }
         ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
@@ -70,6 +73,14 @@ enyo.kind(
         for(var i=0;i<shortDocuments.length;i++){
             shortDocuments[i].updateRatings(checked);
         }
+        this.showOrHideProcessButton(checked);
+    },
+
+    /**
+     * This funtions runs when the user oush the 'Process' button.
+     */
+    processClassify: function(){
+        console.log('process');
     },
 
     /**
@@ -192,8 +203,7 @@ enyo.kind(
      * This function updates the checkedNumber text with the offset and the checkedNumbers.
      */
     updateCheckedNumber: function(){
-        var all = this.offset + 10;
-        this.$.checkedNumbers.setContent(this.checkedDocs + '/' + all);
+        this.$.checkedNumbers.setContent(this.checkedDocs + '/' + this.minClassifyDoc);
     },
 
     /**
@@ -213,6 +223,7 @@ enyo.kind(
     addCheck: function(){
         this.checkedDocs++;
         this.updateCheckedNumber();
+        this.showOrHideProcessButton(true);
     },
 
     /**
@@ -222,6 +233,21 @@ enyo.kind(
     removeCheck: function(){
         this.checkedDocs--;
         this.updateCheckedNumber();
+        this.showOrHideProcessButton(true);
+    },
+
+    /**
+     * This functions decides that we should show the process button or not (by the checkedDocs value)
+     * and shows or hides it
+     * @param {Boolean} active the classifying is active or note
+     */
+    showOrHideProcessButton: function(active){
+        if(active && this.checkedDocs >= this.minClassifyDoc){
+            this.$.processButton.show();
+        }
+        if(!active || this.checkedDocs < this.minClassifyDoc){
+            this.$.processButton.hide();
+        }
     }
 
 });
