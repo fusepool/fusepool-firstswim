@@ -8,6 +8,7 @@ enyo.kind(
     kind: enyo.Control,
 
     published: {
+        activeClassify: false,
         offset: 0,
         checkedDocs: 0,
         minClassifyDoc: 3, // process button showing number
@@ -65,15 +66,17 @@ enyo.kind(
     activateChecking: function(inSender){
         var checked = !inSender.checked;
         if(checked){
+            this.activeClassify = true;
             this.$.checkedNumbers.show();
         } else {
+            this.activeClassify = false;
             this.$.checkedNumbers.hide();
         }
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
             shortDocuments[i].updateRatings(checked);
         }
-        this.showOrHideProcessButton(checked);
+        this.showOrHideProcessButton();
     },
 
     /**
@@ -114,6 +117,7 @@ enyo.kind(
         this.offset = 0;
         this.checkedDocs = 0;
         this.updateCheckedNumber();
+        this.showOrHideProcessButton();
 
         this.documents = documents;
         this.$.list.destroyClientControls();
@@ -223,7 +227,7 @@ enyo.kind(
     addCheck: function(){
         this.checkedDocs++;
         this.updateCheckedNumber();
-        this.showOrHideProcessButton(true);
+        this.showOrHideProcessButton();
     },
 
     /**
@@ -233,7 +237,7 @@ enyo.kind(
     removeCheck: function(){
         this.checkedDocs--;
         this.updateCheckedNumber();
-        this.showOrHideProcessButton(true);
+        this.showOrHideProcessButton();
     },
 
     /**
@@ -242,10 +246,10 @@ enyo.kind(
      * @param {Boolean} active the classifying is active or note
      */
     showOrHideProcessButton: function(active){
-        if(active && this.checkedDocs >= this.minClassifyDoc){
+        if(this.activeClassify && this.checkedDocs >= this.minClassifyDoc){
             this.$.processButton.show();
         }
-        if(!active || this.checkedDocs < this.minClassifyDoc){
+        if(!this.activeClassify || this.checkedDocs < this.minClassifyDoc){
             this.$.processButton.hide();
         }
     }
