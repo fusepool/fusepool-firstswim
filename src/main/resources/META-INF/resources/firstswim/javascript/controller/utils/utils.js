@@ -2,6 +2,7 @@ var BASE_URL = 'http://beta.fusepool.com/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
+    CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
     ADDRESS_URL: BASE_URL + 'ecs/meta',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',

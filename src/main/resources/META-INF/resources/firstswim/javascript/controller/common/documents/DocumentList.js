@@ -10,6 +10,7 @@ enyo.kind(
     published: {
         activeClassify: false,
         offset: 0,
+        searchWord: '',
         checkedDocs: 0,
         minClassifyDoc: 3, // process button showing number
         documents: null,
@@ -83,7 +84,34 @@ enyo.kind(
      * This funtions runs when the user oush the 'Process' button.
      */
     processClassify: function(){
-        console.log('process');
+        var classifyObject = {};
+        classifyObject.search = this.searchWord;
+
+        var classifyDocuments = [];
+        var shortDocuments = this.$.list.children;
+        for(var i=0;i<shortDocuments.length;i++){
+            if(shortDocuments[i].getSlideValue() !== 1){
+                var url = shortDocuments[i].getUrl();
+                var label = shortDocuments[i].getSlideValue() === 2 ? 'Positive' : 'Negative';
+                classifyDocuments.push({documentURL: url, documentLabel: label});
+            }
+        }
+        classifyObject.documents = classifyDocuments;
+        this.sendClassifyRequest(classifyObject);
+    },
+
+    sendClassifyRequest: function(classifyObject){
+        console.log(classifyObject);
+//        var request = new enyo.Ajax({
+//            method: 'GET',
+//            url: CONSTANTS.CLASSIFY_URL,
+//            handleAs: 'text',
+//            headers: { Accept: 'application/rdf+xml' }
+//        });
+//        request.go({
+//            search: classifyObject.search,
+//            documents: classifyObject.documents
+//        });
     },
 
     /**
@@ -112,8 +140,10 @@ enyo.kind(
      * This function update the document list from a documents object. This
      * object contains the short documents.
      * @param {Array} documents the document list object
+     * @param {String} searchWord the search word
      */
-    updateList: function(documents){
+    updateList: function(documents, searchWord){
+        this.searchWord = searchWord;
         this.offset = 0;
         this.checkedDocs = 0;
         this.updateCheckedNumber();

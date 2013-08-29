@@ -538,7 +538,7 @@ jQuery(document).ready(function () {
                  */
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
-                    this.$.documents.updateList(documents);
+                    this.$.documents.updateList(documents, this.searchWord);
                     var count = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts(count);
                 },
