@@ -374,6 +374,7 @@ jQuery(document).ready(function () {
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateEntityList(rdf, searchWord);
                     this.updateDocumentList(rdf);
+                    this.cleanPreviewBox();
                 },
 
                 /**
@@ -541,6 +542,10 @@ jQuery(document).ready(function () {
                     this.$.documents.updateList(documents, this.searchWord);
                     var count = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts(count);
+                },
+
+                cleanPreviewBox: function(){
+                    this.$.previewBox.clean();
                 },
 
                 /**

@@ -16,8 +16,7 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.createMenu();
-        this.$.openedDoc.hide();
-        this.hideRateButtons();
+        this.clean();
         this.$.previewBoxMainTitle.setContent(this.previewBoxMainTitle);
         this.$.previewBoxMainTitle.setClasses(this.previewBoxMainTitleClass);
     },
@@ -266,6 +265,14 @@ enyo.kind(
         this.$.openedDoc.openDoc(previewDoc);
         this.$.openedDoc.show();
         this.showRateButtons();
+    },
+
+    /**
+     * This function clean the document content.
+     */
+    clean: function(){
+        this.$.openedDoc.hide();
+        this.hideRateButtons();
     },
 
     /**
