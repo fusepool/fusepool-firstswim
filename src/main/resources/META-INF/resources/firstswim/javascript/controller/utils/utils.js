@@ -1,3 +1,8 @@
+var GLOBAL= {
+    maxFacets: 100,
+    items: 20
+};
+
 var BASE_URL = 'http://beta.fusepool.com/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',

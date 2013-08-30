@@ -119,7 +119,7 @@ enyo.kind(
      * send and ajax request with the new offset value.
      */
     moreBtnPress: function(){
-        this.offset += 10;
+        this.offset += GLOBAL.items;
         this.owner[this.moreDocumentsFunction](this.offset);
         this.$.loader.show();
         this.$.moreButton.hide();
