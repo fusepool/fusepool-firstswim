@@ -239,7 +239,9 @@ jQuery(document).ready(function () {
                     request.go({
                         search: searchWord,
                         subject: this.getCheckedEntitesID(checkedEntities),
-                        offset: offset
+                        offset: offset,
+                        maxFacets: GLOBAL.maxFacets,
+                        items: GLOBAL.items
                     });
                     return request;
                 },
