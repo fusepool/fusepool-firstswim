@@ -47,6 +47,7 @@ jQuery(document).ready(function () {
                             name: 'middlePanel',
                             mainSearchFunction: 'search',
                             openDocFunction: 'openDoc',
+                            documentsCountClass: 'documentsMobileCount',
                             moreDocumentsFunction: 'moreDocuments'
                         },
                         {
@@ -451,6 +452,21 @@ jQuery(document).ready(function () {
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
                     this.$.middlePanel.updateDocuments(documents);
+                    var count = this.getDocumentsCount(rdf);
+                    this.$.middlePanel.updateCounts(count);
+                },
+
+                /**
+                 * This functions search the count of documents in an rdf object.
+                 * @param {Object} rdf the rdf object, which contains the count of documents.
+                 * @returns {Number} the count of documents
+                 */
+                getDocumentsCount: function(rdf){
+                    var result = 0;
+                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o').each(function(){
+                        result = this.o.value;
+                    });
+                    return result;
                 },
 
                 /**

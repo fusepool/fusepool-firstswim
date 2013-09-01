@@ -734,6 +734,11 @@ body{
 	height: 54px;
 }
 
+.documentsMobileCount{
+    display: inline-block;
+    text-shadow: 1px 1px 0px #fafafa;
+}
+
 /* ----------- RIGHT ----------- */
 .rightPanel{
     background-color: lightgrey;

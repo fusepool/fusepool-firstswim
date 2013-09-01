@@ -15,7 +15,13 @@ enyo.kind(
         openDocFunction: '',
         bookmarkFunction: 'createBookmark',
         popupBookmarkFunction: 'popupBookmark',
+        documentsCountClass: '',
         moreDocumentsFunction: ''
+    },
+
+    create: function(){
+        this.inherited(arguments);
+        this.$.documentsCount.setClasses(this.documentsCountClass);
     },
 
     components: [
@@ -52,6 +58,7 @@ enyo.kind(
                         moreDocumentsFunction: 'moreDocuments'
 		},
         { name: 'documentListMobileToolbar', classes: 'documentListMobileToolbar', components: [
+            { tag: 'div', name: 'documentsCount' },
             { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' }
         ]}		
     ],
@@ -159,6 +166,14 @@ enyo.kind(
      */
     updateInput: function(inputText){
         this.$.searchBox.updateInput(inputText);
+    },
+
+    /**
+     * This function update the counts text with the new count value
+     * @param {Number} count the count of documents
+     */
+    updateCounts: function(count){
+        this.$.documentsCount.setContent(count);
     }
 
 });
