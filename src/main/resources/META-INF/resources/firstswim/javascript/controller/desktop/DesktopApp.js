@@ -174,13 +174,7 @@ jQuery(document).ready(function () {
                  * @param {Object} inEvent mouse over on a short document event
                  */
                 openDoc: function(previewDoc, inEvent){
-                    // After mouse hovering
                     if(!isEmpty(inEvent)){
-                        var mainFrame = jQuery('#' + this.getId());
-                        var jQueryDoc = jQuery('#' + this.$.previewBox.getOpenDocId());
-                        var previewHeight = jQueryDoc.outerHeight();
-                        var clickTop = inEvent.pageY;
-
                         var topMessage = jQuery('#' + this.$.topMessageBox.getId());
                         var topMessageVisible = topMessage.is(':visible');
                         var topMessageHeight = 0;
@@ -188,18 +182,6 @@ jQuery(document).ready(function () {
                             topMessageHeight = topMessage.outerHeight();
                             alert(topMessageHeight);
                         }
-						/* We don't need this currently, layout has been changed
-                        var newTop = clickTop - topMessageHeight - previewHeight / 2;
-                        // If there isn't enough place on the bottom
-                        if(mainFrame.height() < clickTop + previewHeight / 2 + 30){
-                            newTop = mainFrame.height() - topMessageHeight - previewHeight - 30;
-                        }
-                        // If there isn't enough place on the top
-                        if(newTop < 50){
-                            newTop = 50;
-                        }
-                        this.$.previewBox.applyStyle('top', newTop + 'px');
-						*/
                     }
                     this.$.previewBox.openDoc(previewDoc);
                 },
@@ -272,7 +254,6 @@ jQuery(document).ready(function () {
                 resizeHandler: function() {
                     this.inherited(arguments);
                     this.changeBMPopupPosition();
-                    /* this.changePreviewBoxSize();		// we don't need this currently */
                 },
 
                 /**
