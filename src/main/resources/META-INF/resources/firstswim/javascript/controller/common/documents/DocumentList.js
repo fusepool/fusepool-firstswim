@@ -85,33 +85,41 @@ enyo.kind(
      */
     processClassify: function(){
         var classifyObject = {};
-        classifyObject.search = this.searchWord;
+        classifyObject.contentStoreUri = CONSTANTS.SEARCH_URL;
+        classifyObject.contentStoreViewUri = CONSTANTS.SEARCH_URL;
 
-        var classifyDocuments = [];
+        classifyObject.searchs = [];
+        classifyObject.searchs.push(this.searchWord);
+
+        classifyObject.labels = [];
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
             if(shortDocuments[i].getSlideValue() !== 1){
                 var url = shortDocuments[i].getUrl();
                 var label = shortDocuments[i].getSlideValue() === 2 ? 'Positive' : 'Negative';
-                classifyDocuments.push({documentURL: url, documentLabel: label});
+                var docObj = {};
+                docObj[url] = label;
+                classifyObject.labels.push(docObj);
             }
         }
-        classifyObject.documents = classifyDocuments;
         this.sendClassifyRequest(classifyObject);
     },
 
     sendClassifyRequest: function(classifyObject){
-        console.log(classifyObject);
-//        var request = new enyo.Ajax({
-//            method: 'GET',
-//            url: CONSTANTS.CLASSIFY_URL,
-//            handleAs: 'text',
-//            headers: { Accept: 'application/rdf+xml' }
-//        });
-//        request.go({
-//            search: classifyObject.search,
-//            documents: classifyObject.documents
-//        });
+        var sendJSON = JSON.stringify(classifyObject);
+        console.log(sendJSON);
+        var request = new enyo.Ajax({
+            method: 'POST',
+            url: CONSTANTS.CLASSIFY_URL
+        });
+        request.go(sendJSON);
+        request.response(this, function(inSender, inResponse) {
+            this.processClassifyResponse(inResponse);
+        });
+    },
+
+    processClassifyResponse: function(inResponse){
+        console.log(inResponse);
     },
 
     /**
