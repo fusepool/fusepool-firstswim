@@ -176,11 +176,13 @@ enyo.kind(
         var newText = '';
         for(var i=0;i<textArray.length;i++){
             var row = textArray[i];
-            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<');
-            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
-                newText += '|';
-            } else {
-                newText += ' ';
+            if(row.indexOf('http://www.w3.org/2001/XMLSchema#base64Binary') === -1){
+                newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
+                if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                    newText += '|';
+                } else {
+                    newText += ' ';
+                }
             }
         }
         newText = newText.substring(0, newText.length-1);
