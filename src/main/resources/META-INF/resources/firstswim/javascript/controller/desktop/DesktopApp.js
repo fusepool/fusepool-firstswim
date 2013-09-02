@@ -562,11 +562,11 @@ jQuery(document).ready(function () {
                                 title = deleteSpeechMarks(this.title.value + '');
                             }
 
-                            if(!main.containsDocument(documents, content, title)){
+//                            if(!main.containsDocument(documents, content, title)){
                                 if(isEmpty(this.title) || isEmpty(this.title.lang) || this.title.lang + '' === main.lang){
                                     documents.push({url: url, shortContent: content, title: title});
                                 }
-                            }
+//                            }
 
                     });
                     return documents;
