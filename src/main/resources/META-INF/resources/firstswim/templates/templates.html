@@ -1,7 +1,7 @@
 <!-- handlebars template -->
 <script id="preview-template" type="text/x-handlebars-template">
     <h2>{{title}}</h2>
-    <p><a href="{{details.documentURL}}">RDF</a>{{#if details.pmid}} / <a href="http://www.ncbi.nlm.nih.gov/pubmed/{{details.pmid}}">Online Resource</a>{{/if}}{{#if details.dateOfPublication}} / Published: {{details.dateOfPublication}}{{/if}}</p>
+    <p><a target="_blank" href="{{details.documentURL}}">RDF</a>{{#if details.pmid}} / <a target="_blank" href="http://www.ncbi.nlm.nih.gov/pubmed/{{details.pmid}}">Online Resource</a>{{/if}}{{#if details.dateOfPublication}} / Published: {{details.dateOfPublication}}{{/if}}</p>
     <div>{{{content}}}</div>
     {{#if details.inventor}}<h3>Inventors: </h3><p>{{#each details.inventor}}{{{getRDF this}}}{{/each}}</p>{{/if}}
     {{#if details.applicant}}<h3>Applicants: </h3><p>{{#each details.applicant}}{{{getRDF this}}}{{/each}}</p>{{/if}}
