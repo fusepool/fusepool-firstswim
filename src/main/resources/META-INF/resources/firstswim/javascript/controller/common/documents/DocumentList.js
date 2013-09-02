@@ -12,7 +12,7 @@ enyo.kind(
         offset: 0,
         searchWord: '',
         checkedDocs: 0,
-        minClassifyDoc: 3, // process button showing number
+        minClassifyDoc: GLOBAL.items, // process button showing number
         documents: null,
         scrollerClass: '',
         titleClass: '',
@@ -91,15 +91,13 @@ enyo.kind(
         classifyObject.searchs = [];
         classifyObject.searchs.push(this.searchWord);
 
-        classifyObject.labels = [];
+        classifyObject.labels = {};
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
             if(shortDocuments[i].getSlideValue() !== 1){
                 var url = shortDocuments[i].getUrl();
                 var label = shortDocuments[i].getSlideValue() === 2 ? 'Positive' : 'Negative';
-                var docObj = {};
-                docObj[url] = label;
-                classifyObject.labels.push(docObj);
+                classifyObject.labels[url] = label;//push(docObj);
             }
         }
         this.sendClassifyRequest(classifyObject);
@@ -110,9 +108,12 @@ enyo.kind(
         console.log(sendJSON);
         var request = new enyo.Ajax({
             method: 'POST',
-            url: CONSTANTS.CLASSIFY_URL
+            url: CONSTANTS.CLASSIFY_URL,
+            headers: { Accept: 'application/rdf+xml', 'Content-Type' : 'application/json'},
+            postBody: sendJSON,
+            published: {timeout: 60000}
         });
-        request.go(sendJSON);
+        request.go();
         request.response(this, function(inSender, inResponse) {
             this.processClassifyResponse(inResponse);
         });

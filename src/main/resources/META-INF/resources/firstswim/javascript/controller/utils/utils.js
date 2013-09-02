@@ -1,6 +1,6 @@
 var GLOBAL= {
     maxFacets: 100,
-    items: 20
+    items: 10
 };
 
 var BASE_URL = 'http://beta.fusepool.com/';
