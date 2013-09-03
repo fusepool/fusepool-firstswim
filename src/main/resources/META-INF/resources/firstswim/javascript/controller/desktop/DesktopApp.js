@@ -280,7 +280,7 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
-                        this.$.documents.startLoading();
+                        this.$.documents.startSearching();
                         this.$.searchBox.updateInput(this.searchWord);
 
                         var request = this.createSearchRequest(searchWord, checkedEntities);

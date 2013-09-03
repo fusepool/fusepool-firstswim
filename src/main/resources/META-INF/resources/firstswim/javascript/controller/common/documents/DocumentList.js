@@ -84,7 +84,6 @@ enyo.kind(
      * This funtions runs when the user oush the 'Process' button.
      */
     processClassify: function(){
-        this.startLoading();
         var classifyObject = {};
         classifyObject.contentStoreUri = CONSTANTS.SEARCH_URL;
         classifyObject.contentStoreViewUri = CONSTANTS.SEARCH_URL;
@@ -98,24 +97,21 @@ enyo.kind(
             if(shortDocuments[i].getSlideValue() !== 1){
                 var url = shortDocuments[i].getUrl();
                 var label = shortDocuments[i].getSlideValue() === 2 ? 'Positive' : 'Negative';
-                classifyObject.labels[url] = label;
+                classifyObject.labels[url] = label;//push(docObj);
             }
         }
         this.sendClassifyRequest(classifyObject);
     },
 
-    /**
-     * This function send the classify ajax request to the server with an classify object.
-     * @param {Object} classifyObject the classify object
-     */
     sendClassifyRequest: function(classifyObject){
         var sendJSON = JSON.stringify(classifyObject);
+        console.log(sendJSON);
         var request = new enyo.Ajax({
             method: 'POST',
             url: CONSTANTS.CLASSIFY_URL,
             headers: { Accept: 'application/rdf+xml', 'Content-Type' : 'application/json'},
             postBody: sendJSON,
-            published: { timeout: 60000 }
+            published: {timeout: 60000}
         });
         request.go();
         request.response(this, function(inSender, inResponse) {
@@ -123,10 +119,6 @@ enyo.kind(
         });
     },
 
-    /**
-     * This function runs after the the classify query.
-     * @param {Object} inResponse the response of the classify request
-     */
     processClassifyResponse: function(inResponse){
         console.log(inResponse);
     },
@@ -141,11 +133,11 @@ enyo.kind(
         this.$.loader.show();
         this.$.moreButton.hide();
     },
-
     /**
-     * This function clears the list of the documents, hides the 'More' button and shows the loader.
+     * This function runs, when the user start a searching. It clears the list
+     * and shows the loader.
      */
-    startLoading: function(){
+    startSearching: function(){
         this.$.list.setContent('');
         this.$.list.destroyClientControls();
         this.$.list.render();
@@ -290,8 +282,9 @@ enyo.kind(
     /**
      * This functions decides that we should show the process button or not (by the checkedDocs value)
      * and shows or hides it
+     * @param {Boolean} active the classifying is active or note
      */
-    showOrHideProcessButton: function(){
+    showOrHideProcessButton: function(active){
         if(this.activeClassify && this.checkedDocs >= this.minClassifyDoc){
             this.$.processButton.show();
         }
