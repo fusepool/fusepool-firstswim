@@ -67,7 +67,7 @@ enyo.kind(
             url = 'http://' + url;
         }
 
-        if (window.sidebar){ // firefox
+        if (window.sidebar && window.sidebar.addPanel){ // firefox
             window.sidebar.addPanel(title, url, '');
         } else if(window.opera && window.print){ // opera
             var elem = document.createElement('a');
