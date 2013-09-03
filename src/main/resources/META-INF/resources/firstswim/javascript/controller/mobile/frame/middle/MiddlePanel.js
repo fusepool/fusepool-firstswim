@@ -58,8 +58,8 @@ enyo.kind(
                         moreDocumentsFunction: 'moreDocuments'
 		},
         { name: 'documentListMobileToolbar', classes: 'documentListMobileToolbar', components: [
-            { tag: 'div', name: 'documentsCount' },
-            { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' }
+            { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },
+            { tag: 'div', name: 'documentsCount' }
         ]}		
     ],
 	
