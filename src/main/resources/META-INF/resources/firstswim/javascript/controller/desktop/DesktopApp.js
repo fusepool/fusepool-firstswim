@@ -380,6 +380,7 @@ jQuery(document).ready(function () {
                             row = replaceAll(row, 'Ö', 'O');
                             row = replaceAll(row, 'ü', 'u');
                             row = replaceAll(row, 'Ü', 'U');
+                            row = replaceAll(row, 'β', 'ss');
                             newText += replaceAllInTags(row, '"', '\'\'', '>', '<') + '\n';
                         }
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
