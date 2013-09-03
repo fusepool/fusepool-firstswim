@@ -173,7 +173,7 @@ enyo.kind(
      * @param {Number} count the count of documents
      */
     updateCounts: function(count){
-        this.$.documentsCount.setContent(count);
+        this.$.documentsCount.setContent('Documents: ' + count);
     }
 
 });
