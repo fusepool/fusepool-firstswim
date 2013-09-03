@@ -119,6 +119,7 @@ jQuery(document).ready(function () {
                                 loaderClass: 'loader',
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
+                                classifyFinishFunction: 'processSearchResponse',
                                 titleContent: 'Documents:',
                                 documentsCountClass: 'documentsCount',
                                 noDataLabel: 'No data available',
@@ -280,7 +281,7 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
-                        this.$.documents.startSearching();
+                        this.$.documents.startLoading();
                         this.$.searchBox.updateInput(this.searchWord);
 
                         var request = this.createSearchRequest(searchWord, checkedEntities);
