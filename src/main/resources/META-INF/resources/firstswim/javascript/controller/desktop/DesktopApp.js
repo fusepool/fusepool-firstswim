@@ -374,15 +374,15 @@ jQuery(document).ready(function () {
                         var newText = '';
                         for(var i=0;i<textArray.length;i++){
                             var row = textArray[i];
-                            row = replaceAll(row, 'ä', 'a');
-                            row = replaceAll(row, 'Ä', 'A');
-                            row = replaceAll(row, 'ö', 'o');
-                            row = replaceAll(row, 'Ö', 'O');
-                            row = replaceAll(row, 'ü', 'u');
-                            row = replaceAll(row, 'Ü', 'U');
-                            row = replaceAll(row, 'β', 'ss');
-                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<') + '\n';
+                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
+                            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                                newText += '|';
+                            } else {
+                                newText += ' ';
+                            }
                         }
+                        newText = newText.substring(0, newText.length-1);
+                        console.log(newText);
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
                         rdf = jQuery.rdf();
                         rdf.load(parsedData, {});
@@ -566,6 +566,7 @@ jQuery(document).ready(function () {
                         .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
                             var url = this.s.value + '';
                             var content = main.getContentForDocumentId(rdf, url);
+                            content = content.replace(/\|/g,'<br/>');
 
                             var title = '';
                             if(!isEmpty(this.title)){
