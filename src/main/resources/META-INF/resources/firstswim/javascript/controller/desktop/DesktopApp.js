@@ -379,7 +379,8 @@ jQuery(document).ready(function () {
                         rdf = jQuery.rdf();
                         rdf.load(parsedData, {});
                     } catch(e){
-                        console.log('There was an error in RDF object parsing: ' + e);
+                        console.log('There was an error in RDF object parsing:');
+                        console.log(e);
                     }
                     return rdf;
                 },
