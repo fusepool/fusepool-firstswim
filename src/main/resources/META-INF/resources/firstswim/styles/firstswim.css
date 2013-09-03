@@ -250,7 +250,7 @@ body{
 
 .activateSliders{
     display: inline-block;
-    margin-left: 200px;
+    margin-left: 180px;
 }
 
 .sliderText{
@@ -266,7 +266,7 @@ body{
 
 .processClassifyButton{
     margin-left: 7px;
-    width: 75px;
+    width: 96px;
 }
 
 .documentListScroll {

@@ -1,5 +1,5 @@
 var GLOBAL= {
-    maxFacets: 100,
+    maxFacets: 10,
     items: 10
 };
 
