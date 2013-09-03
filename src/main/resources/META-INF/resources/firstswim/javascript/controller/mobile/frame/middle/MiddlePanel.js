@@ -68,7 +68,7 @@ enyo.kind(
 	 * list's startSearching function
 	 */
 	startSearching: function(){
-		this.$.documents.startSearching();
+		this.$.documents.startLoading();
 	},
 
     /**
