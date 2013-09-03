@@ -143,17 +143,3 @@ function deleteSpeechMarks(text){
     }
     return result;
 }
-
-/**
- * Stub which helps debugging of code in console.
- */
-
-var _log = console.log;
-console.log = function () {
-    this._last = [].slice.call(arguments);
-    _log.apply(console, arguments);
-};
-
-console.last = function() {
-    return this._last;
-};
