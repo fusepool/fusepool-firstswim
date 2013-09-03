@@ -373,7 +373,14 @@ jQuery(document).ready(function () {
                         var textArray = searchResponse.split('\n');
                         var newText = '';
                         for(var i=0;i<textArray.length;i++){
-                            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<') + '\n';
+                            var row = textArray[i];
+                            row = replaceAll(row, 'ä', 'a');
+                            row = replaceAll(row, 'Ä', 'A');
+                            row = replaceAll(row, 'ö', 'o');
+                            row = replaceAll(row, 'Ö', 'O');
+                            row = replaceAll(row, 'ü', 'u');
+                            row = replaceAll(row, 'Ü', 'U');
+                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<') + '\n';
                         }
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
                         rdf = jQuery.rdf();
