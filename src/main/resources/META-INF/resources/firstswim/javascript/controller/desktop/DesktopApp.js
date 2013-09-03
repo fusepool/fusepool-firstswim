@@ -278,6 +278,7 @@ jQuery(document).ready(function () {
                  * @param {Array} checkedEntities the checked entities on the left side
                  */
                 search: function(searchWord, checkedEntities){
+                    this.cleanPreviewBox();
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
@@ -358,7 +359,6 @@ jQuery(document).ready(function () {
                     var rdf = this.createRdfObject(searchResponse);
                     this.updateEntityList(rdf, searchWord);
                     this.updateDocumentList(rdf);
-                    this.cleanPreviewBox();
                 },
 
                 /**
