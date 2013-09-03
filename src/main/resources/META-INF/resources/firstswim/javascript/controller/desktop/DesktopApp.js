@@ -373,13 +373,20 @@ jQuery(document).ready(function () {
                         var textArray = searchResponse.split('\n');
                         var newText = '';
                         for(var i=0;i<textArray.length;i++){
-                            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<') + '\n';
+                            var row = textArray[i];
+                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
+                            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
+                                newText += '|';
+                            } else {
+                                newText += ' ';
+                            }
                         }
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
                         rdf = jQuery.rdf();
                         rdf.load(parsedData, {});
                     } catch(e){
-                        console.log('There was an error in RDF object parsing: ' + e);
+                        console.log('There was an error in RDF object parsing: ');
+                        console.log(e);
                     }
                     return rdf;
                 },
@@ -433,6 +440,9 @@ jQuery(document).ready(function () {
                     // categories
                     var main = this;
                     var categories = [];
+//                    rdf.where('?s ?p ?o').each(function(){
+//                        console.log(this.s.value + ' - ' + this.p.value + ' - ' + this.o.value)
+//                    });
                     rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
                         var entity = this.o.value + '';
                         var entityId = this.s.value + '';
