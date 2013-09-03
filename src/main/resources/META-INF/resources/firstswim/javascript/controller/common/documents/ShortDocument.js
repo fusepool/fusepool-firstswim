@@ -63,7 +63,7 @@ enyo.kind(
         { name: 'shortDoc', components: [
             { tag: 'div', name: 'title' },
             { tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content' }
         ]}
     ],
 
