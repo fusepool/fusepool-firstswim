@@ -440,9 +440,6 @@ jQuery(document).ready(function () {
                     // categories
                     var main = this;
                     var categories = [];
-//                    rdf.where('?s ?p ?o').each(function(){
-//                        console.log(this.s.value + ' - ' + this.p.value + ' - ' + this.o.value)
-//                    });
                     rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
                         var entity = this.o.value + '';
                         var entityId = this.s.value + '';
