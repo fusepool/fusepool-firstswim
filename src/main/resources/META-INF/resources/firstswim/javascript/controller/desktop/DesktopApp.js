@@ -382,7 +382,6 @@ jQuery(document).ready(function () {
                             }
                         }
                         newText = newText.substring(0, newText.length-1);
-                        console.log(newText);
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
                         rdf = jQuery.rdf();
                         rdf.load(parsedData, {});
