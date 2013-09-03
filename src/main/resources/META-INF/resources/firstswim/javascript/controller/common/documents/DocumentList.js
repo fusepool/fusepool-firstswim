@@ -101,6 +101,9 @@ enyo.kind(
                 classifyObject.labels[url] = label;
             }
         }
+        this.activeClassify = false;
+        this.$.checkedNumbers.hide();
+        this.$.activateCB.setValue(false);
         this.startLoading();
         this.sendClassifyRequest(classifyObject);
     },
@@ -179,7 +182,7 @@ enyo.kind(
                     classes: 'shortDocumentContainer',
                     addCheckFunction: 'addCheck',
                     removeCheckFunction: 'removeCheck',
-                    showSlidebar: this.$.activateCB.getValue(),
+                    showSlidebar: this.activeClassify,
                     titleClass: 'shortDocumentTitle',
                     contentClass: 'shortDocument',
                     openDocEvent: this.openDocEvent,
@@ -226,7 +229,7 @@ enyo.kind(
                 classes: 'shortDocumentContainer',
                 addCheckFunction: 'addCheck',
                 removeCheckFunction: 'removeCheck',
-                showSlidebar: this.$.activateCB.getValue(),
+                showSlidebar: this.activeClassify,
                 titleClass: 'shortDocumentTitle',
                 contentClass: 'shortDocument',
                 openDocEvent: this.openDocEvent,
