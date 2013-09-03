@@ -154,6 +154,7 @@ enyo.kind(
         this.$.list.render();
         this.$.loader.show();
         this.$.moreButton.hide();
+        this.$.activateSliders.hide();
     },
 
     /**
