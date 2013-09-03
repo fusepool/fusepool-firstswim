@@ -373,20 +373,13 @@ jQuery(document).ready(function () {
                         var textArray = searchResponse.split('\n');
                         var newText = '';
                         for(var i=0;i<textArray.length;i++){
-                            var row = textArray[i];
-                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
-                            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
-                                newText += '|';
-                            } else {
-                                newText += ' ';
-                            }
+                            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<') + '\n';
                         }
                         var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
                         rdf = jQuery.rdf();
                         rdf.load(parsedData, {});
                     } catch(e){
-                        console.log('There was an error in RDF object parsing: ');
-                        console.log(e);
+                        console.log('There was an error in RDF object parsing: ' + e);
                     }
                     return rdf;
                 },
