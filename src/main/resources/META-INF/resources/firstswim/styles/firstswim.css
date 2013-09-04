@@ -307,7 +307,8 @@ body{
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
-	height: 30px;
+	height: 0px;
+	/*height: 30px;*/
 	padding: 10px 0px;
 }
 
@@ -315,7 +316,8 @@ body{
 	position: absolute;
 	top: 50px;
 	right: 0px;
-	bottom: 50px;
+	/*bottom: 50px;*/
+	bottom: 0px;
 	left: 0px;
     word-wrap: break-word;
 	font-size: 12px;
@@ -673,7 +675,7 @@ body{
 .documentsCount{
     display: inline-block;
     color: #777777;
-    font-size: 16px;
+    font-size: 11px;
     margin: 18px 0 0 0;
     text-shadow: 1px 1px 0px #fafafa;
 }
@@ -685,24 +687,44 @@ body{
 	word-wrap: break-word;
 }
 
+.shortDocumentIcon{
+    height: 43px;
+    position: relative;
+    width: 43px;
+}
+
+.shortDocumentControls {
+	display: block;
+    float: left;
+    height: 100%;
+    width: 43px;
+}
+
 .shortDocument{
     background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
     border-bottom: 5px solid #cacaca;
     font-size: 13px;
-    padding: 10px 10px 10px 53px;
+    padding: 10px 10px 10px 10px;
+	min-height: 35px;
+	position: relative;
 }
 
 .shortDocumentTitle{
-    display: inline-block;
+    display: block;
     font-weight: bold;
     margin-bottom: 10px;
-    width: 430px;
+	margin-left: 43px;
+}
+
+.shortDocumentContent{
+	margin-left: 43px;
 }
 
 .rateSlider{
-    display: inline-block;
-    height: 45px;
-    margin: 20px 0 0 25px;
+	float: left;
+	height: 45px;
+	margin: 5px 0px 0px 10px;
+	position: relative;
 }
 
 .shortDocument:hover {

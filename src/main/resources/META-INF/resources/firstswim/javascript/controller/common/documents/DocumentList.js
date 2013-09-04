@@ -184,7 +184,8 @@ enyo.kind(
                     removeCheckFunction: 'removeCheck',
                     showSlidebar: this.activeClassify,
                     titleClass: 'shortDocumentTitle',
-                    contentClass: 'shortDocument',
+					shortDocumentClass: 'shortDocument',
+					contentClass: 'shortDocumentContent',
                     openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
@@ -213,7 +214,7 @@ enyo.kind(
      * @param {Number} count the count of documents
      */
     updateCounts: function(count){
-        this.$.documentsCount.setContent(count);
+        this.$.documentsCount.setContent('('+count+')');
     },
 
     /**
@@ -231,7 +232,8 @@ enyo.kind(
                 removeCheckFunction: 'removeCheck',
                 showSlidebar: this.activeClassify,
                 titleClass: 'shortDocumentTitle',
-                contentClass: 'shortDocument',
+                shortDocumentClass: 'shortDocument',
+                contentClass: 'shortDocumentContent',
                 openDocEvent: this.openDocEvent,
                 openButtonClass: 'openDocButton',
                 container: this.$.list,

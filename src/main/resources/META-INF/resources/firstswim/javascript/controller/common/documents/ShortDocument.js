@@ -19,6 +19,7 @@ enyo.kind(
         addCheckFunction: '',
         removeCheckFunction: '',
         showSlidebar: false,
+        shortDocumentClass: '',
         contentClass: '',
         openButtonClass: ''
     },
@@ -29,11 +30,12 @@ enyo.kind(
      */
     create: function(){
         this.inherited(arguments);
-        this.$.shortDoc.setClasses(this.contentClass);
+        this.$.shortDoc.setClasses(this.shortDocumentClass);
         this.$.shortDoc[this.openDocEvent] = 'openDoc';
         this.$.title.setContent(this.title);
         this.$.title.setClasses(this.titleClass);
         this.$.content.setContent(this.shortContent);
+        this.$.content.setClasses(this.contentClass);
     },
 
     /**
@@ -55,15 +57,19 @@ enyo.kind(
             }
 	});
         if(!this.showSlidebar){
-            this.$.rateSlider.hide();   
+            this.$.rateSlider.hide();
         }
     },
 
     components: [
         { name: 'shortDoc', components: [
+            { tag: 'div', name: 'controls', classes: 'shortDocumentControls enyo-unselectable', components: [
+				{ tag: 'div', name: 'icon', classes: 'shortDocumentIcon' },
+				{ tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' }
+			]},
             { tag: 'div', name: 'title' },
-            { tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content', allowHtml: true },
+            { tag: 'div', classes: 'clear' }
         ]}
     ],
 

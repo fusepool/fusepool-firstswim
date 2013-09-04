@@ -120,7 +120,7 @@ jQuery(document).ready(function () {
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
                                 classifyFinishFunction: 'processSearchResponse',
-                                titleContent: 'Documents:',
+                                titleContent: 'Documents ',
                                 documentsCountClass: 'documentsCount',
                                 noDataLabel: 'No data available',
                                 moreButtonClass: 'moreButton',
