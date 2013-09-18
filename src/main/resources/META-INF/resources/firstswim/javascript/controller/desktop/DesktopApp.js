@@ -30,6 +30,7 @@ jQuery(document).ready(function () {
                     this.inherited(arguments);
                     this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
                     this.changeBMPopupPosition();
+                /*  this.changePreviewBoxSize();		// we don't need this currently */
                 },
 
                 published: {
