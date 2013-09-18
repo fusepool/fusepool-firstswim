@@ -3,7 +3,8 @@ var GLOBAL= {
     items: 10
 };
 
-var BASE_URL = 'http://beta.fusepool.com/';
+//var BASE_URL = 'http://beta.fusepool.com/';
+var BASE_URL = '/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
