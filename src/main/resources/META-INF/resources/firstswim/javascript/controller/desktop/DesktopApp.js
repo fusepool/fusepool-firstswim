@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
-        enyo.Scroller.touchScrolling=false;
+        enyo.Scroller.touchScrolling = false;
 
         /** This function create the user interface with the all components */
         function createUI(){
