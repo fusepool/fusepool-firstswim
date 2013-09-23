@@ -3,7 +3,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
-        enyo.Scroller.touchScrolling = false;
+        enyo.Scroller.touchScrolling=false;
 
         /** This function create the user interface with the all components */
         function createUI(){
@@ -30,7 +30,6 @@ jQuery(document).ready(function () {
                     this.inherited(arguments);
                     this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
                     this.changeBMPopupPosition();
-                /*  this.changePreviewBoxSize();		// we don't need this currently */
                 },
 
                 published: {
@@ -285,11 +284,44 @@ jQuery(document).ready(function () {
                         this.$.documents.startLoading();
                         this.$.searchBox.updateInput(this.searchWord);
 
-                        var request = this.createSearchRequest(searchWord, checkedEntities);
-                        request.response(this, function(inSender, inResponse) {
-                            this.processSearchResponse(inResponse, searchWord);
-                        });
+                        this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
                     }
+                },
+
+                /**
+                 * This function sends an ajax request for searching
+                 * @param {String} searchWord the search word
+                 * @param {String} checkedEntities the checked entities on the left side
+                 * @param {String} responseFunction the name of the response function
+                 * @param {Number} offset the offset of the documents (e.g. offset = 10 --> documents in 10-20)
+                 */
+                sendSearchRequest: function(searchWord, checkedEntities, responseFunction, offset){
+                    var main = this;
+                    var url = this.createSearchURL(searchWord, checkedEntities, offset);
+                    var store = rdfstore.create();
+                    store.load('remote', url, function(success) {
+                        main[responseFunction](success, store);
+                    });
+                },
+
+                /**
+                 * This function creates the search URL for the query
+                 * @param {String} searchWord the search word
+                 * @param {Array} checkedEntities the checked entities
+                 * @param {Number} offset offset of the query
+                 * @returns {String} the search url
+                 */
+                createSearchURL: function(searchWord, checkedEntities, offset){
+                    var url = CONSTANTS.SEARCH_URL;
+                    if(isEmpty(offset)){
+                        offset = 0;
+                    }
+                    url += '?search='+searchWord;
+                    if(checkedEntities.length > 0){
+                        url += '&subject='+this.getCheckedEntitesID(checkedEntities);
+                    }
+                    url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
+                    return url;
                 },
 
                 /**
@@ -325,9 +357,9 @@ jQuery(document).ready(function () {
                 moreDocuments: function(offset){
                     var request = this.createSearchRequest(this.searchWord, this.checkedEntities, offset);
                     request.response(this, function(inSender, inResponse) {
-                        var rdf = this.createRdfObject(inResponse);
-                        var documents = this.createDocumentList(rdf);
-                        this.$.documents.addMoreDocuments(documents);
+//                        var rdf = this.createRdfObject(inResponse);
+//                        var documents = this.createDocumentList(rdf);
+//                        this.$.documents.addMoreDocuments(documents);
                     });
                 },
 
@@ -352,44 +384,12 @@ jQuery(document).ready(function () {
                 /**
                  * This function runs after the ajax search's finish. This function call
                  * the entity list updater and the document updater functions
-                 * @param {Object} searchResponse the search response from the backend
-                 * @param {String} searchWord the searched word
+                 * @param {Boolean} the search query was success or not
+                 * @param {Object} the response rdf object
                  */
-                processSearchResponse: function(searchResponse, searchWord){
-                    var rdf = this.createRdfObject(searchResponse);
-                    this.updateEntityList(rdf, searchWord);
+                processSearchResponse: function(success, rdf){
+//                    this.updateEntityList(rdf, this.searchWord);
                     this.updateDocumentList(rdf);
-                },
-
-                /**
-                 * This funtion create an rdf object from the search response. The rdf query can't parse text, if any property
-                 * contains " mark. We have to modify response: replace " marks to '' in every property.
-                 * @param {String} searchResponse search response from the backend
-                 * @return {Object} the created rdf object
-                 */
-                createRdfObject: function(searchResponse){
-                    var rdf = null;
-                    try {
-                        var textArray = searchResponse.split('\n');
-                        var newText = '';
-                        for(var i=0;i<textArray.length;i++){
-                            var row = textArray[i];
-                            newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
-                            if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
-                                newText += '|';
-                            } else {
-                                newText += ' ';
-                            }
-                        }
-                        newText = newText.substring(0, newText.length-1);
-                        var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
-                        rdf = jQuery.rdf();
-                        rdf.load(parsedData, {});
-                    } catch(e){
-                        console.log('There was an error in RDF object parsing:');
-                        console.log(e);
-                    }
-                    return rdf;
                 },
 
                 /**
@@ -547,8 +547,11 @@ jQuery(document).ready(function () {
                  */
                 getDocumentsCount: function(rdf){
                     var result = 0;
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o').each(function(){
-                        result = this.o.value;
+                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o }';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            result = results[0].o.value;
+                        }
                     });
                     return result;
                 },
@@ -561,47 +564,22 @@ jQuery(document).ready(function () {
                 createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
-                        .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
-                            var url = this.s.value + '';
-                            var content = main.getContentForDocumentId(rdf, url);
-                            content = content.replace(/\|/g,'<br/>');
+                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
+                    query += '      OPTIONAL { ?s <http://purl.org/dc/terms/title> ?title }';
+                    query += '      OPTIONAL { ?s <http://purl.org/dc/terms/abstract> ?content }';
+                    query += '}';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i<results.length;i++){
+                                var row = results[i];
 
-                            var title = '';
-                            if(!isEmpty(this.title)){
-                                title = deleteSpeechMarks(this.title.value + '');
-                            }
-
-//                            if(!main.containsDocument(documents, content, title)){
-                                if(isEmpty(this.title) || isEmpty(this.title.lang) || this.title.lang + '' === main.lang){
-                                    documents.push({url: url, shortContent: content, title: title});
+                                if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
+                                    documents.push({url: row.s.value, shortContent: row.content.value, title: row.title.value});                                    
                                 }
-//                            }
-
-                    });
-                    return documents;
-                },
-
-                /**
-                 * This function search content for a document in an rdf object.
-                 * @param {Object} rdf the rdf object
-                 * @param {String} url of the document
-                 * @returns {String} content of the document (might be empty)
-                 */
-                getContentForDocumentId: function(rdf, url){
-                    var main = this;
-                    var content = '';
-                    rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
-                        if(this.o.lang + '' === main.lang){
-                            content = deleteSpeechMarks(this.o.value + '');
+                            }
                         }
                     });
-                    if(isEmpty(content)){
-                        rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
-                            content = deleteSpeechMarks(this.o.value + '');
-                        });
-                    }
-                    return content;
+                    return documents;
                 },
 
                 /**
