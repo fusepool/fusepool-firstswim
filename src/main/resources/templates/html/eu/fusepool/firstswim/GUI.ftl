@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>FirstSwim</title>
+    <!-- rdfstore -->
+    <script src="firstswim/javascript/rdfstore/rdfstore.js" type="text/javascript"></script>
     <!-- jquery and rdfquery -->
     <script src="firstswim/javascript/jquery/jquery.js" type="text/javascript"></script>
     <script src="firstswim/javascript/jquery/ui/jquery-ui.js" type="text/javascript"></script>
