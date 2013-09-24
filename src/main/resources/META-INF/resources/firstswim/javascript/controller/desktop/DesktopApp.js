@@ -118,7 +118,7 @@ jQuery(document).ready(function () {
                                 loaderClass: 'loader',
                                 scrollerClass: 'documentListScroll',
                                 titleClass: 'documentsMainTitle',
-                                classifyFinishFunction: 'processSearchResponse',
+                                classifyFinishFunction: 'processClassifyResponse',
                                 titleContent: 'Documents ',
                                 documentsCountClass: 'documentsCount',
                                 noDataLabel: 'No data available',
@@ -372,6 +372,10 @@ jQuery(document).ready(function () {
                     this.updateDocumentList(rdf);
                 },
 
+                processClassifyResponse: function(classifyResponse){
+                    console.log(classifyResponse);
+                },
+
                 /**
                  * This functions group and sort the entities update the entity list on the left side
                  * @param {Object} rdf the rdf object which contains the new entity list
@@ -451,9 +455,11 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                var entity = {id: row.id.value, text: row.entity.value};
-                                if(!main.containsEntity(checkedEntities, entity)){
-                                    checkedEntities.push(entity);
+                                if(!isEmpty(row.entity)){   
+                                    var entity = {id: row.id.value, text: row.entity.value};
+                                    if(!main.containsEntity(checkedEntities, entity)){
+                                        checkedEntities.push(entity);
+                                    }
                                 }
                             }
                         }
@@ -534,17 +540,23 @@ jQuery(document).ready(function () {
                 createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
-                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
-                    query += '      OPTIONAL { ?s <http://purl.org/dc/terms/title> ?title }';
-                    query += '      OPTIONAL { ?s <http://purl.org/dc/terms/abstract> ?content }';
+                    var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
+                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
+                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     query += '}';
                     rdf.execute(query, function(success, results) {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-
                                 if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-                                    documents.push({url: row.s.value, shortContent: row.content.value, title: row.title.value});                                    
+                                    var content = row.content.value;
+                                    var title = '';
+                                    if(!isEmpty(row.title)){
+                                        title = row.title.value;
+                                    }
+                                    if(!main.containsDocument(documents, content, title)){
+                                        documents.push({url: row.url.value, shortContent: content, title: title});
+                                    }
                                 }
                             }
                         }
