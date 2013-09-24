@@ -8,12 +8,11 @@
     <title>FirstSwim</title>
     <!-- rdfstore -->
     <script src="firstswim/javascript/rdfstore/rdfstore.js" type="text/javascript"></script>
-    <!-- jquery and rdfquery -->
+    <!-- jquery -->
     <script src="firstswim/javascript/jquery/jquery.js" type="text/javascript"></script>
     <script src="firstswim/javascript/jquery/ui/jquery-ui.js" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="firstswim/javascript/jquery/ui/jquery-ui.css" />
     <script src="firstswim/javascript/jquery/jquery.json.js" type="text/javascript"></script>
-    <script src="firstswim/javascript/jquery/rdfquery.js" type="text/javascript"></script>
     <!-- underscore -->
     <script src="firstswim/javascript/underscore/underscore.js" type="text/javascript"></script>
     <!-- handlebars -->
