@@ -250,7 +250,7 @@ jQuery(document).ready(function () {
                     }
                     url += '?search='+searchWord;
                     if(checkedEntities.length > 0){
-                        url += '&subject='+this.getCheckedEntitesID(checkedEntities);
+                        url += this.getCheckedEntitesURL(checkedEntities);
                     }
                     url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
                     return url;
@@ -276,18 +276,17 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function create an array from the id-s of the checked
-                 * entites for the search query
+                 * This function creates the checked entites part of the search URL
                  * @param {Array} checkedEntities the original checked entities
-                 * @returns {Array} the id-s of the checked entities
+                 * @returns {String} the URL part of the checked entities
                  */
-                getCheckedEntitesID: function(checkedEntities){
-                    var result = [];
+                getCheckedEntitesURL: function(checkedEntities){
+                    var result = '';
                     for(var i=0;i<checkedEntities.length;i++){
                         if(!isEmpty(checkedEntities[i].id)){
-                            result.push(checkedEntities[i].id);
+                            result += '&subject=' + checkedEntities[i].id;
                         } else {
-                            result.push(checkedEntities[i]);
+                            result += '&subject=' + checkedEntities[i];
                         }
                     }
                     return result;
