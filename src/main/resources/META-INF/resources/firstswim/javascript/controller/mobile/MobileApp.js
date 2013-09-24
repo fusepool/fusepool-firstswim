@@ -209,6 +209,7 @@ jQuery(document).ready(function () {
                  * @param {Array} checkedEntities the unchecked entities on the left side
                  */
                 search: function(searchWord, checkedEntities){
+                    this.cleanPreviewBox();
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
@@ -454,6 +455,13 @@ jQuery(document).ready(function () {
                     this.$.middlePanel.updateDocuments(documents);
                     var count = this.getDocumentsCount(rdf);
                     this.$.middlePanel.updateCounts(count);
+                },
+
+                /**
+                 * This function delete the preview's content
+                 */
+                cleanPreviewBox: function(){
+                    this.$.rightPanel.clean();
                 },
 
                 /**

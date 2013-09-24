@@ -512,6 +512,9 @@ jQuery(document).ready(function () {
                     this.$.documents.updateCounts(count);
                 },
 
+                /**
+                 * This function delete the preview's content
+                 */
                 cleanPreviewBox: function(){
                     this.$.previewBox.clean();
                 },
