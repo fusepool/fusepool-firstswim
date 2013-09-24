@@ -81,8 +81,8 @@ enyo.kind(
      * @param {Object} rdf the response rdf object
      */
     processDetailsResponse: function(success, rdf){
-        var title = this.getPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
-        var addressID = this.getPropertyValue(rdf, 'http://schema.org/address');
+        var title = getRDFPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
+        var addressID = getRDFPropertyValue(rdf, 'http://schema.org/address');
         if(!isEmpty(addressID)){
             this.getAddresses(addressID, title);   
         } else {
@@ -113,9 +113,9 @@ enyo.kind(
      */
     processAddressResponse: function(success, rdf, title){
         var addressObject = {};
-        addressObject.locality = this.getPropertyValue(rdf, 'http://schema.org/addressLocality');
-        addressObject.street = this.getPropertyValue(rdf, 'http://schema.org/streetAddress');
-        addressObject.country = this.getPropertyValue(rdf, 'http://schema.org/addressCountry');
+        addressObject.locality = getRDFPropertyValue(rdf, 'http://schema.org/addressLocality');
+        addressObject.street = getRDFPropertyValue(rdf, 'http://schema.org/streetAddress');
+        addressObject.country = getRDFPropertyValue(rdf, 'http://schema.org/addressCountry');
         this.showDetails(title, addressObject);
     },
 
@@ -129,23 +129,6 @@ enyo.kind(
         if(!isEmpty(this.owner)){
             this.owner.owner[this.showDetailsFunction](title, addressObject);
         }
-    },
-
-    /**
-     * This functions search a property's value in an rdf object.
-     * @param {Object} rdf the rdf object
-     * @param {String} propertyName the name of the property
-     * @returns {String} the property's value
-     */
-    getPropertyValue: function(rdf, propertyName){
-        var result = '';
-        var query = 'SELECT * { ?s <' + propertyName + '> ?o }';
-        rdf.execute(query, function(success, results) {
-            if (success && results.length > 0) {
-                result = results[0].o.value;
-            }
-        });
-        return result;
     },
 
     /**

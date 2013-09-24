@@ -144,3 +144,20 @@ function deleteSpeechMarks(text){
     }
     return result;
 }
+
+/**
+ * This functions search a property's value in an rdf object with rdfstore.
+ * @param {Object} rdf the rdf object
+ * @param {String} propertyName the name of the property
+ * @returns {String} the property's value
+ */
+function getRDFPropertyValue(rdf, propertyName){
+    var result = '';
+    var query = 'SELECT * { ?s <' + propertyName + '> ?o }';
+    rdf.execute(query, function(success, results) {
+        if (success && results.length > 0) {
+            result = results[0].o.value;
+        }
+    });
+    return result;
+}
