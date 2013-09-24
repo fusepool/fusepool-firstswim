@@ -216,36 +216,44 @@ jQuery(document).ready(function () {
                         this.$.middlePanel.startSearching();
                         this.$.middlePanel.updateInput(this.searchWord);
 
-                        var request = this.createSearchRequest(searchWord, checkedEntities);
-                        request.response(this, function(inSender, inResponse) {
-                            this.processSearchResponse(inResponse, searchWord);
-                        });
+                        this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
                     }
                 },
+
                 /**
-                 * This function create an ajax request for searching
+                 * This function sends an ajax request for searching
                  * @param {String} searchWord the search word
                  * @param {String} checkedEntities the checked entities on the left side
+                 * @param {String} responseFunction the name of the response function
                  * @param {Number} offset the offset of the documents (e.g. offset = 10 --> documents in 10-20)
                  */
-                createSearchRequest: function(searchWord, checkedEntities, offset){
+                sendSearchRequest: function(searchWord, checkedEntities, responseFunction, offset){
+                    var main = this;
+                    var url = this.createSearchURL(searchWord, checkedEntities, offset);
+                    var store = rdfstore.create();
+                    store.load('remote', url, function(success) {
+                        main[responseFunction](success, store);
+                    });
+                },
+
+                /**
+                 * This function creates the search URL for the query
+                 * @param {String} searchWord the search word
+                 * @param {Array} checkedEntities the checked entities
+                 * @param {Number} offset offset of the query
+                 * @returns {String} the search url
+                 */
+                createSearchURL: function(searchWord, checkedEntities, offset){
+                    var url = CONSTANTS.SEARCH_URL;
                     if(isEmpty(offset)){
                         offset = 0;
                     }
-                    var request = new enyo.Ajax({
-                        method: 'GET',
-                        url: CONSTANTS.SEARCH_URL,
-                        handleAs: 'text',
-                        headers: { Accept: 'application/rdf+xml' }
-                    });
-                    request.go({
-                        search: searchWord,
-                        subject: this.getCheckedEntitesID(checkedEntities),
-                        offset: offset,
-                        maxFacets: GLOBAL.maxFacets,
-                        items: GLOBAL.items
-                    });
-                    return request;
+                    url += '?search='+searchWord;
+                    if(checkedEntities.length > 0){
+                        url += '&subject='+this.getCheckedEntitesID(checkedEntities);
+                    }
+                    url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
+                    return url;
                 },
 
                 /**
@@ -253,12 +261,18 @@ jQuery(document).ready(function () {
                  * @param {Number} offset the offset of the document (offset = 10 --> document in 10-20)
                  */
                 moreDocuments: function(offset){
-                    var request = this.createSearchRequest(this.searchWord, this.checkedEntities, offset);
-                    request.response(this, function(inSender, inResponse) {
-                        var rdf = this.createRdfObject(inResponse);
-                        var documents = this.createDocumentList(rdf);
-                        this.$.middlePanel.addMoreDocuments(documents);
-                    });
+                    this.sendSearchRequest(this.searchWord, this.checkedEntities, 'processMoreResponse', offset);
+                },
+
+                /**
+                 * This function runs after the ajax more search's finish.
+                 * This function calls the document updater function
+                 * @param {Boolean} success the search query was success or not
+                 * @param {Object} rdf the response rdf object
+                 */
+                processMoreResponse: function(success, rdf){
+                    var documents = this.createDocumentList(rdf);
+                    this.$.middlePanel.addMoreDocuments(documents);
                 },
 
                 /**
@@ -280,38 +294,14 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function runs after the ajax search's finish. This function call
+                 * This function runs after the ajax search's finish. This function calls
                  * the entity list updater and the document updater functions
-                 * @param {String} searchResponse the search response from the backend
-                 * @param {String} searchWord the searched word
+                 * @param {Boolean} success the search query was success or not
+                 * @param {Object} rdf the response rdf object
                  */
-                processSearchResponse: function(searchResponse, searchWord){
-                    var rdf = this.createRdfObject(searchResponse);
-                    this.updateEntityList(rdf, searchWord);
+                processSearchResponse: function(success, rdf){
+                    this.updateEntityList(rdf, this.searchWord);
                     this.updateDocumentList(rdf);
-                },
-
-                /**
-                 * This funtion create an rdf object from the search response. The rdf query can't parse text, if any property
-                 * contains " mark. We have to modify response: replace " marks to '' in every property.
-                 * @param {String} searchResponse search response from the backend
-                 * @return {Object} the created rdf object
-                 */
-                createRdfObject: function(searchResponse){
-                    var rdf = null;
-                    try {
-                        var textArray = searchResponse.split('\n');
-                        var newText = '';
-                        for(var i=0;i<textArray.length;i++){
-                            newText += replaceAllInTags(textArray[i], '"', '\'\'', '>', '<') + '\n';
-                        }
-                        var parsedData = new DOMParser().parseFromString(newText, 'text/xml');
-                        rdf = jQuery.rdf();
-                        rdf.load(parsedData, {});
-                    } catch(e){
-                        console.log('There was an error in RDF object parsing: ' + e);
-                    }
-                    return rdf;
                 },
 
                 /**
@@ -360,55 +350,48 @@ jQuery(document).ready(function () {
                  * @returns {Array} the categories array with the entities
                  */
                 getCategories: function(rdf){
-                    // categories
-                    var main = this;
                     var categories = [];
-                    rdf.where('?s <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
-                        var entity = this.o.value + '';
-                        var entityId = this.s.value + '';
-                        var type = main.getTypeForEntity(rdf, entityId);
-                        categories.push({entityId: entityId, entity: entity , value: type});
+                    var query = 'SELECT * { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity';
+                    query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
+                    query += '}';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i<results.length;i++){
+                                var row = results[i];
+                                if(row.type.value.indexOf('#') === -1){
+                                    categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
+                                }
+                            }
+                        }
                     });
                     return categories;
                 },
 
                 /**
-                 * This function search the type of an exist entity in and rdf object.
-                 * @param {Object} rdf the rdf object, which contains the type
-                 * @param {String} entityId id of the entity
-                 * @returns {String} the type of the entity
-                 */
-                getTypeForEntity: function(rdf, entityId){
-                    var result = '';
-                    rdf.where('<'+entityId+'> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?o').each(function(){
-                        var type = this.o.value + '';
-                        if(type.indexOf('#') === -1){
-                            result = this.o.value + '';
-                        }
-                    });
-                    return result;
-                },
-
-                /**
-                 * This function search the checked entities in an rdf object
+                 * This function search the checked entities in an rdf object and
+                 * return with it
                  * @param {Object} rdf the rdf object
                  * @returns {Array} the checked entity list
                  */
                 checkedEntitiesFromRdf: function(rdf){
                     var main = this;
                     var checkedEntities = [];
-                    var ids = [];
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#subject> ?o').each(function(){
-                        ids.push(this.o.value + '');
-                    });
-                    for(var i=0;i<ids.length;i++){
-                        rdf.where('<'+ ids[i] +'> <http://www.w3.org/2000/01/rdf-schema#label> ?o').each(function(){
-                            var entity = {id: ids[i], text: this.o.value};
-                            if(!main.containsEntity(checkedEntities, entity)){
-                                checkedEntities.push(entity);   
+                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#subject> ?id';
+                    query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
+                    query += '}';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i<results.length;i++){
+                                var row = results[i];
+                                if(!isEmpty(row.entity)){   
+                                    var entity = {id: row.id.value, text: row.entity.value};
+                                    if(!main.containsEntity(checkedEntities, entity)){
+                                        checkedEntities.push(entity);
+                                    }
+                                }
                             }
-                        });
-                    }
+                        }
+                    });
                     return checkedEntities;
                 },
 
@@ -471,8 +454,11 @@ jQuery(document).ready(function () {
                  */
                 getDocumentsCount: function(rdf){
                     var result = 0;
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o').each(function(){
-                        result = this.o.value;
+                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o }';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            result = results[0].o.value;
+                        }
                     });
                     return result;
                 },
@@ -485,40 +471,28 @@ jQuery(document).ready(function () {
                 createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
-                    rdf.where('?s <http://fusepool.eu/ontologies/ecs#textPreview> ?preview')
-                        .optional('?s <http://purl.org/dc/terms/title> ?title').each(function(){
-                            var url = this.s.value + '';
-                            var content = main.getContentForDocumentId(rdf, url);
-                            var title = deleteSpeechMarks(this.title.value + '');
-                            if(!main.containsDocument(documents, content, title)){
-                                if(this.title.lang + '' === main.lang || isEmpty(this.title.lang)){
-                                    documents.push({url: url, shortContent: content, title: title});
+                    var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
+                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
+                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
+                    query += '}';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i<results.length;i++){
+                                var row = results[i];
+                                if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
+                                    var content = row.content.value;
+                                    var title = '';
+                                    if(!isEmpty(row.title)){
+                                        title = row.title.value;
+                                    }
+                                    if(!main.containsDocument(documents, content, title)){
+                                        documents.push({url: row.url.value, shortContent: content, title: title});
+                                    }
                                 }
                             }
-                    });
-                    return documents;
-                },
-
-                /**
-                 * This function search content for a document in an rdf object.
-                 * @param {Object} rdf the rdf object
-                 * @param {String} url of the document
-                 * @returns {String} content of the document (might be empty)
-                 */
-                getContentForDocumentId: function(rdf, url){
-                    var main = this;
-                    var content = '';
-                    rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
-                        if(this.o.lang + '' === main.lang){
-                            content = deleteSpeechMarks(this.o.value + '');
                         }
                     });
-                    if(isEmpty(content)){
-                        rdf.where('<'+url+'> <http://purl.org/dc/terms/abstract> ?o').each(function(){
-                            content = deleteSpeechMarks(this.o.value + '');
-                        });
-                    }
-                    return content;
+                    return documents;
                 },
 
                 /**

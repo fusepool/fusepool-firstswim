@@ -86,6 +86,7 @@ enyo.kind(
      * @param {String} doc the document
      */
     showDoc: function(doc){
+        this.show();
         this.scrollToTop();
         this.$.loader.hide();
         this.renderPreviewTemplate(doc);
