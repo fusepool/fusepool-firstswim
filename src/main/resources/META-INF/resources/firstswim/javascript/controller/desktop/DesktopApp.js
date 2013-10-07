@@ -371,8 +371,14 @@ jQuery(document).ready(function () {
                     this.updateDocumentList(rdf);
                 },
 
-                processClassifyResponse: function(classifyResponse){
-                    console.log(classifyResponse);
+                /**
+                 * This functions is called after a success classifying.
+                 * @param {Object} classifyResponse the response of the request
+                 * @param {String} searchWord the search word
+                 */
+                processClassifyResponse: function(classifyResponse, searchWord){
+//                        this.updateEntityList(rdf, this.searchWord);
+//                        this.updateDocumentList(rdf);                        
                 },
 
                 /**

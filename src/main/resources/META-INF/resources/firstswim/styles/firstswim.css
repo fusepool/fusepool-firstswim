@@ -272,11 +272,12 @@ body{
 .documentListScroll {
     background-color: #e3e3e3;
     border: 1px #cccccc solid;
+    bottom: 0;
+    left: 0;
     position: absolute;
+    right: 0;
+    text-align: center;
     top: 50px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
 }
 
 .moreButton{
@@ -705,8 +706,9 @@ body{
     border-bottom: 5px solid #cacaca;
     font-size: 13px;
     padding: 10px 10px 10px 10px;
-	min-height: 35px;
-	position: relative;
+    min-height: 35px;
+    position: relative;
+    text-align: left;
 }
 
 .shortDocumentTitle{

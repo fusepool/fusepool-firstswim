@@ -123,6 +123,10 @@ enyo.kind(
             published: { timeout: 60000 }
         });
         request.go();
+        request.error(this, function(inError){
+            this.$.loader.hide();
+            this.showMessage('There was an error in the classify request!');
+        });
         request.response(this, function(inSender, inResponse) {
             this.processClassifyResponse(inResponse);
         });
@@ -200,13 +204,22 @@ enyo.kind(
             this.$.moreButton.show();
             this.$.activateSliders.show();
         } else {
-            this.$.list.setContent(this.noDataLabel);
+            this.showMessage(this.noDataLabel);
             this.$.loader.hide();
             this.$.activateSliders.hide();
             this.$.list.render();
         }
         this.$.title.show();
         this.scrollToTop();
+    },
+
+    /**
+     * This functions shows a message in the document list box
+     * @param {String} message the message what we want to show
+     */
+    showMessage: function(message){
+        this.$.list.destroyClientControls();
+        this.$.list.setContent(message);
     },
 
     /**
