@@ -45,6 +45,7 @@ enyo.kind(
                     detailsURL: CONSTANTS.DETAILS_URL,
                     entityId: this.entityList[i].id,
                     entityText: this.entityList[i].text,
+                    entityCount: this.entityList[i].count,
                     parentFunction: 'updateEntities',
                     showDetailsFunction: 'updateDetails',
                     checked: false

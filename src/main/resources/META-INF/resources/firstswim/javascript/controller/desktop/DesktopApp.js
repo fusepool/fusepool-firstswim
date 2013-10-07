@@ -388,7 +388,7 @@ jQuery(document).ready(function () {
                  */
                 updateEntityList: function(rdf, searchWord){
                     var checkedEntities = this.checkedEntitiesFromRdf(rdf);
-                    var categories = this.getCategories(rdf);
+                    var categories = this.getEntities(rdf);
 
                     var groupVars = _.groupBy(categories, function(val){ return val.value; });
                     var sortedGroup = _.sortBy(groupVars, function(val){ return -val.length; });
@@ -408,8 +408,9 @@ jQuery(document).ready(function () {
                                 var entityId = category[j].entityId;
                                 var entityText = replaceAll(category[j].entity + '', '_', ' ');
                                 var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
+                                var entityCount = category[j].count;
 
-                                var entity = {id: entityId, text:entityName };
+                                var entity = {id: entityId, text:entityName, count: entityCount };
                                 if(!this.containsEntity(entities, entity)){
                                     entities.push(entity);
                                 }
@@ -426,21 +427,40 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object, which conatins the categories
                  * @returns {Array} the categories array with the entities
                  */
-                getCategories: function(rdf){
+                getEntities: function(rdf){
                     var categories = [];
-                    var query = 'SELECT * { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity';
+                    var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>';
+                    query += '      OPTIONAL { ?v <http://fusepool.eu/ontologies/ecs#facet> ?f }';
+                    query += '      OPTIONAL { ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count }';
+                    query += '      OPTIONAL { ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id }';
+                    query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
                     query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
                     query += '}';
                     rdf.execute(query, function(success, results) {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                if(row.type.value.indexOf('#') === -1){
-                                    categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
-                                }
+                                categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
+//                                console.log({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
                             }
                         }
-                    });
+                    });            
+//          THE OLD QUERY
+//                    console.log('-----------------');
+//                    query = 'SELECT * { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity';
+//                    query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
+//                    query += '}';
+//                    rdf.execute(query, function(success, results) {
+//                        if (success) {
+//                            for(var i=0;i<results.length;i++){
+//                                var row = results[i];
+//                                if(row.type.value.indexOf('#') === -1){
+//                                    console.log({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
+//                                    categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
+//                                }
+//                            }
+//                        }
+//                    });
                     return categories;
                 },
 

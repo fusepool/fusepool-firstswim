@@ -11,6 +11,7 @@ enyo.kind(
         addressURL: '',
         entityId: '',
         entityText: '',
+        entityCount: 0,
         mainClass: '',
         entityTextClass: '',
         entityCheckboxClass: '',
