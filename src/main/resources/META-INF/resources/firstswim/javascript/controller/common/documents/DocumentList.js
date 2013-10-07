@@ -123,7 +123,7 @@ enyo.kind(
             published: { timeout: 60000 }
         });
         request.go();
-        request.error(this, function(inError){
+        request.error(this, function(){
             this.$.loader.hide();
             this.showMessage('There was an error in the classify request!');
         });
