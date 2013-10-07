@@ -66,27 +66,23 @@ enyo.kind(
      * This function send an ajax request to get an entity's details
      */
     getDetails: function(){
-        var request = new enyo.Ajax({
-            method: 'GET',
-            url: this.detailsURL,
-            handleAs: 'text',
-            headers: { Accept: 'application/rdf+xml' }
-        });
-        request.go({ iri: this.entityId });
-        request.response(this, function(inSender, inResponse) {
-            this.processDetailsResponse(inResponse);
+        var main = this;
+        var url = this.detailsURL + '?iri=' + this.entityId;
+        var store = rdfstore.create();
+        store.load('remote', url, function(success) {
+            main.processDetailsResponse(success, store);
         });
     },
 
     /**
      * This functions runs when the details ajax response is arrived about the details.
      * It calls the getAddresses function for more information if the details has address.
-     * @param {String} rdfResponse the ajax response about the details
+     * @param {Boolean} success the search query was success or not
+     * @param {Object} rdf the response rdf object
      */
-    processDetailsResponse: function(rdfResponse){
-        var rdf = this.createRdfObjectFromText(rdfResponse);
-        var title = this.getPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
-        var addressID = this.getPropertyValue(rdf, 'http://schema.org/address');
+    processDetailsResponse: function(success, rdf){
+        var title = getRDFPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
+        var addressID = getRDFPropertyValue(rdf, 'http://schema.org/address');
         if(!isEmpty(addressID)){
             this.getAddresses(addressID, title);   
         } else {
@@ -100,30 +96,26 @@ enyo.kind(
      * @param {String} title the title of the details
      */
     getAddresses: function(addressID, title){
-        var request = new enyo.Ajax({
-            method: 'GET',
-            url: this.addressURL,
-            handleAs: 'text',
-            headers: { Accept: 'application/rdf+xml' }
-        });
-        request.go({ iri: addressID });
-        request.response(this, function(inSender, inResponse) {
-            this.processAddressResponse(inResponse, title);
+        var main = this;
+        var url = this.addressURL + '?iri=' + addressID;
+        var store = rdfstore.create();
+        store.load('remote', url, function(success) {
+            main.processAddressResponse(success, store, title);
         });
     },
 
     /**
-     * This functions runs when the ajax response is arrived about the address.
-     * It calls the parent's show function.
-     * @param {String} response the response of the ajax request
+     * This functions runs when the ajax response is arrived with the address.
+     * It calls the 'show' function.
+     * @param {Boolean} success the ajax query was success or not
+     * @param {Object} rdf the response rdf object
      * @param {String} title the title of the details
      */
-    processAddressResponse: function(response, title){
-        var rdf = this.createRdfObjectFromText(response);
+    processAddressResponse: function(success, rdf, title){
         var addressObject = {};
-        addressObject.locality = this.getPropertyValue(rdf, 'http://schema.org/addressLocality');
-        addressObject.street = this.getPropertyValue(rdf, 'http://schema.org/streetAddress');
-        addressObject.country = this.getPropertyValue(rdf, 'http://schema.org/addressCountry');
+        addressObject.locality = getRDFPropertyValue(rdf, 'http://schema.org/addressLocality');
+        addressObject.street = getRDFPropertyValue(rdf, 'http://schema.org/streetAddress');
+        addressObject.country = getRDFPropertyValue(rdf, 'http://schema.org/addressCountry');
         this.showDetails(title, addressObject);
     },
 
@@ -137,32 +129,6 @@ enyo.kind(
         if(!isEmpty(this.owner)){
             this.owner.owner[this.showDetailsFunction](title, addressObject);
         }
-    },
-
-    /**
-     * This functions search a property's value in an rdf object.
-     * @param {Object} rdf the rdf object
-     * @param {String} propertyName the name of the property
-     * @returns {String} the property's value
-     */
-    getPropertyValue: function(rdf, propertyName){
-        var result = '';
-        rdf.where('?s <' + propertyName + '> ?p').each(function(){
-            result = this.p.value + '';
-        });
-        return result;
-    },
-
-    /**
-     * This function create rdf object from a text.
-     * @param {String} text the text of rdf
-     * @returns {Object} the rdf object
-     */
-    createRdfObjectFromText: function(text){
-        var parsedData = new DOMParser().parseFromString(text, 'text/xml' );
-        var rdf = jQuery.rdf();
-        rdf.load(parsedData, {});
-        return rdf;
     },
 
     /**

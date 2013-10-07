@@ -83,10 +83,10 @@ enyo.kind(
 
     /**
      * This function shows a document.
-     * @param {String} docText the document's content
-     * @param {String} title the document's title
+     * @param {String} doc the document
      */
     showDoc: function(doc){
+        this.show();
         this.scrollToTop();
         this.$.loader.hide();
         this.renderPreviewTemplate(doc);
@@ -94,8 +94,7 @@ enyo.kind(
 
     /**
      * This function render the preview document content with Handlebars template.
-     * @param {String} title the title of the document
-     * @param {String} content the content of the document
+     * @param {String} doc the document
      */
     renderPreviewTemplate: function(doc){
         var templateScript = $("#preview-template").html(); 
@@ -112,15 +111,12 @@ enyo.kind(
         this.clearDoc();
         this.$.loader.show();
         this.documentURL = documentURL;
-        var request = new enyo.Ajax({
-            method: 'GET',
-            url: CONSTANTS.OPEN_DOC_URL,
-            handleAs: 'text',
-            headers: { Accept: 'application/rdf+xml' }
-        });
-        request.go({ iri : documentURL });
-        request.response(this, function(inSender, inResponse) {
-            this.processOpenDocResponse(inResponse);
+
+        var main = this;
+        var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
+        var store = rdfstore.create();
+        store.load('remote', url, function(success) {
+            main.processOpenDocResponse(success, store);
         });
     },
 
@@ -130,66 +126,42 @@ enyo.kind(
      * @param {Object} rdf the data as an rdf object
      */
     processDocDetails: function(rdf){
-        var rdfObj = rdf.databank.dump();
-        var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
-        var doc = _.pick(rdfObj, docName);
-
-        var getName = /(#|\/)([^#\/]*)$/ 
-        var docDetails = _.object(_.toArray(_.map(doc[docName], function (item,index) {
-            var arr = [];
-            regex = getName.exec(index);
-            if (regex) {arr[0] = regex[2];} else {arr[0] = index;};
-            arr[1] = _.map(item, function(subitem){return subitem.value});
-            return arr;
-        })));
-
-        docDetails['documentURL'] = [docName];
-        return docDetails;
+        console.log('Preview details coming soon with uduvudu.');
+//        var rdfObj = rdf.databank.dump();
+//        var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
+//        var doc = _.pick(rdfObj, docName);
+//
+//        var getName = /(#|\/)([^#\/]*)$/;
+//        var docDetails = _.object(_.toArray(_.map(doc[docName], function (item,index) {
+//            var arr = [];
+//            regex = getName.exec(index);
+//            if (regex) {arr[0] = regex[2];} else {arr[0] = index;};
+//            arr[1] = _.map(item, function(subitem){return subitem.value;});
+//            return arr;
+//        })));
+//
+//        docDetails['documentURL'] = [docName];
+//        return docDetails;
+          return null;
     },
 
     /**
      * This function runs when the response of the open doc ajax event is arrived.
      * It processes the response data, delete the bad type rows, parse it and call
      * the document show function.
-     * @param {String} data the response data
+     * @param {Boolean} success the ajax query was success or not
+     * @param {String} rdf the rdf object
      */
-    processOpenDocResponse: function(data){
-        var rdf = this.createPreviewRdfObject(data);
+    processOpenDocResponse: function(success, rdf){
         var docDetails = this.processDocDetails(rdf); 
         var docText = this.getContent(rdf);
         if(docText === ''){
             docText = this.noDataLabel;
         } else {
-            docText = docText.replace(/\|/g,'<br/>');
+            docText = replaceAll(docText, '\n', '<br />', false);
         }
         var title = this.getTitle(rdf);
         this.showDoc({content: docText, title: title, details: docDetails});
-    },
-
-    /**
-     * This function create rdf for preview document from the reponse data.
-     * @param {String} data the response data
-     */
-    createPreviewRdfObject: function(data){
-        // new lines to spaces
-        var textArray = data.split('\n');
-        var newText = '';
-        for(var i=0;i<textArray.length;i++){
-            var row = textArray[i];
-            if(row.indexOf('http://www.w3.org/2001/XMLSchema#base64Binary') === -1){
-                newText += replaceAllInTags(row, '"', '\'\'', '>', '<');
-                if(row.indexOf('<') === -1 && row.indexOf('>') === -1 && row.indexOf('xmlns') === -1){
-                    newText += '|';
-                } else {
-                    newText += ' ';
-                }
-            }
-        }
-        newText = newText.substring(0, newText.length-1);
-        var parsedData = new DOMParser().parseFromString(newText,'text/xml');
-        var rdf = jQuery.rdf();
-        rdf.load(parsedData, {});
-        return rdf;
     },
 
     /**
@@ -200,16 +172,19 @@ enyo.kind(
     getContent: function(rdf){
         var content = '';
         var main = this;
-        rdf.where('?s <http://purl.org/dc/terms/abstract> ?o').each(function(){
-            if(this.o.lang === main.lang || isEmpty(this.o.lang)){
-                content = deleteSpeechMarks(this.o.value + '');
+
+        var query = 'SELECT * { ?s <http://purl.org/dc/terms/abstract> ?content1';
+        query += '      OPTIONAL { ?s <http://rdfs.org/sioc/ns#content> ?content2 }';
+        query += '}';
+        rdf.execute(query, function(success, results) {
+            if (success) {
+                var row = results[0];
+                if(!isEmpty(row.content1) && (row.content1.lang === main.lang || isEmpty(row.content1.lang))){
+                    content = row.content1.value;
+                } else {
+                    content = row.content2.value;
+                }
             }
-        });
-        if(!isEmpty(content)){
-            return content;
-        }
-        rdf.where('?s <http://rdfs.org/sioc/ns#content> ?o').each(function(){
-            content = this.o.value + '';
         });
         return content;
     },
@@ -222,9 +197,12 @@ enyo.kind(
     getTitle: function(rdf){
         var title = '';
         var main = this;
-        rdf.where('?s <http://purl.org/dc/terms/title> ?o').each(function(){
-            if(this.o.lang === main.lang || isEmpty(this.o.lang)){
-                title = deleteSpeechMarks(this.o.value + '');
+
+        var query = 'SELECT * { ?s <http://purl.org/dc/terms/title> ?title }';
+        rdf.execute(query, function(success, results) {
+            var row = results[0];
+            if (success && (isEmpty(row.title.lang) || row.title.lang === main.lang)) {
+                title = row.title.value;
             }
         });
         return title;

@@ -1,10 +1,10 @@
 var GLOBAL= {
     maxFacets: 10,
-    items: 10
+    items: 3
 };
 
-//var BASE_URL = 'http://beta.fusepool.com/';
-var BASE_URL = '/';
+var BASE_URL = 'http://beta.fusepool.com/';
+//var BASE_URL = '/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
@@ -142,5 +142,22 @@ function deleteSpeechMarks(text){
     if(result.charAt(result.length-1) === '"'){
         result = result.substr(0, result.length-1);
     }
+    return result;
+}
+
+/**
+ * This functions search a property's value in an rdf object with rdfstore.
+ * @param {Object} rdf the rdf object
+ * @param {String} propertyName the name of the property
+ * @returns {String} the property's value
+ */
+function getRDFPropertyValue(rdf, propertyName){
+    var result = '';
+    var query = 'SELECT * { ?s <' + propertyName + '> ?o }';
+    rdf.execute(query, function(success, results) {
+        if (success && results.length > 0) {
+            result = results[0].o.value;
+        }
+    });
     return result;
 }

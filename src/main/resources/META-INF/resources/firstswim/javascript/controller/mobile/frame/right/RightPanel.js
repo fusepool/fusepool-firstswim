@@ -98,6 +98,13 @@ enyo.kind(
     },
 
     /**
+     * This functions hides the preview
+     */
+    clean: function(){
+        this.$.openedDoc.hide();
+    },
+
+    /**
      * This function returns the opened doc's document URL
      * @return {String} the document URL
      */

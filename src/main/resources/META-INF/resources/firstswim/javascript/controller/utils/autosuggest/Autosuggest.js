@@ -3,7 +3,7 @@
  * Created by Adam Nagy, GeoX Kft.
  * 
  * @class AutoSuggest
- * @version 1.9.0
+ * @version 1.9.1
 */
 enyo.kind(
 /** @lends AutoSuggest.prototype */
@@ -151,7 +151,7 @@ enyo.kind(
                 this.onTextChange();
             }
         } else {
-            console.log('There\'s an error with ajax request');
+            console.log('Autosuggest: There\'s an error with ajax request');
         }
     },
 
@@ -179,7 +179,7 @@ enyo.kind(
             });
             return suggestList;
         } catch(e){
-            console.log('There\'s a problem with the rdf parsing. Please check jQuery and rdfquery importing and the rdfRowName variable\'s content');
+            console.log('Autosuggest: There\'s a problem with the rdf parsing. Please check jQuery and rdfquery importing and the rdfRowName variable\'s content');
             console.log(e);
             return [];
         }
