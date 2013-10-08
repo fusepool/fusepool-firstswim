@@ -442,26 +442,9 @@ jQuery(document).ready(function () {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
                                 categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
-//                                console.log({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
                             }
                         }
-                    });            
-//          THE OLD QUERY
-//                    console.log('-----------------');
-//                    query = 'SELECT * { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity';
-//                    query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
-//                    query += '}';
-//                    rdf.execute(query, function(success, results) {
-//                        if (success) {
-//                            for(var i=0;i<results.length;i++){
-//                                var row = results[i];
-//                                if(row.type.value.indexOf('#') === -1){
-//                                    console.log({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
-//                                    categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value});
-//                                }
-//                            }
-//                        }
-//                    });
+                    });
                     return categories;
                 },
 
