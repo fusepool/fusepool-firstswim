@@ -430,10 +430,10 @@ jQuery(document).ready(function () {
                  */
                 getEntities: function(rdf){
                     var categories = [];
-                    var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>';
-                    query += '      { ?v <http://fusepool.eu/ontologies/ecs#facet> ?f. }';
-                    query += '      { ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. }';
-                    query += '      { ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id. }';
+                    var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>.';
+                    query += '       ?v <http://fusepool.eu/ontologies/ecs#facet> ?f. ';
+                    query += '       ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. ';
+                    query += '       ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id. ';
                     query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
                     query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
                     query += '}';
