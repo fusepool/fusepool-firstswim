@@ -373,57 +373,13 @@ jQuery(document).ready(function () {
 
                 /**
                  * This functions is called after a success classifying.
-                 * @param {Object} rdf the rdf response of the request
+                 * @param {Object} classifyResponse the response of the request
                  * @param {String} searchWord the search word
                  */
-                processClassifyResponse: function(rdf, searchWord){
-                    this.updateEntityList(rdf, searchWord);
-                    this.updateClassifiedDocList(rdf);
-                },
-
-                /**
-                 * This functions updates the document list with ordering after the classifying
-                 * @param {Object} rdf the RDF object
-                 */
-                updateClassifiedDocList: function(rdf){
-                    var documents = this.createClassifiedDocList(rdf);
-                    this.$.documents.updateList(documents, this.searchWord);
-                    var count = this.getDocumentsCount(rdf);
-                    this.$.documents.updateCounts(count);
-                },
-
-                /**
-                 * This function creates a document list after classifyin
-                 * @param {Object} rdf the RDF object
-                 * @returns {Array} the created document list
-                 */
-                createClassifiedDocList: function(rdf){
-                    var documents = [];
-                    var main = this;
-                    var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
-                    query += '      OPTIONAL { ?url <http://www.w3.org/2001/XMLSchema#double> ?orderVal }';
-                    query += '}';
-                    query += '  ORDER BY DESC(?orderVal)';
-                    rdf.execute(query, function(success, results) {
-                        if (success) {
-                            for(var i=0;i<results.length;i++){
-                                var row = results[i];
-                                if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-                                    var content = row.content.value;
-                                    var title = '';
-                                    if(!isEmpty(row.title)){
-                                        title = row.title.value;
-                                    }
-                                    if(!main.containsDocument(documents, content, title)){
-                                        documents.push({url: row.url.value, shortContent: content, title: title});
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    return documents;
+                processClassifyResponse: function(classifyResponse, searchWord){
+                    console.log(classifyResponse);
+//                        this.updateEntityList(rdf, this.searchWord);
+//                        this.updateDocumentList(rdf);                        
                 },
 
                 /**

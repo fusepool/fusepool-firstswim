@@ -118,39 +118,27 @@ enyo.kind(
             method: 'POST',
             url: CONSTANTS.CLASSIFY_URL,
             handleAs: 'text',
-            headers: { Accept: 'text/turtle', 'Content-Type' : 'application/json'},
+            headers: { Accept: 'application/rdf+xml', 'Content-Type' : 'application/json'},
             postBody: sendJSON,
             published: { timeout: 60000 }
         });
         request.go();
         request.error(this, function(){
-            this.processClassifyResponse(false, null);
+            this.$.loader.hide();
+            this.showMessage('There was an error in the classify request!');
         });
         request.response(this, function(inSender, inResponse) {
-            this.processClassifyResponse(true, inResponse);
+            this.processClassifyResponse(inResponse);
         });
     },
 
     /**
      * This function runs after the the classify query.
-     * @param {Boolean} success the classify request was success or not
      * @param {Object} classifyResponse the response of the classify request
      */
-    processClassifyResponse: function(success, classifyResponse){
+    processClassifyResponse: function(classifyResponse){
         this.$.loader.hide();
-        var main = this;
-        if(success){
-            var store = rdfstore.create();
-            store.load('text/turtle', classifyResponse, function(success, results){
-                if(success){
-                    main.owner[main.classifyFinishFunction](store, main.searchWord);
-                } else {
-                    main.showMessage('There was a problem with the data parsing!');
-                }
-            });
-        } else {
-            this.showMessage('There was an error in the classify request!');
-        }
+        this.owner[this.classifyFinishFunction](classifyResponse, this.searchWord);
     },
 
     /**
