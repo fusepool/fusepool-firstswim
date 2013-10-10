@@ -453,6 +453,7 @@ jQuery(document).ready(function () {
                                 var entityId = category[j].entityId;
                                 var entityText = replaceAll(category[j].entity + '', '_', ' ');
                                 var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
+                                entityName = entityName.substr(entityName.lastIndexOf('#')+1);
                                 var entityCount = category[j].count;
 
                                 var entity = {id: entityId, text:entityName, count: entityCount };
@@ -473,7 +474,51 @@ jQuery(document).ready(function () {
                  * @returns {Array} the categories array with the entities
                  */
                 getEntities: function(rdf){
-                    var categories = [];
+                    var entities = [];
+                    entities = this.getFacets(rdf);
+                    entities = entities.concat(this.getTypeFacets(rdf));
+                    return entities;
+                },
+
+                /**
+                 * This function gives the array of the type facets
+                 * @param {Object} rdf the RDF object which contains the type facets
+                 * @returns {Array} the result array
+                 */
+                getTypeFacets: function(rdf){
+                    var result = [];
+                    var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>.';
+                    query += '       ?v <http://fusepool.eu/ontologies/ecs#typeFacet> ?f. ';
+                    query += '       ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. ';
+                    query += '       ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id. ';
+                    query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
+                    query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
+                    query += '}';
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i<results.length;i++){
+                                var row = results[i];
+                                var entity = row.entity;
+                                if(isEmpty(entity)){
+                                    entity = row.id.value;
+                                } else {
+                                    entity = row.entity.value;
+                                }
+                                var type = row.type;
+                                if(isEmpty(type)){
+                                    type = 'Facet types';
+                                } else {
+                                    type = row.type.value;
+                                }
+                                result.push({entityId: row.id.value, entity: entity, value: type, count: row.count.value});
+                            }
+                        }
+                    });
+                    return result;
+                },
+
+                getFacets: function(rdf){
+                    var result = [];
                     var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>.';
                     query += '       ?v <http://fusepool.eu/ontologies/ecs#facet> ?f. ';
                     query += '       ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. ';
@@ -485,11 +530,11 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                categories.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
+                                result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
                             }
                         }
                     });
-                    return categories;
+                    return result;
                 },
 
                 /**
