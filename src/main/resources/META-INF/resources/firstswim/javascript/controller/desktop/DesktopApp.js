@@ -351,10 +351,10 @@ jQuery(document).ready(function () {
                 getCheckedEntitesURL: function(checkedEntities){
                     var result = '';
                     for(var i=0;i<checkedEntities.length;i++){
-                        if(!isEmpty(checkedEntities[i].id)){
-                            result += '&subject=' + checkedEntities[i].id;
+                        if(checkedEntities[i].typeFacet){   
+                            result += '&type=' + checkedEntities[i].id;
                         } else {
-                            result += '&subject=' + checkedEntities[i];
+                            result += '&subject=' + checkedEntities[i].id;
                         }
                     }
                     return result;
@@ -455,8 +455,9 @@ jQuery(document).ready(function () {
                                 var entityName = entityText.substr(entityText.lastIndexOf('/')+1);
                                 entityName = entityName.substr(entityName.lastIndexOf('#')+1);
                                 var entityCount = category[j].count;
+                                var typeFacet = category[j].typeFacet;
 
-                                var entity = {id: entityId, text:entityName, count: entityCount };
+                                var entity = {id: entityId, text:entityName, count: entityCount, typeFacet: typeFacet};
                                 if(!this.containsEntity(entities, entity)){
                                     entities.push(entity);
                                 }
@@ -510,7 +511,7 @@ jQuery(document).ready(function () {
                                 } else {
                                     type = row.type.value;
                                 }
-                                result.push({entityId: row.id.value, entity: entity, value: type, count: row.count.value});
+                                result.push({entityId: row.id.value, entity: entity, value: type, count: row.count.value, typeFacet: true});
                             }
                         }
                     });
@@ -530,7 +531,7 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value});
+                                result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value, typeFacet: false});
                             }
                         }
                     });

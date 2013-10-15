@@ -45,6 +45,7 @@ enyo.kind(
                     detailsURL: CONSTANTS.DETAILS_URL,
                     entityId: this.entityList[i].id,
                     entityText: this.entityList[i].text,
+                    typeFacet: this.entityList[i].typeFacet,
                     entityCount: this.entityList[i].count,
                     parentFunction: 'updateEntities',
                     showDetailsFunction: 'updateDetails',
@@ -86,12 +87,11 @@ enyo.kind(
     /**
      * This function is called when the user checked/unchecked one entity.
      * It handles the unchecked entity list and call the parent filter function.
-     * @param {String} entityId id of the chosen entity
-     * @param {String} entityText text of the chosen entity
+     * @param {Object} entity the chosen entity
      * @param {Boolean} checked the entity is checked or not
      */
-    updateEntities: function(entityId, entityText, checked){
-        this.owner.owner[this.searchFunction](entityId, entityText, checked);
+    updateEntities: function(entity, checked){
+        this.owner.owner[this.searchFunction](entity, checked);
     }
 
 });

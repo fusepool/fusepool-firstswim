@@ -79,16 +79,14 @@ enyo.kind(
     /**
      * This function calls the parent's search function with searchword and the
      * checked entity list.
-     * @param {String} entityId id of the last checked/unchecked entity
-     * @param {String} entityText text of the last checked/unchecked entity
+     * @param {String} entity the last checked/unchecked entity
      * @param {String} checked the entity was checked or unchecked
      */
-    filter: function(entityId, entityText, checked){
-        var entityObject = {id: entityId, text: entityText};
+    filter: function(entity, checked){
         if(checked){
-            this.checkedEntities.push(entityObject);
+            this.checkedEntities.push(entity);
         } else {
-            var index = this.indexOfEntity(entityObject);
+            var index = this.indexOfEntity(entity);
             if(index !== -1){
                 this.checkedEntities.splice(index, 1);   
             }
@@ -126,6 +124,7 @@ enyo.kind(
                 detailsURL: CONSTANTS.DETAILS_URL,
                 entityId: this.checkedEntities[i].id,
                 entityText: this.checkedEntities[i].text,
+                typeFacet: this.checkedEntities[i].typeFacet,
                 parentFunction: 'filter',
                 showDetailsFunction: 'updateDetails',
                 checked: true

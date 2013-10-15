@@ -17,6 +17,7 @@ enyo.kind(
         entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
+        typeFacet: false,
         checked: false,
         showDetailsFunction: '',
         detailsStart: false
@@ -156,7 +157,7 @@ enyo.kind(
      * @param {Boolean} cbValue new checkbox value
      */
     callParent: function(cbValue){
-        this.owner.owner[this.parentFunction](this.entityId, this.entityText, cbValue);
+        this.owner.owner[this.parentFunction]({id: this.entityId, text: this.entityText, typeFacet: this.typeFacet}, cbValue);
     }
 
 });
