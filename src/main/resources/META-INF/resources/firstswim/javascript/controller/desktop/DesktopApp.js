@@ -400,6 +400,15 @@ jQuery(document).ready(function () {
                 createClassifiedDocList: function(rdf){
                     var documents = [];
                     var main = this;
+
+//                    var query = 'SELECT * { ?s ?p ?o }';
+//                    rdf.execute(query, function(success, results) {
+//                        for(var i=0;i<results.length;i++){
+//                            var row = results[i];
+//                            console.log(row.s.value + ' - ' + row.p.value + ' - ' + row.o.value);
+//                        }
+//                    });
+
                     var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
@@ -531,7 +540,9 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value, typeFacet: false});
+                                if(!isEmpty(row.entity)){
+                                    result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value, typeFacet: false});    
+                                }                                
                             }
                         }
                     });
