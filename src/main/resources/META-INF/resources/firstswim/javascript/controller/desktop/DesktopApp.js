@@ -318,7 +318,7 @@ jQuery(document).ready(function () {
                     }
                     url += '?search='+searchWord;
                     if(checkedEntities.length > 0){
-                        url += this.getCheckedEntitesURL(checkedEntities);
+                        url += this.getCheckedEntitiesURL(checkedEntities);
                     }
                     url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
                     return url;
@@ -348,11 +348,11 @@ jQuery(document).ready(function () {
                  * @param {Array} checkedEntities the original checked entities
                  * @returns {String} the URL part of the checked entities
                  */
-                getCheckedEntitesURL: function(checkedEntities){
+                getCheckedEntitiesURL: function(checkedEntities){
                     var result = '';
                     for(var i=0;i<checkedEntities.length;i++){
                         if(checkedEntities[i].typeFacet){   
-                            result += '&type=' + checkedEntities[i].id;
+                            result += '&type=' + replaceAll(checkedEntities[i].id, '#', '%23');
                         } else {
                             result += '&subject=' + checkedEntities[i].id;
                         }
@@ -441,7 +441,10 @@ jQuery(document).ready(function () {
                  * @param {String} searchWord the searched word
                  */
                 updateEntityList: function(rdf, searchWord){
-                    var checkedEntities = this.checkedEntitiesFromRdf(rdf);
+                    // The checked facets and type facets
+                    var checkedEntities = this.getCheckedEntities(rdf);
+
+                    // The facet and the type facet list
                     var categories = this.getEntities(rdf);
 
                     var groupVars = _.groupBy(categories, function(val){ return val.value; });
@@ -488,6 +491,18 @@ jQuery(document).ready(function () {
                     entities = this.getFacets(rdf);
                     entities = entities.concat(this.getTypeFacets(rdf));
                     return entities;
+                },
+
+                /**
+                 * This function search the dictionary categories in an rdf object.
+                 * @param {Object} rdf the rdf object, which conatins the categories
+                 * @returns {Array} the categories array with the entities
+                 */
+                getCheckedEntities: function(rdf){
+                    var checkedEntities = [];
+                    var checkedEntities = this.checkedEntitiesFromRdf(rdf);
+                    checkedEntities = checkedEntities.concat(this.checkedTypeFacetsFromRdf(rdf));
+                    return checkedEntities;
                 },
 
                 /**
@@ -541,8 +556,10 @@ jQuery(document).ready(function () {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
                                 if(!isEmpty(row.entity)){
-                                    result.push({entityId: row.id.value, entity: row.entity.value, value: row.type.value, count: row.count.value, typeFacet: false});    
-                                }                                
+                                    var type = row.type.value;
+                                    var categoryName = type.substring(type.lastIndexOf('#')+1);
+                                    result.push({entityId: row.id.value, entity: row.entity.value, value: categoryName, count: row.count.value, typeFacet: false});    
+                                }
                             }
                         }
                     });
@@ -566,7 +583,7 @@ jQuery(document).ready(function () {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
                                 if(!isEmpty(row.entity)){
-                                    var entity = {id: row.id.value, text: row.entity.value};
+                                    var entity = {id: row.id.value, text: row.entity.value, typeFacet: false};
                                     if(!main.containsEntity(checkedEntities, entity)){
                                         checkedEntities.push(entity);
                                     }
@@ -575,6 +592,28 @@ jQuery(document).ready(function () {
                         }
                     });
                     return checkedEntities;
+                },
+
+
+                /**
+                 * This function search the checked entities in an rdf object and
+                 * return with it
+                 * @param {Object} rdf the rdf object
+                 * @returns {Array} the checked entity list
+                 */
+                checkedTypeFacetsFromRdf: function(rdf){
+                    var checkedTypes = [];
+                    var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#type> ?o }';
+                    rdf.execute(query, function(success, results) {
+                        for(var i=0;i<results.length;i++){
+                            var id = results[i].o.value;
+                            var text = id.substring(id.lastIndexOf('#')+1);
+                            text = text.substring(text.lastIndexOf('/')+1);
+                            var entity = {id: id, text: text, typeFacet: true};
+                            checkedTypes.push(entity);
+                        }
+                    });
+                    return checkedTypes;
                 },
 
                 /**
@@ -617,7 +656,7 @@ jQuery(document).ready(function () {
                  */
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
-                    this.$.documents.updateList(documents, this.searchWord);
+                    this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
                     var count = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts(count);
                 },
