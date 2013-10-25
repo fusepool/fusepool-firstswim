@@ -86,12 +86,27 @@ enyo.kind(
      */
     processClassify: function(){
         var classifyObject = {};
+
+        // Set the content store properties
         classifyObject.contentStoreUri = CONSTANTS.SEARCH_URL;
         classifyObject.contentStoreViewUri = CONSTANTS.SEARCH_URL;
 
+        // Set the search properties
         classifyObject.searchs = [];
         classifyObject.searchs.push(this.searchWord);
 
+        // Set the checked facets and type facets
+        classifyObject.type = [];
+        classifyObject.subject = [];
+        for(var i=0;i<this.checkedEntities.length;i++){
+            if(this.checkedEntities[i].typeFacet){
+                classifyObject.type.push(this.checkedEntities[i].id);
+            } else {
+                classifyObject.subject.push(this.checkedEntities[i].id);
+            }
+        }
+
+        // Set the positive and negative documents
         classifyObject.labels = {};
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
@@ -181,8 +196,10 @@ enyo.kind(
      * object contains the short documents.
      * @param {Array} documents the document list object
      * @param {String} searchWord the search word
+     * @param {Array} checkedEntities the checked facets and type facets
      */
-    updateList: function(documents, searchWord){
+    updateList: function(documents, searchWord, checkedEntities){
+        this.checkedEntities = checkedEntities;
         this.searchWord = searchWord;
         this.offset = 0;
         this.checkedDocs = 0;
@@ -200,8 +217,8 @@ enyo.kind(
                     removeCheckFunction: 'removeCheck',
                     showSlidebar: this.activeClassify,
                     titleClass: 'shortDocumentTitle',
-					shortDocumentClass: 'shortDocument',
-					contentClass: 'shortDocumentContent',
+                    shortDocumentClass: 'shortDocument',
+                    contentClass: 'shortDocumentContent',
                     openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
