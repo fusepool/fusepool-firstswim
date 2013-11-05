@@ -6,6 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>FirstSwim</title>
+    <!-- zero clipboard -->
+    <script src="firstswim/javascript/zeroclipboard/ZeroClipboard.min.js" type="text/javascript"></script>
     <!-- rdfstore -->
     <script src="firstswim/javascript/rdfstore/rdfstore.js" type="text/javascript"></script>
     <!-- jquery and rdfquery -->

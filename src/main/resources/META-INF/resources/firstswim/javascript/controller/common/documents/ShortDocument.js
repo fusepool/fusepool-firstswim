@@ -31,11 +31,13 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.$.shortDoc.setClasses(this.shortDocumentClass);
-        this.$.shortDoc[this.openDocEvent] = 'openDoc';
+        this.$.content[this.openDocEvent] = 'openDoc';
+        this.$.title[this.openDocEvent] = 'openDoc';
         this.$.title.setContent(this.title);
         this.$.title.setClasses(this.titleClass);
         this.$.content.setContent(this.shortContent);
         this.$.content.setClasses(this.contentClass);
+        this.$.documentMenu.hide();
     },
 
     /**
@@ -59,19 +61,51 @@ enyo.kind(
         if(!this.showSlidebar){
             this.$.rateSlider.hide();
         }
+
+        var newTabBtnId = this.$.newTabBtn.getId();
+        jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.url);
+        new ZeroClipboard(jQuery('#'+newTabBtnId));
     },
 
     components: [
         { name: 'shortDoc', components: [
             { tag: 'div', name: 'controls', classes: 'shortDocumentControls enyo-unselectable', components: [
-				{ tag: 'div', name: 'icon', classes: 'shortDocumentIcon' },
-				{ tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' }
-			]},
-            { tag: 'div', name: 'title' },
-            { tag: 'div', name: 'content', allowHtml: true },
+                { tag: 'div', name: 'icon', classes: 'shortDocumentIcon', onclick: 'tapIcon' },
+                { tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' }
+            ]},
+            { kind: 'DynamicMenu', name: 'documentMenu', classes: 'documentMenu',
+                menuItemClass: 'entityMenuItem', menuItems: [
+                    { label: 'Open in new tab', functionName: 'openInNewTab' },
+                    { label: 'Copy URI to clipboard', functionName: 'copyURIToClipboard' }
+                ]
+            },
+            { tag: 'button', name: 'newTabBtn', style: 'display: none;' },
+            { tag: 'div', name: 'title', onleave: 'leaveMenu', style: 'cursor: pointer;' },
+            { tag: 'div', name: 'content', onleave: 'leaveMenu', style: 'cursor: pointer;', allowHtml: true },
             { tag: 'div', classes: 'clear' }
         ]}
     ],
+
+    leaveMenu: function(){
+        this.$.documentMenu.hide();
+    },
+
+    /**
+     * This function is called when the user click on the 'Open in new tab' menuitem.
+     */
+    openInNewTab: function(){
+        this.$.documentMenu.hide();
+        window.open(this.url, '_blank');
+    },
+
+    /**
+     * This function is called when the user click on the 'Copy URI to clipboard' menuitem.
+     */
+    copyURIToClipboard: function(){
+        this.$.documentMenu.hide();
+        var newTabBtnId = this.$.newTabBtn.getId();
+        jQuery('#'+newTabBtnId).click();
+    },
 
     /**
      * This function runs when the user do a same event with the openDocEvent
@@ -81,7 +115,19 @@ enyo.kind(
      * @param {Object} inEvent the event which is created (inEvent is important in the desktop version)
      */
     openDoc: function(inSender, inEvent){
+        this.$.documentMenu.hide();
         this.owner[this.parentFunction](this.url, inEvent);
+    },
+
+    /**
+     * This function runs when the user click on the document icon.
+     * @param {Object} inSender the document icon
+     * @param {Object} inEvent the click event
+     */
+    tapIcon: function(inSender, inEvent){
+        if(inEvent.which == 3){
+            this.$.documentMenu.show();
+        }
     },
 
     /**
