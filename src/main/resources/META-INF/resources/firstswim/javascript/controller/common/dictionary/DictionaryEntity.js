@@ -6,6 +6,7 @@ enyo.kind(
 {
     tag: 'div',
     name: 'DictionaryEntity',
+    style: 'position: relative',
 
     published: {
         addressURL: '',
@@ -30,14 +31,47 @@ enyo.kind(
         this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
+        this.$.facetMenu.hide();
+    },
+
+    rendered: function(){
+        this.inherited(arguments);
+        var newTabBtnId = this.$.facetMenu.getChildrenById(1).getId();
+        jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.url);
+        new ZeroClipboard(jQuery('#'+newTabBtnId), {
+            moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
+            hoverClass: 'menuItemHover'
+        });
+//        var main = this;
+//        jQuery('#global-zeroclipboard-html-bridge').click(function(){
+//            main.$.facetMenu.hide();
+//        });
     },
 
     components: [
         { tag: 'div', name: 'main', onenter: 'preDetails', onmouseout: 'stopDetails', components: [
             { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
-            { tag: 'span', name: 'entityLabel', ontap: 'entityClick', onenter: 'preDetails', onmouseout: 'stopDetails' }
-        ]}
+            { tag: 'span', name: 'entityLabel', onclick: 'entityClick', onenter: 'preDetails', onmouseout: 'stopDetails' }
+        ]},
+        { kind: 'DynamicMenu', name: 'facetMenu', classes: 'facetMenu',
+            menuItemClass: 'entityMenuItem', menuItems: [
+                { label: 'Open in new tab', functionName: 'openInNewTab' },
+                { label: 'Copy URI to clipboard' }
+            ]
+        }
     ],
+
+    /**
+     * This function is called when the user click on the 'Open in new tab' menuitem.
+     */
+    openInNewTab: function(){
+        this.$.facetMenu.hide();
+        window.open(this.entityId, '_blank');
+    },
+
+    hideMenu: function(){
+        this.$.facetMenu.hide();
+    },
 
     /**
      * This function is called when the user hover the mouse over an entity.
@@ -146,9 +180,13 @@ enyo.kind(
     /**
      * This function is called when the user click on an entity.
      */
-    entityClick: function(){
-        var cbValue = !this.$.entityCheckbox.getValue();
-        this.callParent(cbValue);
+    entityClick: function(inSender, inEvent){
+        if(inEvent.which == 3){
+            this.$.facetMenu.show();
+        } else {
+            var cbValue = !this.$.entityCheckbox.getValue();
+            this.callParent(cbValue);            
+        }
     },
 
     /**

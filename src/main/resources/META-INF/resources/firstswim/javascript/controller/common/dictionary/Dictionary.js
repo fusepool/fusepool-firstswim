@@ -58,6 +58,10 @@ enyo.kind(
         }
     },
 
+    getEntities: function(){
+        return this.$.list;
+    },
+
     /**
      * After the user over the mouse an entity, the program gets the details about
      * the chosen entity, and this function is called for update the details box

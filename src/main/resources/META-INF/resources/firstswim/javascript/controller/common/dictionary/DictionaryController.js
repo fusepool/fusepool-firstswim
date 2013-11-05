@@ -37,7 +37,7 @@ enyo.kind(
     components: [
         { tag: 'div', name: 'title' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-            { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', components: [
+            { name: 'dictionaryListPanel', classes: 'dictionaryListPanel', ontap: 'tapFacetList', components: [
                 { tag: 'div', name: 'checkedDiv', components: [
                     { tag: 'div', name: 'checkedList' },
                     { classes: 'clear' },
@@ -48,6 +48,26 @@ enyo.kind(
             ]}
         ]}
     ],
+            
+    /**
+     * This function hides the all facet popup.
+     */
+    tapFacetList: function(){
+        // Hide checked facet popup
+        var checkedFacets = this.$.checkedList.children;
+        for(var i=0;i<checkedFacets.length;i++){
+            checkedFacets[i].hideMenu();
+        }
+
+        // Hide facet popup
+        var facets = this.$.list.children;
+        for(var i=0;i<facets.length;i++){
+            var entities = facets[i].getEntities().children;
+            for(var j=0;j<entities.length;j++){
+                entities[j].hideMenu();
+            }
+        }
+    },
 
     /**
      * This function update the dictionary list from a dictionary object. This

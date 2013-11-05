@@ -410,6 +410,12 @@ body{
 }
 
 /* ----------- LEFT ----------- */
+.facetMenu{
+    left: 0px;
+    position: absolute;
+    top: 0px;
+}
+
 .leftPanel{
     position: absolute;
 	top: 0px;
