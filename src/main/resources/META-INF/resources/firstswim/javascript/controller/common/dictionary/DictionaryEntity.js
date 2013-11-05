@@ -37,7 +37,7 @@ enyo.kind(
     rendered: function(){
         this.inherited(arguments);
         var newTabBtnId = this.$.facetMenu.getChildrenById(1).getId();
-        jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.url);
+        jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.entityId);
         new ZeroClipboard(jQuery('#'+newTabBtnId), {
             moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
             hoverClass: 'menuItemHover'
