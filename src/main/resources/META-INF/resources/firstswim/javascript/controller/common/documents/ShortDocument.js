@@ -83,7 +83,7 @@ enyo.kind(
             { kind: 'DynamicMenu', name: 'documentMenu', classes: 'documentMenu',
                 menuItemClass: 'entityMenuItem', menuItems: [
                     { label: 'Open in new tab', functionName: 'openInNewTab' },
-                    { label: 'Copy URI to clipboard', functionName: 'copyURIToClipboard' }
+                    { label: 'Copy URI to clipboard' }
                 ]
             },
             { tag: 'div', name: 'title', onleave: 'leaveMenu', style: 'cursor: pointer;' },
@@ -105,14 +105,6 @@ enyo.kind(
     openInNewTab: function(){
         this.$.documentMenu.hide();
         window.open(this.url, '_blank');
-    },
-
-    /**
-     * This function is called when the user click on the 'Copy URI to clipboard' menuitem.
-     */
-    copyURIToClipboard: function(){
-        this.$.documentMenu.hide();
-        var newTabBtnId = this.$.newTabBtn.getId();
     },
 
     /**
