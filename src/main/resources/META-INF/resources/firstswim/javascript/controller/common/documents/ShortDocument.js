@@ -75,7 +75,7 @@ enyo.kind(
     },
 
     components: [
-        { name: 'shortDoc', components: [
+        { name: 'shortDoc', ontap: 'leaveMenu', components: [
             { tag: 'div', name: 'controls', classes: 'shortDocumentControls enyo-unselectable', components: [
                 { tag: 'div', name: 'icon', classes: 'shortDocumentIcon', onclick: 'tapIcon' },
                 { tag: 'div', name: 'rateSlider', classes: 'rateSlider enyo-unselectable' }
@@ -92,6 +92,9 @@ enyo.kind(
         ]}
     ],
 
+    /**
+     * This functions hides the document popup menu.
+     */
     leaveMenu: function(){
         this.$.documentMenu.hide();
     },
