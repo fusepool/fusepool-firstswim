@@ -42,10 +42,10 @@ enyo.kind(
             moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
             hoverClass: 'menuItemHover'
         });
-//        var main = this;
-//        jQuery('#global-zeroclipboard-html-bridge').click(function(){
-//            main.$.facetMenu.hide();
-//        });
+        var main = this;
+        jQuery('#global-zeroclipboard-html-bridge').click(function(){
+            main.$.facetMenu.hide();
+        });
     },
 
     components: [
