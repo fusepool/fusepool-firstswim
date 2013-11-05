@@ -36,15 +36,15 @@ enyo.kind(
 
     rendered: function(){
         this.inherited(arguments);
-        var newTabBtnId = this.$.facetMenu.getChildrenById(1).getId();
+        var facetMenu = this.$.facetMenu;
+        var newTabBtnId = facetMenu.getChildrenById(1).getId();
         jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.entityId);
         new ZeroClipboard(jQuery('#'+newTabBtnId), {
             moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
             hoverClass: 'menuItemHover'
         });
-        var main = this;
         jQuery('#global-zeroclipboard-html-bridge').click(function(){
-            main.$.facetMenu.hide();
+            facetMenu.hide();
         });
     },
 

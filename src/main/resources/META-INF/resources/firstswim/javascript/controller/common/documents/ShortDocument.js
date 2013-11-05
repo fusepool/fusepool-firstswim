@@ -61,16 +61,15 @@ enyo.kind(
         if(!this.showSlidebar){
             this.$.rateSlider.hide();
         }
-
-        var newTabBtnId = this.$.documentMenu.getChildrenById(1).getId();
+        var documentMenu = this.$.documentMenu;
+        var newTabBtnId = documentMenu.getChildrenById(1).getId();
         jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.url);
         new ZeroClipboard(jQuery('#'+newTabBtnId), {
             moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
             hoverClass: 'menuItemHover'
         });
-        var main = this;
         jQuery('#global-zeroclipboard-html-bridge').click(function(){
-            main.$.documentMenu.hide();
+            documentMenu.hide();
         });
     },
 
