@@ -44,5 +44,15 @@ enyo.kind(
      */
     tapMenu: function(inSender){
         this.owner[inSender.functionName]();
+    },
+
+    /**
+     * This functions returns with the children by index
+     * @param {Number} index the index of the child
+     * @returns {Object} the child object
+     */
+    getChildrenById: function(index){
+        return this.children[index];
     }
+
 });

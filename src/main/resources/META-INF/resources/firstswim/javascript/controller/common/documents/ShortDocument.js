@@ -62,9 +62,16 @@ enyo.kind(
             this.$.rateSlider.hide();
         }
 
-        var newTabBtnId = this.$.newTabBtn.getId();
+        var newTabBtnId = this.$.documentMenu.getChildrenById(1).getId();
         jQuery('#'+newTabBtnId).attr('data-clipboard-text', this.url);
-        new ZeroClipboard(jQuery('#'+newTabBtnId));
+        new ZeroClipboard(jQuery('#'+newTabBtnId), {
+            moviePath: CONSTANTS.CLIPBOARD_COPY_PATH,
+            hoverClass: 'menuItemHover'
+        });
+        var main = this;
+        jQuery('#global-zeroclipboard-html-bridge').click(function(){
+            main.$.documentMenu.hide();
+        });
     },
 
     components: [
@@ -79,7 +86,6 @@ enyo.kind(
                     { label: 'Copy URI to clipboard', functionName: 'copyURIToClipboard' }
                 ]
             },
-            { tag: 'button', name: 'newTabBtn', style: 'display: none;' },
             { tag: 'div', name: 'title', onleave: 'leaveMenu', style: 'cursor: pointer;' },
             { tag: 'div', name: 'content', onleave: 'leaveMenu', style: 'cursor: pointer;', allowHtml: true },
             { tag: 'div', classes: 'clear' }
@@ -104,7 +110,6 @@ enyo.kind(
     copyURIToClipboard: function(){
         this.$.documentMenu.hide();
         var newTabBtnId = this.$.newTabBtn.getId();
-        jQuery('#'+newTabBtnId).click();
     },
 
     /**
