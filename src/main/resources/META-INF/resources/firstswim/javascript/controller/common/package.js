@@ -1,5 +1,6 @@
 enyo.depends(
     'Bookmark.js',
+    'DynamicMenu.js',
     'SearchBox.js',
     'DetailsBox.js',
     // -- Dictionary -- //
