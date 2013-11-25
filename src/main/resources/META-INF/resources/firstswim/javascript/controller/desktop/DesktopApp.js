@@ -168,13 +168,13 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function calculate the position of the previwed document
-                 * and open the document on the right side.
+                 * This function calculates the position of the previewed document
+                 * and opens the document on the right side.
                  * @param {Object} previewDoc the document what user want to see
                  * @param {Object} inEvent mouse over on a short document event
                  */
                 openDoc: function(previewDoc, inEvent){
-                    if(!isEmpty(inEvent)){
+                    /*if(!isEmpty(inEvent)){
                         var topMessage = jQuery('#' + this.$.topMessageBox.getId());
                         var topMessageVisible = topMessage.is(':visible');
                         var topMessageHeight = 0;
@@ -183,11 +183,57 @@ jQuery(document).ready(function () {
                             alert(topMessageHeight);
                         }
                     }
-                    this.$.previewBox.openDoc(previewDoc);
+                    this.$.previewBox.openDoc(previewDoc);*/
+					this.sendAnnotation();
                 },
 
                 /**
-                 * This function create and save a bookmark, which contains the
+                 * This function sends an annotation to the annostore
+                 * @param {String} taskNumber number of the related task
+                 * @param {String} annotationBody the annotation itself
+                 */
+                // sendAnnotation: function(taskNumber,annotationBody){
+                sendAnnotation: function(){
+					var request = new enyo.Ajax({
+						method: 'POST',
+						url: CONSTANTS.ANNOTATION_URL,
+						handleAs: 'text',
+						headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
+						postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; <http://fusepool.eu/ontologies/annostore#task> "3.4" ',
+						published: { timeout: 60000 }
+					});
+					request.go();
+					request.error(this, function(){
+						console.log("error");
+					});
+					request.response(this, function(inSender, inResponse) {
+						console.log("success: "+inResponse);
+					});
+                },
+				
+                /**
+                 * This function queries the annostore for a single annotation - only for testing purposes
+                 * @param {String} annotationIRI identifier of the annotation
+                 */
+				getAnnotation: function(annotationIRI){
+					var request = new enyo.Ajax({
+						method: 'GET',
+						url: CONSTANTS.ANNOTATION_URL+'?iri='+annotationIRI,
+						handleAs: 'text',
+						headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'application/x-www-form-urlencoded'},
+						published: { timeout: 60000 }
+					});
+					request.go();
+					request.error(this, function(){
+						console.log("error");
+					});
+					request.response(this, function(inSender, inResponse) {
+						console.log("success: "+inResponse);
+					});
+                },
+
+                /**
+                 * This function creates and saves a bookmark, which contains the
                  * search word, the unchecked entities and the opened document
                  */
                 createBookmark: function(){
