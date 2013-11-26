@@ -10,6 +10,9 @@ enyo.depends(
     // -- Documents -- //
         'documents/DocumentList.js',
         'documents/ShortDocument.js',
+    // -- Labels -- //
+        'labels/LabelList.js',
+        'labels/LabelItem.js',
     // -- Preview -- //
         'preview/OpenedDoc.js',
         'preview/popup/AddEntityPopup.js',

@@ -205,7 +205,9 @@ enyo.kind(
         this.checkedDocs = 0;
         this.updateCheckedNumber();
         this.showOrHideProcessButton();
-
+		
+		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' } ];
+		
         this.documents = documents;
         this.$.list.destroyClientControls();
         if(documents.length > 0){
@@ -225,7 +227,14 @@ enyo.kind(
                     url: documents[i].url,
                     title: documents[i].title,
                     shortContent: documents[i].shortContent,
-                    parentFunction: 'openDoc'
+                    parentFunction: 'openDoc',
+                    labels: testLabelArray, //TEST
+					labelListClass: 'labelList',
+					moreLabelsPanelClass: 'moreLabelsPanel',
+					moreLabelInputClass: 'moreLabelInput',
+					moreLabelInputDecClass: 'moreLabelInputDec',
+					addLabelButtonClass: 'addLabelButton',
+					searchWord: this.searchWord
                 });
 				this.sendDocListAnnotation(documents[i].url,0);
             }

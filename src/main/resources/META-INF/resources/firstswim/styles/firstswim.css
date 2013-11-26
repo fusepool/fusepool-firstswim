@@ -290,6 +290,17 @@ body{
     margin: 20px auto 20px auto;
 }
 
+/* ------- Labels ------- */
+
+.labelListContainer {
+    margin: 10px 10px 10px 43px;
+}
+
+.labelListPanel {
+    border-top: 1px solid lightgrey;
+	padding-top: 10px;
+}
+
 /* ----------- RIGHT ----------- */
 
 /* ----- Preview document ----- */

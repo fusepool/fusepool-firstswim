@@ -21,7 +21,14 @@ enyo.kind(
         showSlidebar: false,
         shortDocumentClass: '',
         contentClass: '',
-        openButtonClass: ''
+        openButtonClass: '',
+		labels: null,
+		labelListClass: '',
+		moreLabelsPanelClass: '',
+		moreLabelInputClass: '',
+		moreLabelInputDecClass: '',
+		addLabelButtonClass: '',
+		searchWord: ''
     },
 
     /**
@@ -29,15 +36,29 @@ enyo.kind(
      * join the openDocEvent event to the shortDoc component.
      */
     create: function(){
-        this.inherited(arguments);
-        this.$.shortDoc.setClasses(this.shortDocumentClass);
-        this.$.content[this.openDocEvent] = 'openDoc';
-        this.$.title[this.openDocEvent] = 'openDoc';
-        this.$.title.setContent(this.title);
-        this.$.title.setClasses(this.titleClass);
-        this.$.content.setContent(this.shortContent);
-        this.$.content.setClasses(this.contentClass);
-        this.$.documentMenu.hide();
+		this.inherited(arguments);
+		this.$.shortDoc.setClasses(this.shortDocumentClass);
+		this.$.content[this.openDocEvent] = 'openDoc';
+		this.$.title[this.openDocEvent] = 'openDoc';
+		this.$.title.setContent(this.title);
+		this.$.title.setClasses(this.titleClass);
+		this.$.content.setContent(this.shortContent);
+		this.$.content.setClasses(this.contentClass);
+		this.$.documentMenu.hide();
+		/* ...only for testing until I get the actual data
+		if(this.labels.length > 0){
+			this.$.labelListContainer.createComponent({
+				kind: 'LabelList',
+				labelListId: this.url,
+				labelListClass: this.labelListClass,
+				labels: this.labels,
+				moreLabelsPanelClass: this.moreLabelsPanelClass,
+				moreLabelInputClass: this.moreLabelInputClass,
+				moreLabelInputDecClass: this.moreLabelInputDecClass,
+				addLabelButtonClass: this.addLabelButtonClass,
+				searchWord: this.searchWord
+			});
+		}*/
     },
 
     /**
@@ -47,7 +68,7 @@ enyo.kind(
         this.inherited(arguments);
         var main = this;
         var sliderId = this.$.rateSlider.getId();
-	jQuery('#' + sliderId).slider({
+		jQuery('#' + sliderId).slider({
             value: this.slideValue,
             min: 0,
             orientation: 'vertical',
@@ -57,7 +78,7 @@ enyo.kind(
                 main.slideValue = ui.value;
                 main.checking();
             }
-	});
+		});
         if(!this.showSlidebar){
             this.$.rateSlider.hide();
         }
@@ -87,6 +108,8 @@ enyo.kind(
             },
             { tag: 'div', name: 'title', onleave: 'leaveMenu', style: 'cursor: pointer;' },
             { tag: 'div', name: 'content', onleave: 'leaveMenu', style: 'cursor: pointer;', allowHtml: true },
+            { tag: 'div', classes: 'clear' },
+            { tag: 'div', name: 'labelListContainer', classes: 'labelListContainer' },
             { tag: 'div', classes: 'clear' }
         ]}
     ],
