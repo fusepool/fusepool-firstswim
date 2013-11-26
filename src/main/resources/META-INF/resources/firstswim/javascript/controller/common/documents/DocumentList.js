@@ -82,7 +82,7 @@ enyo.kind(
     },
 
     /**
-     * This funtions runs when the user oush the 'Process' button.
+     * This funtion runs when the user pushes the 'Process' button.
      */
     processClassify: function(){
         var classifyObject = {};
@@ -227,6 +227,7 @@ enyo.kind(
                     shortContent: documents[i].shortContent,
                     parentFunction: 'openDoc'
                 });
+				this.sendDocListAnnotation(documents[i].url,0);
             }
             this.$.loader.hide();
             this.$.list.render();
@@ -284,6 +285,7 @@ enyo.kind(
                 shortContent: documents[i].shortContent,
                 parentFunction: 'openDoc'
             });
+			this.sendDocListAnnotation(documents[i].url,0);
         }
         this.$.loader.hide();
         this.$.list.render();
@@ -299,7 +301,22 @@ enyo.kind(
      */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
+		this.sendDocListAnnotation(url,1);
     },
+	
+    /**
+     * This function prepares an annotation about the activities related to the
+	 * document list: which documents the user got back using what search query;
+	 * whether the user clicked on the documents. Then calls a parent function 
+	 * which actually sends the request to the server.
+     * @param {String} docURI the URI of the document
+     * @param {Number} click is it only displayed or clicked
+     */
+	sendDocListAnnotation: function(docURI,click) {
+		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <HITID>:'+docURI+'; <source>: [needs to be extracted]; <click>: '+click );
+		// Preparing the annotationBody... Then:
+		// this.owner.sendAnnotation(annotationBody);
+	},
 
     /**
      * This function updates the checkedNumber text with the offset and the checkedNumbers.

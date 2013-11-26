@@ -174,7 +174,7 @@ jQuery(document).ready(function () {
                  * @param {Object} inEvent mouse over on a short document event
                  */
                 openDoc: function(previewDoc, inEvent){
-                    /*if(!isEmpty(inEvent)){
+                    if(!isEmpty(inEvent)){
                         var topMessage = jQuery('#' + this.$.topMessageBox.getId());
                         var topMessageVisible = topMessage.is(':visible');
                         var topMessageHeight = 0;
@@ -183,23 +183,23 @@ jQuery(document).ready(function () {
                             alert(topMessageHeight);
                         }
                     }
-                    this.$.previewBox.openDoc(previewDoc);*/
-					this.sendAnnotation();
+                    this.$.previewBox.openDoc(previewDoc);
                 },
 
                 /**
-                 * This function sends an annotation to the annostore
-                 * @param {String} taskNumber number of the related task
+                 * This function puts an annotation to the annostore
                  * @param {String} annotationBody the annotation itself
                  */
-                // sendAnnotation: function(taskNumber,annotationBody){
-                sendAnnotation: function(){
+                sendAnnotation: function(annotationBody){
+					console.log('sending annotation: ' + annotationBody);
+					/*
 					var request = new enyo.Ajax({
 						method: 'POST',
 						url: CONSTANTS.ANNOTATION_URL,
 						handleAs: 'text',
 						headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
 						postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; <http://fusepool.eu/ontologies/annostore#task> "3.4" ',
+					//	postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; ' + annotationBody,
 						published: { timeout: 60000 }
 					});
 					request.go();
@@ -209,6 +209,7 @@ jQuery(document).ready(function () {
 					request.response(this, function(inSender, inResponse) {
 						console.log("success: "+inResponse);
 					});
+					*/
                 },
 				
                 /**
