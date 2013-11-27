@@ -25,12 +25,12 @@ enyo.kind(
 		{ tag: 'div', name: 'labelListName', classes: 'labelListName', content: 'Labels:' },
         { classes: 'clear' },
         { tag: 'div', name: 'labelList' },
-		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton', content: 'Add more', ontap: 'addMoreLabelsBtnPress' },
+		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton', content: 'Add label', ontap: 'addMoreLabelsBtnPress' },
 		{ tag: 'div', name: 'moreLabelsPanel', components: [
 			{kind: "onyx.InputDecorator", name: 'moreLabelInputDec', components: [
 				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name' }
 			]},
-			{ tag: 'div', name: 'addLabelButton', content: 'Add', ontap: 'addLabel' },
+			{ tag: 'div', name: 'addLabelButton', content: 'Add label', ontap: 'addLabel' },
 			{ tag: 'div', name: 'hideAddingPanelButton', content: 'Close', ontap: 'hideAddingPanelBtnPress' }
 		] },
 		{ classes: 'clear' }
@@ -76,17 +76,19 @@ enyo.kind(
 	},
 	
 	addLabel: function() {
+		var randomId = 'randomId'+Math.floor(Math.random()*100000+1);// TEST
+		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
 			
-			this.sendLabelListAnnotation(this.labelListId,newLabelText,1);
+			this.sendLabelListAnnotation(this.labelListId,randomId,newLabelText,1);
 			
-			this.labelIds.push('randomID');
+			this.labelIds.push(randomId);
 			this.labelTexts.push(newLabelText);
 			
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				labelId: 'newIdOfANewLabel',
+				labelId: randomId,
 				labelText: newLabelText,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
@@ -104,15 +106,16 @@ enyo.kind(
 	 * to the server about this action.
      */
     deleteLabel: function(labelId){
-		this.sendLabelListAnnotation(this.labelListId,labelId,0);
-		
 		var ind = $.inArray(labelId,this.labelIds)
+		this.sendLabelListAnnotation(this.labelListId,this.labelIds[ind],this.labelTexts[ind],-1);
+		
 		this.labelIds.splice(ind,1);
 		this.labelTexts.splice(ind,1);
+		
     },
 	
-	sendLabelListAnnotation: function(docURI,labelItem,action) {
-		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>:' + docURI + '; <labelItem>:' + labelItem + '; <action>: ' + action );
+	sendLabelListAnnotation: function(docURI,labelId,labelText,action) {
+		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>: ' + docURI + '; <labelId>: ' + labelId + '; <labelText>: ' + labelText + '; <action>: ' + action );
 		// Preparing the annotationBody... Then:
 		// this.owner.sendAnnotation(annotationBody);
 	}
