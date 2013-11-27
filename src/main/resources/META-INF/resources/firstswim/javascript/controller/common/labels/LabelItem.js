@@ -43,7 +43,7 @@ enyo.kind(
 	 * to the server about this action.
      */
     deleteLabel: function(){
-        this.owner.owner[this.deleteFunction](this.labelId);
+        this.owner.owner[this.deleteFunction](this.labelId,this.labelText);
 		this.destroy();
     }
 });

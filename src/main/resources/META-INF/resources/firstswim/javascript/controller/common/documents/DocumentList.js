@@ -207,7 +207,8 @@ enyo.kind(
         this.showOrHideProcessButton();
 		
 		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' }, { id: '3', text: 'Third label' } ];
-		var testLabelArray = [];
+		var testLabelIdArray = [];
+		var testLabelTextArray = [];
 		
         this.documents = documents;
         this.$.list.destroyClientControls();
@@ -229,7 +230,8 @@ enyo.kind(
                     title: documents[i].title,
                     shortContent: documents[i].shortContent,
                     parentFunction: 'openDoc',
-                    labels: testLabelArray, //TEST
+                    labelIds: testLabelIdArray, //TEST
+                    labelTexts: testLabelTextArray, //TEST
 					labelListClass: 'labelList',
 					moreLabelsPanelClass: 'moreLabelsPanel',
 					moreLabelInputClass: 'moreLabelInput',
@@ -278,9 +280,10 @@ enyo.kind(
     addMoreDocuments: function(documents){
         this.updateCheckedNumber();
         this.documents.push(documents);
-				
-		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' }, { id: '3', text: 'Third label' } ];
-        
+		
+        var testLabelIdArray = [];
+        var testLabelTextArray = [];
+		
 		for(var i=0;i<documents.length;++i){
             this.createComponent({
                 kind: 'ShortDocument',
@@ -298,7 +301,8 @@ enyo.kind(
                 title: documents[i].title,
                 shortContent: documents[i].shortContent,
                 parentFunction: 'openDoc',
-				labels: testLabelArray, //TEST
+				labelIds: testLabelIdArray, //TEST
+				labelTexts: testLabelTextArray, //TEST
 				labelListClass: 'labelList',
 				moreLabelsPanelClass: 'moreLabelsPanel',
 				moreLabelInputClass: 'moreLabelInput',

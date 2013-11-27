@@ -10,7 +10,8 @@ enyo.kind(
 
     published: {
 		labelListId: '', // = docURI
-        labels: [],
+        labelIds: [],
+        labelTexts: [],
 		moreLabelsPanelClass: '',
 		moreLabelInputClass: '',
 		moreLabelInputDecClass: '',
@@ -41,11 +42,11 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
 
-        for(var i=0;i<this.labels.length;++i){
+        for(var i=0;i<this.labelIds.length;++i){
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				labelId: this.labels[i].id,
-				labelText: this.labels[i].text,
+				labelId: this.labelIds[i],
+				labelText: this.labelTexts[i],
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
 				labelDeleteClass: 'labelDeleteButton',
@@ -66,6 +67,7 @@ enyo.kind(
 	addMoreLabelsBtnPress: function() {
 		this.$.addMoreLabelsButton.hide();
 		this.$.moreLabelsPanel.show();
+        this.$.moreLabelInput.focus();
 	},
 	
 	hideAddingPanelBtnPress: function() {
@@ -75,9 +77,13 @@ enyo.kind(
 	
 	addLabel: function() {
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
-		if(newLabelText!='') {
-			this.$.moreLabelInput.setValue('');
+		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
+			
 			this.sendLabelListAnnotation(this.labelListId,newLabelText,1);
+			
+			this.labelIds.push('randomID');
+			this.labelTexts.push(newLabelText);
+			
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
 				labelId: 'newIdOfANewLabel',
@@ -87,9 +93,10 @@ enyo.kind(
 				labelDeleteClass: 'labelDeleteButton',
 				deleteFunction: 'deleteLabel'
 			});
+			
 			this.$.labelList.render();
 		}
-        this.$.moreLabelInput.focus();
+        this.$.moreLabelInput.setValue('').focus();
 	},
 
     /**
@@ -98,16 +105,16 @@ enyo.kind(
      */
     deleteLabel: function(labelId){
 		this.sendLabelListAnnotation(this.labelListId,labelId,0);
+		
+		var ind = $.inArray(labelId,this.labelIds)
+		this.labelIds.splice(ind,1);
+		this.labelTexts.splice(ind,1);
     },
 	
 	sendLabelListAnnotation: function(docURI,labelItem,action) {
 		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>:' + docURI + '; <labelItem>:' + labelItem + '; <action>: ' + action );
 		// Preparing the annotationBody... Then:
 		// this.owner.sendAnnotation(annotationBody);
-	},
-	
-    getLabels: function(){
-        return this.labels;
-    }
+	}
 	
 });

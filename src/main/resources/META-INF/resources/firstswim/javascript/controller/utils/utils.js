@@ -1,11 +1,11 @@
 var GLOBAL= {
     maxFacets: 10,
-    items: 10
-   // items: 3
+    // items: 10
+   items: 3
 };
 
-// var BASE_URL = 'http://beta.fusepool.com/';
-var BASE_URL = '/';
+var BASE_URL = 'http://beta.fusepool.com/';
+// var BASE_URL = '/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
