@@ -10,28 +10,29 @@ enyo.kind(
 
     published: {
 		labelListId: '', // = docURI
-        labels: null,
+        labels: [],
 		moreLabelsPanelClass: '',
 		moreLabelInputClass: '',
 		moreLabelInputDecClass: '',
 		addLabelButtonClass: '',
+		hideAddingPanelButtonClass: '',
 		labelListClass: '',
 		searchWord: ''
     },
 
     components: [
-		{ tag: 'div', name: 'labelListName', content: 'Labels:' },
+		{ tag: 'div', name: 'labelListName', classes: 'labelListName', content: 'Labels:' },
         { classes: 'clear' },
         { tag: 'div', name: 'labelList' },
-        { classes: 'clear' },
-		{ kind: onyx.Button, name: 'addMoreLabelsButton', content: '+', ontap: 'addMoreLabelsBtnPress' },
+		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton', content: 'Add more', ontap: 'addMoreLabelsBtnPress' },
 		{ tag: 'div', name: 'moreLabelsPanel', components: [
 			{kind: "onyx.InputDecorator", name: 'moreLabelInputDec', components: [
 				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name' }
 			]},
-			{ kind: onyx.Button, name: 'addLabelButton', content: 'Add', ontap: 'addLabel' },
-			{ kind: onyx.Button, name: 'hideAddingPanelButton', content: 'Hide', ontap: 'hideAddingPanelBtnPress' }
-		] }
+			{ tag: 'div', name: 'addLabelButton', content: 'Add', ontap: 'addLabel' },
+			{ tag: 'div', name: 'hideAddingPanelButton', content: 'Close', ontap: 'hideAddingPanelBtnPress' }
+		] },
+		{ classes: 'clear' }
     ],
 
     /**
@@ -40,26 +41,23 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
 
-        var countOfElements = 0;
         for(var i=0;i<this.labels.length;++i){
-			countOfElements++;
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
 				labelId: this.labels[i].id,
 				labelText: this.labels[i].text,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
+				labelDeleteClass: 'labelDeleteButton',
 				deleteFunction: 'deleteLabel'
 			});
-        }
-        if(countOfElements === 0){
-            this.hide();
         }
 		
         this.$.moreLabelsPanel.setClasses(this.moreLabelsPanelClass);		
         this.$.moreLabelInput.setClasses(this.moreLabelInputClass);		
         this.$.moreLabelInputDec.setClasses(this.moreLabelInputDecClass);		
-        this.$.addLabelButton.setClasses(this.addLabelButtonClass);		
+        this.$.addLabelButton.setClasses(this.addLabelButtonClass);
+        this.$.hideAddingPanelButton.setClasses(this.hideAddingPanelButtonClass);
         this.$.labelList.setClasses(this.labelListClass);
 
 		this.$.moreLabelsPanel.hide();
@@ -86,10 +84,12 @@ enyo.kind(
 				labelText: newLabelText,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
+				labelDeleteClass: 'labelDeleteButton',
 				deleteFunction: 'deleteLabel'
 			});
 			this.$.labelList.render();
 		}
+        this.$.moreLabelInput.focus();
 	},
 
     /**
@@ -101,7 +101,7 @@ enyo.kind(
     },
 	
 	sendLabelListAnnotation: function(docURI,labelItem,action) {
-		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <HITID>:' + docURI + '; <labelItem>:' + labelItem + '; <action>: ' + action );
+		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>:' + docURI + '; <labelItem>:' + labelItem + '; <action>: ' + action );
 		// Preparing the annotationBody... Then:
 		// this.owner.sendAnnotation(annotationBody);
 	},

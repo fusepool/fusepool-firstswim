@@ -269,7 +269,7 @@ body{
 }
 
 .documentListScroll {
-    background-color: #e3e3e3;
+    background-color: #dddddd;
     border: 1px #cccccc solid;
     bottom: 0;
     left: 0;
@@ -296,15 +296,66 @@ body{
     margin: 10px 10px 10px 43px;
 }
 
+.labelListName {
+	color: #a6a6a6;
+	font-size: 11px;
+	margin: 4px;
+}
+
 .labelListPanel {
-    border-top: 1px solid lightgrey;
-	padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+.labelDiv {
+	background-color: rgba(98, 162, 22, 0.15);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin: 2px;
+	padding: 4px;
+}
+
+.labelDeleteButton {
+	color: #555555;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 0px 2px 0px 4px;
+}
+
+.addMoreLabelsButton, .addLabelButton, .hideAddingPanelButton {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #f1f1f1;
+	cursor: pointer;
+	font-weight: bold;
+	border: 1px solid #d8d8d8;
+	float: left;
+	margin: 1px 2px;
+    padding: 4px 4px 3px 4px;
+}
+
+.moreLabelsPanel {
+	clear: both;
+}
+
+.moreLabelInputDec {
+	height: 10px;
+	float: left;
+	margin: 1px;
+    padding: 1px 2px 12px 4px;
+}
+
+.moreLabelInput {
+	font-size: 13px !important;
 }
 
 /* ----------- RIGHT ----------- */
 
 /* ----- Preview document ----- */
-.previewBox{
+.previewBox {
 	position: absolute;
 	top: 75px;
 	right: 10px;
@@ -724,7 +775,7 @@ body{
 
 .shortDocument{
     background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
-    border-bottom: 5px solid #cacaca;
+    border-bottom: 5px solid #b1b1b1;
     font-size: 13px;
     padding: 10px 10px 10px 10px;
     min-height: 35px;
@@ -947,7 +998,9 @@ body{
 
 .decorator{
     border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px 3px 3px 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
     margin: 0;
     padding: 6px 8px 10px;
     width: 353px;

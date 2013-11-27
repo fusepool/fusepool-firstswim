@@ -206,7 +206,8 @@ enyo.kind(
         this.updateCheckedNumber();
         this.showOrHideProcessButton();
 		
-		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' } ];
+		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' }, { id: '3', text: 'Third label' } ];
+		var testLabelArray = [];
 		
         this.documents = documents;
         this.$.list.destroyClientControls();
@@ -234,6 +235,7 @@ enyo.kind(
 					moreLabelInputClass: 'moreLabelInput',
 					moreLabelInputDecClass: 'moreLabelInputDec',
 					addLabelButtonClass: 'addLabelButton',
+					hideAddingPanelButtonClass: 'hideAddingPanelButton',
 					searchWord: this.searchWord
                 });
 				this.sendDocListAnnotation(documents[i].url,0);
@@ -276,7 +278,10 @@ enyo.kind(
     addMoreDocuments: function(documents){
         this.updateCheckedNumber();
         this.documents.push(documents);
-        for(var i=0;i<documents.length;++i){
+				
+		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' }, { id: '3', text: 'Third label' } ];
+        
+		for(var i=0;i<documents.length;++i){
             this.createComponent({
                 kind: 'ShortDocument',
                 classes: 'shortDocumentContainer',
@@ -292,7 +297,15 @@ enyo.kind(
                 url: documents[i].url,
                 title: documents[i].title,
                 shortContent: documents[i].shortContent,
-                parentFunction: 'openDoc'
+                parentFunction: 'openDoc',
+				labels: testLabelArray, //TEST
+				labelListClass: 'labelList',
+				moreLabelsPanelClass: 'moreLabelsPanel',
+				moreLabelInputClass: 'moreLabelInput',
+				moreLabelInputDecClass: 'moreLabelInputDec',
+				addLabelButtonClass: 'addLabelButton',
+				hideAddingPanelButtonClass: 'hideAddingPanelButton',
+				searchWord: this.searchWord
             });
 			this.sendDocListAnnotation(documents[i].url,0);
         }
@@ -322,7 +335,14 @@ enyo.kind(
      * @param {Number} click is it only displayed or clicked
      */
 	sendDocListAnnotation: function(docURI,click) {
-		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <HITID>:'+docURI+'; <source>: [needs to be extracted]; <click>: '+click );
+		var src = 'unknown';
+		if(docURI.indexOf('/pmc/') > 0) {
+			src = 'pubmed';
+		}
+		else if (docURI.indexOf('/patent/') > 0) {
+			src = 'patent';
+		}
+		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <docID>:'+docURI+'; <src>: '+src+'; <boost paramed used>: 0; <click>: '+click );
 		// Preparing the annotationBody... Then:
 		// this.owner.sendAnnotation(annotationBody);
 	},

@@ -1,7 +1,7 @@
 var GLOBAL= {
     maxFacets: 10,
     items: 10
-//    items: 3
+   // items: 3
 };
 
 // var BASE_URL = 'http://beta.fusepool.com/';
@@ -66,9 +66,9 @@ function GetURLParameter(paramName){
     var sPageURL = window.location.search.substring(1);
     var sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++){
-        var paramNameeterName = sURLVariables[i].split('=');
-        if (paramNameeterName[0] === paramName){
-            result.push(decodeURIComponent(paramNameeterName[1]));
+        var parameterName = sURLVariables[i].split('=');
+        if (parameterName[0] === paramName){
+            result.push(decodeURIComponent(parameterName[1]));
         }
     }
     return result;

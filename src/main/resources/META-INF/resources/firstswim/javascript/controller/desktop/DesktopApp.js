@@ -78,7 +78,7 @@ jQuery(document).ready(function () {
                                         parentTapFunction: 'createBookmark',
                                         parentPopupFunction: 'popupBookmark',
                                         warningPopupClass: 'bookmarkPopup',
-                                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
+                                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
                                 }
                             ]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },

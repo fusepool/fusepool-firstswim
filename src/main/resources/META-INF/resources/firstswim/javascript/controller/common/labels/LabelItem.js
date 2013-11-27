@@ -35,7 +35,7 @@ enyo.kind(
 
     components: [
 		{ tag: 'span', name: 'labelText' },
-		{ tag: 'span', name: 'labelDeleteButton', onclick: 'deleteLabel', content: 'X', style: 'cursor: pointer;color: red' }	
+		{ tag: 'span', name: 'labelDeleteButton', onclick: 'deleteLabel', content: 'x' }	
     ],
 
     /**

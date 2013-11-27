@@ -22,12 +22,13 @@ enyo.kind(
         shortDocumentClass: '',
         contentClass: '',
         openButtonClass: '',
-		labels: null,
+		labels: [],
 		labelListClass: '',
 		moreLabelsPanelClass: '',
 		moreLabelInputClass: '',
 		moreLabelInputDecClass: '',
 		addLabelButtonClass: '',
+		hideAddingPanelButtonClass: '',
 		searchWord: ''
     },
 
@@ -45,20 +46,19 @@ enyo.kind(
 		this.$.content.setContent(this.shortContent);
 		this.$.content.setClasses(this.contentClass);
 		this.$.documentMenu.hide();
-		/* ...only for testing until I get the actual data
-		if(this.labels.length > 0){
-			this.$.labelListContainer.createComponent({
-				kind: 'LabelList',
-				labelListId: this.url,
-				labelListClass: this.labelListClass,
-				labels: this.labels,
-				moreLabelsPanelClass: this.moreLabelsPanelClass,
-				moreLabelInputClass: this.moreLabelInputClass,
-				moreLabelInputDecClass: this.moreLabelInputDecClass,
-				addLabelButtonClass: this.addLabelButtonClass,
-				searchWord: this.searchWord
-			});
-		}*/
+		/* ...only for testing until I get the actual data*/
+		this.$.labelListContainer.createComponent({
+			kind: 'LabelList',
+			labelListId: this.url,
+			labelListClass: this.labelListClass,
+			labels: this.labels,
+			moreLabelsPanelClass: this.moreLabelsPanelClass,
+			moreLabelInputClass: this.moreLabelInputClass,
+			moreLabelInputDecClass: this.moreLabelInputDecClass,
+			addLabelButtonClass: this.addLabelButtonClass,
+			hideAddingPanelButtonClass: this.hideAddingPanelButtonClass,
+			searchWord: this.searchWord
+		});
     },
 
     /**
