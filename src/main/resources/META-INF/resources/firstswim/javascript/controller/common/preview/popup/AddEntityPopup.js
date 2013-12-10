@@ -6,7 +6,8 @@ enyo.kind({
     published: {
         titleContent: '',
         okButtonContent: '',
-        cancelButtonContent: ''
+        cancelButtonContent: '',
+		selectedText: ''
     },
 
     create: function(){
@@ -22,21 +23,26 @@ enyo.kind({
             { tag: 'span', name: 'addEntityWord' }
         ]},
         { tag: 'select', name: 'dictionarySelect', components: [
-            { tag: 'option', content: 'Person' },
-            { tag: 'option', content: 'Location' },
-            { tag: 'option', content: 'Organization' },
-            { tag: 'option', content: 'LTE' }
-        ]},
+            { tag: 'option', content: 'Person', value: 'urn:fusepool-person-ontology' },
+            { tag: 'option', content: 'Location', value: 'urn:fusepool-location-ontology' },
+            { tag: 'option', content: 'Organization', value: 'urn:fusepool-organization-ontology' },
+            { tag: 'option', content: 'Disease', value: 'urn:fusepool-disease-ontology' }
+        ]},		
         { kind: onyx.Button, name: 'okButton', ontap: 'okAddEntity' },
         { kind: onyx.Button, name: 'cancelButton', ontap: 'cancelAddEntity' }
     ],
 
     addEntity: function(selectedText){
+		this.selectedText = selectedText;
         this.$.addEntityWord.setContent(selectedText);
         this.show();
     },
 
     okAddEntity: function(){
+		var annotationBody = '<userID>: unknown; <dictionary>: '+this.$.dictionarySelect.components[this.$.dictionarySelect.eventNode.selectedIndex].value+'; <entity>: '+this.selectedText+'; <event>: add;';
+		// console.log(annotationBody);
+		// Preparing the annotationBody... Then:
+		sendAnnotation(annotationBody);
         this.hide();
     },
 

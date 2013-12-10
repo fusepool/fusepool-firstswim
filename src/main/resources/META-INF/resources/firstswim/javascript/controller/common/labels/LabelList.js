@@ -117,7 +117,7 @@ enyo.kind(
 	sendLabelListAnnotation: function(docURI,labelId,labelText,action) {
 		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>: ' + docURI + '; <labelId>: ' + labelId + '; <labelText>: ' + labelText + '; <action>: ' + action );
 		// Preparing the annotationBody... Then:
-		// this.owner.sendAnnotation(annotationBody);
+		// sendAnnotation(annotationBody);
 	}
 	
 });

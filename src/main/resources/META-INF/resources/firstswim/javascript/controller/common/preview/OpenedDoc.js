@@ -126,7 +126,7 @@ enyo.kind(
      * @param {Object} rdf the data as an rdf object
      */
     processDocDetails: function(rdf){
-        console.log('Preview details coming soon with uduvudu.');
+//        console.log('Preview details coming soon with uduvudu.');
 //        var rdfObj = rdf.databank.dump();
 //        var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
 //        var doc = _.pick(rdfObj, docName);
@@ -178,12 +178,25 @@ enyo.kind(
         query += '}';
         rdf.execute(query, function(success, results) {
             if (success) {
-                var row = results[0];
-                if(!isEmpty(row.content1) && (row.content1.lang === main.lang || isEmpty(row.content1.lang))){
-                    content = row.content1.value;
-                } else {
-                    content = row.content2.value;
-                }
+				if(results.length > 0) {
+					var row = results[0];
+					//if(!isEmpty(row.content1) && (row.content1.lang === main.lang || isEmpty(row.content1.lang))){
+					//	content = row.content1.value;
+					//} else {
+					//	content = row.content2.value;
+					//}
+					if(!isEmpty(row.content1)) {
+						content = row.content1.value;
+					}
+					else{
+						if(!isEmpty(row.content2)) {
+							content = row.content2.value;
+						}
+						else {
+							content = 'No preview found'
+						}
+					}
+				}
             }
         });
         return content;
@@ -200,10 +213,15 @@ enyo.kind(
 
         var query = 'SELECT * { ?s <http://purl.org/dc/terms/title> ?title }';
         rdf.execute(query, function(success, results) {
-            var row = results[0];
-            if (success && (isEmpty(row.title.lang) || row.title.lang === main.lang)) {
-                title = row.title.value;
-            }
+			try {
+				var row = results[0];
+				if (success && (isEmpty(row.title.lang) || row.title.lang === main.lang)) {
+					title = row.title.value;
+				}
+			}
+			catch(e) {
+				title = 'Title not found';
+			}
         });
         return title;
     },

@@ -225,7 +225,36 @@ body{
     opacity: 0.4;
 }
 
+/* ---------- NGRAPH ------------ */
+
+.nGraphPanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 940px;
+}
+
+.nGraphMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.nGraphCanvas {
+    background-color: #FFFFFF;
+    bottom: 0px;
+    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+}
+
 /* ----------- MIDDLE ----------- */
+
 .bookmarkPopup{
     position: absolute;
     word-wrap: break-word;
@@ -307,13 +336,14 @@ body{
 }
 
 .labelDiv {
-	background-color: rgba(98, 162, 22, 0.15);
+	background-color: rgba(98, 162, 22, 0.2);
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	float: left;
 	margin: 2px;
 	padding: 4px;
+	max-width: 470px;
 }
 
 .labelText {
@@ -328,17 +358,29 @@ body{
 	margin: 0px 2px 0px 4px;
 }
 
+.addMoreLabelsButton {
+	margin-top: 2px;
+}
+
 .addMoreLabelsButton, .addLabelButton, .hideAddingPanelButton {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	background-color: #f1f1f1;
 	cursor: pointer;
-	font-weight: bold;
+	font-size: 12px;
 	border: 1px solid #d8d8d8;
 	float: left;
 	margin: 1px 2px;
     padding: 4px 4px 3px 4px;
+}
+
+.addMoreLabelsButton:hover, .addLabelButton:hover, .hideAddingPanelButton:hover {
+    background-color: #eaeaea;
+}
+
+.addMoreLabelsButton:active, .addLabelButton:active, .hideAddingPanelButton:active {
+    background-color: #dddddd;
 }
 
 .moreLabelsPanel {

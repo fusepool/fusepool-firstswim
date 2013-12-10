@@ -1,11 +1,12 @@
 var GLOBAL= {
     maxFacets: 10,
-    // items: 10
-   items: 3
+    items: 10,
+   // items: 3,
+   viewType: 'nGraph'
 };
 
-var BASE_URL = 'http://beta.fusepool.com/';
-// var BASE_URL = '/';
+// var BASE_URL = 'http://beta.fusepool.com/';
+var BASE_URL = '/';
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
@@ -164,4 +165,30 @@ function getRDFPropertyValue(rdf, propertyName){
         }
     });
     return result;
+}
+
+/**
+ * This function puts an annotation to the annostore
+ * @param {String} annotationBody the annotation itself
+ */
+function sendAnnotation(annotationBody) {
+	console.log('sending annotation: ' + annotationBody);
+	/*
+	var request = new enyo.Ajax({
+		method: 'POST',
+		url: CONSTANTS.ANNOTATION_URL,
+		handleAs: 'text',
+		headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
+		postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; <http://fusepool.eu/ontologies/annostore#task> "3.4" ',
+	//	postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; ' + annotationBody,
+		published: { timeout: 60000 }
+	});
+	request.go();
+	request.error(this, function(){
+		console.log("error");
+	});
+	request.response(this, function(inSender, inResponse) {
+		console.log("success: "+inResponse);
+	});
+	*/
 }

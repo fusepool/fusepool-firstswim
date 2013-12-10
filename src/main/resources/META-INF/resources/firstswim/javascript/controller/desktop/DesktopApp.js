@@ -82,7 +82,7 @@ jQuery(document).ready(function () {
                                 }
                             ]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
-                            {
+                            /*{
                                 classes: 'leftDesktopCol',
                                 components: [
                                     {
@@ -124,6 +124,18 @@ jQuery(document).ready(function () {
                                 noDataLabel: 'No data available',
                                 moreButtonClass: 'moreButton',
                                 moreDocumentsFunction: 'moreDocuments'
+                            },*/
+							
+                            {
+                                kind: 'NGraph',
+                                name: 'nGraph',
+                                openDocFunction: 'openDoc',
+                                openDocEvent: 'ontap',
+                                classes: 'nGraphPanel',
+                                loaderClass: 'loader',
+                                titleClass: 'nGraphMainTitle',
+                                titleContent: 'Network graph ',
+                                noDataLabel: 'No data available'
                             },
                             {
                                 kind: 'PreviewBox',
@@ -184,32 +196,6 @@ jQuery(document).ready(function () {
                         }
                     }
                     this.$.previewBox.openDoc(previewDoc);
-                },
-
-                /**
-                 * This function puts an annotation to the annostore
-                 * @param {String} annotationBody the annotation itself
-                 */
-                sendAnnotation: function(annotationBody){
-					console.log('sending annotation: ' + annotationBody);
-					/*
-					var request = new enyo.Ajax({
-						method: 'POST',
-						url: CONSTANTS.ANNOTATION_URL,
-						handleAs: 'text',
-						headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
-						postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; <http://fusepool.eu/ontologies/annostore#task> "3.4" ',
-					//	postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; ' + annotationBody,
-						published: { timeout: 60000 }
-					});
-					request.go();
-					request.error(this, function(){
-						console.log("error");
-					});
-					request.response(this, function(inSender, inResponse) {
-						console.log("success: "+inResponse);
-					});
-					*/
                 },
 				
                 /**
@@ -328,7 +314,14 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
-                        this.$.documents.startLoading();
+						switch(GLOBAL.viewType) {
+							case 'documentList':
+								this.$.documents.startLoading();
+							break;
+							case 'nGraph':
+								this.$.nGraph.startLoading();
+							break;
+						}
                         this.$.searchBox.updateInput(this.searchWord);
 
                         this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
@@ -414,9 +407,16 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
-                    this.updateEntityList(rdf, this.searchWord);
-                    this.updateDocumentList(rdf);
-                },
+					switch(GLOBAL.viewType) {
+						case 'documentList':
+							this.updateEntityList(rdf, this.searchWord);
+							this.updateDocumentList(rdf);
+						break;
+						case 'nGraph':
+							this.updateNGraph(rdf);
+						break;
+					}
+				},
 
                 /**
                  * This functions is called after a success classifying.
@@ -701,6 +701,15 @@ jQuery(document).ready(function () {
                  * This function update the document list on the middle
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
+                updateNGraph: function(rdf){
+                    var documents = this.createDocumentList(rdf);
+                    this.$.nGraph.updateGraph(documents, this.searchWord, this.checkedEntities);
+                },
+
+                /**
+                 * This function update the document list on the middle
+                 * @param {Object} rdf the rdf object which contains the new document list
+                 */
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
                     this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
@@ -725,9 +734,11 @@ jQuery(document).ready(function () {
                     var query = 'SELECT * { ?s <http://fusepool.eu/ontologies/ecs#contentsCount> ?o }';
                     rdf.execute(query, function(success, results) {
                         if (success) {
-                            result = results[0].o.value;
-                        }
-                    });
+							if(results.length > 0) {
+								result = results[0].o.value;
+							}
+						}
+					});
                     return result;
                 },
 
@@ -747,17 +758,27 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-                                    var content = row.content.value;
-                                    var title = '';
-                                    if(!isEmpty(row.title)){
-                                        title = row.title.value;
-                                    }
-                                    if(!main.containsDocument(documents, content, title)){
-                                        documents.push({url: row.url.value, shortContent: content, title: title});
-                                    }
-                                }
-                            }
+                                // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
+								// var content = row.content.value;
+								var content;
+								if(isEmpty(row.content)) {
+									content = row.preview.value;
+								}
+								else {
+									content = row.content.value;
+								}
+								var title = '';
+								if(!isEmpty(row.title)){
+									title = row.title.value;
+								}
+								else {
+									title = 'Title not found';
+								}
+								if(!main.containsDocument(documents, content, title)){
+									documents.push({url: row.url.value, shortContent: content, title: title});
+								}
+							}
+                        // }
                         }
                     });
                     return documents;

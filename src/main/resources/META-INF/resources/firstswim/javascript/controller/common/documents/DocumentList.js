@@ -346,9 +346,9 @@ enyo.kind(
 		else if (docURI.indexOf('/patent/') > 0) {
 			src = 'patent';
 		}
-		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <docID>:'+docURI+'; <src>: '+src+'; <boost paramed used>: 0; <click>: '+click );
+		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <docID>:'+docURI+'; <src>: '+src+'; <boost parameter used>: 0; <click>: '+click );
 		// Preparing the annotationBody... Then:
-		// this.owner.sendAnnotation(annotationBody);
+		// sendAnnotation(annotationBody);
 	},
 
     /**
