@@ -10,6 +10,8 @@
     <script src="firstswim/javascript/zeroclipboard/ZeroClipboard.min.js" type="text/javascript"></script>
     <!-- rdfstore -->
     <script src="firstswim/javascript/rdfstore/rdfstore.js" type="text/javascript"></script>
+    <!-- jit -->
+    <script src="firstswim/javascript/jit/jit.js" type="text/javascript"></script>
     <!-- jquery and rdfquery -->
     <script src="firstswim/javascript/jquery/jquery.js" type="text/javascript"></script>
     <script src="firstswim/javascript/jquery/ui/jquery-ui.js" type="text/javascript"></script>
