@@ -175,18 +175,17 @@ function getRDFPropertyValue(rdf, propertyName){
 
 /**
  * This function puts an annotation to the annostore
- * @param {String} annotationBody the annotation itself
+ * @param {String} annotationString the annotation itself
  */
-function sendAnnotation(annotationBody) {
-	console.log('sending annotation: ' + annotationBody);
-	/*
+function sendAnnotation(annotationString) {
+	console.log('sending annotation: @prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString);
+	
 	var request = new enyo.Ajax({
 		method: 'POST',
 		url: CONSTANTS.ANNOTATION_URL,
 		handleAs: 'text',
 		headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
-		postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; <http://fusepool.eu/ontologies/annostore#task> "3.4" ',
-	//	postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . [] a oa:Annotation ; ' + annotationBody,
+		postBody: '@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString,
 		published: { timeout: 60000 }
 	});
 	request.go();
@@ -196,5 +195,10 @@ function sendAnnotation(annotationBody) {
 	request.response(this, function(inSender, inResponse) {
 		console.log("success: "+inResponse);
 	});
-	*/
 }
+
+function getRandomId() {
+	return Math.floor(Math.random()*1000000000+1);
+}
+
+

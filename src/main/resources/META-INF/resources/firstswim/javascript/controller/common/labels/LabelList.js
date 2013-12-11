@@ -76,19 +76,19 @@ enyo.kind(
 	},
 	
 	addLabel: function() {
-		var randomId = 'randomId'+Math.floor(Math.random()*100000+1);// TEST
+		var labelId = '<http://fusepool.info/labels/'+getRandomId()+'>';
 		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
 			
-			this.sendLabelListAnnotation(this.labelListId,randomId,newLabelText,1);
+			this.sendLabelListAnnotation(this.labelListId,labelId,newLabelText,1);
 			
-			this.labelIds.push(randomId);
+			this.labelIds.push(labelId);
 			this.labelTexts.push(newLabelText);
 			
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				labelId: randomId,
+				labelId: labelId,
 				labelText: newLabelText,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
@@ -115,9 +115,32 @@ enyo.kind(
     },
 	
 	sendLabelListAnnotation: function(docURI,labelId,labelText,action) {
-		console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>: ' + docURI + '; <labelId>: ' + labelId + '; <labelText>: ' + labelText + '; <action>: ' + action );
-		// Preparing the annotationBody... Then:
-		// sendAnnotation(annotationBody);
+		// console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>: ' + docURI + '; <labelId>: ' + labelId + '; <labelText>: ' + labelText + '; <action>: ' + action );
+				
+		var annoURI = '<http://fusepool.info/annostore/labelling/'+getRandomId()+'>';
+		var annoBodyURI = '<http://fusepool.info/annostore/labelling/body/'+getRandomId()+'>';
+		
+		var annotationString=	'fpanno:datasource a oa:SpecificResource . '+
+								'fpanno:labellingAnnotation a oa:Annotation . '+
+								'fpanno:labellingBody a oa:SpecificResource . '+
+								
+								 annoURI+' a fpanno:labellingAnnotation ; ' +
+								'fpanno:hasTarget '+docURI+' ; ' +
+								'fpanno:hasBody '+annoBodyURI+' ; ' +
+								'fpanno:annotatedAt "2012-02-12T15:02:14Z" ; ' +
+								'fpanno:annotatedBy ex:AdrianGschwend . ' +
+								
+								 annoBodyURI+' a fpanno:labellingBody ; ' +
+								'fpanno:hasNewLabel '+labelId+' . ' +
+								 labelId + ' a oa:Tag, cnt:ContentAsText ; ' + 
+								'cnt:chars "'+labelText+'" . ';
+		
+		if(action==1) {
+			// sendAnnotation(annotationString);
+			console.log(annotationString);
+		}
+		else {
+		}
 	}
 	
 });
