@@ -47,6 +47,7 @@ jQuery(document).ready(function () {
                     {
                         tag: 'div',
                         classes: 'docApp',
+                        name: 'docApp',
                         components: [
                             { name: 'Toolbar', classes: 'toolbar', components: [
                                 { name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
@@ -63,26 +64,31 @@ jQuery(document).ready(function () {
                                                 buttonContent: 'OK',
                                                 searchIconClass: 'searchImage',
                                                 parentSeachFunction: 'search'
-                                        }
-                                ]},
-                                {
-                                        content: 'Login',
-                                        ontap: 'login',
-                                        classes: 'loginButton'
-                                },
-                                { kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
-                                {
-                                        name: 'bookmark',
-                                        kind: 'Bookmark',
-                                        buttonClass: 'bookmarkButton',
-                                        parentTapFunction: 'createBookmark',
-                                        parentPopupFunction: 'popupBookmark',
-                                        warningPopupClass: 'bookmarkPopup',
-                                        warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
-                                }
+                                        },/*
+										{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
+											{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
+											{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
+										]},*/
+										{
+												content: 'Login',
+												ontap: 'login',
+												classes: 'loginButton'
+										},
+										{ kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
+										{
+												name: 'bookmark',
+												kind: 'Bookmark',
+												buttonClass: 'bookmarkButton',
+												parentTapFunction: 'createBookmark',
+												parentPopupFunction: 'popupBookmark',
+												warningPopupClass: 'bookmarkPopup',
+												warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
+										}
+                                ]}
                             ]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
-                            /*{
+                            {
+								name: 'leftDesktopCol',
                                 classes: 'leftDesktopCol',
                                 components: [
                                     {
@@ -124,8 +130,8 @@ jQuery(document).ready(function () {
                                 noDataLabel: 'No data available',
                                 moreButtonClass: 'moreButton',
                                 moreDocumentsFunction: 'moreDocuments'
-                            },*/
-							
+                            },
+							/*
                             {
                                 kind: 'NGraph',
                                 name: 'nGraph',
@@ -136,7 +142,7 @@ jQuery(document).ready(function () {
                                 titleClass: 'nGraphMainTitle',
                                 titleContent: 'Network graph ',
                                 noDataLabel: 'No data available'
-                            },
+                            },*/
                             {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
@@ -147,7 +153,50 @@ jQuery(document).ready(function () {
                         ]
                     }
                 ],
-
+				
+				/** */
+				onViewTypeToggle:  function(inSender, inEvent) {
+					if (inEvent.originator.getActive()) {
+						//var selected = inEvent.originator.indexInContainer();
+						switch(inEvent.originator.name) {
+							case 'docListViewButton':
+								if(GLOBAL.viewType!='documentList') {
+									
+									GLOBAL.viewType='documentList';
+									
+									this.$.nGraph.destroy();
+								}
+							break;
+							case 'nGraphViewButton':
+								if(GLOBAL.viewType!='nView') {
+								
+									GLOBAL.viewType='nView';
+									
+									this.$.leftDesktopCol.destroy();
+									this.$.documents.destroy();
+									this.$.previewBox.clean();
+									
+									this.$.docApp.createComponent({
+										kind: 'NGraph',
+										name: 'nGraph',
+										openDocFunction: 'openDoc',
+										openDocEvent: 'ontap',
+										classes: 'nGraphPanel',
+										loaderClass: 'loader',
+										titleClass: 'nGraphMainTitle',
+										titleContent: 'Network graph ',
+										noDataLabel: 'No data available'
+									});
+									this.$.docApp.render();
+									
+									this.search(this.searchWord);
+									
+								}
+							break;
+						}
+					}
+				},
+				
                 /**
                  * This function is called, when the user click the login button.
                  * It shows the login popup window.
@@ -310,6 +359,7 @@ jQuery(document).ready(function () {
                  * @param {Array} checkedEntities the checked entities on the left side
                  */
                 search: function(searchWord, checkedEntities){
+					checkedEntities = typeof checkedEntities !== 'undefined' ? checkedEntities : [];					
                     this.cleanPreviewBox();
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;

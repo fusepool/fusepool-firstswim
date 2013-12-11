@@ -1,12 +1,15 @@
 var GLOBAL= {
     maxFacets: 10,
     items: 10,
-   // items: 3,
-   viewType: 'nGraph'
+   // items: 6,
+   viewType: 'documentList'
+   // viewType: 'nGraph'
 };
 
-// var BASE_URL = 'http://beta.fusepool.com/';
-var BASE_URL = '/';
+// var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
+// var BASE_URL = 'http://beta.fusepool.com/'; /* lokal, betas fp peldannyal */
+var BASE_URL = '/'; /* commithoz */
+
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
@@ -17,10 +20,13 @@ var CONSTANTS = {
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
+	
+	// CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
+	// TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html', 	
+	// IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
+    CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
     TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
-   // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
-   // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf'
-    CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf'
+	IMG_PATH: BASE_URL + 'firstswim/images/'
 };
 
 /**

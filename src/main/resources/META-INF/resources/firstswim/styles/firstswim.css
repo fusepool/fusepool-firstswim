@@ -51,6 +51,14 @@ body{
 	position: relative;
 }
 
+.viewTypeToggleButtons {
+	position: absolute;
+	right: 170px;
+	top: 20px;
+	width: 70px;
+	cursor: pointer;
+}
+
 .mainLogo {
 	cursor: pointer;
 	width: 271px;

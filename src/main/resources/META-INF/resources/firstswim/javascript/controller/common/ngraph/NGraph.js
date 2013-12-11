@@ -46,7 +46,17 @@ enyo.kind(
         this.$.nGraphCanvas.render();
         this.$.loader.show();
     },
-
+	
+    /** */
+    getNodeConnections: function(nodeURL,limit){
+        var main = this;
+        var url = CONSTANTS.DETAILS_URL + '?iri=' + nodeURL;
+        var store = rdfstore.create();
+        store.load('remote', url, function(success) {
+            main.processOpenDocResponse(success, store, nodeURL);
+        });
+    },
+	
     /**
      * This function updates the document list from a documents object. This
      * object contains the short documents.
@@ -79,9 +89,14 @@ enyo.kind(
 				parentFunction: 'openDoc',
 				searchWord: this.searchWord
                 */
-				var nodeObj = { id: documents[i].url, name: documents[i].title };
+				
+				var nodeObj = { id : documents[i].url, name : documents[i].title };
+				
+			//	this.getNodeConnections(nodeObj.id,10);				
+				//L
+				
 				jsontr.children.push(nodeObj);
-				this.sendDocListAnnotation(documents[i].url,0);
+				// temporarly commented out... this.sendDocListAnnotation(documents[i].url,0);
             }
 			var rgraph = new $jit.RGraph({ 
 				//Where to append the visualization  
@@ -89,6 +104,7 @@ enyo.kind(
 				//Optional: create a background canvas that plots  
 				//concentric circles.  
 				levelDistance: 100,
+				interpolation: 'polar',
 				background: {  
 				  CanvasStyles: {  
 					strokeStyle: '#e0e0e0'  
