@@ -137,7 +137,7 @@ enyo.kind(
 		
 		if(action==1) {
 			// sendAnnotation(annotationString);
-			console.log(annotationString);
+			console.log('@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . '+annotationString);
 		}
 		else {
 		}
