@@ -178,7 +178,7 @@ function getRDFPropertyValue(rdf, propertyName){
  * @param {String} annotationString the annotation itself
  */
 function sendAnnotation(annotationString) {
-	console.log('sending annotation: @prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString);
+	console.log('@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString);
 	
 	var request = new enyo.Ajax({
 		method: 'POST',

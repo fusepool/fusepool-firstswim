@@ -206,10 +206,6 @@ enyo.kind(
         this.updateCheckedNumber();
         this.showOrHideProcessButton();
 		
-		var testLabelArray = [ { id: '1', text: 'First label' }, { id: '2', text: 'Second label' }, { id: '3', text: 'Third label' } ];
-		var testLabelIdArray = [];
-		var testLabelTextArray = [];
-		
         this.documents = documents;
         this.$.list.destroyClientControls();
         if(documents.length > 0){
@@ -230,8 +226,8 @@ enyo.kind(
                     title: documents[i].title,
                     shortContent: documents[i].shortContent,
                     parentFunction: 'openDoc',
-                    labelIds: testLabelIdArray, //TEST
-                    labelTexts: testLabelTextArray, //TEST
+                    labelIds: [],
+                    labelTexts: [],
 					labelListClass: 'labelList',
 					moreLabelsPanelClass: 'moreLabelsPanel',
 					moreLabelInputClass: 'moreLabelInput',
@@ -281,9 +277,6 @@ enyo.kind(
         this.updateCheckedNumber();
         this.documents.push(documents);
 		
-        var testLabelIdArray = [];
-        var testLabelTextArray = [];
-		
 		for(var i=0;i<documents.length;++i){
             this.createComponent({
                 kind: 'ShortDocument',
@@ -301,8 +294,8 @@ enyo.kind(
                 title: documents[i].title,
                 shortContent: documents[i].shortContent,
                 parentFunction: 'openDoc',
-				labelIds: testLabelIdArray, //TEST
-				labelTexts: testLabelTextArray, //TEST
+				labelIds: [],
+				labelTexts: [],
 				labelListClass: 'labelList',
 				moreLabelsPanelClass: 'moreLabelsPanel',
 				moreLabelInputClass: 'moreLabelInput',

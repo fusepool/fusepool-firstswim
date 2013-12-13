@@ -115,20 +115,21 @@ enyo.kind(
     },
 	
 	sendLabelListAnnotation: function(docURI,labelId,labelText,action) {
-		// console.log('<userID>: unknown; <query>: ' + this.searchWord + '; <docId>: ' + docURI + '; <labelId>: ' + labelId + '; <labelText>: ' + labelText + '; <action>: ' + action );
 				
 		var annoURI = '<http://fusepool.info/annostore/labelling/'+getRandomId()+'>';
 		var annoBodyURI = '<http://fusepool.info/annostore/labelling/body/'+getRandomId()+'>';
+		var currentDate = new Date().toISOString();
+		var userURI =  '<http://fusepool.info/users/anonymous>';
 		
-		var annotationString=	'fpanno:datasource a oa:SpecificResource . '+
-								'fpanno:labellingAnnotation a oa:Annotation . '+
-								'fpanno:labellingBody a oa:SpecificResource . '+
+		var annotationString =	'fpanno:datasource a oa:SpecificResource . ' +
+								'fpanno:labellingAnnotation a oa:Annotation . ' +
+								'fpanno:labellingBody a oa:SpecificResource . ' +
 								
 								 annoURI+' a fpanno:labellingAnnotation ; ' +
 								'fpanno:hasTarget '+docURI+' ; ' +
 								'fpanno:hasBody '+annoBodyURI+' ; ' +
-								'fpanno:annotatedAt "2012-02-12T15:02:14Z" ; ' +
-								'fpanno:annotatedBy ex:AdrianGschwend . ' +
+								'fpanno:annotatedAt "'+currentDate+'" ; ' +
+								'fpanno:annotatedBy '+userURI+' . ' +
 								
 								 annoBodyURI+' a fpanno:labellingBody ; ' +
 								'fpanno:hasNewLabel '+labelId+' . ' +
@@ -136,8 +137,8 @@ enyo.kind(
 								'cnt:chars "'+labelText+'" . ';
 		
 		if(action==1) {
-			// sendAnnotation(annotationString);
-			console.log('@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . '+annotationString);
+			sendAnnotation(annotationString);
+			// console.log('@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . '+annotationString);
 		}
 		else {
 		}
