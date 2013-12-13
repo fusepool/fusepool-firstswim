@@ -185,7 +185,7 @@ function sendAnnotation(annotationString) {
 		url: CONSTANTS.ANNOTATION_URL,
 		handleAs: 'text',
 		headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
-		postBody: '@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString,
+		postBody: '@prefix oa: <http://www.w3.org/ns/oa#> . @prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString,
 		published: { timeout: 60000 }
 	});
 	request.go();
