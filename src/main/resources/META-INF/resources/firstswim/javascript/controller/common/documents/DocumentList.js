@@ -345,7 +345,8 @@ enyo.kind(
 		var currentDate = new Date().toISOString();
 		var userURI =  'http://fusepool.info/users/anonymous';
 		
-		var annotationString =	'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
+		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' + 
+								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
 								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
 								
 								'fpanno:datasource a oa:SpecificResource . ' +

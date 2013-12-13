@@ -124,6 +124,7 @@ enyo.kind(
 		var annotationString =	'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
 								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
 								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
+								
 								'fpanno:datasource a oa:SpecificResource . ' +
 								'fpanno:labellingAnnotation a oa:Annotation . ' +
 								'fpanno:labellingBody a oa:SpecificResource . ' +
