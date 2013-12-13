@@ -352,6 +352,7 @@ enyo.kind(
 								'fpanno:datasource a oa:SpecificResource . ' +
 								'fpanno:patent a fpanno:datasource . ' +
 								'fpanno:pubmed a fpanno:datasource . ' +
+								'fpanno:rerankingAnnotation a oa:Annotation . ' + 
 								
 								'<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
 								'oa:hasTarget fpanno:'+src+' ; ' +
