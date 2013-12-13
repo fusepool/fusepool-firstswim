@@ -236,7 +236,7 @@ enyo.kind(
 					hideAddingPanelButtonClass: 'hideAddingPanelButton',
 					searchWord: this.searchWord
                 });
-				this.sendDocListAnnotation(documents[i].url,0);
+				this.sendDocListAnnotation(documents[i].url,'false');
             }
             this.$.loader.hide();
             this.$.list.render();
@@ -304,7 +304,7 @@ enyo.kind(
 				hideAddingPanelButtonClass: 'hideAddingPanelButton',
 				searchWord: this.searchWord
             });
-			this.sendDocListAnnotation(documents[i].url,0);
+			this.sendDocListAnnotation(documents[i].url,'false');
         }
         this.$.loader.hide();
         this.$.list.render();
@@ -320,7 +320,7 @@ enyo.kind(
      */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
-		this.sendDocListAnnotation(url,1);
+		this.sendDocListAnnotation(url,'true');
     },
 	
     /**
@@ -339,9 +339,34 @@ enyo.kind(
 		else if (docURI.indexOf('/patent/') > 0) {
 			src = 'patent';
 		}
-		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <docID>:'+docURI+'; <src>: '+src+'; <boost parameter used>: 0; <click>: '+click );
-		// Preparing the annotationBody... Then:
-		// sendAnnotation(annotationBody);
+		
+		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
+		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
+		var currentDate = new Date().toISOString();
+		var userURI =  'http://fusepool.info/users/anonymous';
+		
+		var annotationString =	'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
+								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
+								
+								'fpanno:datasource a oa:SpecificResource . ' +
+								'fpanno:patent a fpanno:datasource . ' +
+								'fpanno:pubmed a fpanno:datasource . ' +
+								
+								'<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
+								'oa:hasTarget fpanno:'+src+' ; ' +
+								'oa:hasBody <'+annoBodyURI+'> ; ' +
+								'oa:annotatedAt "'+currentDate+'" ; ' +
+								'oa:annotatedBy <'+userURI+'> . ' +
+								
+								'<'+annoBodyURI+'> a ' +
+								'fpanno:rerankingBody ; ' +
+								'fpanno:hasQuery "'+this.searchWord+'" ; ' +
+								'fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' + 
+								'fpanno:withPatentBoost 0.00 ; ' +
+								'fpanno:withPubmedBoost 0.00 . ';
+
+		sendAnnotation(annotationString);
+		// console.log(annotationString);
 	},
 
     /**
