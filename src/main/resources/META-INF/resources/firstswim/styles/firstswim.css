@@ -259,6 +259,7 @@ body{
     position: absolute;
     right: 0px;
     top: 50px;
+	overflow: hidden;
 }
 
 /* ----------- MIDDLE ----------- */

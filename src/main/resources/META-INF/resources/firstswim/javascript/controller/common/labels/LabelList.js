@@ -76,19 +76,19 @@ enyo.kind(
 	},
 	
 	addLabel: function() {
-		var labelId = '<http://fusepool.info/labels/'+getRandomId()+'>';
+		var labelURI = 'http://fusepool.info/labels/'+getRandomId();
 		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
 			
-			this.sendLabelListAnnotation(this.labelListId,labelId,newLabelText,1);
+			this.sendLabelListAnnotation(this.labelListId,labelURI,newLabelText,1);
 			
-			this.labelIds.push(labelId);
+			this.labelIds.push(labelURI);
 			this.labelTexts.push(newLabelText);
 			
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				labelId: labelId,
+				labelId: labelURI,
 				labelText: newLabelText,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
@@ -105,8 +105,8 @@ enyo.kind(
      * This function deletes a label from the GUI and sends an annotation
 	 * to the server about this action.
      */
-    deleteLabel: function(labelId){
-		var ind = $.inArray(labelId,this.labelIds)
+    deleteLabel: function(labelURI){
+		var ind = $.inArray(labelURI,this.labelIds)
 		this.sendLabelListAnnotation(this.labelListId,this.labelIds[ind],this.labelTexts[ind],-1);
 		
 		this.labelIds.splice(ind,1);
@@ -114,26 +114,29 @@ enyo.kind(
 		
     },
 	
-	sendLabelListAnnotation: function(docURI,labelId,labelText,action) {
+	sendLabelListAnnotation: function(docURI,labelURI,labelText,action) {
 				
-		var annoURI = '<http://fusepool.info/annostore/labelling/'+getRandomId()+'>';
-		var annoBodyURI = '<http://fusepool.info/annostore/labelling/body/'+getRandomId()+'>';
+		var annoURI = 'http://fusepool.info/annostore/labelling/'+getRandomId();
+		var annoBodyURI = 'http://fusepool.info/annostore/labelling/body/'+getRandomId();
 		var currentDate = new Date().toISOString();
-		var userURI =  '<http://fusepool.info/users/anonymous>';
+		var userURI =  'http://fusepool.info/users/anonymous';
 		
-		var annotationString =	'fpanno:datasource a oa:SpecificResource . ' +
+		var annotationString =	'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
+								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
+								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + 
+								'fpanno:datasource a oa:SpecificResource . ' +
 								'fpanno:labellingAnnotation a oa:Annotation . ' +
 								'fpanno:labellingBody a oa:SpecificResource . ' +
 								
-								 annoURI+' a fpanno:labellingAnnotation ; ' +
-								'fpanno:hasTarget '+docURI+' ; ' +
-								'fpanno:hasBody '+annoBodyURI+' ; ' +
+								'<'+annoURI+'> a fpanno:labellingAnnotation ; ' +
+								'fpanno:hasTarget <'+docURI+'> ; ' +
+								'fpanno:hasBody <'+annoBodyURI+'> ; ' +
 								'fpanno:annotatedAt "'+currentDate+'" ; ' +
-								'fpanno:annotatedBy '+userURI+' . ' +
+								'fpanno:annotatedBy <'+userURI+'> . ' +
 								
-								 annoBodyURI+' a fpanno:labellingBody ; ' +
-								'fpanno:hasNewLabel '+labelId+' . ' +
-								 labelId + ' a oa:Tag, cnt:ContentAsText ; ' + 
+								'<'+annoBodyURI+'> a fpanno:labellingBody ; ' +
+								'fpanno:hasNewLabel <'+labelURI+'> . ' +
+								'<'+labelURI+'> a oa:Tag, cnt:ContentAsText ; ' + 
 								'cnt:chars "'+labelText+'" . ';
 		
 		if(action==1) {

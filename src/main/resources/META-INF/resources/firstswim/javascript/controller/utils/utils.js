@@ -1,9 +1,7 @@
 var GLOBAL= {
-    maxFacets: 10,
-    items: 10,
-   // items: 6,
-   viewType: 'documentList'
-   // viewType: 'nGraph'
+	maxFacets: 10,
+	items: 10,
+	viewType: 'documentList'
 };
 
 // var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
@@ -178,14 +176,14 @@ function getRDFPropertyValue(rdf, propertyName){
  * @param {String} annotationString the annotation itself
  */
 function sendAnnotation(annotationString) {
-	console.log('@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString);
+	console.log(annotationString);
 	
 	var request = new enyo.Ajax({
 		method: 'POST',
 		url: CONSTANTS.ANNOTATION_URL,
 		handleAs: 'text',
 		headers: { Accept : 'application/rdf+xml', 'Content-Type' : 'text/turtle'},
-		postBody: '@prefix fpanno: <http://fusepool.eu/ontologies/annostore> . ' + annotationString,
+		postBody: annotationString,
 		published: { timeout: 60000 }
 	});
 	request.go();

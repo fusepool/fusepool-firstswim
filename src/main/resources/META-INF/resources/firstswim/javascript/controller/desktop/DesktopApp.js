@@ -64,11 +64,11 @@ jQuery(document).ready(function () {
                                                 buttonContent: 'OK',
                                                 searchIconClass: 'searchImage',
                                                 parentSeachFunction: 'search'
-                                        },/*
+                                        },
 										{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
 											{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
 											{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
-										]},*/
+										]},
 										{
 												content: 'Login',
 												ontap: 'login',
@@ -165,29 +165,79 @@ jQuery(document).ready(function () {
 									GLOBAL.viewType='documentList';
 									
 									this.$.nGraph.destroy();
+										
+									this.createComponent({
+														name: 'leftDesktopCol',
+														classes: 'leftDesktopCol',
+														components: [
+															{
+																	kind: 'DictionaryController',
+																	openClasses: 'dictionaryListOpen',
+																	closeClasses: 'dictionaryListClose',
+																	openScrollerClass: 'dictionaryListScrollOpen',
+																	closeScrollerClass: 'dictionaryListScrollClose',
+																	entityCheckboxClass: 'dictionaryCheckbox',
+																	searchFunction: 'search',
+																	name: 'dictionaries',
+																	dictionaryTitle: 'Entities',
+																	titleClass: 'dictionariesMainTitle',
+																	showDetailsFunction: 'updateDetails'
+															},
+															{
+																	kind: 'DetailsBox',
+																	name: 'detailsBox',
+																	classes: 'detailsBox enyo-unselectable',
+																	detailsMainTitle: 'Details',
+																	mainTitleClass: 'detailsMainTitle',
+																	scrollerClass: 'detailsScroll',
+																	titleClass: 'detailsTitle'
+															}
+														]
+													});
+									
+									this.createComponent({
+															kind: 'DocumentList',
+															name: 'documents',
+															openDocFunction: 'openDoc',
+															openDocEvent: 'ontap',
+															classes: 'documentList',
+															loaderClass: 'loader',
+															scrollerClass: 'documentListScroll',
+															titleClass: 'documentsMainTitle',
+															classifyFinishFunction: 'processClassifyResponse',
+															titleContent: 'Documents ',
+															documentsCountClass: 'documentsCount',
+															noDataLabel: 'No data available',
+															moreButtonClass: 'moreButton',
+															moreDocumentsFunction: 'moreDocuments'
+														});
+									this.render();
+									
+									this.search(this.searchWord);
 								}
 							break;
 							case 'nGraphViewButton':
-								if(GLOBAL.viewType!='nView') {
+								if(GLOBAL.viewType!='nGraph') {
 								
-									GLOBAL.viewType='nView';
+									GLOBAL.viewType='nGraph';
 									
 									this.$.leftDesktopCol.destroy();
 									this.$.documents.destroy();
 									this.$.previewBox.clean();
 									
-									this.$.docApp.createComponent({
-										kind: 'NGraph',
-										name: 'nGraph',
-										openDocFunction: 'openDoc',
-										openDocEvent: 'ontap',
-										classes: 'nGraphPanel',
-										loaderClass: 'loader',
-										titleClass: 'nGraphMainTitle',
-										titleContent: 'Network graph ',
-										noDataLabel: 'No data available'
-									});
-									this.$.docApp.render();
+									this.createComponent({
+											kind: 'NGraph',
+											name: 'nGraph',
+											openDocFunction: 'openDoc',
+											openDocEvent: 'ontap',
+											classes: 'nGraphPanel',
+											loaderClass: 'loader',
+											titleClass: 'nGraphMainTitle',
+											titleContent: 'Network graph ',
+											noDataLabel: 'No data available'
+										});
+										
+									this.render();
 									
 									this.search(this.searchWord);
 									
