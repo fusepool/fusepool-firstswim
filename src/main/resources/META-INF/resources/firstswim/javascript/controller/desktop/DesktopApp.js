@@ -851,6 +851,7 @@ jQuery(document).ready(function () {
                     var documents = [];
                     var main = this;
                     var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
+                    query += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     query += '}';
@@ -860,7 +861,7 @@ jQuery(document).ready(function () {
                                 var row = results[i];
                                 // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
 								// var content = row.content.value;
-								var content;
+                                var content;
 								if(isEmpty(row.content)) {
 									content = row.preview.value;
 								}
@@ -875,7 +876,7 @@ jQuery(document).ready(function () {
 									title = 'Title not found';
 								}
 								if(!main.containsDocument(documents, content, title)){
-									documents.push({url: row.url.value, shortContent: content, title: title});
+									documents.push({url: row.url.value, shortContent: content, title: title, type: row.dtype.value});
 								}
 							}
                         // }
