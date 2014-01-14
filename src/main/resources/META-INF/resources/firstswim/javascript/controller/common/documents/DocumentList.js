@@ -340,7 +340,7 @@ enyo.kind(
      * @param {Number} click is it only displayed or clicked
      */
 	sendDocListAnnotation: function(docURI,docType,click) {
-      console.log("Document Present: " + docURI +  ", " + docType + " clicked: " + click);
+      console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
 		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
@@ -360,8 +360,8 @@ enyo.kind(
                                         '	oa:annotatedBy <'+userURI+'> . ' +
                                         '' +	
                                         '_:2 a fpanno:RerankingBody ; ' +
-                                        '	fpanno:hasQuery "'+this.searchWord+'" ; ' +
-                                        '	fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' +
+                                        '	fpanno:hasQuery '+this.searchWord+' ; ' +
+                                        '	fpanno:wasClicked '+click+'^^xsd:boolean ; ' +
                                         '	fpanno:withPatentBoost 0.78 ; ' +
                                         '	fpanno:withPubmedBoost 0.54 . ' +
                                         '' +
