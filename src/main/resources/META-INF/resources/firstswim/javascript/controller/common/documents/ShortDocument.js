@@ -139,8 +139,9 @@ enyo.kind(
      * @param {Object} inEvent the event which is created (inEvent is important in the desktop version)
      */
     openDoc: function(inSender, inEvent){
+      console.log(this)
         this.$.documentMenu.hide();
-        this.owner[this.parentFunction](this.url, inEvent);
+        this.owner[this.parentFunction](this.url, this.type, inEvent);
     },
 
     /**

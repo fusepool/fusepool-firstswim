@@ -176,7 +176,7 @@ function getRDFPropertyValue(rdf, propertyName){
  * @param {String} annotationString the annotation itself
  */
 function sendAnnotation(annotationString) {
-	console.log(annotationString);
+	//console.log(annotationString);
 	
 	var request = new enyo.Ajax({
 		method: 'POST',
@@ -191,7 +191,7 @@ function sendAnnotation(annotationString) {
 		console.log("error");
 	});
 	request.response(this, function(inSender, inResponse) {
-		console.log("success: "+inResponse);
+		//console.log("success: "+inResponse);
 	});
 }
 

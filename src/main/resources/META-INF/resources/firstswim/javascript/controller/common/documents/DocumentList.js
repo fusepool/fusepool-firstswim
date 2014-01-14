@@ -326,13 +326,9 @@ enyo.kind(
      * @param {String} url the request URL of the preview opening
      * @param {Object} inEvent the user mouse event (it is important in the desktop version)
      */
-    openDoc: function(url, inEvent){
-        this.owner[this.openDocFunction](url, inEvent);
-        //TODO
-        /**
-         * Should use the document type as well !
-         */
-        this.sendDocListAnnotation(url,"TYPE",'true');
+    openDoc: function(url, type, inEvent){
+        this.owner[this.openDocFunction](url, type, inEvent);
+        this.sendDocListAnnotation(url,type,'true');
     },
 	
     /**
@@ -344,14 +340,13 @@ enyo.kind(
      * @param {Number} click is it only displayed or clicked
      */
 	sendDocListAnnotation: function(docURI,docType,click) {
+      console.log("Document Present: " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
 		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
 		var currentDate = new Date().toISOString();
 		var userURI =  'http://fusepool.info/users/anonymous';
-		console.log("---------");
-                console.log(docType);
-                console.log("---------");
+		
                 var annotationString = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' +
                                         '@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
                                         '@prefix cnt: <http://www.w3.org/2011/content#> . ' +

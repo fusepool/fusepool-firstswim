@@ -855,7 +855,6 @@ jQuery(document).ready(function () {
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     query += '}';
-                    console.log(rdf);
                     rdf.execute(query, function(success, results) {
                         if (success) {
                             for(var i=0;i<results.length;i++){
@@ -890,7 +889,6 @@ jQuery(document).ready(function () {
                         // }
                         }
                     });
-                    console.log(documents);
                     return documents;
                 },
 
@@ -935,5 +933,4 @@ jQuery(document).ready(function () {
     } catch(e) {
         console.log(e);
     }
-
 });
