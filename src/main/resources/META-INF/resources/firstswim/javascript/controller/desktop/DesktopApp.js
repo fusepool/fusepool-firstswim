@@ -855,6 +855,7 @@ jQuery(document).ready(function () {
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     query += '}';
+                    console.log(rdf);
                     rdf.execute(query, function(success, results) {
                         if (success) {
                             for(var i=0;i<results.length;i++){
@@ -862,26 +863,34 @@ jQuery(document).ready(function () {
                                 // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
 								// var content = row.content.value;
                                 var content;
-								if(isEmpty(row.content)) {
-									content = row.preview.value;
-								}
-								else {
-									content = row.content.value;
-								}
-								var title = '';
-								if(!isEmpty(row.title)){
-									title = row.title.value;
-								}
-								else {
-									title = 'Title not found';
-								}
-								if(!main.containsDocument(documents, content, title)){
-									documents.push({url: row.url.value, shortContent: content, title: title, type: row.dtype.value});
-								}
-							}
+                                if(isEmpty(row.content)) {
+                                        content = row.preview.value;
+                                }
+                                else {
+                                        content = row.content.value;
+                                }
+                                var title = '';
+                                if(!isEmpty(row.title)){
+                                        title = row.title.value;
+                                }
+                                else {
+                                        title = 'Title not found';
+                                }
+                                var dtype = '';
+                                if(!isEmpty(row.dtype)){
+                                        dtype = row.dtype.value;
+                                }
+                                else {
+                                        dtype = 'Type not found';
+                                }
+                                if(!main.containsDocument(documents, content, title)){
+                                        documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
+                                }
+                        }
                         // }
                         }
                     });
+                    console.log(documents);
                     return documents;
                 },
 

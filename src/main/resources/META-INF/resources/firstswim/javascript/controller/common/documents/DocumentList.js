@@ -225,18 +225,22 @@ enyo.kind(
                     url: documents[i].url,
                     title: documents[i].title,
                     shortContent: documents[i].shortContent,
+                    /**
+                     * Adding the document type in the enyo component.
+                     */
+                    type: documents[i].type,
                     parentFunction: 'openDoc',
                     labelIds: [],
                     labelTexts: [],
-					labelListClass: 'labelList',
-					moreLabelsPanelClass: 'moreLabelsPanel',
-					moreLabelInputClass: 'moreLabelInput',
-					moreLabelInputDecClass: 'moreLabelInputDec',
-					addLabelButtonClass: 'addLabelButton',
-					hideAddingPanelButtonClass: 'hideAddingPanelButton',
-					searchWord: this.searchWord
+                    labelListClass: 'labelList',
+                    moreLabelsPanelClass: 'moreLabelsPanel',
+                    moreLabelInputClass: 'moreLabelInput',
+                    moreLabelInputDecClass: 'moreLabelInputDec',
+                    addLabelButtonClass: 'addLabelButton',
+                    hideAddingPanelButtonClass: 'hideAddingPanelButton',
+                    searchWord: this.searchWord
                 });
-				this.sendDocListAnnotation(documents[i].url,'false');
+                this.sendDocListAnnotation(documents[i].url,documents[i].type,'false');
             }
             this.$.loader.hide();
             this.$.list.render();
@@ -293,18 +297,22 @@ enyo.kind(
                 url: documents[i].url,
                 title: documents[i].title,
                 shortContent: documents[i].shortContent,
+                /**
+                 * Adding the document type in the enyo component.
+                 */
+                type: documents[i].type,
                 parentFunction: 'openDoc',
-				labelIds: [],
-				labelTexts: [],
-				labelListClass: 'labelList',
-				moreLabelsPanelClass: 'moreLabelsPanel',
-				moreLabelInputClass: 'moreLabelInput',
-				moreLabelInputDecClass: 'moreLabelInputDec',
-				addLabelButtonClass: 'addLabelButton',
-				hideAddingPanelButtonClass: 'hideAddingPanelButton',
-				searchWord: this.searchWord
+                labelIds: [],
+                labelTexts: [],
+                labelListClass: 'labelList',
+                moreLabelsPanelClass: 'moreLabelsPanel',
+                moreLabelInputClass: 'moreLabelInput',
+                moreLabelInputDecClass: 'moreLabelInputDec',
+                addLabelButtonClass: 'addLabelButton',
+                hideAddingPanelButtonClass: 'hideAddingPanelButton',
+                searchWord: this.searchWord
             });
-			this.sendDocListAnnotation(documents[i].url,'false');
+            this.sendDocListAnnotation(documents[i].url,documents[i].type,'false');
         }
         this.$.loader.hide();
         this.$.list.render();
@@ -320,7 +328,11 @@ enyo.kind(
      */
     openDoc: function(url, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
-		this.sendDocListAnnotation(url,'true');
+        //TODO
+        /**
+         * Should use the document type as well !
+         */
+        this.sendDocListAnnotation(url,"TYPE",'true');
     },
 	
     /**
@@ -331,41 +343,57 @@ enyo.kind(
      * @param {String} docURI the URI of the document
      * @param {Number} click is it only displayed or clicked
      */
-	sendDocListAnnotation: function(docURI,click) {
-		var src = 'unknown';
-		if(docURI.indexOf('/pmc/') > 0) {
-			src = 'pubmed';
-		}
-		else if (docURI.indexOf('/patent/') > 0) {
-			src = 'patent';
-		}
-		
+	sendDocListAnnotation: function(docURI,docType,click) {
+		var src = docType;
 		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
 		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
 		var currentDate = new Date().toISOString();
 		var userURI =  'http://fusepool.info/users/anonymous';
-		
-		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' + 
-								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
-								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
-								
-								'fpanno:datasource a oa:SpecificResource . ' +
-								'fpanno:patent a fpanno:datasource . ' +
-								'fpanno:pubmed a fpanno:datasource . ' +
-								'fpanno:rerankingAnnotation a oa:Annotation . ' + 
-								
-								'<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
-								'oa:hasTarget fpanno:'+src+' ; ' +
-								'oa:hasBody <'+annoBodyURI+'> ; ' +
-								'oa:annotatedAt "'+currentDate+'" ; ' +
-								'oa:annotatedBy <'+userURI+'> . ' +
-								
-								'<'+annoBodyURI+'> a ' +
-								'fpanno:rerankingBody ; ' +
-								'fpanno:hasQuery "'+this.searchWord+'" ; ' +
-								'fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' + 
-								'fpanno:withPatentBoost 0.00 ; ' +
-								'fpanno:withPubmedBoost 0.00 . ';
+		console.log("---------");
+                console.log(docType);
+                console.log("---------");
+                var annotationString = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' +
+                                        '@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
+                                        '@prefix cnt: <http://www.w3.org/2011/content#> . ' +
+                                        '@prefix oa: <http://www.w3.org/ns/oa#> . ' +
+                                        '@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' +
+                                        '' +
+                                        '_:1 a fpanno:RerankingAnnotation , oa:Annotation ; ' +
+                                        '	oa:hasBody _:2 ; ' +
+                                        '	oa:hasTarget _:3 ; ' +
+                                        '	oa:annotatedAt "'+currentDate+'" ; ' +
+                                        '	oa:annotatedBy <'+userURI+'> . ' +
+                                        '' +	
+                                        '_:2 a fpanno:RerankingBody ; ' +
+                                        '	fpanno:hasQuery "'+this.searchWord+'" ; ' +
+                                        '	fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' +
+                                        '	fpanno:withPatentBoost 0.78 ; ' +
+                                        '	fpanno:withPubmedBoost 0.54 . ' +
+                                        '' +
+                                        '_:3 a <'+docType+'> . ';
+                                
+                                
+//		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' + 
+//                                        '@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
+//                                        '@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
+//
+//                                        'fpanno:datasource a oa:SpecificResource . ' +
+//                                        'fpanno:patent a fpanno:datasource . ' +
+//                                        'fpanno:pubmed a fpanno:datasource . ' +
+//                                        'fpanno:rerankingAnnotation a oa:Annotation . ' + 
+//
+//                                        '<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
+//                                        'oa:hasTarget fpanno:'+src+' ; ' +
+//                                        'oa:hasBody <'+annoBodyURI+'> ; ' +
+//                                        'oa:annotatedAt "'+currentDate+'" ; ' +
+//                                        'oa:annotatedBy <'+userURI+'> . ' +
+//
+//                                        '<'+annoBodyURI+'> a ' +
+//                                        'fpanno:rerankingBody ; ' +
+//                                        'fpanno:hasQuery "'+this.searchWord+'" ; ' +
+//                                        'fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' + 
+//                                        'fpanno:withPatentBoost 0.00 ; ' +
+//                                        'fpanno:withPubmedBoost 0.00 . ';
 
 		sendAnnotation(annotationString);
 		// console.log(annotationString);
