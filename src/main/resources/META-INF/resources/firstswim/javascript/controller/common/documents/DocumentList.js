@@ -360,8 +360,8 @@ enyo.kind(
                                         '	oa:annotatedBy <'+userURI+'> . ' +
                                         '' +	
                                         '_:2 a fpanno:RerankingBody ; ' +
-                                        '	fpanno:hasQuery '+this.searchWord+' ; ' +
-                                        '	fpanno:wasClicked '+click+'^^xsd:boolean ; ' +
+                                        '	fpanno:hasQuery "'+this.searchWord+'" ; ' +
+                                        '	fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' +
                                         '	fpanno:withPatentBoost 0.78 ; ' +
                                         '	fpanno:withPubmedBoost 0.54 . ' +
                                         '' +
