@@ -23,7 +23,8 @@ enyo.kind(
         openDocFunction: '',
         openDocEvent: 'ontap',
         moreButtonClass: '',
-        moreDocumentsFunction: ''
+        moreDocumentsFunction: '',
+		documentsCount: 0
     },
 
     /**
@@ -178,6 +179,7 @@ enyo.kind(
         this.$.loader.show();
         this.$.moreButton.hide();
     },
+	
     /**
      * This function runs, when the user start a searching. It clears the list
      * and shows the loader.
@@ -232,6 +234,8 @@ enyo.kind(
                     parentFunction: 'openDoc',
                     labelIds: [],
                     labelTexts: [],
+					predictedLabelIds: ['asd','asdf'],
+					predictedLabelTexts: ['asd','asdf'],
                     labelListClass: 'labelList',
                     moreLabelsPanelClass: 'moreLabelsPanel',
                     moreLabelInputClass: 'moreLabelInput',
@@ -240,12 +244,17 @@ enyo.kind(
                     hideAddingPanelButtonClass: 'hideAddingPanelButton',
                     searchWord: this.searchWord
                 });
-                this.sendDocListAnnotation(documents[i].url,documents[i].type,'false');
+               this.sendDocListAnnotation(documents[i].url,documents[i].type,'false');
             }
             this.$.loader.hide();
             this.$.list.render();
-            this.$.moreButton.show();
-            this.$.activateSliders.show();
+            this.$.activateSliders.show();           
+			if(documents.length<GLOBAL.items) {
+				this.$.moreButton.hide();
+			}
+			else {
+				this.$.moreButton.show();
+			}
         } else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
@@ -266,11 +275,10 @@ enyo.kind(
     },
 
     /**
-     * This function update the counts text with the new count value
-     * @param {Number} count the count of documents
+     * This function updates the counts text
      */
-    updateCounts: function(count){
-        this.$.documentsCount.setContent('('+count+')');
+    updateCounts: function(){
+        this.$.documentsCount.setContent('('+this.documentsCount+')');
     },
 
     /**
@@ -304,6 +312,8 @@ enyo.kind(
                 parentFunction: 'openDoc',
                 labelIds: [],
                 labelTexts: [],
+				predictedLabelIds: [],
+				predictedLabelTexts: [],
                 labelListClass: 'labelList',
                 moreLabelsPanelClass: 'moreLabelsPanel',
                 moreLabelInputClass: 'moreLabelInput',
@@ -316,7 +326,12 @@ enyo.kind(
         }
         this.$.loader.hide();
         this.$.list.render();
-        this.$.moreButton.show();
+		if(documents.length>0 && documents.length%GLOBAL.items==0) {
+			this.$.moreButton.show();
+		}
+		else {
+			this.$.moreButton.hide();
+		}
     },
 
     /**
