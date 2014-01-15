@@ -900,17 +900,23 @@ jQuery(document).ready(function () {
                       console.log("Hit: " + hit.nominalValue);   
                       current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
                      }
+                     //console.log(graph.toNT());
 
 
                     var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
                     querylist += 'SELECT * {';
                     querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
-                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
+                    querylist += '      ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';
+                    querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
+                    querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
+                    querylist += '        filter ( lang(?title) = "en")';
+                    querylist += '      } UNION {  ';
+                    querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
+                    querylist += '        filter ( lang(?title) = "")';
+                    querylist += '      }'
                     querylist += '}'
 
-
+                    
 
               
 
@@ -930,7 +936,9 @@ jQuery(document).ready(function () {
 
                               for(var i=0;i<results.length;i++){
                                   var row = results[i];
-                                  if(row.url.value!=hits[rank]){
+                                  if(row.url.value!=hits[rank] ||
+                                        row.dtype.value.indexOf("ecs") != -1 || 
+                                        row.dtype.value.indexOf("owl#A") != -1){
                                     continue;
                                   }
                                   // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
@@ -951,6 +959,7 @@ jQuery(document).ready(function () {
                                   }
                                   var dtype = '';
                                   if(!isEmpty(row.dtype)){
+                                    console.log("length of dtype: " + row.dtype.length);
                                           dtype = row.dtype.value;
                                   }
                                   else {
@@ -963,6 +972,7 @@ jQuery(document).ready(function () {
                           }
                         }
                     });
+                    //console.log("Documents: " + documents);
                     return documents;
                 },
 
