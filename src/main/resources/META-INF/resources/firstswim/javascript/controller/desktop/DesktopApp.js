@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
 
 
-
+       
     function initialization(){
 
         createUI();
@@ -853,20 +853,38 @@ jQuery(document).ready(function () {
                     var documents = [];
                     var main = this;
                   
+                  //Getting the order of stuff
+                  var hits = [];
+               
+                    rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
+                    rdf.rdf.setPrefix("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+                    var graph;
+                    rdf.graph(function(success, things){graph = things;});
+                    var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
+                    var current = triples[0].object
+
+                     while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
+                      var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
+                      hits.push(hit.nominalValue);
+                      console.log("Hit: " + hit.nominalValue);   
+                      current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
+                     }
+
+
                     var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
                     querylist += 'SELECT * {';
-                    querylist += '?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
-                    querylist += '?dlist rdf:rest*/rdf:first ?url .'
-                    querylist += '?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+                    querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
                     querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
                     querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     querylist += '}'
-               
-                   
+
+
+
+              
+
                    /** This is the tentative to iterate the list at the API level to have it in ORDER 
-                    rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
-                    rdf.rdf.setPrefix("ecs","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+                   
                     var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
                     var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray();
                     */
@@ -876,34 +894,41 @@ jQuery(document).ready(function () {
 //                          console.log("DOC: " + results[0].title.value);
 //                          console.log("DOC: " + results[1].title.value);
 
-                            for(var i=0;i<results.length;i++){
-                                var row = results[i];
-                                // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-								// var content = row.content.value;
-                                var content;
-                                if(isEmpty(row.content)) {
-                                        content = row.preview.value;
-                                }
-                                else {
-                                        content = row.content.value;
-                                }
-                                var title = '';
-                                if(!isEmpty(row.title)){
-                                        title = row.title.value;
-                                }
-                                else {
-                                        title = 'Title not found';
-                                }
-                                var dtype = '';
-                                if(!isEmpty(row.dtype)){
-                                        dtype = row.dtype.value;
-                                }
-                                else {
-                                        dtype = 'Type not found';
-                                }
-                                if(!main.containsDocument(documents, content, title)){
-                                        documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
-                                }
+                            for(var rank = 0; rank < hits.length; rank ++){
+
+
+                              for(var i=0;i<results.length;i++){
+                                  var row = results[i];
+                                  if(row.url.value!=hits[rank]){
+                                    continue;
+                                  }
+                                  // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
+                                  // var content = row.content.value;
+                                  var content;
+                                  if(isEmpty(row.content)) {
+                                          content = row.preview.value;
+                                  }
+                                  else {
+                                          content = row.content.value;
+                                  }
+                                  var title = '';
+                                  if(!isEmpty(row.title)){
+                                          title = row.title.value;
+                                  }
+                                  else {
+                                          title = 'Title not found';
+                                  }
+                                  var dtype = '';
+                                  if(!isEmpty(row.dtype)){
+                                          dtype = row.dtype.value;
+                                  }
+                                  else {
+                                          dtype = 'Type not found';
+                                  }
+                                  if(!main.containsDocument(documents, content, title)){
+                                          documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
+                                  }
+                            }
                           }
                         }
                     });
