@@ -54,37 +54,47 @@ jQuery(document).ready(function () {
                             { name: 'Toolbar', classes: 'toolbar', components: [
                                 { name: 'ToolbarCenter', classes: 'toolbarCenter', components: [
                                         {
-                                                name: 'mainLogo',
-                                                classes: 'mainLogo',
-                                                ontap: 'clickLogo'
+											name: 'mainLogo',
+											classes: 'mainLogo',
+											ontap: 'clickLogo'
                                         },
                                         {
-                                                kind: 'SearchBox',
-                                                name: 'searchBox',
-                                                placeholder: 'Search in documents',
-                                                buttonClass: 'searchButton',
-                                                buttonContent: 'OK',
-                                                searchIconClass: 'searchImage',
-                                                parentSeachFunction: 'search'
+											kind: 'SearchBox',
+											name: 'searchBox',
+											placeholder: 'Search in documents',
+											buttonClass: 'searchButton',
+											buttonContent: 'OK',
+											searchIconClass: 'searchImage',
+											parentSeachFunction: 'search'
                                         },
-										{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
-											{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
-											{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
-										]},
-										{
-												content: 'Login',
-												ontap: 'login',
-												classes: 'loginButton'
+										{ 
+											name: 'toolbarIcons',
+											classes: 'toolbarIcons',
+											components: [
+												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
+													{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
+													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
+													{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
+												]},
+												{
+													ontap: 'login',
+													classes: 'loginButton'
+												},
+												{
+													name: 'bookmark',
+													kind: 'Bookmark',
+													buttonClass: 'bookmarkButton',
+													parentTapFunction: 'createBookmark',
+													parentPopupFunction: 'popupBookmark',
+													warningPopupClass: 'bookmarkPopup',
+													warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
+												}
+											]
 										},
-										{ kind: 'LoginPopup', name: 'loginPopup', classes: 'loginPopup' },
 										{
-												name: 'bookmark',
-												kind: 'Bookmark',
-												buttonClass: 'bookmarkButton',
-												parentTapFunction: 'createBookmark',
-												parentPopupFunction: 'popupBookmark',
-												warningPopupClass: 'bookmarkPopup',
-												warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
+											kind: 'LoginPopup',
+											name: 'loginPopup',
+											classes: 'loginPopup'
 										}
                                 ]}
                             ]},
@@ -133,18 +143,6 @@ jQuery(document).ready(function () {
                                 moreButtonClass: 'moreButton',
                                 moreDocumentsFunction: 'moreDocuments'
                             },
-							/*
-                            {
-                                kind: 'NGraph',
-                                name: 'nGraph',
-                                openDocFunction: 'openDoc',
-                                openDocEvent: 'ontap',
-                                classes: 'nGraphPanel',
-                                loaderClass: 'loader',
-                                titleClass: 'nGraphMainTitle',
-                                titleContent: 'Network graph ',
-                                noDataLabel: 'No data available'
-                            },*/
                             {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
@@ -162,11 +160,10 @@ jQuery(document).ready(function () {
 						//var selected = inEvent.originator.indexInContainer();
 						switch(inEvent.originator.name) {
 							case 'docListViewButton':
-								if(GLOBAL.viewType!='documentList') {
-									
+								this.destroyCurrentViewType(GLOBAL.viewType,'documentList');
+								
+								if(GLOBAL.viewType!='documentList') {									
 									GLOBAL.viewType='documentList';
-									
-									this.$.nGraph.destroy();
 										
 									this.createComponent({
 														name: 'leftDesktopCol',
@@ -219,14 +216,11 @@ jQuery(document).ready(function () {
 								}
 							break;
 							case 'nGraphViewButton':
-								if(GLOBAL.viewType!='nGraph') {
+								this.destroyCurrentViewType(GLOBAL.viewType,'nGraph');
 								
+								if(GLOBAL.viewType!='nGraph') {
 									GLOBAL.viewType='nGraph';
-									
-									this.$.leftDesktopCol.destroy();
-									this.$.documents.destroy();
-									this.$.previewBox.clean();
-									
+
 									this.createComponent({
 											kind: 'NGraph',
 											name: 'nGraph',
@@ -244,6 +238,41 @@ jQuery(document).ready(function () {
 									this.search(this.searchWord);
 									
 								}
+							break;
+							case 'landscapeViewButton':
+								this.destroyCurrentViewType(GLOBAL.viewType,'landscape');
+								
+								if(GLOBAL.viewType!='landscape') {
+									GLOBAL.viewType='landscape';
+									this.createComponent({
+											kind: 'Landscape',
+											name: 'landscape',
+											classes: 'landscapePanel',
+											loaderClass: 'loader',
+											titleClass: 'landscapeMainTitle',
+											titleContent: 'Landscape '
+										});
+										
+									this.render();								
+									this.search(this.searchWord);
+								}
+							break;
+						}
+					}
+				},
+				
+				destroyCurrentViewType: function(currType,newType) {
+					if(currType!=newType) {
+						switch (currType) {
+							case 'nGraph':
+								this.$.nGraph.destroy();
+							break;
+							case 'documentList':									
+								this.$.leftDesktopCol.destroy();
+								this.$.documents.destroy();
+							break;
+							case 'landscape':									
+								this.$.landscape.destroy();
 							break;
 						}
 					}
@@ -515,7 +544,9 @@ jQuery(document).ready(function () {
 							this.updateDocumentList(rdf);
 						break;
 						case 'nGraph':
-							this.updateNGraph(rdf);
+							this.newNGraph(rdf);
+						break;
+						case 'landscape':
 						break;
 					}
 				},
@@ -537,8 +568,8 @@ jQuery(document).ready(function () {
                 updateClassifiedDocList: function(rdf){
                     var documents = this.createClassifiedDocList(rdf);
                     this.$.documents.updateList(documents, this.searchWord);
-                    var count = this.getDocumentsCount(rdf);
-                    this.$.documents.updateCounts(count);
+                    this.$.documents.documentCount = this.getDocumentsCount(rdf);
+                    this.$.documents.updateCounts();
                 },
 
                 /**
@@ -803,20 +834,20 @@ jQuery(document).ready(function () {
                  * This function update the document list on the middle
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
-                updateNGraph: function(rdf){
+                newNGraph: function(rdf){
                     var documents = this.createDocumentList(rdf);
-                    this.$.nGraph.updateGraph(documents, this.searchWord, this.checkedEntities);
+                    this.$.nGraph.newGraph(documents, this.searchWord);
                 },
 
                 /**
-                 * This function update the document list on the middle
+                 * This function updates the document list on the middle
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
                     this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
-                    var count = this.getDocumentsCount(rdf);
-                    this.$.documents.updateCounts(count);
+                    this.$.documents.documentCount = this.getDocumentsCount(rdf);
+                    this.$.documents.updateCounts();
                 },
 
                 /**

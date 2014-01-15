@@ -1,6 +1,8 @@
 var GLOBAL= {
 	maxFacets: 10,
 	items: 10,
+	firstLvlLimit: 8,
+	secondLvlLimit: 3,
 	viewType: 'documentList'
 };
 
