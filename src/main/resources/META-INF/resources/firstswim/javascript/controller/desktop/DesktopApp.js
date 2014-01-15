@@ -1,6 +1,6 @@
 jQuery(document).ready(function () {
 
-var mystuff;
+
 
     function initialization(){
 
@@ -853,38 +853,28 @@ var mystuff;
                     var documents = [];
                     var main = this;
                   
-//                    var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
-//                    querylist += 'SELECT * {';
-//                    querylist += '?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
-////                    querylist += '?dlist rdf:rest*/rdf:first ?url .'
-//                    querylist += '?dlist rdf:rest* ?rest . '
-//                    querylist += '?rest rdf:first ?url . '
-//                    querylist += '?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-//                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-//                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
-//                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
-//                    querylist += '}'
-               
                     var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
                     querylist += 'SELECT * {';
-                    querylist += '      ?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
-                    querylist += '      ?dlist rdf:rest* ?url1 .'
-                    querylist += '      ?url1 rdf:first ?eurl1 .'
-                    querylist += '      ?url1 rdf:rest* ?url1n .'
-                    querylist += '      ?url1n rdf:first ?eurl2 .'
-                    querylist += '      ?eurl1 <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-                    querylist += '      OPTIONAL { ?eurl1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-                    querylist += '      OPTIONAL { ?eurl1 <http://purl.org/dc/terms/title> ?title }';
-                    querylist += '      OPTIONAL { ?eurl1 <http://purl.org/dc/terms/abstract> ?content }';
+                    querylist += '?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
+                    querylist += '?dlist rdf:rest*/rdf:first ?url .'
+                    querylist += '?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
+                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
                     querylist += '}'
                
-
-                    
+                   
+                   /** This is the tentative to iterate the list at the API level to have it in ORDER 
+                    rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
+                    rdf.rdf.setPrefix("ecs","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+                    var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
+                    var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray();
+                    */
+                   
                     rdf.execute(querylist, function(success, results) {
-//                      console.log(results);
                         if (success) {
-                          console.log("DOC: " + results[0].title.value);
-                          console.log("DOC: " + results[1].title.value);
+//                          console.log("DOC: " + results[0].title.value);
+//                          console.log("DOC: " + results[1].title.value);
 
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
