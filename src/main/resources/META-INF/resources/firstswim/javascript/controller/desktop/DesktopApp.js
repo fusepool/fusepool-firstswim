@@ -1,5 +1,7 @@
 jQuery(document).ready(function () {
 
+var mystuff;
+
     function initialization(){
 
         createUI();
@@ -850,13 +852,40 @@ jQuery(document).ready(function () {
                 createDocumentList: function(rdf){
                     var documents = [];
                     var main = this;
-                    var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
-                    query += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
-                    query += '}';
-                    rdf.execute(query, function(success, results) {
+                  
+//                    var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
+//                    querylist += 'SELECT * {';
+//                    querylist += '?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
+////                    querylist += '?dlist rdf:rest*/rdf:first ?url .'
+//                    querylist += '?dlist rdf:rest* ?rest . '
+//                    querylist += '?rest rdf:first ?url . '
+//                    querylist += '?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+//                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+//                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
+//                    querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
+//                    querylist += '}'
+               
+                    var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
+                    querylist += 'SELECT * {';
+                    querylist += '      ?urlsearch <http://fusepool.eu/ontologies/ecs#contents> ?dlist . ';
+                    querylist += '      ?dlist rdf:rest* ?url1 .'
+                    querylist += '      ?url1 rdf:first ?eurl1 .'
+                    querylist += '      ?url1 rdf:rest* ?url1n .'
+                    querylist += '      ?url1n rdf:first ?eurl2 .'
+                    querylist += '      ?eurl1 <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+                    querylist += '      OPTIONAL { ?eurl1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+                    querylist += '      OPTIONAL { ?eurl1 <http://purl.org/dc/terms/title> ?title }';
+                    querylist += '      OPTIONAL { ?eurl1 <http://purl.org/dc/terms/abstract> ?content }';
+                    querylist += '}'
+               
+
+                    
+                    rdf.execute(querylist, function(success, results) {
+//                      console.log(results);
                         if (success) {
+                          console.log("DOC: " + results[0].title.value);
+                          console.log("DOC: " + results[1].title.value);
+
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
                                 // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
@@ -885,8 +914,7 @@ jQuery(document).ready(function () {
                                 if(!main.containsDocument(documents, content, title)){
                                         documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
                                 }
-                        }
-                        // }
+                          }
                         }
                     });
                     return documents;
