@@ -271,7 +271,7 @@ enyo.kind(
      * This function clean the document content.
      */
     clean: function(){
-        this.$.openedDoc.hide();
+       // this.$.openedDoc.hide();
         this.hideRateButtons();
     },
 

@@ -10,6 +10,8 @@ enyo.depends(
     // -- Documents -- //
         'documents/DocumentList.js',
         'documents/ShortDocument.js',
+    // -- Landscape -- //
+        'landscape/Landscape.js',
     // -- Network Graph -- //
         'ngraph/NGraph.js',
     // -- Labels -- //

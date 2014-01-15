@@ -54,8 +54,8 @@ enyo.kind(
 			loaderClass: 'loader',
 			titleContent: 'DOCUMENTS',
 			noDataLabel: 'No data available',
-                        moreButtonClass: 'moreButton',
-                        moreDocumentsFunction: 'moreDocuments'
+			moreButtonClass: 'moreButton',
+			moreDocumentsFunction: 'moreDocuments'
 		},
         { name: 'documentListMobileToolbar', classes: 'documentListMobileToolbar', components: [
             { kind: 'onyx.Button', classes: 'lightButton', name: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },

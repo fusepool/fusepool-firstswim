@@ -51,12 +51,26 @@ body{
 	position: relative;
 }
 
-.viewTypeToggleButtons {
+.toolbarIcons {
+	background-color: rgba(30, 27, 26, 0.5);
+	border: 1px solid rgba(255, 255, 255, 0.17);
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	display: block;
+	padding: 8px;
 	position: absolute;
-	right: 170px;
-	top: 20px;
-	width: 70px;
+	right: 12px;
+	top: 12px;
+}
+
+.toolbarIcons * {
 	cursor: pointer;
+	float: left;
+}
+
+.viewTypeToggleButtons {
+	margin: 0px 2px 0px 2px;
 }
 
 .mainLogo {
@@ -66,32 +80,29 @@ body{
 	background-image: url("../images/logo_only_turq.png");
 	position: absolute;
 	top: 5px;
-	left: 0px;
+	left: -20px;
 	
 }
 
 /* ----------- Login ----------- */
-.loginButton{
-    position: absolute;
-    right: 100px;
-    top: 20px;
-    cursor: pointer;
-	color: #9ba09f;
-}
-
-.loginButton:hover{
-    color: #ccdada;
+.loginButton {
+	background-image: url("../images/loginButton.png");
+    background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 0px 2px 0px 2px;
 }
 
 .loginPopup{
-    left: 400px;
+    right: 100px;
     position: absolute;
-    top: 110px;
+    top: 63px;
     width: 430px;
     word-wrap: break-word;
 }
 
 .loginPopupDiv{
+	background-color: #534B48;
     font-size: 14px;
     width: 415px;
 }
@@ -103,8 +114,8 @@ body{
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
-    right: -12px;
-    top: -10px;
+    right: 0px;
+    top: 0px;
     z-index: 9999;
 }
 
@@ -251,7 +262,36 @@ body{
     text-shadow: 1px 1px 0 #FAFAFA;
 }
 
-.nGraphCanvas {
+.nGraphDiv {
+    background-color: #FFFFFF;
+    bottom: 0px;
+    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+	overflow: hidden;
+}
+
+/* ---------- LANDSCAPE ------------ */
+
+.landscapePanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 940px;
+}
+
+.landscapeMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.landscapeDiv {
     background-color: #FFFFFF;
     bottom: 0px;
     box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
@@ -273,7 +313,8 @@ body{
 
 .bookmarkPopupDiv{
     width: 584px !important;
-    padding: 8px !important;
+    padding: 16px !important;
+	background-color: #534B48;
 }
 
 .documentList{
@@ -344,8 +385,7 @@ body{
     border-top: 1px solid #eeeeee;
 }
 
-.labelDiv {
-	background-color: rgba(98, 162, 22, 0.2);
+.labelDiv, .predictedLabelDiv {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -355,11 +395,19 @@ body{
 	max-width: 470px;
 }
 
+.labelDiv {
+	background-color: rgba(98, 162, 22, 0.2);
+}
+
+.predictedLabelDiv {
+	background-color: rgba(96, 136, 100, 0.2);
+}
+
 .labelText {
 	font-size: 12px;
 }
 
-.labelDeleteButton {
+.labelDeleteButton, .labelAddButton {
 	color: #555555;
 	cursor: pointer;
 	font-size: 14px;
@@ -744,15 +792,13 @@ body{
 /* ----------- MIDDLE ----------- */
 
 /* ----- Bookmark ----- */
-.bookmarkButton{
-    width: 50px;
-    height: 60px;
+.bookmarkButton {
     background-image: url(../images/bookmark.png);
     background-repeat: no-repeat;
-    position: absolute;
-    top: 0px;
-    right: 30px;
-    cursor: pointer;
+	width: 18px;
+	height: 32px;
+	margin: 0px 2px 0px 2px;
+	
 }
 
 .bookmarkMobileButton {
@@ -949,9 +995,11 @@ body{
 .loader{
     background-image: url("../images/loader.gif");
     background-repeat: no-repeat;
-    height: 100px;
-    margin: 40px auto;
-    width: 100px;
+    height: 32px;
+    width: 32px;
+    margin: 50px auto;
+	position: relative;
+    z-index: 1;
 }
 
 .openedDocMobileToolbar{
@@ -1016,8 +1064,8 @@ body{
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
-    right: -12px;
-    top: -10px;
+    right: -16px;
+    top: 0px;
     z-index: 9999;
 }
 

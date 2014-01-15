@@ -15,12 +15,15 @@ enyo.kind(
         titleContent: '',
         noDataLabel: '',
         openDocFunction: '',
-        openDocEvent: 'ontap'
+        loaderClass: '',
+        openDocEvent: 'ontap',
+		rGraph: null,
+		graphJSON: null
     },
 
     /**
      * When the component is created the program sets the title's properties and
-     * hides it.
+     * hides the loader.
      */
     create: function(){
         this.inherited(arguments);
@@ -32,8 +35,8 @@ enyo.kind(
 
     components: [
         { tag: 'div', name: 'title' },
-		{ tag: 'div', name: 'nGraphCanvas', published: { id: 'nGraphCanvas'}, classes: 'nGraphCanvas' },
-		{ name: 'loader' }
+		{ name: 'loader' },
+		{ tag: 'div', name: 'nGraphDiv', published: { id: 'nGraphDiv'}, classes: 'nGraphDiv' }
     ],
 
     /**
@@ -41,164 +44,209 @@ enyo.kind(
      * and shows the loader.
      */
     startLoading: function(){
-        this.$.nGraphCanvas.setContent('');
-        this.$.nGraphCanvas.destroyClientControls();
-        this.$.nGraphCanvas.render();
         this.$.loader.show();
-    },
+        this.$.nGraphDiv.setContent('');
+        this.$.nGraphDiv.destroyClientControls();
+        this.$.nGraphDiv.render();
+	},
 	
-    /** */
+	getGraphDefaults: function(propertyName) {
+		switch(propertyName) {
+			case 'animation': 
+				return { type: 'fade:seq', duration: 300, fps: 30, hideLabels: false };
+			break;
+			case 'edge': 
+				return { overridable: true, color: '#cadada', lineWidth:1 };
+			break;
+			case 'node': 
+				return { overridable: true, color: '#239fa0' };
+			break;
+			case 'navigation': 
+				return  { enable: true, panning: true, zooming: 100 };
+			break;
+			case 'background': 
+				return  { CanvasStyles: { strokeStyle: '#e0e0e0' } };
+			break;
+			default:
+				return null;
+		}
+	},
+	
     getNodeConnections: function(nodeURL,limit){
+		var conns=[];
+		
         var main = this;
         var url = CONSTANTS.DETAILS_URL + '?iri=' + nodeURL;
         var store = rdfstore.create();
         store.load('remote', url, function(success) {
-            main.processOpenDocResponse(success, store, nodeURL);
+            conns = main.processNodeConnResponse(success, store);
         });
+		/*var conns = [
+						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
+						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
+						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
+						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
+						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] }
+					];*/
+		return conns;
     },
 	
     /**
-     * This function updates the document list from a documents object. This
-     * object contains the short documents.
-     * @param {Array} documents the document list object
-     * @param {String} searchWord the search word
-     * @param {Array} checkedEntities the checked facets and type facets
+     * @param {Boolean} success the ajax query was success or not
+     * @param {String} rdf the rdf object
      */
-    updateGraph: function(documents, searchWord, checkedEntities){
-        this.searchWord = searchWord;
-        this.offset = 0;		
+    processNodeConnResponse: function(success, rdf){
+        var subjects = this.getSubjectConnections(rdf); 
+        // var documents = this.getDocumentConnections(rdf);
+		return subjects;
+    },
 	
-        this.documents = documents;
-        this.$.nGraphCanvas.destroyClientControls();
-        if(documents.length > 0){
-			var jsontr = {
-				id: "query",
-				name: "["+this.searchWord+"]",
-				children: []
-			};
-			
-			//
-            for(var i=0;i<documents.length;++i){
-               /* 
-				openDocEvent: this.openDocEvent,
-				openButtonClass: 'openDocButton',
-				container: this.$.list,
-				url: documents[i].url,
-				title: documents[i].title,
-				shortContent: documents[i].shortContent,
-				parentFunction: 'openDoc',
-				searchWord: this.searchWord
-                */
-				
-				var nodeObj = { id : documents[i].url, name : documents[i].title };
-				
-			//	this.getNodeConnections(nodeObj.id,10);				
-				//L
-				
-				jsontr.children.push(nodeObj);
-				// temporarly commented out... this.sendDocListAnnotation(documents[i].url,0);
+	getSubjectConnections: function(rdf){
+		var subjectConnections = [];
+		var main = this;
+
+		var query = 'SELECT * { ?s <http://rdfs.org/sioc/ns#subject> ?subj }';  // dc:subject?
+		// var query = 'SELECT * { ?f <http://fusepool.eu/ontologies/ecs#subject> ?subj } ';  
+		
+		rdf.execute(query, function(success, results) {
+            if (success) {
+                for(var i=0;i<results.length;i++){
+					var row = results[i];
+					if(!isEmpty(row.subj)) {
+						subjectConnections.push(row.subj.value);
+					}
+				}
             }
-			var rgraph = new $jit.RGraph({ 
-				//Where to append the visualization  
-				injectInto: 'documentApp_nGraph_nGraphCanvas',  
-				//Optional: create a background canvas that plots  
-				//concentric circles.  
-				levelDistance: 100,
-				interpolation: 'polar',
-				background: {  
-				  CanvasStyles: {  
-					strokeStyle: '#e0e0e0'  
-				  }  
-				},  
-				//Add navigation capabilities:  
-				//zooming by scrolling and panning.  
-				Navigation: {  
-				  enable: true,  
-				  panning: true,  
-				  zooming: 100  
-				},  
-				//Set Node and Edge styles.  
-				Node: {  
-					overridable: true,
-					color: '#239fa0'  
-				},				  
-				Edge: {  
-					overridable: true,
-					color: '#cadada',  
-					lineWidth:1 
-				},			  
-				onBeforeCompute: function(node){  
-					//Log.write("centering " + node.name + "...");  
-					//Add the relation list in the right column.  
-					//This list is taken from the data property of each JSON node.  
-					//$jit.id('inner-detailstr').innerHTML = node.data.relation;  
-				},
-				//Add the name of the node in the correponding label  
-				//and a click handler to move the graph.  
-				//This method is called once, on label creation.  
+        });
+        return subjectConnections;
+    },
+	
+	newGraph: function(documents, searchWord) {
+        this.searchWord = searchWord;
+        this.offset = 0;
+        this.documents = documents;
+        // this.$.nGraphDiv.destroyClientControls();
+		var main = this;
+		
+		if(documents.length > 0){
+			this.initGraphJSON(documents);
+			
+			this.rGraph = new $jit.RGraph({ 
+				injectInto: main.$.nGraphDiv.id,
+				background: main.getGraphDefaults('background'),
+				Navigation: main.getGraphDefaults('navigation'),
+				Node: main.getGraphDefaults('node'),
+				Edge: main.getGraphDefaults('edge'),
+				onBeforeCompute: function(node){ } , //onclick
 				onCreateLabel: function(domElement, node){  
 					domElement.innerHTML = node.name;  
 					domElement.onclick = function(){  
-						rgraph.onClick(node.id, {  
-							onComplete: function() {  
-								//Log.write("done");  
-							}  
+						main.rGraph.onClick(node.id, {
+							onComplete: function() {
+								main.onNodeClick(node, 'ontap');
+							}
 						});  
 					};  
-				},  
-				//Change some label dom properties.  
-				//This method is called each time a label is plotted.  
+				},
 				onPlaceLabel: function(domElement, node){  
 					var style = domElement.style;  
 					style.display = '';  
 					style.cursor = 'pointer';  
 					
 					if(node._depth == 0) {
-						style.fontSize = "11px";  
+						style.fontSize = "12px";  
 						style.color = "#555";  
 						style.maxWidth = "130px";
 					}
 					else if (node._depth == 1) {  
-						style.fontSize = "10px";  
+						style.fontSize = "11px";  
 						style.color = "#555";
 						style.maxWidth = "130px";
 					  
-					} else if(node._depth == 2 || node._depth == 3){  
-						style.fontSize = "9px";  
+					}
+					else if(node._depth == 2 || node._depth == 3){  
+						style.fontSize = "10px";  
 						style.color = "#555";  
 						style.maxWidth = "130px";
 					  
-					} else {  
+					}
+					else {  
 						style.display = 'none';  
-					}  
-			  
+					}
 					var left = parseInt(style.left);  
 					var w = domElement.offsetWidth;  
 					style.left = (left - w / 2) + 'px';  
 				}  
 			});
 			
-			rgraph.loadJSON(jsontr);
-			//trigger small animation  
-			rgraph.graph.eachNode(function(n) {  
-			  var pos = n.getPos();  
-			  pos.setc(-100, -100);  
+			this.rGraph.loadJSON(this.graphJSON);
+			
+			this.rGraph.graph.eachNode(function(n) {  
+				var pos = n.getPos();  
+				pos.setc(-100, -100);  
 			});  
-			rgraph.compute('end');  
-			rgraph.fx.animate({  
-			  modes:['polar'],  
-			  duration: 200  
+			this.rGraph.compute('end');  
+			this.rGraph.fx.animate({  
+				modes:['polar'],  
+				duration: 200  
 			});
 			
-            this.$.loader.hide();
-            //this.$.nGraphCanvas.render();
-        }
+			// $(window).resize(function() {
+				// main.rGraph.canvas.getsize();
+			// });
+			
+			this.$.loader.hide();
+		}
 		else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
-            this.$.nGraphCanvas.render();
+            this.$.nGraphDiv.render();
         }
-        this.$.title.show();
+	},
+	
+    initGraphJSON: function(documents){
+		if(documents.length > 0){
+			this.graphJSON = {
+				id: 'query',
+				name: this.searchWord,
+				children: []
+			};
+            for(var i=0;i<documents.length;++i){				
+				var nodeObj = { id : documents[i].url, name : documents[i].title, children : [] };
+				
+				var nodeConnections = this.getNodeConnections(nodeObj.id, GLOBAL.secondLvlLimit);
+				if(!isEmpty(nodeConnections)) {
+					for(var j=0;j<nodeConnections.length;j++) {
+						nodeObj.children.push(nodeConnections[j]);
+						this.sendDocListAnnotation(nodeConnections[j].id,0);
+					}
+				}
+				this.graphJSON.children.push(nodeObj);
+				this.sendDocListAnnotation(documents[i].url,0);
+            }
+        }
+		console.log(this.graphJSON);
+    },
+	
+    updateGraphJSON: function(center){
+
+		var newJSON	= { id: center.id, name: center.name, children: [] };
+		var main = this;
+		
+		$.each(center.adjacencies, function( index, value ) {
+			var child = { id: value.nodeFrom.id, name: value.nodeFrom.name, children: [] };
+			
+			var nodeConnections = main.getNodeConnections(child.id, GLOBAL.firstLvlLimit);
+			if(!isEmpty(nodeConnections)) {
+				for(var j=0;j<nodeConnections.length;j++) {
+					child.children.push(nodeConnections[j]);
+					main.sendDocListAnnotation(nodeConnections[j].id,0);
+				}
+			}
+			newJSON.children.push(child);			
+		});
+		
+		this.graphJSON = newJSON;
     },
 
     /**
@@ -206,27 +254,50 @@ enyo.kind(
      * @param {String} message the message to be displayed
      */
     showMessage: function(message){
-        this.$.nGraphCanvas.destroyClientControls();
-        this.$.nGraphCanvas.setContent(message);
+        this.$.nGraphDiv.destroyClientControls();
+        this.$.nGraphDiv.setContent(message);
     },
 
     /**
-     * This function is called when the user would like to open a document to
-     * preview. It calls a parent function, which can call the preview box to
-     * open a document.
-     * @param {String} url the request URL of the preview opening
-     * @param {Object} inEvent the user mouse event (it is important in the desktop version)
+     * This function is called when the user clicks on a node.
+	 * An annotation is being sent about the click, and it calls
+	 * a parent function, which can call the preview box to open a
+     * document.
      */
-    openDoc: function(url, inEvent){
-        this.owner[this.openDocFunction](url, inEvent);
-		this.sendDocListAnnotation(url,1);
+    onNodeClick: function(node, inEvent){
+		/* delete - a morph jobb rá
+		var subnodes = node.getSubnodes(3);		
+        for(var i=0;i<subnodes.length;i++) {
+			this.deleteNode(subnodes[i].id);
+		}
+		*/
+		// this.getNodeConnections(node.id,9);
+
+		this.updateGraphJSON(node);
+		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
+		
+		if(node.id!='query') {
+			this.owner[this.openDocFunction](node.id, inEvent);
+			this.sendDocListAnnotation(node.id,'true');
+		}
+    },
+	
+	deleteNode: function(nodeId) {
+		var n = this.rGraph.graph.getNode(nodeId);
+        if(!n) return;
+        var subnodes = n.getSubnodes(0);
+        var map = [];
+        for(var i=0;i<subnodes.length;i++) {
+            map.push(subnodes[i].id);
+        }
+        this.rGraph.op.removeNode(map.reverse(), this.getGraphDefaults('animation') );
     },
 	
     /**
      * This function prepares an annotation about the activities related to the
 	 * document list: which documents the user got back using what search query;
-	 * whether the user clicked on the documents. Then calls a parent function 
-	 * which actually sends the request to the server.
+	 * whether the user clicked on the documents. Then calls a function which
+	 * actually sends the request to the server.
      * @param {String} docURI the URI of the document
      * @param {Number} click is it only displayed or clicked
      */
@@ -238,8 +309,35 @@ enyo.kind(
 		else if (docURI.indexOf('/patent/') > 0) {
 			src = 'patent';
 		}
-		console.log('<userID>: unknown; <query>: '+this.searchWord+'; <docID>:'+docURI+'; <src>: '+src+'; <boost parameter used>: 0; <click>: '+click );
-		// Preparing the annotationBody... Then:
-		// sendAnnotation(annotationBody);
+		
+		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
+		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
+		var currentDate = new Date().toISOString();
+		var userURI =  'http://fusepool.info/users/anonymous';
+		
+		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' + 
+								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
+								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
+								
+								'fpanno:datasource a oa:SpecificResource . ' +
+								'fpanno:patent a fpanno:datasource . ' +
+								'fpanno:pubmed a fpanno:datasource . ' +
+								'fpanno:rerankingAnnotation a oa:Annotation . ' + 
+								
+								'<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
+								'oa:hasTarget fpanno:'+src+' ; ' +
+								'oa:hasBody <'+annoBodyURI+'> ; ' +
+								'oa:annotatedAt "'+currentDate+'" ; ' +
+								'oa:annotatedBy <'+userURI+'> . ' +
+								
+								'<'+annoBodyURI+'> a ' +
+								'fpanno:rerankingBody ; ' +
+								'fpanno:hasQuery "'+this.searchWord+'" ; ' +
+								'fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' + 
+								'fpanno:withPatentBoost 0.00 ; ' +
+								'fpanno:withPubmedBoost 0.00 . ';
+
+		sendAnnotation(annotationString);
+		// console.log(annotationString);
 	}
 });

@@ -42,7 +42,7 @@ enyo.kind({
 		var annotationBody = '<userID>: unknown; <dictionary>: '+this.$.dictionarySelect.components[this.$.dictionarySelect.eventNode.selectedIndex].value+'; <entity>: '+this.selectedText+'; <event>: add;';
 		// console.log(annotationBody);
 		// Preparing the annotationBody... Then:
-		sendAnnotation(annotationBody);
+		// sendAnnotation(annotationBody);
         this.hide();
     },
 
