@@ -23,7 +23,7 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
-		//FusePool.Landscaping.initialize('.landscapeDiv');
+		// FusePool.Landscaping.initialize('.landscapeDiv');
     },
 
     components: [
@@ -32,8 +32,11 @@ enyo.kind(
 		{ tag: 'div', name: 'landscapeDiv', published: { id: 'landscapeDiv'}, classes: 'landscapeDiv', content: 'Coming soon...' }
     ],
 	
+    /**
+     * This function runs, when the user starts a search. It only shows the loader yet.
+     */
     startLoading: function(){
         this.$.loader.show();
-	},
+	}
 	
 });

@@ -293,10 +293,10 @@ body{
 
 .landscapeDiv {
     background-color: #FFFFFF;
-    bottom: 0px;
     box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
-    left: 0px;
     position: absolute;
+    left: 0px;
+    bottom: 0px;
     right: 0px;
     top: 50px;
 	overflow: hidden;

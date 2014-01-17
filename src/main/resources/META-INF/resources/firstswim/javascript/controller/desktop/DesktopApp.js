@@ -253,7 +253,7 @@ jQuery(document).ready(function () {
 											titleContent: 'Landscape '
 										});
 										
-									this.render();								
+									this.render();
 									this.search(this.searchWord);
 								}
 							break;
@@ -454,6 +454,10 @@ jQuery(document).ready(function () {
 								this.$.nGraph.startLoading();
 								this.$.nGraph.newGraph(searchWord);
 							break;
+							case 'landscape':
+								this.$.landscape.startLoading();
+								this.sendSearchRequest(searchWord, [], 'processSearchResponse');
+							break;
 						}
                         this.$.searchBox.updateInput(this.searchWord);
                     }
@@ -547,6 +551,7 @@ jQuery(document).ready(function () {
 							this.newNGraph(rdf);
 						break;
 						case 'landscape':
+							Fusepool.Landscaping.renderAll();
 						break;
 					}
 				},

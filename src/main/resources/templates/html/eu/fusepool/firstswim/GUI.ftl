@@ -17,8 +17,13 @@
     <script src="firstswim/javascript/jquery/ui/jquery-ui.js" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="firstswim/javascript/jquery/ui/jquery-ui.css" />
     <script src="firstswim/javascript/jquery/jquery.json.js" type="text/javascript"></script>
+    <script src="firstswim/javascript/jquery/jquery.mousewheel.js" type="text/javascript"></script>
     <!-- underscore -->
     <script src="firstswim/javascript/underscore/underscore.js" type="text/javascript"></script>
+    <!-- landscaping -->
+    <script src="landscaping/js/fusepool.landscaping.js" type="text/javascript"></script>
+    <script src="landscaping/js/three.js" type="text/javascript"></script>
+    <script src="landscaping/js/jsondata.js" type="text/javascript"></script>
     <!-- handlebars -->
     <script src="firstswim/javascript/handlebars/handlebars.js" type="text/javascript"></script>
     <!-- enyojs -->

@@ -50,7 +50,7 @@ enyo.kind(
 	},
 	
 	/**
-	 * This function returns some default values for the graph.
+	 * This function returns default values for the graph.
 	 * @param {String} propertyName name of the property (animation/edge/node/navigation/background)
 	 */
 	getGraphDefaults: function(propertyName) {
@@ -109,7 +109,7 @@ enyo.kind(
 	 * @param {String} searchWord a search term
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
 	 */
-	buildGraphJSON(nodeObj,URI,level) {
+	buildGraphJSON: function(nodeObj,URI,level) {
 		if(level > 0 && nodeObj.data.type=="subject") {
 			nodeObj.name = getTitleByURI(URI);
 		}		
