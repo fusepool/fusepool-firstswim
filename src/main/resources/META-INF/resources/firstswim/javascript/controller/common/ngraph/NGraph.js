@@ -105,7 +105,7 @@ enyo.kind(
 	/**
 	 * This function builds up an object recursively until it reaches the desired level. 
 	 * This level is currently 2, the centre node is level 0. This object will be used
-	 * to feed the graph.
+	 * to feed the graph. Important: It's necessary to have one base node already in the graph.
 	 * @param {String} searchWord a search term
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
 	 */
@@ -262,7 +262,7 @@ enyo.kind(
 			this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 		}
 		
-		this.initNode('query',0,'query');
+		this.buildGraphJSON(this.rGraph.graph.getNode('query'),0,'query');
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 		
 		this.$.loader.hide();
