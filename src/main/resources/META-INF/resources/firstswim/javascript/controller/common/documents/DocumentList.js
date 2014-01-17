@@ -355,7 +355,7 @@ enyo.kind(
      * @param {Number} click is it only displayed or clicked
      */
 	sendDocListAnnotation: function(docURI,docType,click) {
-      console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
+		console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
 		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();

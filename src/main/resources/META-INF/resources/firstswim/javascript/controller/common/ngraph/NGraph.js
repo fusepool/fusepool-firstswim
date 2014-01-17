@@ -10,7 +10,6 @@ enyo.kind(
     published: {
         offset: 0,
         searchWord: '',
-        documents: null,
         titleClass: '',
         titleContent: '',
         noDataLabel: '',
@@ -72,42 +71,65 @@ enyo.kind(
 		}
 	},
 	
-    getNodeConnections: function(nodeURL,limit){
-		var conns=[];
+	search: function(searchWord, URI){
+		var main = this;
 		
-        var main = this;
-        var url = CONSTANTS.DETAILS_URL + '?iri=' + nodeURL;
-        var store = rdfstore.create();
-        store.load('remote', url, function(success) {
-            conns = main.processNodeConnResponse(success, store);
-        });
-		/*var conns = [
-						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
-						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
-						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
-						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] },
-						{ id : 'test'+getRandomId(), name : 'Test title'+getRandomId(), children: [] }
-					];*/
-		return conns;
-    },
+		var url = CONSTANTS.SEARCH_URL;
+		if(URI=="query") {
+			url+='?search='+searchWord;
+		}
+		else {
+			url+='?search=&subject='+URI;
+		}		
+		url+='&offset=0&maxFacets=0&items=5';
+		
+		var documents = [];
+		var store = rdfstore.create();
+		store.load('remote', url, function(success) {
+			if(success) {
+				documents = main.owner.createDocumentList(store);
+			}
+		});		
+		return documents;
+	},
 	
-    /**
-     * @param {Boolean} success the ajax query was success or not
-     * @param {String} rdf the rdf object
-     */
-    processNodeConnResponse: function(success, rdf){
-        var subjects = this.getSubjectConnections(rdf); 
-        // var documents = this.getDocumentConnections(rdf);
-		return subjects;
-    },
+	buildGraphJSON(nodeObj,URI,level) {
+		if(level > 0 && nodeObj.data.type=="subject") {
+			nodeObj.name = getTitleByURI(URI);
+		}		
+		this.sendDocListAnnotation(URI,0);
+		level++;
+		
+		if(level < 3) {
+			switch(nodeObj.data.type) {
+				case "query":
+				case "subject":
+					var docNodes = this.search(nodeObj.name,URI);
+					for(var i=0; i<docNodes.length; i++) {
+						var ind = nodeObj.children.push({ id: docNodes[i].url, name: docNodes[i].title, children: [], data: { type: "document" }});
+						this.buildGraphJSON(nodeObj.children[ind],docNodes[i].url,level);
+					}
+				break;
+				case "document":				
+					var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
+					var store = rdfstore.create();
+					store.load('remote', url, function(success) {
+						var subjNodes =  main.getSubjectConnections(success, store);
+						for(var i=0; i<subjNodes.length; i++) {
+							var ind = nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject" }});
+							this.buildGraphJSON(nodeObj.children[ind],subjNodes[i].url,level);
+						}
+					});				
+				break;
+			}
+		}
+	},
 	
-	getSubjectConnections: function(rdf){
+	getSubjectConnections: function(success, rdf){
 		var subjectConnections = [];
 		var main = this;
 
-		var query = 'SELECT * { ?s <http://rdfs.org/sioc/ns#subject> ?subj }';  // dc:subject?
-		// var query = 'SELECT * { ?f <http://fusepool.eu/ontologies/ecs#subject> ?subj } ';  
-		
+		var query = 'SELECT * { ?s <http://purl.org/dc/elements/1.1/subject> ?subj }';  		
 		rdf.execute(query, function(success, results) {
             if (success) {
                 for(var i=0;i<results.length;i++){
@@ -118,145 +140,97 @@ enyo.kind(
 				}
             }
         });
-        return subjectConnections;
+		return subjectConnections;
     },
-	
-	newGraph: function(documents, searchWord) {
-        this.searchWord = searchWord;
-        this.offset = 0;
-        this.documents = documents;
-        // this.$.nGraphDiv.destroyClientControls();
-		var main = this;
 		
-		if(documents.length > 0){
-			this.initGraphJSON(documents);
-			
-			this.rGraph = new $jit.RGraph({ 
-				injectInto: main.$.nGraphDiv.id,
-				background: main.getGraphDefaults('background'),
-				Navigation: main.getGraphDefaults('navigation'),
-				Node: main.getGraphDefaults('node'),
-				Edge: main.getGraphDefaults('edge'),
-				onBeforeCompute: function(node){ } , //onclick
-				onCreateLabel: function(domElement, node){  
-					domElement.innerHTML = node.name;  
-					domElement.onclick = function(){  
-						main.rGraph.onClick(node.id, {
-							onComplete: function() {
-								main.onNodeClick(node, 'ontap');
-							}
-						});  
-					};  
-				},
-				onPlaceLabel: function(domElement, node){  
-					var style = domElement.style;  
-					style.display = '';  
-					style.cursor = 'pointer';  
-					
-					if(node._depth == 0) {
-						style.fontSize = "12px";  
-						style.color = "#555";  
-						style.maxWidth = "130px";
+	getTitleByURI: function(URI) {
+		var title = '?';
+		var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
+		var store = rdfstore.create();
+		store.load('remote', url, function(success) {
+			store.execute(query, function(success, results) {
+				if (success) {
+					for(var i=0;i<results.length;i++){
+						var row = results[i];
+						if(!isEmpty(row.title)) {
+							title=row.title;
+						}
 					}
-					else if (node._depth == 1) {  
-						style.fontSize = "11px";  
-						style.color = "#555";
-						style.maxWidth = "130px";
-					  
-					}
-					else if(node._depth == 2 || node._depth == 3){  
-						style.fontSize = "10px";  
-						style.color = "#555";  
-						style.maxWidth = "130px";
-					  
-					}
-					else {  
-						style.display = 'none';  
-					}
-					var left = parseInt(style.left);  
-					var w = domElement.offsetWidth;  
-					style.left = (left - w / 2) + 'px';  
-				}  
+				}
 			});
-			
-			this.rGraph.loadJSON(this.graphJSON);
-			
-			this.rGraph.graph.eachNode(function(n) {  
-				var pos = n.getPos();  
-				pos.setc(-100, -100);  
-			});  
-			this.rGraph.compute('end');  
-			this.rGraph.fx.animate({  
-				modes:['polar'],  
-				duration: 200  
-			});
-			
-			// $(window).resize(function() {
-				// main.rGraph.canvas.getsize();
-			// });
-			
-			this.$.loader.hide();
-		}
-		else {
-            this.showMessage(this.noDataLabel);
-            this.$.loader.hide();
-            this.$.nGraphDiv.render();
-        }
+		});
+		return title;
 	},
 	
-    initGraphJSON: function(documents){
-		if(documents.length > 0){
-			this.graphJSON = {
-				id: 'query',
-				name: this.searchWord,
-				children: []
-			};
-            for(var i=0;i<documents.length;++i){				
-				var nodeObj = { id : documents[i].url, name : documents[i].title, children : [] };
-				
-				var nodeConnections = this.getNodeConnections(nodeObj.id, GLOBAL.secondLvlLimit);
-				if(!isEmpty(nodeConnections)) {
-					for(var j=0;j<nodeConnections.length;j++) {
-						nodeObj.children.push(nodeConnections[j]);
-						this.sendDocListAnnotation(nodeConnections[j].id,0);
-					}
-				}
-				this.graphJSON.children.push(nodeObj);
-				this.sendDocListAnnotation(documents[i].url,0);
-            }
-        }
-		console.log(this.graphJSON);
-    },
-	
-    updateGraphJSON: function(center){
-
-		var newJSON	= { id: center.id, name: center.name, children: [] };
+	newGraph: function(searchWord) {
+        this.searchWord = searchWord;
 		var main = this;
-		
-		$.each(center.adjacencies, function( index, value ) {
-			var child = { id: value.nodeFrom.id, name: value.nodeFrom.name, children: [] };
 			
-			var nodeConnections = main.getNodeConnections(child.id, GLOBAL.firstLvlLimit);
-			if(!isEmpty(nodeConnections)) {
-				for(var j=0;j<nodeConnections.length;j++) {
-					child.children.push(nodeConnections[j]);
-					main.sendDocListAnnotation(nodeConnections[j].id,0);
+		this.rGraph = new $jit.RGraph({
+			injectInto: main.$.nGraphDiv.id,
+			background: main.getGraphDefaults('background'),
+			Navigation: main.getGraphDefaults('navigation'),
+			Node: main.getGraphDefaults('node'),
+			Edge: main.getGraphDefaults('edge'),
+			onBeforeCompute: function(node){ } , //onclick
+			onCreateLabel: function(domElement, node){  
+				domElement.innerHTML = node.name;  
+				domElement.onclick = function(){  
+					main.rGraph.onClick(node.id, {
+						onComplete: function() {
+							main.onNodeClick(node, 'ontap');
+						}
+					});  
+				};  
+			},
+			onPlaceLabel: function(domElement, node){  
+				var style = domElement.style;  
+				style.display = '';  
+				style.cursor = 'pointer';  
+				
+				if(node._depth == 0) {
+					style.fontSize = "12px";  
+					style.color = "#555";  
+					style.maxWidth = "130px";
 				}
-			}
-			newJSON.children.push(child);			
+				else if (node._depth == 1) {  
+					style.fontSize = "11px";  
+					style.color = "#555";
+					style.maxWidth = "130px";
+				  
+				}
+				else if(node._depth == 2 || node._depth == 3){  
+					style.fontSize = "10px";  
+					style.color = "#555";  
+					style.maxWidth = "130px";
+				  
+				}
+				else {  
+					style.display = 'none';  
+				}
+				var left = parseInt(style.left);  
+				var w = domElement.offsetWidth;  
+				style.left = (left - w / 2) + 'px';  
+			}  
 		});
 		
-		this.graphJSON = newJSON;
-    },
-
-    /**
-     * This functions shows a message in the network-graph panel
-     * @param {String} message the message to be displayed
-     */
-    showMessage: function(message){
-        this.$.nGraphDiv.destroyClientControls();
-        this.$.nGraphDiv.setContent(message);
-    },
+		this.rGraph.loadJSON({ id: 'query', name: this.searchWord, children: [], data: { type: 'query' }});
+		
+		this.rGraph.graph.eachNode(function(n) {
+			var pos = n.getPos();
+			pos.setc(-100, -100);
+		});  
+		this.rGraph.compute('end');  
+		this.rGraph.fx.animate({  
+			modes:['polar'],
+			duration: 200
+		});
+		
+		this.initNode('query',0,'query');
+		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
+		
+		this.$.loader.hide();
+	},
 
     /**
      * This function is called when the user clicks on a node.
@@ -265,15 +239,11 @@ enyo.kind(
      * document.
      */
     onNodeClick: function(node, inEvent){
-		/* delete - a morph jobb rá
-		var subnodes = node.getSubnodes(3);		
-        for(var i=0;i<subnodes.length;i++) {
-			this.deleteNode(subnodes[i].id);
-		}
-		*/
-		// this.getNodeConnections(node.id,9);
-
-		this.updateGraphJSON(node);
+		
+		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type }};
+		this.graphJSON = centre;
+		this.buildGraphJSON(centre, node.id, 0, node.data.type);
+		
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 		
 		if(node.id!='query') {
@@ -282,6 +252,17 @@ enyo.kind(
 		}
     },
 	
+	/*
+    updateGraphJSON: function(centre){
+		var main = this;
+		$.each(centre.adjacencies, function( index, value ) {
+			var child = { id: value.nodeFrom.id, name: value.nodeFrom.name, children: [] };
+			this.graphJSON.children.push(child);
+			
+			main.setNodeConnections(child.id);
+		});
+    },*/
+	/*
 	deleteNode: function(nodeId) {
 		var n = this.rGraph.graph.getNode(nodeId);
         if(!n) return;
@@ -291,8 +272,15 @@ enyo.kind(
             map.push(subnodes[i].id);
         }
         this.rGraph.op.removeNode(map.reverse(), this.getGraphDefaults('animation') );
+    },*/
+	/**
+	* This functions shows a message in the network-graph panel
+	* @param {String} message the message to be displayed
+	*/
+    showMessage: function(message){
+        this.$.nGraphDiv.destroyClientControls();
+        this.$.nGraphDiv.setContent(message);
     },
-	
     /**
      * This function prepares an annotation about the activities related to the
 	 * document list: which documents the user got back using what search query;
@@ -338,6 +326,5 @@ enyo.kind(
 								'fpanno:withPubmedBoost 0.00 . ';
 
 		sendAnnotation(annotationString);
-		// console.log(annotationString);
 	}
 });

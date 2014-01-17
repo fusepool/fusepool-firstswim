@@ -448,14 +448,14 @@ jQuery(document).ready(function () {
 						switch(GLOBAL.viewType) {
 							case 'documentList':
 								this.$.documents.startLoading();
+								this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
 							break;
 							case 'nGraph':
 								this.$.nGraph.startLoading();
+								this.$.nGraph.newGraph(searchWord);
 							break;
 						}
                         this.$.searchBox.updateInput(this.searchWord);
-
-                        this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
                     }
                 },
 
