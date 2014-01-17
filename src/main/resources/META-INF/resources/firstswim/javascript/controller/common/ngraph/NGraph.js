@@ -192,69 +192,75 @@ enyo.kind(
 	 * In case of the very first search, a completely new graph is being initialized.
 	 * @param {String} searchWord the search word
 	 */
-	newGraph: function(searchWord) {
+	newGraph: function(searchWord) {        
         this.searchWord = searchWord;
 		var main = this;
+		
+		if(isEmpty(this.graphJSON)) {
+			this.rGraph = new $jit.RGraph({
+				injectInto: main.$.nGraphDiv.id,
+				background: main.getGraphDefaults('background'),
+				Navigation: main.getGraphDefaults('navigation'),
+				Node: main.getGraphDefaults('node'),
+				Edge: main.getGraphDefaults('edge'),
+				onBeforeCompute: function(node){ } , //onclick
+				onCreateLabel: function(domElement, node){  
+					domElement.innerHTML = node.name;  
+					domElement.onclick = function(){  
+						main.rGraph.onClick(node.id, {
+							onComplete: function() {
+								main.onNodeClick(node, 'ontap');
+							}
+						});  
+					};  
+				},
+				onPlaceLabel: function(domElement, node){  
+					var style = domElement.style;  
+					style.display = '';  
+					style.cursor = 'pointer';  
+					
+					if(node._depth == 0) {
+						style.fontSize = "12px";  
+						style.color = "#555";  
+						style.maxWidth = "130px";
+					}
+					else if (node._depth == 1) {  
+						style.fontSize = "11px";  
+						style.color = "#555";
+						style.maxWidth = "130px";
+					  
+					}
+					else if(node._depth == 2 || node._depth == 3){  
+						style.fontSize = "10px";  
+						style.color = "#555";  
+						style.maxWidth = "130px";
+					  
+					}
+					else {  
+						style.display = 'none';  
+					}
+					var left = parseInt(style.left);  
+					var w = domElement.offsetWidth;  
+					style.left = (left - w / 2) + 'px';  
+				}  
+			});
 			
-		this.rGraph = new $jit.RGraph({
-			injectInto: main.$.nGraphDiv.id,
-			background: main.getGraphDefaults('background'),
-			Navigation: main.getGraphDefaults('navigation'),
-			Node: main.getGraphDefaults('node'),
-			Edge: main.getGraphDefaults('edge'),
-			onBeforeCompute: function(node){ } , //onclick
-			onCreateLabel: function(domElement, node){  
-				domElement.innerHTML = node.name;  
-				domElement.onclick = function(){  
-					main.rGraph.onClick(node.id, {
-						onComplete: function() {
-							main.onNodeClick(node, 'ontap');
-						}
-					});  
-				};  
-			},
-			onPlaceLabel: function(domElement, node){  
-				var style = domElement.style;  
-				style.display = '';  
-				style.cursor = 'pointer';  
-				
-				if(node._depth == 0) {
-					style.fontSize = "12px";  
-					style.color = "#555";  
-					style.maxWidth = "130px";
-				}
-				else if (node._depth == 1) {  
-					style.fontSize = "11px";  
-					style.color = "#555";
-					style.maxWidth = "130px";
-				  
-				}
-				else if(node._depth == 2 || node._depth == 3){  
-					style.fontSize = "10px";  
-					style.color = "#555";  
-					style.maxWidth = "130px";
-				  
-				}
-				else {  
-					style.display = 'none';  
-				}
-				var left = parseInt(style.left);  
-				var w = domElement.offsetWidth;  
-				style.left = (left - w / 2) + 'px';  
-			}  
-		});
-		
-		this.rGraph.loadJSON({ id: 'query', name: this.searchWord, children: [], data: { type: 'query' }});
-		
-		this.rGraph.graph.eachNode(function(n) {
-			var pos = n.getPos();
-			pos.setc(-100, -100);
-		});  
-		this.rGraph.compute('end');  
-		this.rGraph.fx.animate({  
-			modes:['polar'],
-			duration: 200
-		});
+			this.rGraph.loadJSON({ id: 'query', name: this.searchWord, children: [], data: { type: 'query' }});
+			
+			this.rGraph.graph.eachNode(function(n) {
+				var pos = n.getPos();
+				pos.setc(-100, -100);
+			});  
+			this.rGraph.compute('end');  
+			this.rGraph.fx.animate({  
+				modes:['polar'],
+				duration: 200
+			});
+		}
+		else {
+			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query' }};
+			this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
+		}
 		
 		this.initNode('query',0,'query');
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
