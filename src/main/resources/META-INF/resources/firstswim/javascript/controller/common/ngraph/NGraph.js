@@ -39,8 +39,8 @@ enyo.kind(
     ],
 
     /**
-     * This function runs, when the user starts a search. It clears the list
-     * and shows the loader.
+     * This function runs, when the user starts a search. It clears the current 
+     * content and shows the loader.
      */
     startLoading: function(){
         this.$.loader.show();
@@ -49,6 +49,10 @@ enyo.kind(
         this.$.nGraphDiv.render();
 	},
 	
+	/**
+	 * This function returns some default values for the graph.
+	 * @param {String} propertyName name of the property (animation/edge/node/navigation/background)
+	 */
 	getGraphDefaults: function(propertyName) {
 		switch(propertyName) {
 			case 'animation': 
@@ -71,6 +75,11 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	 * This function runs a search for documents and returns an array of doc URIs.
+	 * @param {String} searchWord a search term
+	 * @param {String} URI an entity that filters the result. "query" means no filter needed.
+	 */
 	search: function(searchWord, URI){
 		var main = this;
 		
@@ -93,6 +102,13 @@ enyo.kind(
 		return documents;
 	},
 	
+	/**
+	 * This function builds up an object recursively until it reaches the desired level. 
+	 * This level is currently 2, the centre node is level 0. This object will be used
+	 * to feed the graph.
+	 * @param {String} searchWord a search term
+	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
+	 */
 	buildGraphJSON(nodeObj,URI,level) {
 		if(level > 0 && nodeObj.data.type=="subject") {
 			nodeObj.name = getTitleByURI(URI);
@@ -125,7 +141,12 @@ enyo.kind(
 		}
 	},
 	
-	getSubjectConnections: function(success, rdf){
+	/**
+	 * Filters an rdf object and returns an array of URIs found in dc:subject
+	 * @param {Boolean} success the search query was success or not
+	 * @param {Object} rdf the response rdf object
+	 */
+	getSubjectConnections: function(success, rdf) {
 		var subjectConnections = [];
 		var main = this;
 
@@ -142,7 +163,11 @@ enyo.kind(
         });
 		return subjectConnections;
     },
-		
+
+	/**
+	 * This function queries the platform using a URI for getting the title of the entity.
+	 * @param {String} URI the entity's URI which title is needed
+	 */
 	getTitleByURI: function(URI) {
 		var title = '?';
 		var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
@@ -162,6 +187,11 @@ enyo.kind(
 		return title;
 	},
 	
+	/**
+	 * After a new search term has been entered, the graph is being redrawn.
+	 * In case of the very first search, a completely new graph is being initialized.
+	 * @param {String} searchWord the search word
+	 */
 	newGraph: function(searchWord) {
         this.searchWord = searchWord;
 		var main = this;
@@ -237,9 +267,10 @@ enyo.kind(
 	 * An annotation is being sent about the click, and it calls
 	 * a parent function, which can call the preview box to open a
      * document.
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
      */
     onNodeClick: function(node, inEvent){
-		
 		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type }};
 		this.graphJSON = centre;
 		this.buildGraphJSON(centre, node.id, 0, node.data.type);
@@ -273,6 +304,7 @@ enyo.kind(
         }
         this.rGraph.op.removeNode(map.reverse(), this.getGraphDefaults('animation') );
     },*/
+	
 	/**
 	* This functions shows a message in the network-graph panel
 	* @param {String} message the message to be displayed
@@ -281,6 +313,7 @@ enyo.kind(
         this.$.nGraphDiv.destroyClientControls();
         this.$.nGraphDiv.setContent(message);
     },
+	
     /**
      * This function prepares an annotation about the activities related to the
 	 * document list: which documents the user got back using what search query;
