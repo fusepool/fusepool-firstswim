@@ -121,7 +121,7 @@ enyo.kind(
 				case "query":
 				case "subject":
 					var docNodes = this.search(nodeObj.name,URI);
-					for(var i=0; i<docNodes.length; i++) {
+					for(var i=0; i<docNodes.length && i<=GLOBAL.nodeLimit[level]; i++) {
 						var ind = nodeObj.children.push({ id: docNodes[i].url, name: docNodes[i].title, children: [], data: { type: "document" }});
 						this.buildGraphJSON(nodeObj.children[ind],docNodes[i].url,level);
 					}
@@ -131,7 +131,7 @@ enyo.kind(
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
 						var subjNodes =  main.getSubjectConnections(success, store);
-						for(var i=0; i<subjNodes.length; i++) {
+						for(var i=0; i<subjNodes.length && i<=GLOBAL.nodeLimit[level]; i++) {
 							var ind = nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject" }});
 							this.buildGraphJSON(nodeObj.children[ind],subjNodes[i].url,level);
 						}
