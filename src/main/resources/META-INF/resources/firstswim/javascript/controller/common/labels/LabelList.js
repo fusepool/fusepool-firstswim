@@ -9,10 +9,8 @@ enyo.kind(
 	classes: 'labelListPanel',
 
     published: {
-		labelListId: '', // = docURI
-        labelIds: [],
+		labelListId: '', // docURI
         labelTexts: [],
-        predictedLabelIds: [],
         predictedLabelTexts: [],
 		moreLabelsPanelClass: '',
 		moreLabelInputClass: '',
@@ -27,13 +25,13 @@ enyo.kind(
 		{ tag: 'div', name: 'labelListName', classes: 'labelListName', content: 'Labels:' },
         { classes: 'clear' },
         { tag: 'div', name: 'labelList' },
-		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton', content: 'Add label', ontap: 'addMoreLabelsBtnPress' },
+		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton enyo-unselectable', content: 'Add label', ontap: 'addMoreLabelsBtnPress' },
 		{ tag: 'div', name: 'moreLabelsPanel', components: [
 			{kind: "onyx.InputDecorator", name: 'moreLabelInputDec', components: [
 				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name', onkeydown: 'addOnEnter' }
 			]},
-			{ tag: 'div', name: 'addLabelButton', content: 'Add label', ontap: 'addNewLabel' },
-			{ tag: 'div', name: 'hideAddingPanelButton', content: 'Close', ontap: 'hideAddingPanelBtnPress' }
+			{ tag: 'div', name: 'addLabelButton', content: 'Add label', ontap: 'addNewLabel', classes: 'enyo-unselectable' },
+			{ tag: 'div', name: 'hideAddingPanelButton', content: 'Close', ontap: 'hideAddingPanelBtnPress', classes: 'enyo-unselectable' }
 		] },
 		{ classes: 'clear' },
 		{ tag: 'div', name: 'predictedLabelListName', classes: 'labelListName', content: 'Predicted labels:' },
@@ -43,30 +41,49 @@ enyo.kind(
     ],
 
     /**
-     * The create function sets the content of the label list
+     * The create function sets the content of the label list based on the doc URI
      */
     create: function(){
         this.inherited(arguments);
 
-        for(var i=0;i<this.predictedLabelIds.length;++i){
-			this.$.predictedLabelList.createComponent({
-				kind: 'LabelItem',
-				name: this.predictedLabelIds[i],
-				labelId: this.predictedLabelIds[i],
-				labelText: this.predictedLabelTexts[i],
-				labelType: 'prediction',
-				labelClass: 'predictedLabelDiv',
-				labelTextClass: 'labelText',
-				labelAddClass: 'labelAddButton',
-				addFunction: 'addPredictedLabel'
-			});
-        }
+		this.initLabels();
+		this.initPredictedLabels();
+		
+        this.$.moreLabelsPanel.setClasses(this.moreLabelsPanelClass);		
+        this.$.moreLabelInput.setClasses(this.moreLabelInputClass);		
+        this.$.moreLabelInputDec.setClasses(this.moreLabelInputDecClass);		
+        this.$.addLabelButton.addClass(this.addLabelButtonClass);
+        this.$.hideAddingPanelButton.addClass(this.hideAddingPanelButtonClass);
+        this.$.labelList.setClasses(this.labelListClass);
 
-        for(var i=0;i<this.labelIds.length;++i){
+		this.$.moreLabelsPanel.hide();
+    },
+	
+	initLabels: function() {
+	
+		// var request = new enyo.Ajax({
+			// method: 'GET',
+			// url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
+			// handleAs: 'text',
+			// headers: { Accept : '*/*', 'Content-Type' : 'application/x-www-form-urlencoded'},
+			// published: { timeout: 60000 }
+		// });
+		// request.go();
+		// request.error(this, function(){
+			// console.log("error");
+		// });
+		// request.response(this, function(inSender, inResponse) {
+			// console.log("success: "+inResponse);
+		// });
+
+		// TODO: query the AnnoStore for actual labels
+		// push the result to this.labelTexts
+		// then:
+		/*
+        for(var i=0;i<this.labelTexts.length;i++){
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				name: this.labelIds[i],
-				labelId: this.labelIds[i],
+				name: this.labelTexts[i],
 				labelText: this.labelTexts[i],
 				labelType: 'userDefined',
 				labelClass: 'labelDiv',
@@ -75,16 +92,33 @@ enyo.kind(
 				deleteFunction: 'deleteLabel'
 			});
         }
-		
-        this.$.moreLabelsPanel.setClasses(this.moreLabelsPanelClass);		
-        this.$.moreLabelInput.setClasses(this.moreLabelInputClass);		
-        this.$.moreLabelInputDec.setClasses(this.moreLabelInputDecClass);		
-        this.$.addLabelButton.setClasses(this.addLabelButtonClass);
-        this.$.hideAddingPanelButton.setClasses(this.hideAddingPanelButtonClass);
-        this.$.labelList.setClasses(this.labelListClass);
+		*/
+	},
+	
+	initPredictedLabels: function() {
 
-		this.$.moreLabelsPanel.hide();
-    },
+		// TODO: query the REST endpoint for predicted labels
+		// push the result to this.predictedLabelTexts	
+		// if(this.predictedLabelTexts.length==0) {
+			// this.$.predictedLabelListName.hide();
+		// }
+		// else {
+		/*
+			for(var i=0;i<this.predictedLabelTexts.length;i++){
+				this.$.predictedLabelList.createComponent({
+					kind: 'LabelItem',
+					name: this.predictedLabelTexts[i],
+					labelText: this.predictedLabelTexts[i],
+					labelType: 'prediction',
+					labelClass: 'predictedLabelDiv',
+					labelTextClass: 'labelText',
+					labelAddClass: 'labelAddButton',
+					addFunction: 'addPredictedLabel'
+				});
+			}
+		*/
+		// }
+	},
 	
 	addMoreLabelsBtnPress: function() {
 		this.$.addMoreLabelsButton.hide();
@@ -110,20 +144,17 @@ enyo.kind(
 			
 			var ind = $.inArray(newLabelText,this.predictedLabelTexts);	
 			if(ind>-1) {
-				this.addPredictedLabel(this.predictedLabelIds[ind],this.predictedLabelTexts[ind],this.$.predictedLabelList.$[this.predictedLabelIds[ind]]);
+				this.addPredictedLabel(this.predictedLabelTexts[ind],this.$.predictedLabelList.$[this.predictedLabelTexts[ind]]);
 				this.$.moreLabelInput.setValue('');
 			}
 			else {
-				var labelURI = 'http://fusepool.info/labels/'+getRandomId();
-				this.sendLabelListAnnotation(this.labelListId,labelURI,newLabelText,1);
+				this.sendLabelListAnnotation(this.labelListId,newLabelText,1);
 				
-				this.labelIds.push(labelURI);
 				this.labelTexts.push(newLabelText);
 				
 				this.$.labelList.createComponent({
 					kind: 'LabelItem',
-					name: labelURI,
-					labelId: labelURI,
+					name: newLabelText,
 					labelText: newLabelText,
 					labelClass: 'labelDiv',
 					labelTextClass: 'labelText',
@@ -137,24 +168,24 @@ enyo.kind(
 		}
 	},
 	
-	addPredictedLabel: function(labelURI,labelText,labelElement) {		
+	addPredictedLabel: function(labelText,labelElement) {		
 		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
 			
-			// this.sendLabelListAnnotation(this.labelListId,labelURI,labelText,1); // vsz nem kell
+			this.sendLabelListAnnotation(this.labelListId,labelText,1);
 			
-			this.labelIds.push(labelURI);
 			this.labelTexts.push(labelText);
 			
 			var ind = $.inArray(labelText,this.predictedLabelTexts);	
 			if(ind>-1) {
-				this.predictedLabelIds.splice(ind,1);
 				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
 			}
 			
 			this.$.labelList.createComponent({
 				kind: 'LabelItem',
-				name: labelURI,
-				labelId: labelURI,
+				name: labelText,
 				labelText: labelText,
 				labelClass: 'labelDiv',
 				labelTextClass: 'labelText',
@@ -172,22 +203,21 @@ enyo.kind(
      * This function deletes a label from the GUI and sends an annotation
 	 * to the server about this action.
      */
-    deleteLabel: function(labelURI,labelElement){
-		var ind = $.inArray(labelURI,this.labelIds);
+    deleteLabel: function(labelText,labelElement){
+		var ind = $.inArray(labelText,this.labelTexts);
 		if(ind>-1) {
-			this.sendLabelListAnnotation(this.labelListId,this.labelIds[ind],this.labelTexts[ind],-1);
+			this.sendLabelListAnnotation(this.labelListId,this.labelTexts[ind],-1);
 			
-			this.labelIds.splice(ind,1);
 			this.labelTexts.splice(ind,1);
 
 			labelElement.destroy();
 		}
     },
 	
-	sendLabelListAnnotation: function(docURI,labelURI,labelText,action) {
+	sendLabelListAnnotation: function(docURI,labelText,action) {
 				
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/anonymous';
+		var userURI =  'http://fusepool.info/users/anonymous';	// test
 		
 		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
 								'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
@@ -200,38 +230,18 @@ enyo.kind(
 								'fpanno:annotatedAt "'+currentDate+'" ; ' +
 								'fpanno:annotatedBy <'+userURI+'> . ' +
 
-								'_:2 a fpanno:labellingBody ; ' +
-								'fpanno:hasNewLabel _:3 . ' +
-
+								'_:2 a fpanno:labellingBody ; ';
+		if(action==1) {
+			annotationString +=	'fpanno:hasNewLabel _:3 . ' +
 								'_:3 a oa:Tag, cnt:ContentAsText ; ' +
 								'cnt:chars "'+labelText+'" . ';
-								
-		/* régi
-		var annotationString =	'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
-								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
-								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
-								
-								'fpanno:datasource a oa:SpecificResource . ' +
-								'fpanno:labellingAnnotation a oa:Annotation . ' +
-								'fpanno:labellingBody a oa:SpecificResource . ' +
-								
-								'<'+annoURI+'> a fpanno:labellingAnnotation ; ' +
-								'fpanno:hasTarget <'+docURI+'> ; ' +
-								'fpanno:hasBody <'+annoBodyURI+'> ; ' +
-								'fpanno:annotatedAt "'+currentDate+'" ; ' +
-								'fpanno:annotatedBy <'+userURI+'> . ' +
-								
-								'<'+annoBodyURI+'> a fpanno:labellingBody ; ' +
-								'fpanno:hasNewLabel <'+labelURI+'> . ' +
-								'<'+labelURI+'> a oa:Tag, cnt:ContentAsText ; ' + 
-								'cnt:chars "'+labelText+'" . ';*/
-		
-		if(action==1) {
-			sendAnnotation(annotationString);
 		}
 		else {
-			// -1 : delete label
+			annotationString +=	'fpanno:hasDeletedLabel _:4 . ' +
+								'_:4 a oa:Tag, cnt:ContentAsText ; ' +
+								'cnt:chars "'+labelText+'" . ';
 		}
+		sendAnnotation(annotationString);
 	}
 	
 });

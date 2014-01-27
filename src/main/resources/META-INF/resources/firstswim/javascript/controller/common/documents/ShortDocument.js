@@ -22,9 +22,7 @@ enyo.kind(
         shortDocumentClass: '',
         contentClass: '',
         openButtonClass: '',
-		labelIds: [],
 		labelTexts: [],
-		predictedLabelIds: [],
 		predictedLabelTexts: [],
 		labelListClass: '',
 		moreLabelsPanelClass: '',
@@ -49,7 +47,6 @@ enyo.kind(
 		this.$.content.setContent(this.shortContent);
 		this.$.content.setClasses(this.contentClass);
 		this.$.documentMenu.hide();
-		/* ...only for testing until I get the actual data*/
 		this.$.labelListContainer.createComponent({
 			kind: 'LabelList',
 			labelListId: this.url,

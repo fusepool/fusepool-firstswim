@@ -226,16 +226,11 @@ enyo.kind(
                     container: this.$.list,
                     url: documents[i].url,
                     title: documents[i].title,
-                    shortContent: documents[i].shortContent,
-                    /**
-                     * Adding the document type in the enyo component.
-                     */
+                    shortContent: cutStr(documents[i].shortContent,350),
                     type: documents[i].type,
                     parentFunction: 'openDoc',
-                    labelIds: [],
-                    labelTexts: [],
-					predictedLabelIds: ['asd','asdf'],
-					predictedLabelTexts: ['asd','asdf'],
+                    labelTexts: ['test1','test2'],
+					predictedLabelTexts: ['p-test1','p-test2'],
                     labelListClass: 'labelList',
                     moreLabelsPanelClass: 'moreLabelsPanel',
                     moreLabelInputClass: 'moreLabelInput',
@@ -304,15 +299,10 @@ enyo.kind(
                 container: this.$.list,
                 url: documents[i].url,
                 title: documents[i].title,
-                shortContent: documents[i].shortContent,
-                /**
-                 * Adding the document type in the enyo component.
-                 */
+                shortContent: cutStr(documents[i].shortContent,350),
                 type: documents[i].type,
                 parentFunction: 'openDoc',
-                labelIds: [],
                 labelTexts: [],
-				predictedLabelIds: [],
 				predictedLabelTexts: [],
                 labelListClass: 'labelList',
                 moreLabelsPanelClass: 'moreLabelsPanel',
@@ -355,7 +345,7 @@ enyo.kind(
      * @param {Number} click is it only displayed or clicked
      */
 	sendDocListAnnotation: function(docURI,docType,click) {
-		console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
+		// console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
 		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();

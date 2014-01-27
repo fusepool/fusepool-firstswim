@@ -222,21 +222,19 @@ jQuery(document).ready(function () {
 									GLOBAL.viewType='nGraph';
 
 									this.createComponent({
-											kind: 'NGraph',
-											name: 'nGraph',
-											openDocFunction: 'openDoc',
-											openDocEvent: 'ontap',
-											classes: 'nGraphPanel',
-											loaderClass: 'loader',
-											titleClass: 'nGraphMainTitle',
-											titleContent: 'Network graph ',
-											noDataLabel: 'No data available'
-										});
+										kind: 'NGraph',
+										name: 'nGraph',
+										openDocFunction: 'openDoc',
+										openDocEvent: 'ontap',
+										classes: 'nGraphPanel',
+										loaderClass: 'loader',
+										titleClass: 'nGraphMainTitle',
+										titleContent: 'Network graph ',
+										noDataLabel: 'No data available'
+									});
 										
 									this.render();
-									
 									this.search(this.searchWord);
-									
 								}
 							break;
 							case 'landscapeViewButton':
@@ -450,9 +448,8 @@ jQuery(document).ready(function () {
 								this.$.documents.startLoading();
 								this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
 							break;
-							case 'nGraph':
-								this.$.nGraph.startLoading();
-								this.$.nGraph.newGraph(searchWord);
+							case 'nGraph':					
+								this.$.nGraph.newGraph();	
 							break;
 							case 'landscape':
 								this.$.landscape.startLoading();
@@ -546,9 +543,6 @@ jQuery(document).ready(function () {
 						case 'documentList':
 							this.updateEntityList(rdf, this.searchWord);
 							this.updateDocumentList(rdf);
-						break;
-						case 'nGraph':
-							this.newNGraph(rdf);
 						break;
 						case 'landscape':
 							Fusepool.Landscaping.renderAll();
@@ -740,7 +734,8 @@ jQuery(document).ready(function () {
                         if (success) {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
-                                if(!isEmpty(row.entity)){
+								// if(!isEmpty(row.entity)){ 	// X branch
+                                if(!isEmpty(row.entity) && !isEmpty(row.type)){
                                     var type = row.type.value;
                                     var categoryName = type.substring(type.lastIndexOf('#')+1);
                                     result.push({entityId: row.id.value, entity: row.entity.value, value: categoryName, count: row.count.value, typeFacet: false});    
@@ -778,7 +773,6 @@ jQuery(document).ready(function () {
                     });
                     return checkedEntities;
                 },
-
 
                 /**
                  * This function search the checked entities in an rdf object and
@@ -833,15 +827,6 @@ jQuery(document).ready(function () {
                             }
                         }
                     }
-                },
-
-                /**
-                 * This function update the document list on the middle
-                 * @param {Object} rdf the rdf object which contains the new document list
-                 */
-                newNGraph: function(rdf){
-                    var documents = this.createDocumentList(rdf);
-                    this.$.nGraph.newGraph(documents, this.searchWord);
                 },
 
                 /**
@@ -902,7 +887,7 @@ jQuery(document).ready(function () {
                      while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
                       var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
                       hits.push(hit.nominalValue);
-                      console.log("Hit: " + hit.nominalValue);   
+                      console.log("Hit: " + hit.nominalValue);  
                       current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
                      }
                      //console.log(graph.toNT());
@@ -910,8 +895,6 @@ jQuery(document).ready(function () {
 
                     var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
                     querylist += 'SELECT * {';
-                    querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-                    querylist += '      ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';
                     querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
                     querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
                     querylist += '        filter ( lang(?title) = "en")';
@@ -919,7 +902,10 @@ jQuery(document).ready(function () {
                     querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
                     querylist += '        filter ( lang(?title) = "")';
                     querylist += '      }'
-                    querylist += '}'
+                    querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+                    // querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
+                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+                    querylist += '}';
 
                     
 
@@ -941,9 +927,10 @@ jQuery(document).ready(function () {
 
                               for(var i=0;i<results.length;i++){
                                   var row = results[i];
-                                  if(row.url.value!=hits[rank] ||
+                                  // if( row.url.value!=hits[rank] ||
+                                  if( !isEmpty(row.dtype) && (row.url.value!=hits[rank] ||
                                         row.dtype.value.indexOf("ecs") != -1 || 
-                                        row.dtype.value.indexOf("owl#A") != -1){
+                                        row.dtype.value.indexOf("owl#A") != -1)){
                                     continue;
                                   }
                                   // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
@@ -977,7 +964,6 @@ jQuery(document).ready(function () {
                           }
                         }
                     });
-                    //console.log("Documents: " + documents);
                     return documents;
                 },
 

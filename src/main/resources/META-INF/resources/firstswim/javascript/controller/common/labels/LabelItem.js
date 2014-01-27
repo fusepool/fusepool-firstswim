@@ -9,7 +9,6 @@ enyo.kind(
     style: 'float: left',
 
     published: {
-        labelId: '',
         labelText: '',
         labelType: '',
         labelClass: '',
@@ -55,10 +54,10 @@ enyo.kind(
 	 * to the server about this action.
      */
     deleteLabel: function(){
-        this.owner.owner[this.deleteFunction](this.labelId,this);
+        this.owner.owner[this.deleteFunction](this.labelText,this);
     },
 	
 	addPredictedLabel: function(){
-        this.owner.owner[this.addFunction](this.labelId,this.labelText,this);
+        this.owner.owner[this.addFunction](this.labelText,this);
 	}
 });

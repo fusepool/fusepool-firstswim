@@ -14,6 +14,7 @@ var CONSTANTS = {
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
+	GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
     ADDRESS_URL: BASE_URL + 'ecs/meta',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
@@ -177,7 +178,6 @@ function getRDFPropertyValue(rdf, propertyName){
  * @param {String} annotationString the annotation itself
  */
 function sendAnnotation(annotationString) {
-	//console.log(annotationString);
 	
 	var request = new enyo.Ajax({
 		method: 'POST',
@@ -189,15 +189,22 @@ function sendAnnotation(annotationString) {
 	});
 	request.go();
 	request.error(this, function(){
-		console.log("error");
+		// console.log("error");
 	});
 	request.response(this, function(inSender, inResponse) {
-		//console.log("success: "+inResponse);
+		// console.log("success: "+inResponse);
 	});
 }
 
 function getRandomId() {
 	return Math.floor(Math.random()*1000000000+1);
+}
+
+function cutStr(str,val) {
+	if(str.length>val) {
+		str = str.substring(0,val)+'&#8230;';
+	}
+	return str;
 }
 
 

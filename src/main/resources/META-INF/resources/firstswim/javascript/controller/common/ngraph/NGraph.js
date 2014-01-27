@@ -56,7 +56,7 @@ enyo.kind(
 	getGraphDefaults: function(propertyName) {
 		switch(propertyName) {
 			case 'animation': 
-				return { type: 'fade:seq', duration: 300, fps: 30, hideLabels: false };
+				return { type: 'replot', duration: 0, fps: 10, hideLabels: false };
 			break;
 			case 'edge': 
 				return { overridable: true, color: '#cadada', lineWidth:1 };
@@ -80,26 +80,100 @@ enyo.kind(
 	 * @param {String} searchWord a search term
 	 * @param {String} URI an entity that filters the result. "query" means no filter needed.
 	 */
-	search: function(searchWord, URI){
+	search: function(nodeObj,URI,level){
 		var main = this;
 		
 		var url = CONSTANTS.SEARCH_URL;
 		if(URI=="query") {
-			url+='?search='+searchWord;
+			url+='?search='+nodeObj.name;
+			this.owner.searchWord = nodeObj.name;
 		}
 		else {
 			url+='?search=&subject='+URI;
 		}		
 		url+='&offset=0&maxFacets=0&items=5';
 		
-		var documents = [];
 		var store = rdfstore.create();
 		store.load('remote', url, function(success) {
 			if(success) {
-				documents = main.owner.createDocumentList(store);
+				var documents = main.createDocumentList(store);
+				main.addDocNodes(documents,nodeObj,level);
 			}
-		});		
+		});
+	},
+	
+	/**
+	 * This function create the document list from the rdf object.
+	 * @param {Object} rdf the rdf object, which contains the documents
+	 * @returns {Array} the document list
+	 */
+	createDocumentList: function(rdf){
+		var documents = [];
+		var main = this;
+	  
+		//Getting the order of stuff
+		var hits = [];
+   
+		rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
+		rdf.rdf.setPrefix("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		var graph;
+		rdf.graph(function(success, things){graph = things;});
+		var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
+		var current = triples[0].object;
+
+		while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
+			var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
+			hits.push(hit.nominalValue);
+			// console.log("Hit: " + hit.nominalValue);  
+			current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
+		}
+
+
+		var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
+		querylist += 'SELECT * {';
+		querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
+		querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
+		querylist += '        filter ( lang(?title) = "en")';
+		querylist += '      } UNION {  ';
+		querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
+		querylist += '        filter ( lang(?title) = "")';
+		querylist += '      }'
+		querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+		querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+		querylist += '}';
+		
+		rdf.execute(querylist, function(success, results) {
+			if (success) {
+				for(var rank = 0; rank < hits.length; rank ++){
+				// console.log(results);
+				for(var i=0;i<results.length;i++){
+					var row = results[i];
+					/* if( !isEmpty(row.dtype) && (row.url.value!=hits[rank] ||
+					row.dtype.value.indexOf("ecs") != -1 || 
+					row.dtype.value.indexOf("owl#A") != -1)){
+					continue;
+					}*/
+					var title = '';
+					if(!isEmpty(row.title)){
+						title = row.title.value;
+					}
+					else {
+						title = 'Title not found';
+					}
+						documents.push({url: row.url.value, title: title});
+					}
+				}
+			}
+		});
 		return documents;
+	},
+	
+	/** */
+	addDocNodes: function(docNodes,nodeObj,level) {
+		for(var i=0; i<docNodes.length && i<GLOBAL.nodeLimit[level]; i++) {
+			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,100), children: [], data: { type: "document" }});
+			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
+		}
 	},
 	
 	/**
@@ -110,35 +184,33 @@ enyo.kind(
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
 	 */
 	buildGraphJSON: function(nodeObj,URI,level) {
+		var main = this;
 		if(level > 0 && nodeObj.data.type=="subject") {
-			nodeObj.name = getTitleByURI(URI);
-		}		
-		this.sendDocListAnnotation(URI,0);
+			nodeObj.name = cutStr(this.getTitleByURI(URI),100);
+		}
 		level++;
 		
 		if(level < 3) {
 			switch(nodeObj.data.type) {
 				case "query":
 				case "subject":
-					var docNodes = this.search(nodeObj.name,URI);
-					for(var i=0; i<docNodes.length && i<=GLOBAL.nodeLimit[level]; i++) {
-						var ind = nodeObj.children.push({ id: docNodes[i].url, name: docNodes[i].title, children: [], data: { type: "document" }});
-						this.buildGraphJSON(nodeObj.children[ind],docNodes[i].url,level);
-					}
+					this.search(nodeObj,URI,level);
 				break;
-				case "document":				
+				case "document":
 					var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
 						var subjNodes =  main.getSubjectConnections(success, store);
 						for(var i=0; i<subjNodes.length && i<=GLOBAL.nodeLimit[level]; i++) {
-							var ind = nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject" }});
-							this.buildGraphJSON(nodeObj.children[ind],subjNodes[i].url,level);
+							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject" }});
+							var ind = nodeObj.children.length-1;
+							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
 						}
 					});				
 				break;
 			}
 		}
+		this.redrawGraph();
 	},
 	
 	/**
@@ -173,16 +245,7 @@ enyo.kind(
 		var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 		var store = rdfstore.create();
 		store.load('remote', url, function(success) {
-			store.execute(query, function(success, results) {
-				if (success) {
-					for(var i=0;i<results.length;i++){
-						var row = results[i];
-						if(!isEmpty(row.title)) {
-							title=row.title;
-						}
-					}
-				}
-			});
+			title = getRDFPropertyValue(store, 'http://www.w3.org/2000/01/rdf-schema#label');
 		});
 		return title;
 	},
@@ -192,8 +255,8 @@ enyo.kind(
 	 * In case of the very first search, a completely new graph is being initialized.
 	 * @param {String} searchWord the search word
 	 */
-	newGraph: function(searchWord) {        
-        this.searchWord = searchWord;
+	newGraph: function() {
+        this.searchWord = this.owner.searchWord;
 		var main = this;
 		
 		if(isEmpty(this.graphJSON)) {
@@ -203,7 +266,7 @@ enyo.kind(
 				Navigation: main.getGraphDefaults('navigation'),
 				Node: main.getGraphDefaults('node'),
 				Edge: main.getGraphDefaults('edge'),
-				onBeforeCompute: function(node){ } , //onclick
+				onBeforeCompute: function(node){ } ,
 				onCreateLabel: function(domElement, node){  
 					domElement.innerHTML = node.name;  
 					domElement.onclick = function(){  
@@ -245,27 +308,19 @@ enyo.kind(
 				}  
 			});
 			
-			this.rGraph.loadJSON({ id: 'query', name: this.searchWord, children: [], data: { type: 'query' }});
-			
-			this.rGraph.graph.eachNode(function(n) {
-				var pos = n.getPos();
-				pos.setc(-100, -100);
-			});  
-			this.rGraph.compute('end');  
-			this.rGraph.fx.animate({  
-				modes:['polar'],
-				duration: 200
-			});
+			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query' }};
 		}
 		else {
 			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query' }};
-			this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 		}
 		
-		this.buildGraphJSON(this.rGraph.graph.getNode('query'),0,'query');
+		this.rGraph.loadJSON(this.graphJSON);
+		this.rGraph.compute();		
+		this.buildGraphJSON(this.graphJSON,'query',0);
+	},
+	
+	redrawGraph: function() {
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
-		
-		this.$.loader.hide();
 	},
 
     /**
@@ -279,37 +334,14 @@ enyo.kind(
     onNodeClick: function(node, inEvent){
 		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type }};
 		this.graphJSON = centre;
-		this.buildGraphJSON(centre, node.id, 0, node.data.type);
+		this.buildGraphJSON(centre, node.id, 0);
 		
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 		
 		if(node.id!='query') {
 			this.owner[this.openDocFunction](node.id, inEvent);
-			this.sendDocListAnnotation(node.id,'true');
 		}
     },
-	
-	/*
-    updateGraphJSON: function(centre){
-		var main = this;
-		$.each(centre.adjacencies, function( index, value ) {
-			var child = { id: value.nodeFrom.id, name: value.nodeFrom.name, children: [] };
-			this.graphJSON.children.push(child);
-			
-			main.setNodeConnections(child.id);
-		});
-    },*/
-	/*
-	deleteNode: function(nodeId) {
-		var n = this.rGraph.graph.getNode(nodeId);
-        if(!n) return;
-        var subnodes = n.getSubnodes(0);
-        var map = [];
-        for(var i=0;i<subnodes.length;i++) {
-            map.push(subnodes[i].id);
-        }
-        this.rGraph.op.removeNode(map.reverse(), this.getGraphDefaults('animation') );
-    },*/
 	
 	/**
 	* This functions shows a message in the network-graph panel
@@ -320,50 +352,4 @@ enyo.kind(
         this.$.nGraphDiv.setContent(message);
     },
 	
-    /**
-     * This function prepares an annotation about the activities related to the
-	 * document list: which documents the user got back using what search query;
-	 * whether the user clicked on the documents. Then calls a function which
-	 * actually sends the request to the server.
-     * @param {String} docURI the URI of the document
-     * @param {Number} click is it only displayed or clicked
-     */
-	sendDocListAnnotation: function(docURI,click) {
-		var src = 'unknown';
-		if(docURI.indexOf('/pmc/') > 0) {
-			src = 'pubmed';
-		}
-		else if (docURI.indexOf('/patent/') > 0) {
-			src = 'patent';
-		}
-		
-		var annoURI = 'http://fusepool.info/annostore/reranking/'+getRandomId();
-		var annoBodyURI = 'http://fusepool.info/annostore/reranking/body/'+getRandomId();
-		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/anonymous';
-		
-		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' + 
-								'@prefix oa: <http://www.w3.org/ns/oa#> . ' + 								
-								'@prefix fpanno: <http://fusepool.eu/ontologies/annostore#> . ' + 
-								
-								'fpanno:datasource a oa:SpecificResource . ' +
-								'fpanno:patent a fpanno:datasource . ' +
-								'fpanno:pubmed a fpanno:datasource . ' +
-								'fpanno:rerankingAnnotation a oa:Annotation . ' + 
-								
-								'<'+annoURI+'> a fpanno:rerankingAnnotation ; ' +
-								'oa:hasTarget fpanno:'+src+' ; ' +
-								'oa:hasBody <'+annoBodyURI+'> ; ' +
-								'oa:annotatedAt "'+currentDate+'" ; ' +
-								'oa:annotatedBy <'+userURI+'> . ' +
-								
-								'<'+annoBodyURI+'> a ' +
-								'fpanno:rerankingBody ; ' +
-								'fpanno:hasQuery "'+this.searchWord+'" ; ' +
-								'fpanno:wasClicked "'+click+'"^^xsd:boolean ; ' + 
-								'fpanno:withPatentBoost 0.00 ; ' +
-								'fpanno:withPubmedBoost 0.00 . ';
-
-		sendAnnotation(annotationString);
-	}
 });
