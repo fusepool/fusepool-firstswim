@@ -52,6 +52,7 @@ enyo.kind(
 	/**
 	 * This function returns default values for the graph.
 	 * @param {String} propertyName name of the property (animation/edge/node/navigation/background)
+	 * @returns {Object} the value
 	 */
 	getGraphDefaults: function(propertyName) {
 		switch(propertyName) {
@@ -76,7 +77,7 @@ enyo.kind(
 	},
 	
 	/**
-	 * This function runs a search for documents and returns an array of doc URIs.
+	 * This function runs a search for documents.
 	 * @param {String} searchWord a search term
 	 * @param {String} URI an entity that filters the result. "query" means no filter needed.
 	 */
@@ -168,25 +169,33 @@ enyo.kind(
 		return documents;
 	},
 	
-	/** */
+	/**
+	* This function gets the documents and pushes them to the nodeObj
+	* as child nodes, and calls the buildGraphJSON to continue building
+	* the graph on the given branch. 
+	 * @param {Object} docNodes retrieved documents
+	 * @param {Object} nodeObj points to the parent node
+	 * @param {Number} level the current level
+	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
 		for(var i=0; i<docNodes.length && i<GLOBAL.nodeLimit[level]; i++) {
-			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,100), children: [], data: { type: "document" }});
+			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
 	},
 	
 	/**
-	 * This function builds up an object recursively until it reaches the desired level. 
-	 * This level is currently 2, the centre node is level 0. This object will be used
-	 * to feed the graph. Important: It's necessary to have one base node already in the graph.
+	 * This function builds an object recursively until it reaches the desired level. 
+	 * It's set to 2, the centre node is level 0. This object will be used to feed the 
+	 * graph. Important: The centre node must be initialized already before calling
+	 * this function.
 	 * @param {String} searchWord a search term
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
 	 */
 	buildGraphJSON: function(nodeObj,URI,level) {
 		var main = this;
 		if(level > 0 && nodeObj.data.type=="subject") {
-			nodeObj.name = cutStr(this.getTitleByURI(URI),100);
+			nodeObj.name = cutStr(this.getTitleByURI(URI),60);
 		}
 		level++;
 		
@@ -214,9 +223,11 @@ enyo.kind(
 	},
 	
 	/**
-	 * Filters an rdf object and returns an array of URIs found in dc:subject
-	 * @param {Boolean} success the search query was success or not
+	 * This function filters an rdf object and returns an array of URIs found in
+	 * dc:subject
+	 * @param {Boolean} success whether the search query was success or not
 	 * @param {Object} rdf the response rdf object
+	 * @returns {Array} URIs of the connected subjects
 	 */
 	getSubjectConnections: function(success, rdf) {
 		var subjectConnections = [];
@@ -239,6 +250,7 @@ enyo.kind(
 	/**
 	 * This function queries the platform using a URI for getting the title of the entity.
 	 * @param {String} URI the entity's URI which title is needed
+	 * @returns {String} title of the given entity
 	 */
 	getTitleByURI: function(URI) {
 		var title = '?';
@@ -319,6 +331,9 @@ enyo.kind(
 		this.buildGraphJSON(this.graphJSON,'query',0);
 	},
 	
+	/** 
+	 * This function redraws the graph using the object in the graphJSON variable.
+	 */
 	redrawGraph: function() {
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
 	},

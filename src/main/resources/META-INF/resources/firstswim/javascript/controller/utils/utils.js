@@ -175,7 +175,7 @@ function getRDFPropertyValue(rdf, propertyName){
 
 /**
  * This function puts an annotation to the annostore
- * @param {String} annotationString the annotation itself
+ * @param {String} annotationString body of the annotation
  */
 function sendAnnotation(annotationString) {
 	
@@ -196,10 +196,13 @@ function sendAnnotation(annotationString) {
 	});
 }
 
-function getRandomId() {
-	return Math.floor(Math.random()*1000000000+1);
-}
-
+/**
+ * This function cuts the given string at the given length
+ * if the string is longer than this length, adds an ellipsis 
+ * character to the end, then returns the new string.
+ * @param {String} str the string
+ * @param {Number} val cutting length
+ */
 function cutStr(str,val) {
 	if(str.length>val) {
 		str = str.substring(0,val)+'&#8230;';
