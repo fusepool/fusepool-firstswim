@@ -211,7 +211,7 @@ enyo.kind(
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
 						var subjNodes =  main.getSubjectConnections(success, store);					
-						for(var i=0; i<subjNodes.length && i<=( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
+						for(var i=0; i<subjNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
 							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
 							var ind = nodeObj.children.length-1;
 							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
