@@ -30,6 +30,7 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
+		this.canvasResizer(); 
     },
 
     components: [
@@ -37,7 +38,7 @@ enyo.kind(
 		{ name: 'loader' },
 		{ tag: 'div', name: 'nGraphDiv', published: { id: 'nGraphDiv'}, classes: 'nGraphDiv' }
     ],
-
+		
     /**
      * This function runs, when the user starts a search. It clears the current 
      * content and shows the loader.
@@ -178,7 +179,7 @@ enyo.kind(
 	 * @param {Number} level the current level
 	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
-		for(var i=0; i<docNodes.length && i<=( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
+		for(var i=0; i<docNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
 			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
@@ -367,4 +368,16 @@ enyo.kind(
         this.$.nGraphDiv.setContent(message);
     },
 	
+	/**
+	 * This function defines a function on window resize event which 
+	 * resizes the graph canvas to the proper size.
+	 */
+	canvasResizer: function() {
+		var main=this;
+		$(window).resize(function() {
+			if(!isEmpty(main.rGraph)) {
+				main.rGraph.canvas.resize($('.nGraphDiv').width(), $('.nGraphDiv').height()); 
+			}
+		});
+	}
 });
