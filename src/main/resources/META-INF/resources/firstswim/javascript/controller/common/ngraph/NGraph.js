@@ -289,10 +289,12 @@ enyo.kind(
 							}
 						});  
 					};
-					domElement.onmouseover = function(){  
+					domElement.onmouseover = function(){ 
+						domElement.style.color = '#09a7a9';
 						main.onNodeHover(node, 'ontap');
 					};
 					domElement.onmouseout = function(){  
+						domElement.style.color = '#555';
 						main.onNodeLeave(node, 'ontap');
 					};  
 				},
@@ -304,10 +306,10 @@ enyo.kind(
 					style.maxWidth = "130px";
 					
 					if(node._depth == 0) {
-						style.fontSize = "12px";  
+						style.fontSize = "13px";  
 					}
 					else {  
-						style.fontSize = "11px";
+						style.fontSize = "12px";
 					}
 					var left = parseInt(style.left);  
 					var w = domElement.offsetWidth;  
