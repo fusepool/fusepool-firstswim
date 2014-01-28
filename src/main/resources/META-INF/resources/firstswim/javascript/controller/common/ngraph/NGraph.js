@@ -180,7 +180,7 @@ enyo.kind(
 	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
 		for(var i=0; i<docNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
-			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document" }});
+			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document", $type: "square", $color: "#239fa0" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
 	},
@@ -212,7 +212,7 @@ enyo.kind(
 					store.load('remote', url, function(success) {
 						var subjNodes =  main.getSubjectConnections(success, store);					
 						for(var i=0; i<subjNodes.length && i<=( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
-							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject" }});
+							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
 							var ind = nodeObj.children.length-1;
 							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
 						}
@@ -321,10 +321,10 @@ enyo.kind(
 				}  
 			});
 			
-			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query' }};
+			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query', $color: "#c5c5c5" }};
 		}
 		else {
-			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query' }};
+			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query', $color: "#c5c5c5" }};
 		}
 		
 		this.rGraph.loadJSON(this.graphJSON);
@@ -348,7 +348,7 @@ enyo.kind(
 	 * @param {Event} inEvent the click event
      */
     onNodeClick: function(node, inEvent){
-		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type }};
+		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type, $type: node.data.$type, $color: node.data.$color }};
 		this.graphJSON = centre;
 		this.buildGraphJSON(centre, node.id, 0);
 		
