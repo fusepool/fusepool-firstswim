@@ -254,7 +254,7 @@ enyo.kind(
 	 * @returns {String} title of the given entity
 	 */
 	getTitleByURI: function(URI) {
-		var title = '?';
+		var title = '(?)';
 		var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 		var store = rdfstore.create();
 		store.load('remote', url, function(success) {
@@ -347,10 +347,21 @@ enyo.kind(
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
     },
 	
+	/**
+	 * This function clears the timeout that has been set 
+	 * for node hover.
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
+	 */
 	onNodeLeave: function(node, inEvent) {
 		clearTimeout(this.timeout);
 	},
 	
+	/**
+	 * This function sets a 1 sec timeout before displaying details.
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
+	 */
 	onNodeHover: function(node, inEvent) {
 		if(node.id!='query') {
 			var main = this;
