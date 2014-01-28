@@ -288,45 +288,35 @@ enyo.kind(
 								main.onNodeClick(node, 'ontap');
 							}
 						});  
+					};
+					domElement.onmouseover = function(){  
+						main.onNodeHover(node, 'ontap');
+					};
+					domElement.onmouseout = function(){  
+						main.onNodeLeave(node, 'ontap');
 					};  
 				},
 				onPlaceLabel: function(domElement, node){  
 					var style = domElement.style;  
 					style.display = '';  
 					style.cursor = 'pointer';  
+					style.color = "#555";  
+					style.maxWidth = "130px";
 					
 					if(node._depth == 0) {
 						style.fontSize = "12px";  
-						style.color = "#555";  
-						style.maxWidth = "130px";
-					}
-					else if (node._depth == 1) {  
-						style.fontSize = "11px";  
-						style.color = "#555";
-						style.maxWidth = "130px";
-					  
-					}
-					else if(node._depth == 2 || node._depth == 3){  
-						style.fontSize = "10px";  
-						style.color = "#555";  
-						style.maxWidth = "130px";
-					  
 					}
 					else {  
-						style.display = 'none';  
+						style.fontSize = "11px";
 					}
 					var left = parseInt(style.left);  
 					var w = domElement.offsetWidth;  
 					style.left = (left - w / 2) + 'px';  
 				}  
 			});
-			
-			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query', $color: "#c5c5c5" }};
-		}
-		else {
-			this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query', $color: "#c5c5c5" }};
 		}
 		
+		this.graphJSON = { id: 'query', name: this.searchWord, children: [], data: { type: 'query', $color: "#c5c5c5" }};
 		this.rGraph.loadJSON(this.graphJSON);
 		this.rGraph.compute();		
 		this.buildGraphJSON(this.graphJSON,'query',0);
@@ -353,11 +343,22 @@ enyo.kind(
 		this.buildGraphJSON(centre, node.id, 0);
 		
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
-		
-		if(node.id!='query') {
-			this.owner[this.openDocFunction](node.id, inEvent);
-		}
     },
+	
+	onNodeLeave: function(node, inEvent) {
+		clearTimeout(this.timeout);
+	},
+	
+	onNodeHover: function(node, inEvent) {
+		if(node.id!='query') {
+			var main = this;
+			clearTimeout(this.timeout);
+			this.timeout = setTimeout(function() {
+				main.owner[main.openDocFunction](node.id, inEvent);
+				return false;
+			},1000);
+		}
+	},
 	
 	/**
 	* This functions shows a message in the network-graph panel
