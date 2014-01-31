@@ -229,8 +229,6 @@ enyo.kind(
                     shortContent: cutStr(documents[i].shortContent,350),
                     type: documents[i].type,
                     parentFunction: 'openDoc',
-                    labelTexts: ['test1','test2'],
-					predictedLabelTexts: ['p-test1','p-test2'],
                     labelListClass: 'labelList',
                     moreLabelsPanelClass: 'moreLabelsPanel',
                     moreLabelInputClass: 'moreLabelInput',

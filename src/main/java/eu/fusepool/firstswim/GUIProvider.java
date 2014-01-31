@@ -1,17 +1,25 @@
 package eu.fusepool.firstswim;
 
-import java.io.IOException;
+import java.util.concurrent.locks.Lock;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import org.apache.clerezza.jaxrs.utils.form.FormFile;
-import org.apache.clerezza.jaxrs.utils.form.MultiPartBody;
 import org.apache.clerezza.rdf.core.MGraph;
+import org.apache.clerezza.rdf.core.Resource;
+import org.apache.clerezza.rdf.core.TypedLiteral;
 import org.apache.clerezza.rdf.core.UriRef;
+import org.apache.clerezza.rdf.core.access.LockableMGraph;
+import org.apache.clerezza.rdf.core.access.NoSuchEntityException;
+import org.apache.clerezza.rdf.core.access.TcManager;
 import org.apache.clerezza.rdf.core.impl.PlainLiteralImpl;
+import org.apache.clerezza.rdf.core.sparql.ParseException;
+import org.apache.clerezza.rdf.core.sparql.QueryParser;
+import org.apache.clerezza.rdf.core.sparql.ResultSet;
+import org.apache.clerezza.rdf.core.sparql.SolutionMapping;
+import org.apache.clerezza.rdf.core.sparql.query.SelectQuery;
 import org.apache.clerezza.rdf.ontologies.RDF;
 import org.apache.clerezza.rdf.ontologies.RDFS;
 import org.apache.clerezza.rdf.utils.GraphNode;
@@ -23,14 +31,11 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.stanbol.commons.indexedgraph.IndexedMGraph;
 import org.apache.stanbol.commons.web.viewable.RdfViewable;
-import org.apache.stanbol.enhancer.servicesapi.Chain;
 import org.apache.stanbol.enhancer.servicesapi.ChainManager;
-import org.apache.stanbol.enhancer.servicesapi.ContentItem;
 import org.apache.stanbol.enhancer.servicesapi.ContentItemFactory;
-import org.apache.stanbol.enhancer.servicesapi.ContentSource;
-import org.apache.stanbol.enhancer.servicesapi.EnhancementException;
 import org.apache.stanbol.enhancer.servicesapi.EnhancementJobManager;
-import org.apache.stanbol.enhancer.servicesapi.impl.ByteArraySource;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +62,11 @@ public class GUIProvider {
     
     @Reference
     private ChainManager chainManager;
+    
+    @Reference
+    private TcManager tcManager;
+    
+    private UriRef ANNOTATION_GRAPH_NAME = new UriRef("urn:x-localinstance:/fusepool/annotation.graph");
     
     @Activate
     protected void activate(ComponentContext context) {
@@ -91,6 +101,81 @@ public class GUIProvider {
         return new RdfViewable("GUI.ftl", node, GUIProvider.class);
     }
     
-   
-    
+    @GET
+    @Path("getlabels")
+    public String serviceEntry(@Context final UriInfo uriInfo,
+            @QueryParam("iri") final UriRef iri) throws Exception {
+        JSONArray labels = new JSONArray();
+        try {
+            //Get TcManager
+            tcManager = TcManager.getInstance();
+
+            //Get the graph by its URI
+            LockableMGraph graph = null;
+            try {
+                graph = tcManager.getMGraph(ANNOTATION_GRAPH_NAME);
+            } catch (NoSuchEntityException e) {
+                log.error("Enhancement Graph must be existing", e);
+            }
+            
+            String sparqlQuery =    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                                +   "PREFIX xsd: <http://www.w3.org/2011/XMLSchema#>"
+                                +   "PREFIX cnt: <http://www.w3.org/2011/content#>"
+                                +   "PREFIX oa: <http://www.w3.org/ns/oa#>"
+                                +   "PREFIX fpanno: <http://fusepool.eu/ontologies/annostore#>"
+                                +   "SELECT ?label ?x1 WHERE { "
+                                +   "?x1 fpanno:hasTarget <" + iri.getUnicodeString() + "> ."
+                                +   "?x1 fpanno:hasBody ?x2 ."
+                                +   "?x2 fpanno:hasNewLabel ?x3 ."
+                                +   "?x3 rdf:type oa:Tag ."
+                                +   "?x3 cnt:chars ?label ."
+                                +   "}";
+            
+            //Parse the SPARQL query
+            SelectQuery selectQuery = null;
+            try {
+                selectQuery = (SelectQuery) QueryParser.getInstance().parse(sparqlQuery);
+            } catch (ParseException e) {
+                log.error("Cannot parse the SPARQL query", e);
+            }
+
+            if (graph != null) {
+                Lock l = graph.getLock().readLock();
+                l.lock();
+                try {
+
+                    //Execute the SPARQL query
+                    ResultSet resultSet = tcManager.executeSparqlQuery(selectQuery, graph);
+
+                    while (resultSet.hasNext()) {
+                        SolutionMapping mapping = resultSet.next();
+                        try {
+                            Resource r = mapping.get("label");
+                            if (r instanceof TypedLiteral) {
+                                TypedLiteral label = (TypedLiteral) r;
+                                labels.add(label.getLexicalForm());
+                            } else {
+                                PlainLiteralImpl label = (PlainLiteralImpl) r;
+                                labels.add(label.getLexicalForm());
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            break;
+                        }
+                    }
+                } finally {
+                    l.unlock();
+                }
+            } else {
+                log.error("There is no registered graph with given uri: " + ANNOTATION_GRAPH_NAME.getUnicodeString());
+            }
+        } catch (Exception e) {
+            log.error("Error", e);
+        }
+        
+        JSONObject json = new JSONObject();
+        json.put("labels", labels);
+        
+        return json.toString();
+    }
 }

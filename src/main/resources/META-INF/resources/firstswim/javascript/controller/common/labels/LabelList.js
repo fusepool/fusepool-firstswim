@@ -60,39 +60,38 @@ enyo.kind(
     },
 	
 	initLabels: function() {
-	
-		// var request = new enyo.Ajax({
-			// method: 'GET',
-			// url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
-			// handleAs: 'text',
-			// headers: { Accept : '*/*', 'Content-Type' : 'application/x-www-form-urlencoded'},
-			// published: { timeout: 60000 }
-		// });
-		// request.go();
-		// request.error(this, function(){
-			// console.log("error");
-		// });
-		// request.response(this, function(inSender, inResponse) {
-			// console.log("success: "+inResponse);
-		// });
-
-		// TODO: query the AnnoStore for actual labels
-		// push the result to this.labelTexts
-		// then:
-		/*
-        for(var i=0;i<this.labelTexts.length;i++){
-			this.$.labelList.createComponent({
-				kind: 'LabelItem',
-				name: this.labelTexts[i],
-				labelText: this.labelTexts[i],
-				labelType: 'userDefined',
-				labelClass: 'labelDiv',
-				labelTextClass: 'labelText',
-				labelDeleteClass: 'labelDeleteButton',
-				deleteFunction: 'deleteLabel'
-			});
-        }
-		*/
+		var main = this;
+		
+		var request = new enyo.Ajax({
+			method: 'GET',
+			url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
+			handleAs: 'text',
+			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded'},
+			published: { timeout: 60000 }
+		});
+		request.go();
+		request.error(this, function(){
+			console.log("error");
+		});
+		request.response(this, function(inSender, inResponse) {
+			var obj = JSON.parse(inResponse);
+			if(!isEmpty(obj)) {
+				for(var i=0;i<obj.labels.length;i++){
+					main.labelTexts.push(obj.labels[i]);
+					main.$.labelList.createComponent({
+						kind: 'LabelItem',
+						name: obj.labels[i],
+						labelText: obj.labels[i],
+						labelType: 'userDefined',
+						labelClass: 'labelDiv',
+						labelTextClass: 'labelText',
+						labelDeleteClass: 'labelDeleteButton',
+						deleteFunction: 'deleteLabel'
+					});
+					main.$.labelList.render();
+				}
+			}
+		});
 	},
 	
 	initPredictedLabels: function() {
@@ -207,9 +206,7 @@ enyo.kind(
 		var ind = $.inArray(labelText,this.labelTexts);
 		if(ind>-1) {
 			this.sendLabelListAnnotation(this.labelListId,this.labelTexts[ind],-1);
-			
 			this.labelTexts.splice(ind,1);
-
 			labelElement.destroy();
 		}
     },
