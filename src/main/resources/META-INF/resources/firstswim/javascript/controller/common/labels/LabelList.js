@@ -28,7 +28,7 @@ enyo.kind(
 		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton enyo-unselectable', content: 'Add label', ontap: 'addMoreLabelsBtnPress' },
 		{ tag: 'div', name: 'moreLabelsPanel', components: [
 			{kind: "onyx.InputDecorator", name: 'moreLabelInputDec', components: [
-				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name', onkeydown: 'addOnEnter' }
+				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name', onkeydown: 'onKeydown' }
 			]},
 			{ tag: 'div', name: 'addLabelButton', content: 'Add label', ontap: 'addNewLabel', classes: 'enyo-unselectable' },
 			{ tag: 'div', name: 'hideAddingPanelButton', content: 'Close', ontap: 'hideAddingPanelBtnPress', classes: 'enyo-unselectable' }
@@ -130,9 +130,14 @@ enyo.kind(
 		this.$.moreLabelsPanel.hide();		
 	},
 	
-	addOnEnter: function(inSender, inEvent) {
-		if (inEvent.keyCode === 13) {
-			this.addNewLabel();
+	onKeydown: function(inSender, inEvent) {
+		switch(inEvent.keyCode) {
+			case 13:	// Enter
+				this.addNewLabel();
+				break;
+			case 27: 	// Escape
+				this.hideAddingPanelBtnPress();
+				break;
 		}
 	},
 	
