@@ -323,8 +323,8 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user would like to open a document to
-     * preview. It calls a parent function, which can call the preview box to
+     * This function is called when the user opens a document to preview.
+     * It calls a parent function, which can call the preview box to
      * open a document.
      * @param {String} url the request URL of the preview opening
      * @param {Object} inEvent the user mouse event (it is important in the desktop version)

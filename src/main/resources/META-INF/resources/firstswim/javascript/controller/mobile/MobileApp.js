@@ -97,13 +97,14 @@ jQuery(document).ready(function () {
                  * If the screen is little, shows only the right panel.
                  * @param {String} documentURL the document what user want to see
                  */
-                openDoc: function(documentURL){
+                openDoc: function(documentURL,type){
                     if(this.isMobileSize()){
                         this.$.panels.setIndex(2);
                     }
                     this.$.rightPanel.openDoc(documentURL);
+                    this.$.middlePanel.$.documents.sendDocListAnnotation(documentURL,type,'true');
                 },
-
+				
                 /**
                  * This function update the "open" buttons, like the
                  * "entities button" on the middle
@@ -470,33 +471,7 @@ jQuery(document).ready(function () {
                  * @returns {Array} the document list
                  */
                 createDocumentList: function(rdf){
-				/*
-                    var documents = [];
-                    var main = this;
-                    var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
-                    query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
-                    query += '}';
-                    rdf.execute(query, function(success, results) {
-                        if (success) {
-                            for(var i=0;i<results.length;i++){
-                                var row = results[i];
-                                if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-                                    var content = row.content.value;
-                                    var title = '';
-                                    if(!isEmpty(row.title)){
-                                        title = row.title.value;
-                                    }
-                                    if(!main.containsDocument(documents, content, title)){
-                                        documents.push({url: row.url.value, shortContent: content, title: title});
-                                    }
-                                }
-                            }
-                        }
-                    });
-                    return documents;
-				*/
-				var documents = [];
+					var documents = [];
 					var main = this;
 					var hits = [];
 
@@ -541,7 +516,6 @@ jQuery(document).ready(function () {
 										/*if(row.url.value!=hits[rank] || 
 										row.dtype.value.indexOf("ecs") != -1 || 
 										row.dtype.value.indexOf("owl#A") != -1 ){ */
-										console.log('!='+row.url.value);
 										continue;
 									}
 									// if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
