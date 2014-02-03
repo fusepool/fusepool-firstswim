@@ -241,7 +241,7 @@ enyo.kind(
             }
             this.$.loader.hide();
             this.$.list.render();
-            this.$.activateSliders.show();           
+            this.$.activateSliders.show();
 			if(documents.length<GLOBAL.items) {
 				this.$.moreButton.hide();
 			}
@@ -314,11 +314,11 @@ enyo.kind(
         }
         this.$.loader.hide();
         this.$.list.render();
-		if(documents.length>0 && documents.length%GLOBAL.items==0) {
-			this.$.moreButton.show();
+		if(documents.length<GLOBAL.items) {
+			this.$.moreButton.hide();
 		}
 		else {
-			this.$.moreButton.hide();
+			this.$.moreButton.show();
 		}
     },
 
