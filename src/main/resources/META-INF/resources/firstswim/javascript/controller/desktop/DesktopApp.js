@@ -865,11 +865,11 @@ jQuery(document).ready(function () {
                     return result;
                 },
 
-                /**
-                 * This function create the document list from the rdf object.
-                 * @param {Object} rdf the rdf object, which contains the documents
-                 * @returns {Array} the document list
-                 */
+				/**
+				 * This function creates ordered document list from the rdf object.
+				 * @param {Object} rdf the rdf object, which contains the documents
+				 * @returns {Array} the document list
+				 */
 				createDocumentList: function(rdf){
 					var documents = [];
 					var main = this;
@@ -916,7 +916,6 @@ jQuery(document).ready(function () {
 										/*if(row.url.value!=hits[rank] || 
 										row.dtype.value.indexOf("ecs") != -1 || 
 										row.dtype.value.indexOf("owl#A") != -1 ){ */
-										console.log('!='+row.url.value);
 										continue;
 									}
 									// if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
