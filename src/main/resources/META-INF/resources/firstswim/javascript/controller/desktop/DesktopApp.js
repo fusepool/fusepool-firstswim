@@ -870,102 +870,81 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object, which contains the documents
                  * @returns {Array} the document list
                  */
-                createDocumentList: function(rdf){
-                    var documents = [];
-                    var main = this;
-                  
-                  //Getting the order of stuff
-                  var hits = [];
-               
-                    rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
-                    rdf.rdf.setPrefix("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-                    var graph;
-                    rdf.graph(function(success, things){graph = things;});
-                    var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
-                    var current = triples[0].object
+				createDocumentList: function(rdf){
+					var documents = [];
+					var main = this;
+					var hits = [];
 
-                     while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
-                      var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
-                      hits.push(hit.nominalValue);
-                      console.log("Hit: " + hit.nominalValue);  
-                      current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
-                     }
-                     //console.log(graph.toNT());
+					rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
+					rdf.rdf.setPrefix("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+					var graph;
+					rdf.graph(function(success, things){graph = things;});
+					var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
+					var current = triples[0].object;
 
+					while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
+						var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
+						hits.push(hit.nominalValue);
+						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
+					}
 
-                    var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
-                    querylist += 'SELECT * {';
-                    querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
-                    querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
-                    querylist += '        filter ( lang(?title) = "en")';
-                    querylist += '      } UNION {  ';
-                    querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
-                    querylist += '        filter ( lang(?title) = "")';
-                    querylist += '      }'
-                    querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-                    // querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
-                    querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-                    querylist += '}';
+					var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
+					querylist += 'SELECT * {';
+					querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
+					querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
+					querylist += '        filter ( lang(?title) = "en")';
+					querylist += '      } UNION {  ';
+					querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
+					querylist += '        filter ( lang(?title) = "")';
+					querylist += '      }'
+					querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+					// querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
+					querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
+					querylist += '}';
 
-                    
+					/* This is the tentative to iterate the list at the API level to have it in ORDER 
+						var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
+						var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray();
+					*/
 
-              
-
-                   /** This is the tentative to iterate the list at the API level to have it in ORDER 
-                   
-                    var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
-                    var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray();
-                    */
-                   
-                    rdf.execute(querylist, function(success, results) {
-                        if (success) {
-//                          console.log("DOC: " + results[0].title.value);
-//                          console.log("DOC: " + results[1].title.value);
-
-                            for(var rank = 0; rank < hits.length; rank ++){
-
-
-                              for(var i=0;i<results.length;i++){
-                                  var row = results[i];
-                                  // if( row.url.value!=hits[rank] ||
-                                  if( !isEmpty(row.dtype) && (row.url.value!=hits[rank] ||
-                                        row.dtype.value.indexOf("ecs") != -1 || 
-                                        row.dtype.value.indexOf("owl#A") != -1)){
-                                    continue;
-                                  }
-                                  // if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-                                  // var content = row.content.value;
-                                  var content;
-                                  if(isEmpty(row.content)) {
-                                          content = row.preview.value;
-                                  }
-                                  else {
-                                          content = row.content.value;
-                                  }
-                                  var title = '';
-                                  if(!isEmpty(row.title)){
-                                          title = row.title.value;
-                                  }
-                                  else {
-                                          title = 'Title not found';
-                                  }
-                                  var dtype = '';
-                                  if(!isEmpty(row.dtype)){
-                                    console.log("length of dtype: " + row.dtype.length);
-                                          dtype = row.dtype.value;
-                                  }
-                                  else {
-                                          dtype = 'Type not found';
-                                  }
-                                  if(!main.containsDocument(documents, content, title)){
-                                          documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
-                                  }
-                            }
-                          }
-                        }
-                    });
-                    return documents;
-                },
+					rdf.execute(querylist, function(success, results) {
+						if (success) {
+							for(var rank=0; rank<hits.length; rank++){
+								for(var i=0; i<results.length; i++){
+									var row = results[i];
+									if(row.url.value!=hits[rank]) {
+										/*if(row.url.value!=hits[rank] || 
+										row.dtype.value.indexOf("ecs") != -1 || 
+										row.dtype.value.indexOf("owl#A") != -1 ){ */
+										console.log('!='+row.url.value);
+										continue;
+									}
+									// if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
+									// var content = row.content.value;
+									var content;
+									if(isEmpty(row.content)) {
+										content = row.preview.value;
+									}
+									else {
+										content = row.content.value;
+									}
+									var title = 'Title not found';
+									if(!isEmpty(row.title)){
+										title = row.title.value;
+									}
+									var dtype = 'Type not found';
+									if(!isEmpty(row.dtype)){
+										dtype = row.dtype.value;
+									}
+									if(!main.containsDocument(documents, content, title)){
+										documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
+									}
+								}
+							}
+						}
+					});
+					return documents;
+				},
 
                 /**
                  * This function decide that a document list contains a document,
