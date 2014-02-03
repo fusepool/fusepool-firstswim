@@ -112,24 +112,6 @@ enyo.kind(
 	createDocumentList: function(rdf){
 		var documents = [];
 		var main = this;
-	  
-		//Getting the order of stuff
-		var hits = [];
-   
-		rdf.rdf.setPrefix("ecs","http://fusepool.eu/ontologies/ecs#");
-		rdf.rdf.setPrefix("rdf","http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-		var graph;
-		rdf.graph(function(success, things){graph = things;});
-		var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
-		var current = triples[0].object;
-
-		while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:nil")))){
-			var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:first")), null).toArray()[0].object;
-			hits.push(hit.nominalValue);
-			// console.log("Hit: " + hit.nominalValue);  
-			current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
-		}
-
 
 		var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
 		querylist += 'SELECT * {';
@@ -146,24 +128,13 @@ enyo.kind(
 		
 		rdf.execute(querylist, function(success, results) {
 			if (success) {
-				for(var rank = 0; rank < hits.length; rank ++){
-				// console.log(results);
 				for(var i=0;i<results.length;i++){
 					var row = results[i];
-					/* if( !isEmpty(row.dtype) && (row.url.value!=hits[rank] ||
-					row.dtype.value.indexOf("ecs") != -1 || 
-					row.dtype.value.indexOf("owl#A") != -1)){
-					continue;
-					}*/
-					var title = '';
+					var title = 'Title not found';
 					if(!isEmpty(row.title)){
 						title = row.title.value;
 					}
-					else {
-						title = 'Title not found';
-					}
-						documents.push({url: row.url.value, title: title});
-					}
+					documents.push({url: row.url.value, title: title});
 				}
 			}
 		});
