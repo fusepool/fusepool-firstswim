@@ -555,8 +555,7 @@ jQuery(document).ready(function () {
                  */
                 containsDocument: function(documents, content, title, url){
                     for(var i=0;i<documents.length;i++){
-                        // if(documents[i].shortContent === content && documents[i].title === title){
-                        if(documents[i].url === url){
+                        if(documents[i].url === url || (documents[i].shortContent === content && documents[i].title === title)){
                             return true;
                         }
                     }
