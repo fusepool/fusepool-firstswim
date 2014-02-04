@@ -10,8 +10,6 @@ enyo.kind(
 
     published: {
 		labelListId: '', // docURI
-        labelTexts: [],
-        predictedLabelTexts: [],
 		moreLabelsPanelClass: '',
 		moreLabelInputClass: '',
 		moreLabelInputDecClass: '',
@@ -47,7 +45,6 @@ enyo.kind(
         this.inherited(arguments);
 
 		this.initLabels();
-		this.initPredictedLabels();
 		
         this.$.moreLabelsPanel.setClasses(this.moreLabelsPanelClass);		
         this.$.moreLabelInput.setClasses(this.moreLabelInputClass);		
@@ -60,8 +57,10 @@ enyo.kind(
     },
 	
 	initLabels: function() {
-		var main = this;
+		this.labelTexts=[];
+		this.predictedLabelTexts=[];
 		
+		var main = this;
 		var request = new enyo.Ajax({
 			method: 'GET',
 			url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
@@ -76,12 +75,12 @@ enyo.kind(
 		request.response(this, function(inSender, inResponse) {
 			var obj = JSON.parse(inResponse);
 			if(!isEmpty(obj)) {
-				for(var i=0;i<obj.labels.length;i++){
-					main.labelTexts.push(obj.labels[i]);
+				for(var i=0;i<obj.existingLabels.length;i++){
+					main.labelTexts.push(obj.existingLabels[i]);
 					main.$.labelList.createComponent({
 						kind: 'LabelItem',
-						name: obj.labels[i],
-						labelText: obj.labels[i],
+						name: obj.existingLabels[i],
+						labelText: obj.existingLabels[i],
 						labelType: 'userDefined',
 						labelClass: 'labelDiv',
 						labelTextClass: 'labelText',
@@ -90,33 +89,22 @@ enyo.kind(
 					});
 					main.$.labelList.render();
 				}
+				for(var i=0;i<obj.predictedLabels.length;i++){
+					main.labelTexts.push(obj.predictedLabels[i]);
+					main.$.predictedLabelList.createComponent({
+						kind: 'LabelItem',
+						name: obj.predictedLabels[i],
+						labelText: obj.predictedLabels[i],
+						labelType: 'prediction',
+						labelClass: 'labelDiv',
+						labelTextClass: 'labelText',
+						labelAddClass: 'labelAddButton',
+						deleteFunction: 'deleteLabel'
+					});
+					main.$.predictedLabelList.render();
+				}
 			}
 		});
-	},
-	
-	initPredictedLabels: function() {
-
-		// TODO: query the REST endpoint for predicted labels
-		// push the result to this.predictedLabelTexts	
-		// if(this.predictedLabelTexts.length==0) {
-			// this.$.predictedLabelListName.hide();
-		// }
-		// else {
-		/*
-			for(var i=0;i<this.predictedLabelTexts.length;i++){
-				this.$.predictedLabelList.createComponent({
-					kind: 'LabelItem',
-					name: this.predictedLabelTexts[i],
-					labelText: this.predictedLabelTexts[i],
-					labelType: 'prediction',
-					labelClass: 'predictedLabelDiv',
-					labelTextClass: 'labelText',
-					labelAddClass: 'labelAddButton',
-					addFunction: 'addPredictedLabel'
-				});
-			}
-		*/
-		// }
 	},
 	
 	addMoreLabelsBtnPress: function() {
@@ -142,6 +130,8 @@ enyo.kind(
 	},
 	
 	addNewLabel: function() {
+		console.log(this);
+		console.log(this.labelTexts);
 		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
