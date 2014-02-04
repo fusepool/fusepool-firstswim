@@ -134,7 +134,9 @@ enyo.kind(
 					if(!isEmpty(row.title)){
 						title = row.title.value;
 					}
-					documents.push({url: row.url.value, title: title});
+					if(!main.owner.containsDocument(documents, row.url.value)){
+						documents.push({url: row.url.value, title: title});
+					}
 				}
 			}
 		});

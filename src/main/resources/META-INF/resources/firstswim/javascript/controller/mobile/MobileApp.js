@@ -535,7 +535,7 @@ jQuery(document).ready(function () {
 									if(!isEmpty(row.dtype)){
 										dtype = row.dtype.value;
 									}
-									if(!main.containsDocument(documents, content, title)){
+									if(!main.containsDocument(documents, content, title, row.url.value)){
 										documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
 									}
 								}
@@ -553,9 +553,10 @@ jQuery(document).ready(function () {
                  * @param {String} title title of the other document
                  * @returns {Boolean} true, if the list contains, false otherwise
                  */
-                containsDocument: function(documents, content, title){
+                containsDocument: function(documents, content, title, url){
                     for(var i=0;i<documents.length;i++){
-                        if(documents[i].shortContent === content && documents[i].title === title){
+                        // if(documents[i].shortContent === content && documents[i].title === title){
+                        if(documents[i].url === url){
                             return true;
                         }
                     }
