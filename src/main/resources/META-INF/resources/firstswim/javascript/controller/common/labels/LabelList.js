@@ -129,10 +129,7 @@ enyo.kind(
 		}
 	},
 	
-	addNewLabel: function() {
-		console.log(this);
-		console.log(this.labelTexts);
-		
+	addNewLabel: function() {		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
 			
