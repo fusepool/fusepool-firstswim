@@ -26,6 +26,9 @@
     <script src="landscaping/js/jsondata.js" type="text/javascript"></script>
     <!-- handlebars -->
     <script src="firstswim/javascript/handlebars/handlebars.js" type="text/javascript"></script>
+    <!-- uduvudu -->
+    <script src="firstswim/javascript/uduvudu/matcher_firstswim.js" type="text/javascript"></script>
+    <script src="firstswim/javascript/uduvudu/uduvudu.js" type="text/javascript"></script>
     <!-- enyojs -->
     <script src="firstswim/javascript/enyo/enyo.js" type="text/javascript"></script>
     <script src="firstswim/javascript/lib/layout/package.js" type="text/javascript"></script>
@@ -39,7 +42,7 @@
   <body>
       <div id="main"></div>
       <div id="menu"></div>
-      <div id="templates"></div>
+      <div id="visualizer"></div>
   </body>
 
 </html>

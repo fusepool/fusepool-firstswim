@@ -93,13 +93,11 @@ enyo.kind(
     },
 
     /**
-     * This function render the preview document content with Handlebars template.
+     * This function render the preview document content through the Uduvudu Library
      * @param {String} doc the document
      */
     renderPreviewTemplate: function(doc){
-        var templateScript = $("#preview-template").html(); 
-        var template = Handlebars.compile(templateScript);
-        $("#" + this.$.content.getId()).append(template(doc));
+        $("#" + this.$.content.getId()).append(uduvudu.process(doc));
     },
 
     /**
@@ -121,31 +119,6 @@ enyo.kind(
     },
 
     /**
-     * This functions gets the details of a document and preprocess for direct 
-     * use by the template. 
-     * @param {Object} rdf the data as an rdf object
-     */
-    processDocDetails: function(rdf){
-//        console.log('Preview details coming soon with uduvudu.');
-//        var rdfObj = rdf.databank.dump();
-//        var docName = _.find(_.keys(rdfObj), function (item) {return ((item.search("/doc/patent/") > 0) || (item.search("/doc/pmc/") > 0));});
-//        var doc = _.pick(rdfObj, docName);
-//
-//        var getName = /(#|\/)([^#\/]*)$/;
-//        var docDetails = _.object(_.toArray(_.map(doc[docName], function (item,index) {
-//            var arr = [];
-//            regex = getName.exec(index);
-//            if (regex) {arr[0] = regex[2];} else {arr[0] = index;};
-//            arr[1] = _.map(item, function(subitem){return subitem.value;});
-//            return arr;
-//        })));
-//
-//        docDetails['documentURL'] = [docName];
-//        return docDetails;
-          return null;
-    },
-
-    /**
      * This function runs when the response of the open doc ajax event is arrived.
      * It processes the response data, delete the bad type rows, parse it and call
      * the document show function.
@@ -153,53 +126,7 @@ enyo.kind(
      * @param {String} rdf the rdf object
      */
     processOpenDocResponse: function(success, rdf){
-        var docDetails = this.processDocDetails(rdf); 
-        var docText = this.getContent(rdf);
-        if(docText === ''){
-            docText = this.noDataLabel;
-        } else {
-            docText = replaceAll(docText, '\n', '<br />', false);
-        }
-        var title = this.getTitle(rdf);
-        this.showDoc({content: docText, title: title, details: docDetails});
-    },
-
-    /**
-     * This function search the content in the rdf object.
-     * @param {Object} rdf the rdf object
-     * @returns {String} content, might by empty
-     */
-    getContent: function(rdf){
-        var content = '';
-        var main = this;
-
-        var query = 'SELECT * { ?s <http://purl.org/dc/terms/abstract> ?content1';
-        query += '      OPTIONAL { ?s <http://rdfs.org/sioc/ns#content> ?content2 }';
-        query += '}';
-        rdf.execute(query, function(success, results) {
-            if (success) {
-				if(results.length > 0) {
-					var row = results[0];
-					//if(!isEmpty(row.content1) && (row.content1.lang === main.lang || isEmpty(row.content1.lang))){
-					//	content = row.content1.value;
-					//} else {
-					//	content = row.content2.value;
-					//}
-					if(!isEmpty(row.content1)) {
-						content = row.content1.value;
-					}
-					else{
-						if(!isEmpty(row.content2)) {
-							content = row.content2.value;
-						}
-						else {
-							content = 'No preview found'
-						}
-					}
-				}
-            }
-        });
-        return content;
+        this.showDoc(rdf);
     },
 
     /**

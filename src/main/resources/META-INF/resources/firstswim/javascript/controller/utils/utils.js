@@ -14,7 +14,7 @@ var CONSTANTS = {
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
-	GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
+    GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
     ADDRESS_URL: BASE_URL + 'ecs/meta',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
@@ -26,7 +26,8 @@ var CONSTANTS = {
 	// IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
     CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
     TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
-	IMG_PATH: BASE_URL + 'firstswim/images/'
+    VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
+    IMG_PATH: BASE_URL + 'firstswim/images/'
 };
 
 /**
