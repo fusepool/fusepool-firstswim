@@ -22,7 +22,8 @@ var CONSTANTS = {
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
 
     // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
-    // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html', 	
+    // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
+    // VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
     // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
     CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
     TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
@@ -206,7 +207,12 @@ function sendAnnotation(annotationString) {
  */
 function cutStr(str,val) {
 	if(str.length>val) {
-		str = str.substring(0,val)+'&#8230;';
+		str = str.substring(0,val);
+		var lastSpace = str.lastIndexOf(" ");
+		if (lastSpace > 0){
+			str = str.substring(0,lastSpace+1);	
+		}
+		str = str+'&#8230;';
 	}
 	return str;
 }
