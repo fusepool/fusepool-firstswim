@@ -35,8 +35,8 @@ body{
 	left: 0px;
 	right: 0px;
 }
-/* ----------- Toolbar ----------- */
 
+/* ----------- Toolbar ----------- */
 .toolbar {
 	position: relative;
 	top: 0px;
@@ -237,9 +237,11 @@ body{
     vertical-align: middle;
     width: 15px;
 }
+
 .dictionaryCheckbox[checked] {
     background-position: 0 -15px;
 }
+
 .dictionaryCheckbox[disabled] {
     opacity: 0.4;
 }
@@ -396,11 +398,11 @@ body{
 }
 
 .labelDiv {
-	background-color: rgba(98, 162, 22, 0.2);
+    background-color: rgba(20, 175, 255, 0.3)
 }
 
 .predictedLabelDiv {
-	background-color: rgba(96, 136, 100, 0.2);
+    background-color: rgba(28, 215, 50, 0.25);
 }
 
 .labelText {
@@ -756,7 +758,7 @@ body{
 }
 
 .detailsDiv{
-	background-color: rgba(99, 166, 167, 0.15);
+    background-color: rgba(99, 166, 167, 0.2);
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -919,8 +921,8 @@ body{
     top: -15px;
     cursor: pointer;
 }
-/* ------ DocumentList Toolbar ------ */
 
+/* ------ DocumentList Toolbar ------ */
 .documentListMobileToolbar{
 	background: #eaeaea;
 	background-image: none;
