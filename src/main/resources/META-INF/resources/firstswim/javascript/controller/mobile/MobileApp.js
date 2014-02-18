@@ -569,10 +569,10 @@ jQuery(document).ready(function () {
         
         function renderTemplateDiv(){
             var innerDiv = document.createElement('div');
-            innerDiv.id = 'templates';
+            innerDiv.id = 'visualizer';
             document.body.appendChild(innerDiv);
             // load the preview templates
-            jQuery("#templates").load(CONSTANTS.TEMPLATES_URL);
+            jQuery("#visualizer").load(CONSTANTS.VISUALIZER_URL);
         }
 
     }

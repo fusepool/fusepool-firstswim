@@ -977,7 +977,7 @@ jQuery(document).ready(function () {
         
         function renderTemplateDiv(){
             // load the preview templates
-            jQuery("#templates").load(CONSTANTS.TEMPLATES_URL);
+            jQuery("#visualizer").load(CONSTANTS.VISUALIZER_URL);
         }
     }
 	
