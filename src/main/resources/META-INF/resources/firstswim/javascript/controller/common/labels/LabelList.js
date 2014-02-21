@@ -89,19 +89,24 @@ enyo.kind(
 					});
 					main.$.labelList.render();
 				}
-				for(var i=0;i<obj.predictedLabels.length;i++){
-					main.labelTexts.push(obj.predictedLabels[i]);
-					main.$.predictedLabelList.createComponent({
-						kind: 'LabelItem',
-						name: obj.predictedLabels[i],
-						labelText: obj.predictedLabels[i],
-						labelType: 'prediction',
-						labelClass: 'labelDiv',
-						labelTextClass: 'labelText',
-						labelAddClass: 'labelAddButton',
-						deleteFunction: 'deleteLabel'
-					});
-					main.$.predictedLabelList.render();
+				if(obj.predictedLabels.length>0) {
+					for(var i=0;i<obj.predictedLabels.length;i++){
+						main.predictedLabelTexts.push(obj.predictedLabels[i]);
+						main.$.predictedLabelList.createComponent({
+							kind: 'LabelItem',
+							name: obj.predictedLabels[i],
+							labelText: obj.predictedLabels[i],
+							labelType: 'prediction',
+							labelClass: 'labelDiv',
+							labelTextClass: 'labelText',
+							labelAddClass: 'labelAddButton',
+							deleteFunction: 'deleteLabel'
+						});
+						main.$.predictedLabelList.render();
+					}
+				}
+				else {
+					main.$.predictedLabelListName.hide();
 				}
 			}
 		});
