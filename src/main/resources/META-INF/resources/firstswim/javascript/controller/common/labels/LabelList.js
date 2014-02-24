@@ -97,7 +97,7 @@ enyo.kind(
 							name: obj.predictedLabels[i],
 							labelText: obj.predictedLabels[i],
 							labelType: 'prediction',
-							labelClass: 'labelDiv',
+							labelClass: 'predictedLabelDiv',
 							labelTextClass: 'labelText',
 							labelAddClass: 'labelAddButton',
 							deleteFunction: 'deleteLabel'
