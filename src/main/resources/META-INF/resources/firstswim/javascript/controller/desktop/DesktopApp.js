@@ -567,7 +567,7 @@ jQuery(document).ready(function () {
                 updateClassifiedDocList: function(rdf){
                     var documents = this.createClassifiedDocList(rdf);
                     this.$.documents.updateList(documents, this.searchWord);
-                    this.$.documents.documentCount = this.getDocumentsCount(rdf);
+                    this.$.documents.documentsCount = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts();
                 },
 
@@ -836,7 +836,7 @@ jQuery(document).ready(function () {
                 updateDocumentList: function(rdf){
                     var documents = this.createDocumentList(rdf);
                     this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
-                    this.$.documents.documentCount = this.getDocumentsCount(rdf);
+                    this.$.documents.documentsCount = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts();
                 },
 
