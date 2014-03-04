@@ -74,6 +74,7 @@ enyo.kind(
 		});
 		request.response(this, function(inSender, inResponse) {
 			var obj = JSON.parse(inResponse);
+			// obj=JSON.parse('{"existingLabels":["barriers","sodium","vascular","yea","25","endothelium","helium","asd"],"predictedLabels":["go","fa"]}');
 			if(!isEmpty(obj)) {
 				for(var i=0;i<obj.existingLabels.length;i++){
 					main.labelTexts.push(obj.existingLabels[i]);
@@ -100,7 +101,9 @@ enyo.kind(
 							labelClass: 'predictedLabelDiv',
 							labelTextClass: 'labelText',
 							labelAddClass: 'labelAddButton',
-							deleteFunction: 'deleteLabel'
+							labelDeleteClass: 'labelDeleteButton',
+							deleteFunction: 'deleteLabel',
+							addFunction: 'addPredictedLabel'
 						});
 						main.$.predictedLabelList.render();
 					}
@@ -205,6 +208,17 @@ enyo.kind(
 			this.sendLabelListAnnotation(this.labelListId,this.labelTexts[ind],-1);
 			this.labelTexts.splice(ind,1);
 			labelElement.destroy();
+		}
+		else {
+			var ind = $.inArray(labelText,this.predictedLabelTexts);
+			if(ind>-1) {
+				this.sendLabelListAnnotation(this.labelListId,this.predictedLabelTexts[ind],-1);
+				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
+				labelElement.destroy();
+			}
 		}
     },
 	

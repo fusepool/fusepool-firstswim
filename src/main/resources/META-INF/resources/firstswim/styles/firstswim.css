@@ -412,7 +412,7 @@ body{
 .labelDeleteButton, .labelAddButton {
 	color: #555555;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	margin: 0px 2px 0px 4px;
 }

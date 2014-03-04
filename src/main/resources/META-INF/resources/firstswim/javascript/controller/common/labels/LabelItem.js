@@ -27,10 +27,7 @@ enyo.kind(
         this.$.labelAddButton.setClasses(this.labelAddClass);
 		this.setClasses(this.labelClass);
 		
-		if(this.labelType=='prediction') {
-			this.$.labelDeleteButton.destroy();
-		}
-		else {
+		if(this.labelType!='prediction') {
 			this.$.labelAddButton.destroy();
 		}
     },
@@ -45,14 +42,10 @@ enyo.kind(
 	
     components: [
 		{ tag: 'span', name: 'labelText' },
-		{ tag: 'span', name: 'labelDeleteButton', onclick: 'deleteLabel', content: 'x' },
-		{ tag: 'span', name: 'labelAddButton', onclick: 'addPredictedLabel', content: '+' }	
+		{ tag: 'span', name: 'labelAddButton', onclick: 'addPredictedLabel', content: '✔' },
+		{ tag: 'span', name: 'labelDeleteButton', onclick: 'deleteLabel', content: '✗' }
     ],
 
-    /**
-     * This function deletes a label from the GUI and sends an annotation
-	 * to the server about this action.
-     */
     deleteLabel: function(){
         this.owner.owner[this.deleteFunction](this.labelText,this);
     },
