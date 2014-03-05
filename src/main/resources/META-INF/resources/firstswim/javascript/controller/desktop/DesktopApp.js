@@ -887,25 +887,24 @@ jQuery(document).ready(function () {
 						hits.push(hit.nominalValue);
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
-
+					
 					var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
-					querylist += 'SELECT * {';
-					querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
-					querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
-					querylist += '        filter ( lang(?title) = "en")';
-					querylist += '      } UNION {  ';
-					querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
-					querylist += '        filter ( lang(?title) = "")';
-					querylist += '      }'
-					querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
-					// querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
-					querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
-					querylist += '}';
-
+						querylist += 'SELECT * {';
+						querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
+						querylist += '        filter ( lang(?title) = "en")';
+						querylist += '      } UNION {  ';
+						querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
+						querylist += '        filter ( lang(?title) = "")';
+						querylist += '      }'
+						querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?abst } .';
+						querylist += '      OPTIONAL { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview } .';
+						// querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
+						querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype } .';
+						querylist += '}';						
+					
 					/* This is the tentative to iterate the list at the API level to have it in ORDER 
 						var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
-						var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray();
-					*/
+						var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve("rdf:rest")), null).toArray(); */
 
 					rdf.execute(querylist, function(success, results) {
 						if (success) {
@@ -918,33 +917,43 @@ jQuery(document).ready(function () {
 										row.dtype.value.indexOf("owl#A") != -1 ){ */
 										continue;
 									}
-									// if(!isEmpty(row.content) && (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + '' === main.lang)){
-									// var content = row.content.value;
-									var content;
-									if(isEmpty(row.content)) {
-										content = row.preview.value;
-									}
-									else {
-										content = row.content.value;
-									}
-									var title = 'Title not found';
+									
+									//// TITLE ////
+									var title = '[Title not found]';
 									if(!isEmpty(row.title)){
 										title = row.title.value;
 									}
-									var dtype = 'Type not found';
+									
+									//// SHORT CONTENT ////									
+									var shortContent = '';
+									if(!isEmpty(row.abst)) {
+										shortContent = row.abst.value;
+									}
+									else if(!isEmpty(row.preview)) {
+										shortContent = row.preview.value;
+									}
+									else {
+										var exclude = ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://purl.org/dc/terms/title'];
+										shortContent = getAPropertyValue(rdf, row.url.value, exclude);
+									}
+									
+									//// DOCTYPE ////
+									var dtype = '[Type not found]';
 									if(!isEmpty(row.dtype)){
 										dtype = row.dtype.value;
 									}
-									if(!main.containsDocument(documents, content, title, row.url.value)){
-										documents.push({url: row.url.value, shortContent: content, title: title, type: dtype});
+									
+									if(!main.containsDocument(documents, shortContent, title, row.url.value)){
+										documents.push({url: row.url.value, shortContent: shortContent, title: title, type: dtype});
 									}
 								}
 							}
 						}
 					});
+					
 					return documents;
 				},
-
+				
                 /**
                  * This function decide that a document list contains a document,
                  * which has a same content and same title with another.

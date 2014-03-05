@@ -175,6 +175,52 @@ function getRDFPropertyValue(rdf, propertyName){
     return result;
 }
 
+
+/**
+ * This function gets an rdf object, an existing subject and an exclude array 
+ * and gives back a value from a random property that has been found in the rdf
+ * connected to the given subject and does not exist in the exclude array.
+ * @param {Object} rdf the rdf object
+ * @param {String} subject URI of the subject
+ * @param {Array} exclude array of properties to exclude
+ * @returns {String} the value of a found property 
+ */
+function getAPropertyValue(rdf, subject, exclude) {
+	var prop = '';
+	var query = 'SELECT * { <'+subject+'> ?p ?o }';
+	rdf.execute(query, function(success, results) {
+		if (success && results.length > 0) {
+			for(var i=0;i < results.length;i++) {
+				if($.inArray(results[i].p.value, exclude)==-1) {
+					prop = results[i].o.value;
+					break;
+				}
+			}
+		}
+	});
+	return prop;
+}
+
+/**
+ * This function gets an rdf object, an existing subject and returns
+ * with all the available properties it has in the rdf object.
+ * @param {Object} rdf the rdf object
+ * @param {String} subject URI of the subject
+ * @returns {Array} the value of a found property 
+ */
+function getRDFProperties(rdf, subject) {
+	var props = [];
+	var query = 'SELECT * { <'+subject+'> ?p ?o }';
+	rdf.execute(query, function(success, results) {
+		if (success && results.length > 0) {
+			for(var i=0;i<results.length;i++) {
+				props.push(results[i].p.value);
+			}
+		}
+	});
+	return props;
+}
+
 /**
  * This function puts an annotation to the annostore
  * @param {String} annotationString body of the annotation
