@@ -242,12 +242,7 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.activateSliders.show();
-			if(documents.length<GLOBAL.items) {
-				this.$.moreButton.hide();
-			}
-			else {
-				this.$.moreButton.show();
-			}
+			this.$.moreButton.show();
         } else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
@@ -312,12 +307,7 @@ enyo.kind(
         }
         this.$.loader.hide();
         this.$.list.render();
-		if(documents.length<GLOBAL.items) {
-			this.$.moreButton.hide();
-		}
-		else {
-			this.$.moreButton.show();
-		}
+		this.$.moreButton.show();
     },
 
     /**
