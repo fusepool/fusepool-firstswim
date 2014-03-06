@@ -349,6 +349,10 @@ body{
     width: 96px;
 }
 
+.docListMessageLabel{
+	margin-top: 20px;
+}
+
 .documentListScroll {
     background-color: #dddddd;
     border: 1px #cccccc solid;

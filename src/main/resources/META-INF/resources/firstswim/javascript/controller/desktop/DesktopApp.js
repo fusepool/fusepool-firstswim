@@ -539,14 +539,21 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
-					switch(GLOBAL.viewType) {
-						case 'documentList':
-							this.updateEntityList(rdf, this.searchWord);
-							this.updateDocumentList(rdf);
-						break;
-						case 'landscape':
-							Fusepool.Landscaping.renderAll();
-						break;
+					if(success) {
+						switch(GLOBAL.viewType) {
+							case 'documentList':
+								this.updateEntityList(rdf, this.searchWord);
+								this.updateDocumentList(rdf);
+							break;
+							case 'landscape':
+								Fusepool.Landscaping.renderAll();
+							break;
+						}
+					}
+					else {
+						this.$.documents.updateList([], this.searchWord, this.checkedEntities);
+						this.$.documents.documentsCount = 0;
+						this.$.documents.updateCounts();
 					}
 				},
 
@@ -834,10 +841,15 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
-                    var documents = this.createDocumentList(rdf);
-                    this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
                     this.$.documents.documentsCount = this.getDocumentsCount(rdf);
                     this.$.documents.updateCounts();
+					if(this.$.documents.documentsCount>0) {
+						var documents = this.createDocumentList(rdf);
+					}
+					else {
+						var documents = [];
+					}
+					this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
                 },
 
                 /**

@@ -259,7 +259,7 @@ enyo.kind(
      */
     showMessage: function(message){
         this.$.list.destroyClientControls();
-        this.$.list.setContent(message);
+		this.$.list.createComponent({ content: message,	classes: 'docListMessageLabel'});
     },
 
     /**
