@@ -300,9 +300,15 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
-                    this.updateEntityList(rdf, this.searchWord);
-                    this.updateDocumentList(rdf);
-                },
+					if(success) {
+						this.updateEntityList(rdf, this.searchWord);
+						this.updateDocumentList(rdf);
+					}
+					else {
+						this.$.middlePanel.$.documents.updateList([], this.searchWord);
+						this.$.middlePanel.updateCounts(0);
+					}
+				},
 
                 /**
                  * This functions group and sort the entities update the entity list on the left side
@@ -436,10 +442,15 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the rdf object which contains the new document list
                  */
                 updateDocumentList: function(rdf){
-                    var documents = this.createDocumentList(rdf);
-                    this.$.middlePanel.updateDocuments(documents);
                     var count = this.getDocumentsCount(rdf);
-                    this.$.middlePanel.updateCounts(count);
+                    this.$.middlePanel.$.documents.updateCounts(count);
+					if(count>0) {
+						var documents = this.createDocumentList(rdf);
+					}
+					else {
+						var documents = [];
+					}
+                    this.$.middlePanel.updateDocuments(documents);
                 },
 
                 /**
