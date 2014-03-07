@@ -44,6 +44,9 @@ import org.json.simple.JSONObject;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.xerox.services.HubEngine;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Upload file for which the enhancements are to be computed
@@ -71,11 +74,31 @@ public class GUIProvider {
     @Reference
     private TcManager tcManager;
     
+    private LockableMGraph graph;
+    
+    private final double THRESHOLD = 0.0;
+    
+    @Reference
+    private HubEngine predictionHub;
+    
     private UriRef ANNOTATION_GRAPH_NAME = new UriRef("urn:x-localinstance:/fusepool/annotation.graph");
     
     @Activate
     protected void activate(ComponentContext context) {
         log.info("The firstswim file provider service is being activated");
+        
+        tcManager = TcManager.getInstance();
+//        TcAccessController tca;
+        
+        try {
+            graph = tcManager.getMGraph(ANNOTATION_GRAPH_NAME);
+//            tca = new TcAccessController(tcManager);
+//            tca.setRequiredReadPermissions(ANNOTATION_GRAPH_NAME, Collections.singleton((Permission) new TcPermission(
+//                    "urn:x-localinstance:/fusepool/content.graph", "read")));
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+        }
     }
     
     @Deactivate
@@ -116,23 +139,7 @@ public class GUIProvider {
         JSONArray existingLabels = new JSONArray();
         JSONArray predictedLabels = new JSONArray();
         
-        try {
-            // get TcManager instance
-            tcManager = TcManager.getInstance();
-            TcAccessController tca;
-            
-            // get the graph by its URI
-            LockableMGraph graph = null;
-            try {
-                graph = tcManager.getMGraph(ANNOTATION_GRAPH_NAME);
-//                tca = new TcAccessController(tcManager);
-//                tca.setRequiredReadPermissions(ANNOTATION_GRAPH_NAME,Collections.singleton((Permission)new TcPermission(
-//                    "urn:x-localinstance:/content.graph", "read"))
-//                );
-            } catch (NoSuchEntityException e) {
-                log.error("Enhancement Graph must be existing", e);
-            }
-            
+        try {            
             // query all labels for a given URI
             String sparqlQuery =    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
                                 +   "PREFIX xsd: <http://www.w3.org/2011/XMLSchema#>"
@@ -161,9 +168,11 @@ public class GUIProvider {
             if (graph != null) {
                 Lock l = graph.getLock().readLock();
                 l.lock();
+
                 try {
                     // execute the SPARQL query
                     ResultSet resultSet = tcManager.executeSparqlQuery(selectQuery, graph);
+
                     // object for handling labels
                     Labels labels = new Labels();       
                     String label, date, status;
@@ -210,14 +219,49 @@ public class GUIProvider {
                         }
                     }
                     // add existing labels to json response
-                    for (String lbl : labels.GetLabels()) {
+                    for (String lbl : labels.GetNewLabels()) {
                         existingLabels.add(lbl);
                     }
                     
-                    ////////////////////////////////////////
-                    // TODO add predicted labels to response
-                    ////////////////////////////////////////
+                    // get all user defined labels
+                    List<String> allUserLabels = labels.GetAllLabels();
+            
+                    // add the document URI to a hashmap 
+                    HashMap<String,String> params = new HashMap<String, String>();
+                    params.put("docURI", iri.getUnicodeString());
                     
+                    String predictedLabel;
+                    double predictedScore;
+                    
+                    // get predicted labels
+                    String predictionResut = predictionHub.predict("LUP34",params);       
+                    System.out.println("predictionResut: " + predictionResut);  
+                    if(predictionResut != null){
+                        // if the prediction string is an error do not do anything
+                        if(!predictionResut.equals("__error__")){
+                            // splitting ## separated prediction result string and adding them to json response
+                            for (String lbl : predictionResut.split("##")) {
+                                // get the first part of each string which contains the label (for now we do not need the confidence score which is the second part)
+                                String[] lblsrt = lbl.split("__");
+                                predictedLabel = lblsrt[0];
+                                predictedScore = 0.0;
+                                // try parsing the score value, otherwise it is set to 0.0
+                                try{
+                                    predictedScore = Double.parseDouble(lblsrt[1]);
+                                } catch(NumberFormatException e){
+                                    log.warn("Warning: {}", e.getMessage());
+                                }
+                                // only use label if the confidence score is larger than a predefined threshold
+                                if(predictedScore > THRESHOLD){
+                                    // only use predicted label if there is no matching user defined label (deleted or new)
+                                    System.out.println("allUserLabels:" + allUserLabels.toString());
+                                    if(!allUserLabels.contains(predictedLabel)){
+                                        predictedLabels.add(predictedLabel);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 } finally {
                     l.unlock();
                 }                
@@ -225,6 +269,7 @@ public class GUIProvider {
                 log.error("There is no registered graph with given uri: " + ANNOTATION_GRAPH_NAME.getUnicodeString());
             }
         } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
             log.error("Error", e);
         }
         // add labels to response

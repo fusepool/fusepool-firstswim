@@ -38,7 +38,7 @@ public class Labels {
      * Get most recent labels and filter deleted labels.
      * @return 
      */
-    public List<String> GetLabels(){    
+    public List<String> GetNewLabels(){    
         List<LabelMetaData> mostRecentLabels;
         List<LabelMetaData> temp;
         
@@ -66,5 +66,37 @@ public class Labels {
             }
         }
         return enabledLabels;
+    }
+    
+    /**
+     * Get most recent labels, whether it is deleted or new label.
+     * @return 
+     */
+    public List<String> GetAllLabels(){    
+        List<LabelMetaData> mostRecentLabels;
+        List<LabelMetaData> temp;
+        
+        Set set = labels.entrySet();
+        Iterator iterator = set.iterator();
+        mostRecentLabels = new ArrayList<LabelMetaData>();
+        
+        while(iterator.hasNext()){
+            Map.Entry me = (Map.Entry)iterator.next();
+            temp = (List<LabelMetaData>) me.getValue();
+            // sort labels by date
+            Collections.sort(temp);
+            // get the most recent label
+            mostRecentLabels.add(temp.get(0));
+        }
+        // sort labels by date
+        Collections.sort(mostRecentLabels);
+        // reverse the ordering
+        Collections.reverse(mostRecentLabels);
+        // get labels that are not deleted labels
+        List<String> allLabels = new ArrayList<String>();
+        for (LabelMetaData label : mostRecentLabels) {
+            allLabels.add(label.GetLabel());
+        }
+        return allLabels;
     }
 }
