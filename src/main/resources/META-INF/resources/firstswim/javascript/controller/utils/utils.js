@@ -1,4 +1,6 @@
+
 var GLOBAL= {
+	currentUser: 'anonymous',
 	maxFacets: 10,
 	items: 10,
 	nodeLimit: [1,5,3],
@@ -17,6 +19,8 @@ var CONSTANTS = {
     GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
     ADDRESS_URL: BASE_URL + 'ecs/meta',
+	SELFREG_URL: BASE_URL + 'selfregistration/',
+	CURRENTUSER_URL: BASE_URL + 'selfregistration/currentUser',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
@@ -30,6 +34,25 @@ var CONSTANTS = {
     VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
     IMG_PATH: BASE_URL + 'firstswim/images/'
 };
+
+/**
+* This function queries the platform for the current, logged in user
+* and sets the currentUser GLOBAL variable
+*/
+function setCurrentUser() {
+	var request = new enyo.Ajax({
+		method: 'GET',
+		url: CONSTANTS.CURRENTUSER_URL,
+		handleAs: 'text',
+		headers: { Accept: 'text/plain', 'Content-Type' : 'text/turtle'},
+		postBody: null,
+		published: { timeout: 60000 }
+	});
+	request.go();
+	request.response(this, function(inSender, inResponse) {
+		GLOBAL.currentUser = inResponse;
+	});
+}
 
 /**
  * Check the data is empty

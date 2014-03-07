@@ -3,6 +3,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
+		setCurrentUser();
         enyo.Scroller.touchScrolling=true;
 
         /*

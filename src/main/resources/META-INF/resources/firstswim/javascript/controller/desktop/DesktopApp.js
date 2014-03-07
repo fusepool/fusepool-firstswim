@@ -5,6 +5,7 @@ jQuery(document).ready(function () {
     function initialization(){
 
         createUI();
+		setCurrentUser();
         enyo.Scroller.touchScrolling=false;
 
         /** This function create the user interface with the all components */
