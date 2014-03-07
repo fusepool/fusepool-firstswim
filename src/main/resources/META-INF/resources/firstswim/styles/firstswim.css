@@ -120,7 +120,7 @@ body{
 }
 
 .loginTable{
-    margin: 10px auto 20px;
+    margin: 10px auto 10px;
 }
 
 .loginTableLeftCol{
@@ -145,6 +145,15 @@ body{
 .signUpBtn{
     display: inline-block;
     cursor: pointer;
+}
+
+.loginMessage{
+	display: block;
+	font-size: 12px;
+	font-style: italic;
+	margin: 15px auto;
+	width: 320px;
+	color: #FFCD9C;
 }
 
 /* ----------- Top message box ----------- */

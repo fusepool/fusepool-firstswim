@@ -40,6 +40,7 @@ enyo.kind(
                     { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
                 ]}
             ]},
+            { tag: 'div', classes: 'loginMessage', name: 'loginMessage' },
             { tag: 'div', classes: 'loginButtons', components: [
                 { content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap: 'back' },
                 { content: 'Sign In', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
@@ -59,13 +60,14 @@ enyo.kind(
         this.$.emailRow.hide();
         this.$.passwordConfirmRow.hide();
         this.realSignUp = false;
+		this.hideLoginMessage();
     },
 
     /**
      * This funtion runs when the user push the "Sign In" button.
      */
     signIn: function(){
-        alert('authenticate is coming soon...');
+		this.showLoginMessage('Login is coming soon...');
     },
 
     /**
@@ -74,13 +76,78 @@ enyo.kind(
      * it shows the registration's fields.
      */
     signUp: function(){
+		this.hideLoginMessage();
         if(this.realSignUp){
-            alert('Real sign up coming soon...');
+            if(true) {
+				if(this.validateFields()) {	
+					var main = this;				
+					var sendOBJ = {userName: this.$.usernameInput.getValue(), password: this.$.passwordInput.getValue(), email: this.$.email.getValue()};
+					// console.log(sendOBJ);
+					
+					var request = new enyo.Ajax({
+						method: 'POST',
+						url: CONSTANTS.SELFREG_URL,
+						headers: { Accept: 'text/plain', 'Content-Type' : 'application/x-www-form-urlencoded'},
+						postBody: sendOBJ,
+						published: { timeout: 60000 }
+					});
+					request.go();
+					request.error(enyo.bind(this, function(inSender, inResponse) {
+						var errorMessage = 'Registration failed.';
+						var token = /\<pre\>(.*)\<\/pre\>/g;
+						var regExpResult = token.exec(inSender.xhrResponse.body);
+						if(!isEmpty(regExpResult)) {
+							errorMessage = RegExp.$1;
+						}
+						main.registrationFailed(errorMessage);
+					}));				
+					request.response(this, function(inSender, inResponse) {
+						main.registrationSucceed(true, inResponse);
+					});
+				}
+			}
         } else {
             this.realSignUp = true;
             this.showRegisterFields();
         }
     },
+	
+	registrationFailed: function(errorMessage) {
+		this.showLoginMessage(errorMessage);
+	},
+	
+	registrationSucceed: function() {
+		this.back();
+		this.showLoginMessage('Successful registration. Now you can sign in.');
+	},
+	
+	validateFields: function() {
+		var valid = true;
+		
+		var token = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		var str='asd@asdhu.';
+		if(	!token.test(this.$.email.getValue()) ||
+			isEmpty(this.$.usernameInput.getValue()) ||	
+			isEmpty(this.$.passwordInput.getValue()) ||
+			isEmpty(this.$.passwordConfirmInput.getValue()) ||	
+			this.$.passwordInput.getValue() != this.$.passwordConfirmInput.getValue() 
+			) {
+			valid = false;
+			this.showLoginMessage('Invalid data. Try again.');
+		}
+		
+		return valid;
+	},
+	
+	hideLoginMessage: function() {
+		this.$.loginMessage.hide();
+		this.$.loginMessage.setContent('');
+	},
+	
+	showLoginMessage: function(message) {
+		this.$.loginMessage.show();
+		this.$.loginMessage.setContent(message);
+	},
 
     /**
      * This function shows all fields of the registration.
@@ -93,7 +160,7 @@ enyo.kind(
     },
 
     /**
-     * This function shows all about the popups.
+     * This function shows the whole popup.
      */
     showLogin: function(){
         this.$.popup.show();
@@ -102,10 +169,11 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user click out of the popup or to the close
-     * button. It hides all about the popup.
+     * This function runs when the user clicks out of the popup or to the close
+     * button. It hides the whole popup.
      */
     close: function(){
+		this.hideLoginMessage();
         this.hide();
         this.$.closeButton.hide();
     }    
