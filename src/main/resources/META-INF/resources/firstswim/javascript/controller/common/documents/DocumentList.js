@@ -334,7 +334,7 @@ enyo.kind(
 		// console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/anonymous';
+		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
 		
 		var annotationString = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' +
 								'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +

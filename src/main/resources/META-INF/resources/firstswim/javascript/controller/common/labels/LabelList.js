@@ -225,7 +225,7 @@ enyo.kind(
 	sendLabelListAnnotation: function(docURI,labelText,action) {
 				
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/anonymous';	// test
+		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
 		
 		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
 								'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
