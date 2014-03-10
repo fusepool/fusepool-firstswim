@@ -115,14 +115,12 @@ enyo.kind(
 
 		var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
 		querylist += 'SELECT * {';
-		querylist += '      ?url <http://purl.org/dc/terms/abstract> ?content .';
 		querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
 		querylist += '        filter ( lang(?title) = "en")';
 		querylist += '      } UNION {  ';
 		querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
 		querylist += '        filter ( lang(?title) = "")';
-		querylist += '      }'
-		querylist += '      ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview .';
+		querylist += '      }';
 		querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype }';
 		querylist += '}';
 		
@@ -306,9 +304,8 @@ enyo.kind(
 
     /**
      * This function is called when the user clicks on a node.
-	 * An annotation is being sent about the click, and it calls
-	 * a parent function, which can call the preview box to open a
-     * document.
+	 * It calls a parent function, which can call the preview box
+	 * to open a document.
 	 * @param {Object} node the clicked node
 	 * @param {Event} inEvent the click event
      */
