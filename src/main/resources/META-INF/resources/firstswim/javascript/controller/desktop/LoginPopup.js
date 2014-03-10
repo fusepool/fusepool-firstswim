@@ -81,9 +81,7 @@ enyo.kind(
             if(true) {
 				if(this.validateFields()) {	
 					var main = this;				
-					var sendOBJ = {userName: this.$.usernameInput.getValue(), password: this.$.passwordInput.getValue(), email: this.$.email.getValue()};
-					// console.log(sendOBJ);
-					
+					var sendOBJ = { userName: this.$.usernameInput.getValue(), password: this.$.passwordInput.getValue(), email: this.$.email.getValue() };
 					var request = new enyo.Ajax({
 						method: 'POST',
 						url: CONSTANTS.SELFREG_URL,
@@ -125,7 +123,6 @@ enyo.kind(
 		var valid = true;
 		
 		var token = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-		var str='asd@asdhu.';
 		if(	!token.test(this.$.email.getValue()) ||
 			isEmpty(this.$.usernameInput.getValue()) ||	
 			isEmpty(this.$.passwordInput.getValue()) ||

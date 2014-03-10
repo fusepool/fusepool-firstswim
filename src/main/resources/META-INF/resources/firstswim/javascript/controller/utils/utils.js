@@ -281,7 +281,7 @@ function cutStr(str,val) {
 		if (lastSpace > 0){
 			str = str.substring(0,lastSpace+1);	
 		}
-		str = str+'&#8230;';
+		str = str+'…';
 	}
 	return str;
 }
