@@ -136,7 +136,7 @@ body{
     width: 130px;
 }
 
-.loginBackBtn, .signInBtn{
+.loginBackBtn, .signInBtn, .signOutBtn{
     display: inline-block;
     margin-right: 20px;
     cursor: pointer;
@@ -145,6 +145,12 @@ body{
 .signUpBtn{
     display: inline-block;
     cursor: pointer;
+}
+
+.currentUserLabel{
+	display: block;
+	margin: 15px auto;
+	width: 320px;
 }
 
 .loginMessage{

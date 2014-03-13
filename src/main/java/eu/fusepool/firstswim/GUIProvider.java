@@ -1,7 +1,5 @@
 package eu.fusepool.firstswim;
 
-import java.security.Permission;
-import java.util.Collections;
 import java.util.concurrent.locks.Lock;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -15,10 +13,7 @@ import org.apache.clerezza.rdf.core.Resource;
 import org.apache.clerezza.rdf.core.TypedLiteral;
 import org.apache.clerezza.rdf.core.UriRef;
 import org.apache.clerezza.rdf.core.access.LockableMGraph;
-import org.apache.clerezza.rdf.core.access.NoSuchEntityException;
 import org.apache.clerezza.rdf.core.access.TcManager;
-import org.apache.clerezza.rdf.core.access.security.TcAccessController;
-import org.apache.clerezza.rdf.core.access.security.TcPermission;
 import org.apache.clerezza.rdf.core.impl.PlainLiteralImpl;
 import org.apache.clerezza.rdf.core.sparql.ParseException;
 import org.apache.clerezza.rdf.core.sparql.QueryParser;
@@ -45,8 +40,15 @@ import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.xerox.services.HubEngine;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.List;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
+import org.apache.stanbol.commons.security.auth.AuthenticationService;
+import org.apache.stanbol.commons.security.auth.NoSuchAgent;
 
 /**
  * Upload file for which the enhancements are to be computed
@@ -82,6 +84,9 @@ public class GUIProvider {
     private HubEngine predictionHub;
     
     private UriRef ANNOTATION_GRAPH_NAME = new UriRef("urn:x-localinstance:/fusepool/annotation.graph");
+    
+    @Reference
+    private AuthenticationService authenticationService;
     
     @Activate
     protected void activate(ComponentContext context) {
@@ -276,5 +281,28 @@ public class GUIProvider {
         response.put("existingLabels", existingLabels);
         response.put("predictedLabels", predictedLabels);
         return response.toString();
+    }
+    
+    @POST
+    @Path("authUser")
+    public Response loginUser(@FormParam("userName") final String userName,
+            @FormParam("password") final String password) {
+        return AccessController.doPrivileged(new PrivilegedAction<Response>() {
+            public Response run() {
+                Boolean success;
+                try {
+                    success = authenticationService.authenticateUser(userName, password);
+                } catch (NoSuchAgent ex) {
+                    success = false;
+                    log.error("Authentication error, " + ex.getMessage());
+                }
+                if(success){
+                    return Response.status(Response.Status.OK).entity("OK").build();
+                }
+                else{
+                    return Response.status(Response.Status.BAD_REQUEST).entity("Invalid Username Or Password").build();
+                }
+            }
+        }); 
     }
 }
