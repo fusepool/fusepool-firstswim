@@ -189,7 +189,8 @@ enyo.kind(
 	validateFields: function() {
 		var valid = true;
 		
-		var token = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+		var token = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				
 		if(	!token.test(this.$.email.getValue()) ||
 			isEmpty(this.$.usernameInput.getValue()) ||	
 			isEmpty(this.$.passwordInput.getValue()) ||
