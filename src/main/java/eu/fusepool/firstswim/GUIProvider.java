@@ -39,7 +39,7 @@ import org.json.simple.JSONObject;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-//import com.xerox.services.HubEngine;
+import com.xerox.services.HubEngine;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.HashMap;
@@ -80,8 +80,8 @@ public class GUIProvider {
     
     private final double THRESHOLD = 0.0;
     
-    //@Reference
-    //private HubEngine predictionHub;
+    @Reference
+    private HubEngine predictionHub;
     
     private UriRef ANNOTATION_GRAPH_NAME = new UriRef("urn:x-localinstance:/fusepool/annotation.graph");
     
@@ -239,7 +239,7 @@ public class GUIProvider {
                     double predictedScore;
                     
                     // get predicted labels
-                    String predictionResut = null;//predictionHub.predict("LUP34",params);       
+                    String predictionResut = predictionHub.predict("LUP34",params);       
                     System.out.println("predictionResut: " + predictionResut);  
                     if(predictionResut != null){
                         // if the prediction string is an error do not do anything
