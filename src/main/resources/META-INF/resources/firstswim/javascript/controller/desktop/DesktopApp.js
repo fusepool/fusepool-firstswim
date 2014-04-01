@@ -74,6 +74,7 @@ jQuery(document).ready(function () {
 											components: [
 												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
 													{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
+													{kind: 'onyx.IconButton', name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
 													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
 													{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
 												]},
@@ -165,6 +166,7 @@ jQuery(document).ready(function () {
 								
 								if(GLOBAL.viewType!='documentList') {									
 									GLOBAL.viewType='documentList';
+									GLOBAL.searchType='document';
 										
 									this.createComponent({
 														name: 'leftDesktopCol',
@@ -238,6 +240,62 @@ jQuery(document).ready(function () {
 									this.search(this.searchWord);
 								}
 							break;
+							case 'entityListViewButton':
+								this.destroyCurrentViewType(GLOBAL.viewType,'entityList');
+								if(GLOBAL.viewType!='entityList') {									
+									GLOBAL.viewType='entityList';
+									GLOBAL.searchType='entity';
+										
+									this.createComponent({
+														name: 'leftDesktopCol',
+														classes: 'leftDesktopCol',
+														components: [
+															{
+																	kind: 'DictionaryController',
+																	openClasses: 'dictionaryListOpen',
+																	closeClasses: 'dictionaryListClose',
+																	openScrollerClass: 'dictionaryListScrollOpen',
+																	closeScrollerClass: 'dictionaryListScrollClose',
+																	entityCheckboxClass: 'dictionaryCheckbox',
+																	searchFunction: 'search',
+																	name: 'dictionaries',
+																	dictionaryTitle: 'Organizations',
+																	titleClass: 'dictionariesMainTitle',
+																	showDetailsFunction: 'updateDetails'
+															},
+															{
+																	kind: 'DetailsBox',
+																	name: 'detailsBox',
+																	classes: 'detailsBox enyo-unselectable',
+																	detailsMainTitle: 'Details',
+																	mainTitleClass: 'detailsMainTitle',
+																	scrollerClass: 'detailsScroll',
+																	titleClass: 'detailsTitle'
+															}
+														]
+													});
+									
+									this.createComponent({
+															kind: 'DocumentList',
+															name: 'documents',
+															openDocFunction: 'openDoc',
+															openDocEvent: 'ontap',
+															classes: 'documentList',
+															loaderClass: 'loader',
+															scrollerClass: 'documentListScroll',
+															titleClass: 'documentsMainTitle',
+															classifyFinishFunction: 'processClassifyResponse',
+															titleContent: 'Persons ',
+															documentsCountClass: 'documentsCount',
+															noDataLabel: 'No data available',
+															moreButtonClass: 'moreButton',
+															moreDocumentsFunction: 'moreDocuments'
+														});
+									this.render();
+									
+									this.search(this.searchWord);
+								}
+							break;
 							case 'landscapeViewButton':
 								this.destroyCurrentViewType(GLOBAL.viewType,'landscape');
 								
@@ -266,7 +324,8 @@ jQuery(document).ready(function () {
 							case 'nGraph':
 								this.$.nGraph.destroy();
 							break;
-							case 'documentList':									
+							case 'documentList':	
+							case 'entityList':										
 								this.$.leftDesktopCol.destroy();
 								this.$.documents.destroy();
 							break;
@@ -445,6 +504,7 @@ jQuery(document).ready(function () {
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
 						switch(GLOBAL.viewType) {
+							case 'entityList':
 							case 'documentList':
 								this.$.documents.startLoading();
 								this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
@@ -485,7 +545,12 @@ jQuery(document).ready(function () {
                  * @returns {String} the search url
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
-                    var url = CONSTANTS.SEARCH_URL;
+					if(GLOBAL.searchType == "entity") {
+						var url = CONSTANTS.ENTITY_SEARCH_URL;
+					}
+					else {
+						var url = CONSTANTS.SEARCH_URL;
+					}
                     if(isEmpty(offset)){
                         offset = 0;
                     }
@@ -543,6 +608,7 @@ jQuery(document).ready(function () {
 					if(success) {
 						switch(GLOBAL.viewType) {
 							case 'documentList':
+							case 'entityList':
 								this.updateEntityList(rdf, this.searchWord);
 								this.updateDocumentList(rdf);
 							break;

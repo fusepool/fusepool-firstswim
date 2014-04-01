@@ -4,7 +4,8 @@ var GLOBAL= {
 	maxFacets: 10,
 	items: 10,
 	nodeLimit: [1,5,3],
-	viewType: 'documentList'
+	viewType: 'documentList',
+	searchType: 'document'
 };
 
 // var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
@@ -13,6 +14,7 @@ var BASE_URL = '/'; /* commithoz */
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
+    ENTITY_SEARCH_URL: BASE_URL + 'ineedanewrestendpoint/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
