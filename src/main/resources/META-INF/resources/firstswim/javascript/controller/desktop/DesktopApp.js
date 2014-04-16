@@ -166,7 +166,6 @@ jQuery(document).ready(function () {
 								
 								if(GLOBAL.viewType!='documentList') {									
 									GLOBAL.viewType='documentList';
-									GLOBAL.searchType='document';
 										
 									this.createComponent({
 														name: 'leftDesktopCol',
@@ -244,7 +243,6 @@ jQuery(document).ready(function () {
 								this.destroyCurrentViewType(GLOBAL.viewType,'entityList');
 								if(GLOBAL.viewType!='entityList') {									
 									GLOBAL.viewType='entityList';
-									GLOBAL.searchType='entity';
 										
 									this.createComponent({
 														name: 'leftDesktopCol',
@@ -545,7 +543,13 @@ jQuery(document).ready(function () {
                  * @returns {String} the search url
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
-					if(GLOBAL.searchType == "entity") {
+					
+					// var labelPattern = /^'label:'.*$/;
+					// if(labelPattern.test(searchWord)) {
+					
+					// }
+					
+					if(GLOBAL.viewType == "entityList") {
 						var url = CONSTANTS.ENTITY_SEARCH_URL;
 					}
 					else {
@@ -967,19 +971,28 @@ jQuery(document).ready(function () {
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
 					
-					var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
-						querylist += 'SELECT * {';
-						querylist += '      { ?url <http://purl.org/dc/terms/title> ?title .';
-						querylist += '        filter ( lang(?title) = "en")';
-						querylist += '      } UNION {  ';
-						querylist += '        ?url <http://purl.org/dc/terms/title> ?title .';
-						querylist += '        filter ( lang(?title) = "")';
-						querylist += '      }'
-						querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?abst } .';
-						querylist += '      OPTIONAL { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview } .';
-						// querylist += '    ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype .';	// X branch
-						querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype } .';
-						querylist += '}';						
+					if(GLOBAL.viewType == "entityList") {
+						var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
+							querylist += ' SELECT ?name ?url ?address ';
+							querylist += ' WHERE {	?url foaf:name ?name . ';
+							querylist += '			?url <http://schema.org/address> ?nothing . ';
+							querylist += '			?nothing <http://schema.org/addressLocality> ?address ';
+							querylist += '		} ';
+					}
+					else {
+						var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
+							querylist += 'SELECT * {';
+							querylist += '      { ?url <http://purl.org/dc/terms/title> ?title . ';
+							querylist += '        filter ( lang(?title) = "en")';
+							querylist += '      } UNION {  ';
+							querylist += '        ?url <http://purl.org/dc/terms/title> ?title . ';
+							querylist += '        filter ( lang(?title) = "")';
+							querylist += '      }';
+							querylist += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?abst } . ';
+							querylist += '      OPTIONAL { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview } . ';
+							querylist += '      OPTIONAL { ?url <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?dtype } . ';
+							querylist += '}';
+					}
 					
 					/* This is the tentative to iterate the list at the API level to have it in ORDER 
 						var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve("ecs:contents")), null).toArray();
@@ -990,6 +1003,7 @@ jQuery(document).ready(function () {
 							for(var rank=0; rank<hits.length; rank++){
 								for(var i=0; i<results.length; i++){
 									var row = results[i];
+									
 									if(row.url.value!=hits[rank]) {
 										/*if(row.url.value!=hits[rank] || 
 										row.dtype.value.indexOf("ecs") != -1 || 
@@ -998,9 +1012,12 @@ jQuery(document).ready(function () {
 									}
 									
 									//// TITLE ////
-									var title = '[Title not found]';
+									var title = '[Unknown]';
 									if(!isEmpty(row.title)){
 										title = row.title.value;
+									}
+									else if(!isEmpty(row.name)) {
+										title = row.name.value;
 									}
 									
 									//// SHORT CONTENT ////									
@@ -1010,6 +1027,9 @@ jQuery(document).ready(function () {
 									}
 									else if(!isEmpty(row.preview)) {
 										shortContent = row.preview.value;
+									}
+									else if(!isEmpty(row.address)) {
+										shortContent = row.address.value;
 									}
 									else {
 										var exclude = ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://purl.org/dc/terms/title'];
