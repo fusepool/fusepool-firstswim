@@ -101,7 +101,6 @@
       <groupId>com.xerox</groupId>
       <artifactId>xeroxservicesapi</artifactId>
       <version>1.0-SNAPSHOT</version>
-      <type>jar</type>
     </dependency>
   </dependencies>
 </project>
