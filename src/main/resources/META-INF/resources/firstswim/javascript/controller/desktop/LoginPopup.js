@@ -131,6 +131,8 @@ enyo.kind(
 		this.$.signUpBtn.hide();
 		
 		this.$.signOutBtn.show();
+		
+		getUserLabels(userName);
     },
 	
 	signInFailed: function(errorMessage){

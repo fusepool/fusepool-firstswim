@@ -25,6 +25,10 @@ enyo.kind(
         { tag: 'div', name: 'labelList' },
 		{ tag: 'div', name: 'addMoreLabelsButton', classes: 'addMoreLabelsButton enyo-unselectable', content: 'Add label', ontap: 'addMoreLabelsBtnPress' },
 		{ tag: 'div', name: 'moreLabelsPanel', components: [
+			/* {kind: "onyx.PickerDecorator", name: 'userLabels', onActivate: 'initUserLabelSelect', onSelect: 'userLabelSelection', components: [
+				{kind: "onyx.PickerButton", content: "My labels", style: "width: 150px;"},
+				{kind: "onyx.Picker", name: 'userLabelPicker', components: [] }
+			]}, */
 			{kind: "onyx.InputDecorator", name: 'moreLabelInputDec', components: [
 				{ kind: onyx.Input, name: 'moreLabelInput', placeholder: 'Add a new label name', onkeydown: 'onKeydown' }
 			]},
@@ -56,9 +60,16 @@ enyo.kind(
 		this.$.moreLabelsPanel.hide();
     },
 	
+	userLabelSelection: function(inSender, inEvent) {
+		this.addUserLabel(inEvent.selected.content);
+	},
+	
+	initUserLabelSelect: function(inSender, inEvent) {
+	},
+	
 	initLabels: function() {
-		this.labelTexts=[];
-		this.predictedLabelTexts=[];
+		this.labelTexts = [];
+		this.predictedLabelTexts = [];
 		
 		var main = this;
 		var request = new enyo.Ajax({
@@ -90,7 +101,7 @@ enyo.kind(
 					});
 					main.$.labelList.render();
 				}
-				if(obj.predictedLabels.length>0) {
+				if(obj.predictedLabels.length > 0) {
 					for(var i=0;i<obj.predictedLabels.length;i++){
 						main.predictedLabelTexts.push(obj.predictedLabels[i]);
 						main.$.predictedLabelList.createComponent({
@@ -107,12 +118,35 @@ enyo.kind(
 						});
 						main.$.predictedLabelList.render();
 					}
+					if(!GLOBAL.labelPrediction) {
+						main.$.predictedLabelListName.hide();
+						main.$.predictedLabelList.hide();
+					}
 				}
 				else {
 					main.$.predictedLabelListName.hide();
+					main.$.predictedLabelList.hide();
 				}
 			}
 		});
+		/*
+		if(GLOBAL.userLabels.length > 0) {
+			for(var i=0;i<GLOBAL.userLabels.length;i++) {
+				main.$.userLabelPicker.createComponent({ content: GLOBAL.userLabels[i] });
+			}
+			main.$.userLabelPicker.render();
+		} */
+	},
+	
+	togglePredictedLabelLists: function(enable) {
+		if(enable && this.predictedLabelTexts.length > 0) {
+			this.$.predictedLabelListName.show();
+			this.$.predictedLabelList.show();
+		}
+		else {
+			this.$.predictedLabelListName.hide();
+			this.$.predictedLabelList.hide();
+		}
 	},
 	
 	addMoreLabelsBtnPress: function() {
@@ -195,6 +229,35 @@ enyo.kind(
 			this.$.labelList.render();
 			
 			labelElement.destroy();
+		}
+	},
+	
+	addUserLabel: function(labelText) {		
+		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
+			
+			this.sendLabelListAnnotation(this.labelListId,labelText,1);
+			
+			this.labelTexts.push(labelText);
+			
+			var ind = $.inArray(labelText,this.predictedLabelTexts);	
+			if(ind>-1) {
+				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
+			}
+			
+			this.$.labelList.createComponent({
+				kind: 'LabelItem',
+				name: labelText,
+				labelText: labelText,
+				labelClass: 'labelDiv',
+				labelTextClass: 'labelText',
+				labelDeleteClass: 'labelDeleteButton',
+				deleteFunction: 'deleteLabel'
+			});
+			
+			this.$.labelList.render();
 		}
 	},
 

@@ -42,6 +42,10 @@ import org.slf4j.LoggerFactory;
 import com.xerox.services.HubEngine;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import javax.ws.rs.FormParam;
@@ -78,7 +82,11 @@ public class GUIProvider {
     
     private LockableMGraph graph;
     
+    // threshold for weight of predicted labels
     private final double THRESHOLD = 0.0;
+    
+    // limit the number of prediced labels returned
+    private final int LABEL_LIMIT = 20;
     
     @Reference
     private HubEngine predictionHub;
@@ -237,6 +245,7 @@ public class GUIProvider {
                     
                     String predictedLabel;
                     double predictedScore;
+                    List<Label> lbls;
                     
                     // get predicted labels
                     String predictionResut = predictionHub.predict("LUP34",params);       
@@ -244,7 +253,8 @@ public class GUIProvider {
                     if(predictionResut != null){
                         // if the prediction string is an error do not do anything
                         if(!predictionResut.equals("__error__")){
-                            // splitting ## separated prediction result string and adding them to json response
+                            lbls = new ArrayList<Label>();
+                            // splitting ## separated prediction result string
                             for (String lbl : predictionResut.split("##")) {
                                 // get the first part of each string which contains the label (for now we do not need the confidence score which is the second part)
                                 String[] lblsrt = lbl.split("__");
@@ -253,16 +263,31 @@ public class GUIProvider {
                                 // try parsing the score value, otherwise it is set to 0.0
                                 try{
                                     predictedScore = Double.parseDouble(lblsrt[1]);
-                                } catch(NumberFormatException e){
+                                }catch(NumberFormatException e){
                                     log.warn("Warning: {}", e.getMessage());
                                 }
                                 // only use label if the confidence score is larger than a predefined threshold
                                 if(predictedScore > THRESHOLD){
-                                    // only use predicted label if there is no matching user defined label (deleted or new)
-                                    System.out.println("allUserLabels:" + allUserLabels.toString());
-                                    if(!allUserLabels.contains(predictedLabel)){
-                                        predictedLabels.add(predictedLabel);
-                                    }
+                                    lbls.add(new Label(predictedLabel, predictedScore));
+                                }
+                            }
+                            
+                            // sort labels by score
+                            Collections.sort(lbls);
+                            
+                            int counter = 0;
+                            
+                            // splitting ## separated prediction result string and adding them to json response
+                            for (Label lbl : lbls) {
+                                if(counter >= LABEL_LIMIT){
+                                    break;
+                                }
+                                
+                                // only use predicted label if there is no matching user defined label (deleted or new)
+                                if(!allUserLabels.contains(lbl.getLabel())){
+                                    System.out.println(lbl.toString());
+                                    predictedLabels.add(lbl.getLabel());
+                                    counter++;
                                 }
                             }
                         }
@@ -305,4 +330,163 @@ public class GUIProvider {
             }
         }); 
     }
+    
+    @GET
+    @Path("entitysearch")
+    public String serviceEntry(@Context final UriInfo uriInfo,
+            @QueryParam("items") final int items,
+            @QueryParam("maxFacets") final int maxFacets,
+            @QueryParam("offset") final int offset,
+            @QueryParam("search") final String search
+            ) throws Exception {
+        
+        // json response for the client
+        String predictionResut = null;
+        
+        try {                    
+            // add the search string to a hashmap 
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("search", search);
+            params.put("offset", Integer.toString(offset));
+            params.put("maxFacets", Integer.toString(maxFacets));
+            params.put("items", Integer.toString(items));
+            
+            // get prediction
+            predictionResut = predictionHub.predict("LUP45", params);
+            
+            if (predictionResut == null) {
+                log.error("Error: {}", "LUP45 return null");
+            }
+            else{
+                if(predictionResut.equals("__error__")){
+                    log.error("Error: {}", "LUP45 returned error string");
+                }
+            }
+                              
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+        }
+
+        return predictionResut;
+    }
+    
+    @GET
+    @Path("getuserlabels")
+    public String serviceEntry2(@Context final UriInfo uriInfo,
+            @QueryParam("user") final String user) throws Exception {
+        
+        // json response for the client
+        JSONObject response = new JSONObject();
+        JSONArray userLabels = new JSONArray();
+        System.out.println(user);
+        try {            
+            // query all labels for a given URI
+            String sparqlQuery =    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+                                +   "PREFIX xsd: <http://www.w3.org/2011/XMLSchema#>"
+                                +   "PREFIX cnt: <http://www.w3.org/2011/content#>"
+                                +   "PREFIX oa: <http://www.w3.org/ns/oa#>"
+                                +   "PREFIX fpanno: <http://fusepool.eu/ontologies/annostore#>"
+                                +   "SELECT ?label ?date ?status WHERE { "
+                                    +   "?x1 fpanno:annotatedBy <http://fusepool.info/users/" + user + "> ."
+                                    +   "?x1 fpanno:hasBody ?x2 ."
+                                    +   "?x1 fpanno:annotatedAt ?date ."
+                                        +   "OPTIONAL {?x2 fpanno:hasNewLabel ?x3} ."
+                                        +   "OPTIONAL {?x2 fpanno:hasDeletedLabel ?x3} ."
+                                    +   "?x3 rdf:type oa:Tag ."
+                                    +   "?x3 cnt:chars ?label ."
+                                    +   "?x2 ?status ?x3 ."
+                                +   "}";
+            
+            // parse the SPARQL query
+            SelectQuery selectQuery = null;
+            try {
+                selectQuery = (SelectQuery) QueryParser.getInstance().parse(sparqlQuery);
+            } catch (ParseException e) {
+                log.error("Cannot parse the SPARQL query", e);
+            }
+
+            if (graph != null) {
+                Lock l = graph.getLock().readLock();
+                l.lock();
+
+                try {
+                    // execute the SPARQL query
+                    ResultSet resultSet = tcManager.executeSparqlQuery(selectQuery, graph);
+
+                    // object for handling labels
+                    Labels labels = new Labels();       
+                    String label, date, status;
+                    UriRef uri;
+                    while (resultSet.hasNext()) {
+                        SolutionMapping mapping = resultSet.next();
+                        try {
+                            Literal literal;
+                            
+                            // get label text
+                            Resource r = mapping.get("label");
+                            if (r instanceof TypedLiteral) {
+                                literal = (TypedLiteral) r;
+                            } else {
+                                literal = (PlainLiteralImpl) r;
+                            }
+                            label = literal.getLexicalForm();
+                            
+                            // get timestamp of label
+                            r = mapping.get("date");
+                            if (r instanceof TypedLiteral) {
+                                literal = (TypedLiteral) r;
+                            } else {
+                                literal = (PlainLiteralImpl) r;
+                            }
+                            date = literal.getLexicalForm();
+                            
+                            // get status of label (hasNew or hasDeleted)
+                            r = mapping.get("status");
+                            if (r instanceof UriRef) {
+                                uri = (UriRef) r;
+                                status = uri.getUnicodeString();
+                            } else {
+                                literal = (PlainLiteralImpl) r;
+                                status = literal.getLexicalForm();
+                            }
+                            
+                            labels.AddLabel(label, date, status);
+                            
+                        } catch (Exception e) {
+                            log.error("Error: {}", e.getMessage());
+                            System.out.println(e.getMessage());
+                            continue;
+                        }
+                    }
+                    System.out.println(labels.GetAllLabels().toString());
+                    List<String> lblList = new ArrayList<String>();
+                    for (String lbl : labels.GetAllLabels()) {
+                        lblList.add(lbl);
+                    }
+                    
+                    String[] lblArray = lblList.toArray(new String[lblList.size()]);
+                    
+                    Arrays.sort(lblArray);
+                    
+                    // add existing labels to json response
+                    for (String lbl : lblArray) {
+                        userLabels.add(lbl);
+                    }
+                    
+                } finally {
+                    l.unlock();
+                }                
+            } else {
+                log.error("There is no registered graph with given uri: " + ANNOTATION_GRAPH_NAME.getUnicodeString());
+            }
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+        }
+        // add labels to response
+        response.put("userLabels", userLabels);
+        return response.toString();
+    }
+    
 }
