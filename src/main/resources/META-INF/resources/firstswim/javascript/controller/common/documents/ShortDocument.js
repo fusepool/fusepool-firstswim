@@ -111,6 +111,13 @@ enyo.kind(
         ]}
     ],
 
+	togglePredictedLabelLists: function(enable) {
+        var labelList = this.$.labelListContainer.children;
+        for(var i=0;i<labelList.length;i++){
+            labelList[i].togglePredictedLabelLists(enable);
+        }
+	},
+	
     /**
      * This functions hides the document popup menu.
      */

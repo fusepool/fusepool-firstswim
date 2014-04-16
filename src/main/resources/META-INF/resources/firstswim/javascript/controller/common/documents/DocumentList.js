@@ -41,6 +41,7 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.moreButton.setClasses(this.moreButtonClass);
         this.$.activateSliders.hide();
+        this.$.labelPredictionSettings.hide();
         this.$.processButton.hide();
         this.$.checkedNumbers.hide();
         this.$.moreButton.hide();
@@ -55,6 +56,10 @@ enyo.kind(
             { tag: 'div', name: 'checkedNumbers', classes: 'checkedNumbers' },
             { kind: onyx.Button, name: 'processButton', classes: 'processClassifyButton', content: 'Process', ontap: 'processClassify' }
         ]},
+        { tag: 'div', name: 'labelPredictionSettings', classes: 'activateSliders', components: [
+            { tag: 'div', classes: 'sliderText', content: 'Label prediction:' },
+            { kind: enyo.Checkbox, name: 'labelPredictionToggle', ontap: 'toggleLabelPrediction', checked: true }
+        ]},
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { tag: 'div', name: 'list' },
             { name: 'loader' },
@@ -62,6 +67,14 @@ enyo.kind(
         ]}
     ],
 
+    toggleLabelPrediction: function(inSender){
+		GLOBAL.labelPrediction = !inSender.checked; //this is weird
+        var shortDocuments = this.$.list.children;
+        for(var i=0;i<shortDocuments.length;i++){
+            shortDocuments[i].togglePredictedLabelLists(GLOBAL.labelPrediction);
+        }
+    },
+	
     /**
      * This function runs when the user activate/unactivate the ratings bar.
      * @param {Object} inSender the activator checkbox
@@ -191,6 +204,7 @@ enyo.kind(
         this.$.loader.show();
         this.$.moreButton.hide();
         this.$.activateSliders.hide();
+        this.$.labelPredictionSettings.hide();
     },
 
     /**
@@ -242,11 +256,13 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.activateSliders.show();
+            this.$.labelPredictionSettings.show();
 			this.$.moreButton.show();
         } else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
             this.$.activateSliders.hide();
+            this.$.labelPredictionSettings.hide();
             this.$.list.render();
         }
         this.$.title.show();

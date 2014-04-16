@@ -5,7 +5,8 @@ var GLOBAL= {
 	items: 10,
 	nodeLimit: [1,5,3],
 	viewType: 'documentList',
-	searchType: 'document'
+	labelPrediction: true,
+	userLabels: []
 };
 
 // var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
@@ -14,11 +15,12 @@ var BASE_URL = '/'; /* commithoz */
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
-    ENTITY_SEARCH_URL: BASE_URL + 'ineedanewrestendpoint/',
+    ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
     GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
+    GET_USER_LABELS_URL: BASE_URL + 'firstswim/getuserlabels/',
     OPEN_DOC_URL: BASE_URL + 'ecs/meta',
     ADDRESS_URL: BASE_URL + 'ecs/meta',
 	SELFREG_URL: BASE_URL + 'selfregistration/',
@@ -201,7 +203,6 @@ function getRDFPropertyValue(rdf, propertyName){
     return result;
 }
 
-
 /**
  * This function gets an rdf object, an existing subject and an exclude array 
  * and gives back a value from a random property that has been found in the rdf
@@ -289,4 +290,18 @@ function cutStr(str,val) {
 	return str;
 }
 
+function getUserLabels(userName) {
+	var request = new enyo.Ajax({
+		method: 'GET',
+		url: CONSTANTS.GET_USER_LABELS_URL+'?user='+userName,
+		handleAs: 'text',
+		headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded' },
+		published: { timeout: 60000 }
+	});
+	request.go();	
+	request.response(this, function(inSender, inResponse) {
+		var obj = JSON.parse(inResponse);
+		GLOBAL.userLabels = obj.userLabels;
+	});
+}
 
