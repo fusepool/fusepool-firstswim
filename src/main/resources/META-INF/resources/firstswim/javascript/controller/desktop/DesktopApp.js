@@ -75,6 +75,7 @@ jQuery(document).ready(function () {
 												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
 													{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
 													{kind: 'onyx.IconButton', name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
+													{kind: 'onyx.IconButton', name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
 													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
 													{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
 												]},
@@ -161,6 +162,25 @@ jQuery(document).ready(function () {
 					if (inEvent.originator.getActive()) {
 						//var selected = inEvent.originator.indexInContainer();
 						switch(inEvent.originator.name) {
+							case 'locationViewButton':
+								this.destroyCurrentViewType(GLOBAL.viewType,'locationViewer');
+								
+								if(GLOBAL.viewType!='locationViewer') {
+									GLOBAL.viewType='locationViewer';
+
+									this.createComponent({
+										kind: 'LocationViewer',
+										name: 'locationViewer',
+										classes: 'locationViewerPanel',
+										loaderClass: 'loader',
+										titleClass: 'locationViewerMainTitle',
+										titleContent: 'Location viewer ',
+										noDataLabel: 'No data available'
+									});
+										
+									this.render();
+								}
+							break;
 							case 'docListViewButton':
 								this.destroyCurrentViewType(GLOBAL.viewType,'documentList');
 								
@@ -329,6 +349,9 @@ jQuery(document).ready(function () {
 							break;
 							case 'landscape':									
 								this.$.landscape.destroy();
+							break;
+							case 'locationViewer':									
+								this.$.locationViewer.destroy();
 							break;
 						}
 					}
@@ -513,6 +536,9 @@ jQuery(document).ready(function () {
 							case 'landscape':
 								this.$.landscape.startLoading();
 								this.sendSearchRequest(searchWord, [], 'processSearchResponse');
+							break;
+							case 'locationViewer':
+								this.$.locationViewer.search(searchWord);
 							break;
 						}
                         this.$.searchBox.updateInput(this.searchWord);

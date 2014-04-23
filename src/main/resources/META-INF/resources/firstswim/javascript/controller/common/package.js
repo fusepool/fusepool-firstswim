@@ -14,6 +14,8 @@ enyo.depends(
         'landscape/Landscape.js',
     // -- Network Graph -- //
         'ngraph/NGraph.js',
+    // -- LocationViewer -- //
+        'locationviewer/LocationViewer.js',
     // -- Labels -- //
         'labels/LabelList.js',
         'labels/LabelItem.js',

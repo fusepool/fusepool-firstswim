@@ -290,6 +290,35 @@ body{
 	overflow: hidden;
 }
 
+/* ---------- LOCATIONVIEWER ------------ */
+
+.locationViewerPanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 940px;
+}
+
+.locationViewerMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.mapDiv {
+    background-color: #FFFFFF;
+    bottom: 0px;
+    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+	overflow: hidden;
+}
+
 /* ---------- LANDSCAPE ------------ */
 
 .landscapePanel {
