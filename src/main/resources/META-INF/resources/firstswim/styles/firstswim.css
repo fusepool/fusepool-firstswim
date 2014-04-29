@@ -212,6 +212,10 @@ body{
 	margin: 12px 20px 20px 20px;
 }
 
+.detailsPanel img {
+	max-width: 100%;
+}
+
 .detailsScroll {
     background-color: #ffffff;
 	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
@@ -563,6 +567,10 @@ body{
 
 .documentContent{
 	margin: 20px;
+}
+
+.documentContent img {
+	max-width: 100%;
 }
 
 /* ----- Entity menu ----- */
@@ -1047,6 +1055,10 @@ body{
     padding: 15px;
     word-wrap: break-word;
     font-size: 12px;
+}
+
+.openedMobileDocument img {
+	max-width: 100%;
 }
 
 .loader{
