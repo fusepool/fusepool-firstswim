@@ -424,7 +424,7 @@ jQuery(document).ready(function () {
 						console.log("error");
 					});
 					request.response(this, function(inSender, inResponse) {
-						console.log("success: "+inResponse);
+						// console.log("success: "+inResponse);
 					});
                 },
 
@@ -766,7 +766,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function search the dictionary categories in an rdf object.
-                 * @param {Object} rdf the rdf object, which conatins the categories
+                 * @param {Object} rdf the rdf object, which contains the categories
                  * @returns {Array} the categories array with the entities
                  */
                 getEntities: function(rdf){
@@ -867,7 +867,7 @@ jQuery(document).ready(function () {
                             for(var i=0;i<results.length;i++){
                                 var row = results[i];
                                 if(!isEmpty(row.entity)){
-                                    var entity = {id: row.id.value, text: row.entity.value, typeFacet: false};
+                                    var entity = {id: row.id.value, text: row.entity.value, count: -1, typeFacet: false};
                                     if(!main.containsEntity(checkedEntities, entity)){
                                         checkedEntities.push(entity);
                                     }
@@ -892,7 +892,7 @@ jQuery(document).ready(function () {
                             var id = results[i].o.value;
                             var text = id.substring(id.lastIndexOf('#')+1);
                             text = text.substring(text.lastIndexOf('/')+1);
-                            var entity = {id: id, text: text, typeFacet: true};
+                            var entity = {id: id, text: text, count: -1, typeFacet: true};
                             checkedTypes.push(entity);
                         }
                     });
@@ -997,13 +997,17 @@ jQuery(document).ready(function () {
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
 					
-					if(GLOBAL.viewType == "entityList") {
+					if(GLOBAL.viewType == "entityList") {							
+						var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
+							querylist += 'SELECT ?name ?url ';
+							querylist += 'WHERE { ?url foaf:name ?name . } ';
+						/*
 						var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
 							querylist += ' SELECT ?name ?url ?address ';
 							querylist += ' WHERE {	?url foaf:name ?name . ';
 							querylist += '			?url <http://schema.org/address> ?nothing . ';
 							querylist += '			?nothing <http://schema.org/addressLocality> ?address ';
-							querylist += '		} ';
+							querylist += '		} '; */
 					}
 					else {
 						var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';

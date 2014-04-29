@@ -32,12 +32,12 @@ enyo.kind(
     components: [
         { name: 'detailsMainTitle' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-            { name: 'detailsPanel', classes: 'detailsPanel', components: [
-                { tag: 'div', name: 'detailsTitle' },
+            { name: 'detailsPanel', classes: 'detailsPanel' , components: [
+                { tag: 'div', name: 'detailsTitle' } /*,
                 { tag: 'div', name: 'country' },
                 { tag: 'div', name: 'local' },
-                { tag: 'div', name: 'street' }
-            ]}
+                { tag: 'div', name: 'street' } */
+            ] }
         ]}
     ],
 
@@ -56,6 +56,10 @@ enyo.kind(
         }
         this.show();
     },
+	
+	displayDetails: function(rdf) {
+        $("#" + this.$.detailsPanel.getId()).append(uduvudu.process(rdf));
+	},
 
     /**
      * This functions returns the country code from a URL

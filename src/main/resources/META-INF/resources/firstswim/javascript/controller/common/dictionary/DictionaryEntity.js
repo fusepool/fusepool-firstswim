@@ -15,6 +15,7 @@ enyo.kind(
         entityCount: 0,
         mainClass: '',
         entityTextClass: '',
+		entityCountClass: '',
         entityCheckboxClass: '',
         detailsURL: '',
         parentFunction: '',
@@ -31,6 +32,11 @@ enyo.kind(
         this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
+		if(this.entityCount > 0) {
+			// TODO -1 helyett helyes ertek pipalas utan (DesktopApp)
+			this.$.entityCount.setContent('('+this.entityCount+')');
+		}
+        this.$.entityCount.setClasses(this.entityCountClass);
         this.$.facetMenu.hide();
     },
 
@@ -51,7 +57,8 @@ enyo.kind(
     components: [
         { tag: 'div', name: 'main', onenter: 'preDetails', onmouseout: 'stopDetails', components: [
             { kind: onyx.Checkbox, name: 'entityCheckbox', onchange: 'checkboxChange' },
-            { tag: 'span', name: 'entityLabel', onclick: 'entityClick', onenter: 'preDetails', onmouseout: 'stopDetails' }
+            { tag: 'span', name: 'entityLabel', onclick: 'entityClick', onenter: 'preDetails', onmouseout: 'stopDetails' },
+            { tag: 'span', name: 'entityCount' }
         ]},
         { kind: 'DynamicMenu', name: 'facetMenu', classes: 'facetMenu',
             menuItemClass: 'entityMenuItem', menuItems: [
@@ -117,13 +124,17 @@ enyo.kind(
      * @param {Object} rdf the response rdf object
      */
     processDetailsResponse: function(success, rdf){
+        if(!isEmpty(this.owner)){
+            this.owner.owner.owner.owner.owner.$.detailsBox.displayDetails(rdf);
+        }	
+	/*
         var title = getRDFPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
         var addressID = getRDFPropertyValue(rdf, 'http://schema.org/address');
         if(!isEmpty(addressID)){
             this.getAddresses(addressID, title);   
         } else {
             this.showDetails(title, null);
-        }
+        } */
     },
 
     /**
@@ -195,7 +206,7 @@ enyo.kind(
      * @param {Boolean} cbValue new checkbox value
      */
     callParent: function(cbValue){
-        this.owner.owner[this.parentFunction]({id: this.entityId, text: this.entityText, typeFacet: this.typeFacet}, cbValue);
+        this.owner.owner[this.parentFunction]({id: this.entityId, text: this.entityText, typeFacet: this.typeFacet, count: this.entityCount}, cbValue);
     }
 
 });

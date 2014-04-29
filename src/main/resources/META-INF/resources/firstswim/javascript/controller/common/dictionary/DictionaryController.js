@@ -78,7 +78,7 @@ enyo.kind(
     updateLists: function(dictionaryObject){
         this.searchWord = dictionaryObject.searchWord;
         this.checkedEntities = dictionaryObject.checkedEntities;
-
+		
         this.updateCheckedDictionaries();
         this.updateDictionaryList(dictionaryObject.dictionaries);
     },
@@ -144,6 +144,8 @@ enyo.kind(
                 detailsURL: CONSTANTS.DETAILS_URL,
                 entityId: this.checkedEntities[i].id,
                 entityText: this.checkedEntities[i].text,
+                entityCount: this.checkedEntities[i].count,
+                entityCountClass: 'entityCount enyo-unselectable',
                 typeFacet: this.checkedEntities[i].typeFacet,
                 parentFunction: 'filter',
                 showDetailsFunction: 'updateDetails',

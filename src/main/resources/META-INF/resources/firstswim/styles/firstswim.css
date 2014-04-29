@@ -824,6 +824,12 @@ body{
 .entityText:hover{
 }
 
+.entityCount {
+	font-size: 10px;
+	margin-left: 5px;
+	color: #666666;
+}
+
 /* ------ entitiesToolbar ------ */
 
 .entitiesMobileToolbar{

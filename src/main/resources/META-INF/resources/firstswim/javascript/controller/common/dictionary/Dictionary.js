@@ -31,7 +31,7 @@ enyo.kind(
         this.inherited(arguments);
         this.$.nameDiv.setClasses(this.nameClass);
         this.$.nameDiv.setContent(this.dictionaryName);
-
+		
         var countOfElements = 0;
         for(var i=0;i<this.entityList.length;++i){
             if(!this.isCheckedEntity(this.entityList[i])){
@@ -42,6 +42,8 @@ enyo.kind(
                     addressURL: CONSTANTS.ADDRESS_URL,
                     entityTextClass: 'entityText enyo-unselectable',
                     entityCheckboxClass: this.entityCheckboxClass,
+					entityCount: this.entityList[i].count,
+					entityCountClass: 'entityCount enyo-unselectable',
                     detailsURL: CONSTANTS.DETAILS_URL,
                     entityId: this.entityList[i].id,
                     entityText: this.entityList[i].text,
