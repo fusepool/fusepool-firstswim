@@ -96,6 +96,17 @@ enyo.kind(
         this.owner[this.showDetailsFunction](title, addressObject);
     },
 
+	/**
+     * After the user hovers an entity, the program gets the details about
+     * the chosen entity, and this function is called for update the details box.
+	 * @param {Object} rdf rdf with the metadata of the entity
+	 */
+    displayDetails: function(rdf){
+        this.setClasses(this.closeClasses);
+        this.$.scroller.setClasses(this.closeScrollerClass);
+        this.owner[this.showDetailsFunction](rdf);
+    },
+	
     /**
      * This function calls the parent's search function with searchword and the
      * checked entity list.
@@ -148,7 +159,8 @@ enyo.kind(
                 entityCountClass: 'entityCount enyo-unselectable',
                 typeFacet: this.checkedEntities[i].typeFacet,
                 parentFunction: 'filter',
-                showDetailsFunction: 'updateDetails',
+                // showDetailsFunction: 'updateDetails',
+                showDetailsFunction: 'displayDetails',
                 checked: true
             });
         }
@@ -176,7 +188,8 @@ enyo.kind(
                     entityList: dictionaries[i].entities,
                     searchFunction: 'filter',
                     checkedEntities: this.checkedEntities,
-                    showDetailsFunction: 'updateDetails'
+					// showDetailsFunction: 'updateDetails'
+					showDetailsFunction: 'displayDetails'
                 });
             }
         }

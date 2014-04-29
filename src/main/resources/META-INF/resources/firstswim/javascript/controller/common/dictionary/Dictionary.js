@@ -50,7 +50,8 @@ enyo.kind(
                     typeFacet: this.entityList[i].typeFacet,
                     entityCount: this.entityList[i].count,
                     parentFunction: 'updateEntities',
-                    showDetailsFunction: 'updateDetails',
+                    // showDetailsFunction: 'updateDetails',
+                    showDetailsFunction: 'displayDetails',
                     checked: false
                 });
             }
@@ -73,6 +74,15 @@ enyo.kind(
      */
     updateDetails: function(title, addressObject){
         this.owner.owner[this.showDetailsFunction](title, addressObject);
+    },
+	
+	/**
+     * After the user hovers an entity, the program gets the details about
+     * the chosen entity, and this function is called for update the details box.
+	 * @param {Object} rdf rdf with the metadata of the entity
+	 */
+    displayDetails: function(rdf){
+        this.owner.owner[this.showDetailsFunction](rdf);
     },
 
     /**

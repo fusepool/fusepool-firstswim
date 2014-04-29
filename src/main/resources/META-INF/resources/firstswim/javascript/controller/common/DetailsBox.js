@@ -57,8 +57,14 @@ enyo.kind(
         this.show();
     },
 	
+	/**
+     * This function updates the content of the details
+	 * @param {Object} rdf rdf with the metadata of the entity
+	 */
 	displayDetails: function(rdf) {
+        this.scrollToTop();
         $("#" + this.$.detailsPanel.getId()).append(uduvudu.process(rdf));
+        this.show();
 	},
 
     /**

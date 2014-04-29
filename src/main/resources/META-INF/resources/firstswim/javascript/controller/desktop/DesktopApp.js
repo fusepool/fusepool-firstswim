@@ -117,7 +117,8 @@ jQuery(document).ready(function () {
                                             name: 'dictionaries',
                                             dictionaryTitle: 'Entities',
                                             titleClass: 'dictionariesMainTitle',
-                                            showDetailsFunction: 'updateDetails'
+                                            // showDetailsFunction: 'updateDetails'
+                                            showDetailsFunction: 'displayDetails'
                                     },
                                     {
                                             kind: 'DetailsBox',
@@ -202,7 +203,8 @@ jQuery(document).ready(function () {
 																	name: 'dictionaries',
 																	dictionaryTitle: 'Entities',
 																	titleClass: 'dictionariesMainTitle',
-																	showDetailsFunction: 'updateDetails'
+																	// showDetailsFunction: 'updateDetails'
+																	showDetailsFunction: 'displayDetails'
 															},
 															{
 																	kind: 'DetailsBox',
@@ -279,7 +281,8 @@ jQuery(document).ready(function () {
 																	name: 'dictionaries',
 																	dictionaryTitle: 'Organizations',
 																	titleClass: 'dictionariesMainTitle',
-																	showDetailsFunction: 'updateDetails'
+																	// showDetailsFunction: 'updateDetails'
+																	showDetailsFunction: 'displayDetails'
 															},
 															{
 																	kind: 'DetailsBox',
@@ -303,7 +306,7 @@ jQuery(document).ready(function () {
 															scrollerClass: 'documentListScroll',
 															titleClass: 'documentsMainTitle',
 															classifyFinishFunction: 'processClassifyResponse',
-															titleContent: 'Persons ',
+															titleContent: 'People ',
 															documentsCountClass: 'documentsCount',
 															noDataLabel: 'No data available',
 															moreButtonClass: 'moreButton',
@@ -1107,7 +1110,15 @@ jQuery(document).ready(function () {
                  */
                 updateDetails: function(title, addressObject){
                     this.$.detailsBox.updateDetails(title, addressObject);
-                }
+                },
+				
+				/**
+				 * This function calls the details box content update function.
+				 * @param {Object} rdf rdf with the metadata of the entity
+				 */
+				displayDetails: function(rdf){
+					this.$.detailsBox.displayDetails(rdf);
+				}
             });
         }
         new DocumentApp().renderInto(document.getElementById('main'));

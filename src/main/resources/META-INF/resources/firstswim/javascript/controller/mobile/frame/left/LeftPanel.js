@@ -23,7 +23,8 @@ enyo.kind(
 			searchFunction: 'search',
 			name: 'dictionaries',
 			titleClass: 'dictionariesMainTitle',
-			showDetailsFunction: 'updateDetails'
+			// showDetailsFunction: 'updateDetails'
+			showDetailsFunction: 'displayDetails'
 		},
         {
             kind: 'DetailsBox',
@@ -85,6 +86,14 @@ enyo.kind(
     updateDetails: function(title, addressObject){
         this.$.detailsBox.updateDetails(title, addressObject);
     },
+	
+	/**
+     * This function calls the details box content update function.
+	 * @param {Object} rdf rdf with the metadata of the entity
+	 */
+	displayDetails: function(rdf){
+        this.$.detailsBox.displayDetails(rdf);
+	},
 
     /**
      * This function calls the parent's search function with searchword and the

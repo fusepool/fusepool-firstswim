@@ -125,8 +125,8 @@ enyo.kind(
      */
     processDetailsResponse: function(success, rdf){
         if(!isEmpty(this.owner)){
-            this.owner.owner.owner.owner.owner.$.detailsBox.displayDetails(rdf);
-        }	
+            this.owner.owner[this.showDetailsFunction](rdf);
+        }
 	/*
         var title = getRDFPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
         var addressID = getRDFPropertyValue(rdf, 'http://schema.org/address');
