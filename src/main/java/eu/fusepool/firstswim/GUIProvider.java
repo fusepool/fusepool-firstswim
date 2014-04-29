@@ -356,19 +356,39 @@ public class GUIProvider {
             
             if (predictionResut == null) {
                 log.error("Error: {}", "LUP45 return null");
+                return CreateEmptyResult(search, offset, maxFacets, items);
             }
             else{
                 if(predictionResut.equals("__error__")){
                     log.error("Error: {}", "LUP45 returned error string");
+                    return CreateEmptyResult(search, offset, maxFacets, items);
                 }
             }
                               
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
             log.error("Error", e);
+            return CreateEmptyResult(search, offset, maxFacets, items);
         }
 
         return predictionResut;
+    }
+    
+    private String CreateEmptyResult(String search, int offset, int maxFacets, int items){
+        String emptyResult = "";
+        
+        emptyResult += "<http://platform.fusepool.info/ecs/?search=" + search + "&offset=" + Integer.toString(offset) + "&maxFacets=" + Integer.toString(maxFacets) + "&items=" + Integer.toString(items) + ">";
+        emptyResult += "a       <http://fusepool.eu/ontologies/ecs#ContentStoreView> ;";
+        emptyResult += "<http://www.w3.org/2000/01/rdf-schema#comment>";
+        emptyResult += "        \"An enhanced content store\" ;";
+        emptyResult += "<http://fusepool.eu/ontologies/ecs#contentsCount>";
+        emptyResult += "        \"0\"^^<http://www.w3.org/2001/XMLSchema#int> ;";
+        emptyResult += "<http://fusepool.eu/ontologies/ecs#search>";
+        emptyResult += "        \"" + search + "\"^^<http://www.w3.org/2001/XMLSchema#string> ;";
+        emptyResult += "<http://fusepool.eu/ontologies/ecs#store>";
+        emptyResult += "        <http://platform.fusepool.info/ecs/> .";
+        
+        return emptyResult;
     }
     
     @GET
