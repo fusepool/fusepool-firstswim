@@ -23,13 +23,12 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
-		// FusePool.Landscaping.initialize('.landscapeDiv');
     },
 
     components: [
         { tag: 'div', name: 'title' },
 		{ name: 'loader' },
-		{ tag: 'div', name: 'landscapeDiv', published: { id: 'landscapeDiv'}, classes: 'landscapeDiv', content: 'Coming soon...' }
+		{ tag: 'div', name: 'landscapeDiv', classes: 'landscapeDiv', content: 'Initializing...' }
     ],
 	
     /**
@@ -37,6 +36,26 @@ enyo.kind(
      */
     startLoading: function(){
         this.$.loader.show();
+	},
+	
+	rendered: function() {
+		this.inherited(arguments); // important! must call the inherited method
+		if (this.hasNode()) {
+			// Daniel van Adrichem: the actual div is not yet created while
+			// in the .create() function. I have added it to this this
+			// rendered() function since this is called after everything
+			// has been created.
+			// first remove the current content
+			this.$.landscapeDiv.setContent('');
+			// then initialize landscaping (if available)
+			if (FusePool === undefined &&
+				FusePool.Landscaping === undefined) {
+				this.$.landscapeDiv.setContent('Landscape currently unavailable.');
+			}
+			else {
+				FusePool.Landscaping.initialize('.landscapeDiv');
+			}
+		}
 	}
 	
 });

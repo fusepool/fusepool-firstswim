@@ -20,11 +20,10 @@
     <script src="/firstswim/javascript/jquery/jquery.mousewheel.js" type="text/javascript"></script>
     <!-- underscore -->
     <script src="/firstswim/javascript/underscore/underscore.js" type="text/javascript"></script>
-    <!-- landscaping
-    <script src="/landscaping/js/fusepool.landscaping.js" type="text/javascript"></script>
-    <script src="/landscaping/js/three.js" type="text/javascript"></script>
-    <script src="/landscaping/js/jsondata.js" type="text/javascript"></script>
-    -->
+	<!-- landscaping -->
+	<script src="/kmxproxy/landscaping/js/three.js" type="text/javascript"></script>
+	<script src="/kmxproxy/landscaping/js/jsondata.js" type="text/javascript"></script>
+	<script src="/kmxproxy/landscaping/js/fusepool.landscaping.js" type="text/javascript"></script>
     <!-- handlebars -->
     <script src="/firstswim/javascript/handlebars/handlebars.js" type="text/javascript"></script>
     <!-- uduvudu -->
