@@ -1,6 +1,7 @@
 /* The main div, which contains the input field and the suggest div */
 .suggestMain{
     position: relative;
+	margin-right: 30px;
 }
 
 .autoSuggest_back_input{
@@ -12,8 +13,7 @@
     left: -3px;
     color: grey;
     padding-left: 5px;
-    width: 330px;
-	max-width: 100%;
+    width: 100%;
 }
 
 /* The input field */
@@ -27,15 +27,13 @@
     border: none;
     color: black;
     padding-left: 5px;
-    width: 330px;
-	max-width: 100%;
+    width: 100%;
 }
 
 /* Suggest div, which contains the list */
 .autoSuggest_suggestDiv{
     border: lightgrey 1px solid;
-    width: 330px;
-	max-width: 100%;
+    width: 100%;
     position: absolute;
     left: -1px;
     top: 30px;
@@ -45,8 +43,8 @@
 
 /* One element of suggest list */
 .autoSuggest_suggestDiv div{
-    background:#fff;
-    color:#000;
+    background-color: #ffffff;
+    color: #000000;
     padding: 3px 2px 3px 5px;
     cursor: pointer;
     text-align:left;
