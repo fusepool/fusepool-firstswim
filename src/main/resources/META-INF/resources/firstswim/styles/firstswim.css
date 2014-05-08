@@ -106,6 +106,14 @@ body{
 	margin: 0px 2px 0px 2px;
 }
 
+.loggedOut {
+	background-position: 0px 0px;
+}
+
+.loggedIn{
+	background-position: 0px -32px;
+}
+
 .loginPopup{
     right: 25px;
     position: absolute;

@@ -94,7 +94,7 @@ jQuery(document).ready(function () {
 														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip'}
 													]}
 												]},
-												{ontap: 'login', classes: 'loginButton' }
+												{ontap: 'login', name: 'loginButton', classes: 'loginButton loggedOut' }
 												/*,
 												{
 													name: 'bookmark',

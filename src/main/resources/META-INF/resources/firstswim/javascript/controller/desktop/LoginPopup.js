@@ -79,6 +79,9 @@ enyo.kind(
 		this.$.passwordConfirmRow.hide();
 		this.$.signOutBtn.hide();
 		this.$.loginBackBtn.hide();
+		
+		this.owner.$.loginButton.removeClass('loggedIn');
+		this.owner.$.loginButton.addClass('loggedOut');
 	},
 	
     /**
@@ -113,7 +116,7 @@ enyo.kind(
 		});
 		request.go();
 		request.error(enyo.bind(this, function(inSender, inResponse) {
-			main.registrationFailed(inSender.xhrResponse.body);
+			main.signInFailed(inSender.xhrResponse.body);
 		}));				
 		request.response(this, function(inSender, inResponse) {
 			main.signInSucceed(name, main);
@@ -131,6 +134,9 @@ enyo.kind(
 		this.$.signUpBtn.hide();
 		
 		this.$.signOutBtn.show();
+		
+		this.owner.$.loginButton.removeClass('loggedOut');
+		this.owner.$.loginButton.addClass('loggedIn');
 		
 		getUserLabels(userName);
     },
