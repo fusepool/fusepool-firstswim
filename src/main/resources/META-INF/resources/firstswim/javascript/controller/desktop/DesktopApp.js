@@ -73,16 +73,29 @@ jQuery(document).ready(function () {
 											classes: 'toolbarIcons',
 											components: [
 												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
-													{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
-													{kind: 'onyx.IconButton', name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
-													{kind: 'onyx.IconButton', name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
-													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'}, 
-													{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
+													{kind: "onyx.TooltipDecorator", components: [
+														{kind: "onyx.IconButton", name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
+														{kind: "onyx.Tooltip", content: "Document list view", classes: 'viewTypeTooltip'}
+													]},
+													{kind: "onyx.TooltipDecorator", components: [
+														{kind: "onyx.IconButton", name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png', active: true},
+														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'viewTypeTooltip'}
+													]},
+													{kind: "onyx.TooltipDecorator", components: [
+														{kind: "onyx.IconButton", name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png', active: true},
+														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'viewTypeTooltip'}
+													]},
+													{kind: "onyx.TooltipDecorator", components: [
+														{kind: "onyx.IconButton", name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png', active: true},
+														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'viewTypeTooltip'}
+													]},
+													{kind: "onyx.TooltipDecorator", components: [
+														{kind: "onyx.IconButton", name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png', active: true},
+														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip'}
+													]}
 												]},
-												{
-													ontap: 'login',
-													classes: 'loginButton'
-												},
+												{ontap: 'login', classes: 'loginButton' }
+												/*,
 												{
 													name: 'bookmark',
 													kind: 'Bookmark',
@@ -91,7 +104,7 @@ jQuery(document).ready(function () {
 													parentPopupFunction: 'popupBookmark',
 													warningPopupClass: 'bookmarkPopup',
 													warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert this URL manually:<br/><br/>'
-												}
+												} */
 											]
 										},
 										{
