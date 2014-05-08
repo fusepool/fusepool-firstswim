@@ -1,18 +1,3 @@
-/************* DESKTOP *************/
-
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 400;
-  src: local('PT Sans Caption'), local('PTSans-Caption'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/OXYTDOzBcXU8MTNBvBHeSZsUyLnvNVEr3YfO1b3hweY.woff') format('woff');
-}
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 700;
-  src: local('PT Sans Caption Bold'), local('PTSans-CaptionBold'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/Q-gJrFokeE7JydPpxASt26-uHvvNr40SEURDy78pRVo.woff') format('woff');
-}
-
 /* ----------- MAIN ----------- */
 html{
     height:100%;
@@ -23,7 +8,7 @@ body{
 	height: 100%;
 	width: 100%;
 	background-color: #eaeaea;
-	font-family: 'PT Sans Caption',Arial,sans-serif;
+	font-family: Arial,sans-serif;
 	font-weight: 400;
 	color: #5e5e5e;
 }
