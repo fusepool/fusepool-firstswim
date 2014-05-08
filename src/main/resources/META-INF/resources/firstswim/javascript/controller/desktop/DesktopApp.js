@@ -76,7 +76,7 @@ jQuery(document).ready(function () {
 													{kind: 'onyx.IconButton', name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
 													{kind: 'onyx.IconButton', name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
 													{kind: 'onyx.IconButton', name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
-													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
+													{kind: 'onyx.IconButton', name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'}, 
 													{kind: 'onyx.IconButton', name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'}
 												]},
 												{

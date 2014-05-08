@@ -14,6 +14,10 @@
 }
 
 /* ----------- MAIN ----------- */
+html{
+    height:100%;
+}
+
 body{
     margin: 0;
 	height: 100%;
@@ -34,6 +38,11 @@ body{
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
+}
+
+#map-canvas {
+	width: 200px;
+	height: 200px;
 }
 
 /* ----------- Toolbar ----------- */
@@ -62,6 +71,7 @@ body{
 	position: absolute;
 	right: 12px;
 	top: 12px;
+	max-width: 25%;
 }
 
 .toolbarIcons * {
@@ -81,7 +91,7 @@ body{
 	position: absolute;
 	top: 5px;
 	left: -20px;
-	
+	max-width: 30%;
 }
 
 /* ----------- Login ----------- */
@@ -1155,10 +1165,10 @@ body{
     height: 20px;
     background-image: url(../images/search-icon.png);
     background-repeat: no-repeat;
-    position: absolute;
-    right: 35px;
-    top: 25px;
+	max-width: 30%;
 	cursor: pointer;
+    position: relative;
+	float: right;
 }
 
 .searchButton {
@@ -1181,6 +1191,7 @@ body{
     width: 353px;
     height: 23px;
 	background-color: #ffffff;
+	max-width: 30%;
 }
 
 /* ----- Full view button and rate buttons ----- */

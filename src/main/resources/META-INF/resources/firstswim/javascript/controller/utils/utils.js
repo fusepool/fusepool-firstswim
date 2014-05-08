@@ -74,10 +74,10 @@ function isEmpty(data){
 /**
  * This function check a text and decide that the
  * text's length is between the minimum and maximum length
- * @param {String} text the text, what the funtion checks
+ * @param {String} text the text, what the function checks
  * @param {Number} min minimum length
  * @param {Number} max maximum length
- * @return {Boolean} true, if the text's length larger or equals the mimumum length
+ * @return {Boolean} true, if the text's length is greater or equals the minimum length
  * and shorter or equals the maximum length
  */
 function textLengthBetween(text, min, max){

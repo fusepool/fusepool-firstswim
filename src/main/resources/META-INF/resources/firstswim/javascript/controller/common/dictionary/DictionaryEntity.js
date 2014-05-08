@@ -139,6 +139,7 @@ enyo.kind(
 
     /**
      * This function send an ajax request to get an entity's address.
+	 * Currently unused.
      * @param {String} addressID id of the address
      * @param {String} title the title of the details
      */
@@ -154,6 +155,7 @@ enyo.kind(
     /**
      * This functions runs when the ajax response is arrived with the address.
      * It calls the 'show' function.
+	 * Currently unused.
      * @param {Boolean} success the ajax query was success or not
      * @param {Object} rdf the response rdf object
      * @param {String} title the title of the details
@@ -169,6 +171,7 @@ enyo.kind(
     /**
      * This function calls the parent's function to show the new details in the
      * details box.
+	 * Currently unused.
      * @param {String} title the title of the details
      * @param {Object} addressObject the address of the details
      */
@@ -189,7 +192,7 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user click on an entity.
+     * This function is called when the user clicks on an entity.
      */
     entityClick: function(inSender, inEvent){
         if(inEvent.which == 3){
