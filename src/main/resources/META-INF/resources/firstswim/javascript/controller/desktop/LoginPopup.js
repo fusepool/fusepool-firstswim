@@ -24,16 +24,16 @@ enyo.kind(
                     { tag: 'td', classes: 'loginTableLeftCol', content: 'Username: ' },
                     { tag: 'td', components: [{ name: 'usernameInput', kind: enyo.Input }]}
                 ]},
-                { tag: 'tr', name: 'emailRow', components: [
+                { tag: 'tr', classes: 'loginTableLeftCol', name: 'emailRow', components: [
                     { tag: 'td', content: 'E-mail address: ' },
                     { tag: 'td', components: [{ name: 'email', kind: enyo.Input }]}
                 ]},
                 { tag: 'tr', components: [
-                    { tag: 'td', content: 'Password: ' },
+                    { tag: 'td', classes: 'loginTableLeftCol', content: 'Password: ' },
                     { tag: 'td', components: [{ name: 'passwordInput', type: 'password', kind: enyo.Input, onkeydown: 'onKeydown' }]}
                 ]},
                 { tag: 'tr', name: 'passwordConfirmRow', components: [
-                    { tag: 'td', content: 'Password confirm: ' },
+                    { tag: 'td', classes: 'loginTableLeftCol', content: 'Password confirm: ' },
                     { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
                 ]}
             ]},
@@ -42,8 +42,8 @@ enyo.kind(
             { tag: 'div', classes: 'loginButtons', components: [
                 { content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap: 'signOut' },
                 { content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap: 'back' },
-                { content: 'Sign In', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
-                { content: 'Sign Up', name: 'signUpBtn', classes: 'signUpBtn', ontap: 'signUp' }
+                { content: 'Sign in', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
+                { content: 'Register', name: 'signUpBtn', classes: 'signUpBtn', ontap: 'signUp' }
             ]}
         ]},
         { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }

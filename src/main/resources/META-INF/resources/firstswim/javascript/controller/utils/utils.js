@@ -28,7 +28,7 @@ var CONSTANTS = {
 	SIGNIN_URL: BASE_URL + 'firstswim/authUser/',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
-    FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
+    FUSEPOOL_MAIN_URL: 'http://www.fusepool.eu',
 
     // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
     // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',

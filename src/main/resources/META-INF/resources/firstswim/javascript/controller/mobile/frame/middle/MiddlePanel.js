@@ -33,7 +33,7 @@ enyo.kind(
             buttonContent: 'OK',
             searchIconClass: 'searchImage',
             parentSeachFunction: 'updateUI'
-        },
+        },/*
         {
             name: 'bookmark',
             kind: 'Bookmark',
@@ -43,7 +43,7 @@ enyo.kind(
             warningPopupClass: 'bookmarkPopup',
             warningPopupContent: '<br/>Your browser doesn\'t support add bookmark via Javascript.<br/><br/>Please insert manually this URL:<br/><br/>'
         },
-        /*{ name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },*/
+        { name: 'entitiesButton', classes: 'entitiesButton', content: 'Entities', ontap: 'entityShow' },*/
 		{
 			kind: 'DocumentList',
 			name: 'documents',
