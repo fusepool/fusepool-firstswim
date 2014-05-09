@@ -78,19 +78,19 @@ jQuery(document).ready(function () {
 														{kind: "onyx.Tooltip", content: "Document list view", classes: 'viewTypeTooltip'}
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png', active: true},
+														{kind: "onyx.IconButton", name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
 														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'viewTypeTooltip'}
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png', active: true},
+														{kind: "onyx.IconButton", name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
 														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'viewTypeTooltip'}
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png', active: true},
+														{kind: "onyx.IconButton", name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
 														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'viewTypeTooltip'}
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png', active: true},
+														{kind: "onyx.IconButton", name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'},
 														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip'}
 													]}
 												]},
