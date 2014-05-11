@@ -18,6 +18,7 @@ var CONSTANTS = {
     ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
+    LANDSCAPE_URL: BASE_URL + 'kmxrdfproxy/landscape/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
     GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
     GET_USER_LABELS_URL: BASE_URL + 'firstswim/getuserlabels/',
