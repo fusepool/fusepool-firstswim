@@ -659,7 +659,7 @@ jQuery(document).ready(function () {
 								this.updateDocumentList(rdf);
 							break;
 							case 'landscape':
-								Fusepool.Landscaping.renderAll();
+								FusePool.Landscaping.doSearch();
 							break;
 						}
 					}
