@@ -155,18 +155,14 @@ body{
 
 .loginButtons{
     margin: 0 auto 20px;
-    width: 130px;
+	text-align: center;
 }
 
-.loginBackBtn, .signInBtn, .signOutBtn{
-    display: inline-block;
-    margin-right: 20px;
+.loginBackBtn, .signInBtn, .signOutBtn, .signUpBtn{
+    display: inline;
+    margin-right: 10px;
     cursor: pointer;
-}
-
-.signUpBtn{
-    display: inline-block;
-    cursor: pointer;
+	background-color: #bff3ff;
 }
 
 .currentUserLabel{

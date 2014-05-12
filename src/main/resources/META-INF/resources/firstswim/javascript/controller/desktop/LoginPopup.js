@@ -40,10 +40,10 @@ enyo.kind(
             { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel' },
             { tag: 'div', classes: 'loginMessage', name: 'loginMessage' },
             { tag: 'div', classes: 'loginButtons', components: [
-                { content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap: 'signOut' },
-                { content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap: 'back' },
-                { content: 'Sign in', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
-                { content: 'Register', name: 'signUpBtn', classes: 'signUpBtn', ontap: 'signUp' }
+				{ kind: 'onyx.Button', content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap:"signOut"},
+				{ kind: 'onyx.Button', content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap:"back"},
+				{ kind: 'onyx.Button', content: 'Sign in', name: 'signInBtn', classes: 'signInBtn', ontap:"signIn"},
+				{ kind: 'onyx.Button', content: 'Register', name: 'signUpBtn', classes: 'signUpBtn', ontap:"signUp"}
             ]}
         ]},
         { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }
