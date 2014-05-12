@@ -104,7 +104,7 @@ enyo.kind(
                 ]
             },
             { tag: 'div', name: 'title', onleave: 'leaveMenu', style: 'cursor: pointer;' },
-            { tag: 'div', name: 'content', onleave: 'leaveMenu', style: 'cursor: pointer;', allowHtml: false },
+            { tag: 'div', name: 'content', onleave: 'leaveMenu', style: 'cursor: pointer;', allowHtml: true },
             { tag: 'div', classes: 'clear' },
             { tag: 'div', name: 'labelListContainer', classes: 'labelListContainer' },
             { tag: 'div', classes: 'clear' }

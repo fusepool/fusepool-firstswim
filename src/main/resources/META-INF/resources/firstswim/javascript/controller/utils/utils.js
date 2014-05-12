@@ -1,5 +1,5 @@
 
-var GLOBAL= {
+var GLOBAL = {
 	currentUser: 'anonymous',
 	maxFacets: 10,
 	items: 10,
@@ -9,9 +9,9 @@ var GLOBAL= {
 	userLabels: []
 };
 
-// var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
-// var BASE_URL = 'http://beta.fusepool.com/'; /* lokal, betas fp peldannyal */
-var BASE_URL = '/'; /* commithoz */
+// var BASE_URL = 'http://localhost:8080/';
+// var BASE_URL = 'http://beta.fusepool.com/';
+var BASE_URL = '/';
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
@@ -70,6 +70,18 @@ function isEmpty(data){
         return true;
     }
     return false;
+}
+
+/**
+ * This function formats the given string and clears from the
+ * html tags that could cause trouble on the GUI. (Using jquery-clean 
+ * jQuery plug-in.)
+ * @param {String} string to be cleaned
+ * @return {String} clean string
+*/
+function removeTags(str) {
+	var tagWhiteList = ["b", "big", "i", "small", "tt", "abbr", "acronym", "cite", "code", "dfn", "em", "kbd", "strong", "samp", "var", "bdo", "br", "q", "span", "sub", "sup", "label"];
+	return $.htmlClean(str, {format: true, allowedTags: tagWhiteList });
 }
 
 /**
