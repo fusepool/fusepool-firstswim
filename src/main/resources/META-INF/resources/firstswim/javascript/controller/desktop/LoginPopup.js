@@ -37,7 +37,7 @@ enyo.kind(
                     { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
                 ]}
             ]},
-            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel' },
+            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel', allowHTML: true },
             { tag: 'div', classes: 'loginMessage', name: 'loginMessage' },
             { tag: 'div', classes: 'loginButtons', components: [
 				{ kind: 'onyx.Button', content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap:"signOut"},
@@ -60,7 +60,7 @@ enyo.kind(
 			this.$.signInBtn.hide();
 			this.$.signUpBtn.hide();
 			this.$.loginTable.hide();
-			this.showCurrentUser('Signed in as '+GLOBAL.currentUser+'.');
+			this.showCurrentUser('Signed in as <strong>'+GLOBAL.currentUser+'</strong>.');
 		}
 		this.hideLoginMessage();
 		this.$.loginBackBtn.hide();
@@ -126,7 +126,7 @@ enyo.kind(
 	signInSucceed: function(userName){
 		GLOBAL.currentUser = userName;
 		this.$.loginStatus;
-		this.showCurrentUser('Signed in as '+userName+'.');
+		this.showCurrentUser('Signed in as <strong>'+userName+'</strong>.');
 		this.hideLoginMessage();
 		
 		this.$.loginTable.hide();
