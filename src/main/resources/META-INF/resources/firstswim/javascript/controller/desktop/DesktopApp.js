@@ -407,10 +407,10 @@ jQuery(document).ready(function () {
                 /**
                  * This function calculates the position of the previewed document
                  * and opens the document on the right side.
-                 * @param {Object} previewDoc the document what user want to see
+                 * @param {String} docURI the URI of the clicked document
                  * @param {Object} inEvent mouse over on a short document event
                  */
-                openDoc: function(previewDoc, inEvent){
+                openDoc: function(docURI, inEvent){
                     if(!isEmpty(inEvent)){
                         var topMessage = jQuery('#' + this.$.topMessageBox.getId());
                         var topMessageVisible = topMessage.is(':visible');
@@ -420,7 +420,7 @@ jQuery(document).ready(function () {
                             alert(topMessageHeight);
                         }
                     }
-                    this.$.previewBox.openDoc(previewDoc);
+                    this.$.previewBox.openDoc(docURI);
                 },
 				
                 /**
@@ -1013,17 +1013,21 @@ jQuery(document).ready(function () {
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
 					
-					if(GLOBAL.viewType == "entityList") {							
-						var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
+					if(GLOBAL.viewType == "entityList") {
+						/* var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
 							querylist += 'SELECT ?name ?url ';
-							querylist += 'WHERE { ?url foaf:name ?name . } ';
-						/*
-						var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
-							querylist += ' SELECT ?name ?url ?address ';
-							querylist += ' WHERE {	?url foaf:name ?name . ';
-							querylist += '			?url <http://schema.org/address> ?nothing . ';
-							querylist += '			?nothing <http://schema.org/addressLocality> ?address ';
-							querylist += '		} '; */
+							querylist += 'WHERE { ?url foaf:name ?name . } '; */
+							
+						var querylist = 'PREFIX foaf: <http://xmlns.com/foaf/0.1/>' + 
+						'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>' + 
+						'SELECT ?url ?name ?addresslocality ?streetaddress ' + 
+						'WHERE { ' + 
+							'?url rdf:type foaf:Person . ' + 
+							'?url foaf:name ?name .  ' + 
+							'?url <http://schema.org/address> ?addressURI . ' + 
+							'?addressURI <http://schema.org/addressLocality> ?addresslocality . ' + 
+							'?addressURI <http://schema.org/streetAddress> ?streetaddress ' + 
+						'}';
 					}
 					else {
 						var querylist = 'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> ';
@@ -1074,8 +1078,8 @@ jQuery(document).ready(function () {
 									else if(!isEmpty(row.preview)) {
 										shortContent = row.preview.value;
 									}
-									else if(!isEmpty(row.address)) {
-										shortContent = row.address.value;
+									else if(!isEmpty(row.addresslocality) && !isEmpty(row.streetaddress)) {
+										shortContent = row.addresslocality.value + ', ' + row.streetaddress.value;
 									}
 									else {
 										var exclude = ['http://www.w3.org/1999/02/22-rdf-syntax-ns#type','http://purl.org/dc/terms/title'];

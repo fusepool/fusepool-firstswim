@@ -334,7 +334,7 @@ enyo.kind(
      * @param {Object} inEvent the user mouse event (it is important in the desktop version)
      */
     openDoc: function(url, type, inEvent){
-        this.owner[this.openDocFunction](url, type, inEvent);
+        this.owner[this.openDocFunction](url, inEvent);
         this.sendDocListAnnotation(url,type,'true');
     },
 	

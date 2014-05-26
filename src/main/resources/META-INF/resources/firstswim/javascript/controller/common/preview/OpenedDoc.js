@@ -93,7 +93,7 @@ enyo.kind(
     },
 
     /**
-     * This function render the preview document content through the Uduvudu Library
+     * This function renders the preview document content through the Uduvudu Library
      * @param {String} doc the document
      */
     renderPreviewTemplate: function(doc){
@@ -101,17 +101,17 @@ enyo.kind(
     },
 
     /**
-     * This function clear the document content, shows the loader and send an
+     * This function clears the document content, shows the loader and sends an
      * open doc request to a URL.
-     * @param {String} documentURL the request URL
+     * @param {String} documentURI the request URL
      */
-    openDoc: function(documentURL){
+    openDoc: function(documentURI){
         this.clearDoc();
         this.$.loader.show();
-        this.documentURL = documentURL;
+        this.documentURI = documentURI;
 
         var main = this;
-        var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
+        var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURI;
         var store = rdfstore.create();
         store.load('remote', url, function(success) {
             main.processOpenDocResponse(success, store);
@@ -123,7 +123,7 @@ enyo.kind(
      * It processes the response data, delete the bad type rows, parse it and call
      * the document show function.
      * @param {Boolean} success the ajax query was success or not
-     * @param {String} rdf the rdf object
+     * @param {Object} rdf the rdf object
      */
     processOpenDocResponse: function(success, rdf){
         this.showDoc(rdf);

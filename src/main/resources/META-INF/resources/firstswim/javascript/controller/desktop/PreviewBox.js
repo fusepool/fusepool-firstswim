@@ -259,10 +259,10 @@ enyo.kind(
 
     /**
      * This function call the opened doc's openDoc function and shows the buttons.
-     * @param {Object} previewDoc the previewed document
+     * @param {String} docURI URI of the document to be opened
      */
-    openDoc: function(previewDoc){
-        this.$.openedDoc.openDoc(previewDoc);
+    openDoc: function(docURI){
+        this.$.openedDoc.openDoc(docURI);
         this.$.openedDoc.show();
         this.showRateButtons();
     },
