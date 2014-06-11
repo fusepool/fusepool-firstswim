@@ -145,7 +145,8 @@ public class GUIProvider {
     @GET
     @Path("getlabels")
     public String serviceEntry(@Context final UriInfo uriInfo,
-            @QueryParam("iri") final UriRef iri) throws Exception {
+            @QueryParam("iri") final UriRef iri,
+            @QueryParam("usePrediction") final String usePrediction ) throws Exception {
         
         // json response for the client
         JSONObject response = new JSONObject();
@@ -246,9 +247,15 @@ public class GUIProvider {
                     String predictedLabel;
                     double predictedScore;
                     List<Label> lbls;
+                    String predictionResut;
                     
                     // get predicted labels
-                    String predictionResut = predictionHub.predict("LUP34",params);       
+                    if(usePrediction.equals("true")) {
+                        predictionResut = predictionHub.predict("LUP34",params);       
+                    }
+                    else {
+                        predictionResut = "";
+                    }
                     System.out.println("predictionResut: " + predictionResut);  
                     if(predictionResut != null){
                         // if the prediction string is an error do not do anything
@@ -372,6 +379,43 @@ public class GUIProvider {
         }
 
         return predictionResut;
+    }
+    
+    @GET
+    @Path("entitydetails")
+    public String serviceEntry3(@Context final UriInfo uriInfo,
+            @QueryParam("entityURI") final String entityURI
+            ) throws Exception {
+        
+        // json response for the client
+        String predictionResult = null;
+        
+        try {                    
+            // add the URI to a hashmap 
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("entityURI", entityURI);
+            
+            // get prediction
+            predictionResult = predictionHub.predict("LUP45", params);
+            
+            if (predictionResult == null) {
+                log.error("Error: {}", "LUP45 return null");
+                return "";
+            }
+            else{
+                if(predictionResult.equals("__error__")){
+                    log.error("Error: {}", "LUP45 returned error string");
+                    return "";
+                }
+            }
+                              
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+            return "";
+        }
+
+        return predictionResult;
     }
     
     private String CreateEmptyResult(String search, int offset, int maxFacets, int items){

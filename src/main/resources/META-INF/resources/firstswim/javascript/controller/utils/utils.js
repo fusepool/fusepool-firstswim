@@ -10,12 +10,13 @@ var GLOBAL = {
 };
 
 // var BASE_URL = 'http://localhost:8080/';
-// var BASE_URL = 'http://beta.fusepool.com/';
+// var BASE_URL = 'http://platform.fusepool.info/';
 var BASE_URL = '/';
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
+    ENTITY_DETAILS_URL: BASE_URL + 'firstswim/entitydetails/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     LANDSCAPE_URL: BASE_URL + 'kmxrdfproxy/landscape/',

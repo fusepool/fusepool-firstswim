@@ -111,7 +111,12 @@ enyo.kind(
         this.documentURI = documentURI;
 
         var main = this;
-        var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURI;
+		if(GLOBAL.viewType == "entityList") {
+			var url = CONSTANTS.ENTITY_DETAILS_URL + '?entityURI=' + documentURI;
+		}
+		else {
+			var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURI;
+		}
         var store = rdfstore.create();
         store.load('remote', url, function(success) {
             main.processOpenDocResponse(success, store);

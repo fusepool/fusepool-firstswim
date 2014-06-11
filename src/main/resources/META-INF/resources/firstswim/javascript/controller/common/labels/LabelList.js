@@ -74,7 +74,7 @@ enyo.kind(
 		var main = this;
 		var request = new enyo.Ajax({
 			method: 'GET',
-			url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
+			url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=' + ( GLOBAL.viewType == 'entityList' ? false : true ),
 			handleAs: 'text',
 			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded'},
 			published: { timeout: 60000 }
@@ -101,7 +101,7 @@ enyo.kind(
 					});
 					main.$.labelList.render();
 				}
-				if(obj.predictedLabels.length > 0) {
+				if(obj.predictedLabels.length > 0 ) {
 					for(var i=0;i<obj.predictedLabels.length;i++){
 						main.predictedLabelTexts.push(obj.predictedLabels[i]);
 						main.$.predictedLabelList.createComponent({
