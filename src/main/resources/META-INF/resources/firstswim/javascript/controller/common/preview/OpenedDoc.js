@@ -74,9 +74,10 @@ enyo.kind(
     },
 
     /**
-     * This function clear the document's content.
+     * This function clears the document's content.
      */
     clearDoc: function(){
+		this.$.content.setContent('');
         this.$.content.destroyClientControls();
         this.$.content.render();
     },

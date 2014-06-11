@@ -130,7 +130,6 @@ jQuery(document).ready(function () {
                                             name: 'dictionaries',
                                             dictionaryTitle: 'Entities',
                                             titleClass: 'dictionariesMainTitle',
-                                            // showDetailsFunction: 'updateDetails'
                                             showDetailsFunction: 'displayDetails'
                                     },
                                     {
@@ -139,8 +138,7 @@ jQuery(document).ready(function () {
                                             classes: 'detailsBox enyo-unselectable',
                                             detailsMainTitle: 'Details',
                                             mainTitleClass: 'detailsMainTitle',
-                                            scrollerClass: 'detailsScroll',
-                                            titleClass: 'detailsTitle'
+                                            scrollerClass: 'detailsScroll'
                                     }
                                 ]
                             },
@@ -535,8 +533,7 @@ jQuery(document).ready(function () {
                  * @param {Array} checkedEntities the checked entities on the left side
                  */
                 search: function(searchWord, checkedEntities){
-					checkedEntities = typeof checkedEntities !== 'undefined' ? checkedEntities : [];					
-                    this.cleanPreviewBox();
+					checkedEntities = typeof checkedEntities !== 'undefined' ? checkedEntities : [];
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
@@ -651,6 +648,8 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
+                    this.cleanPreviewBox();
+                    this.cleanDetailsBox();
 					if(success) {
 						switch(GLOBAL.viewType) {
 							case 'documentList':
@@ -966,10 +965,17 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function delete the preview's content
+                 * This function deletes the content from the Preview panel
                  */
                 cleanPreviewBox: function(){
                     this.$.previewBox.clean();
+                },
+				
+                /**
+                 * This function deletes the content from the Details panel
+                 */
+                cleanDetailsBox: function(){
+                    this.$.detailsBox.clean();
                 },
 
                 /**
@@ -1013,11 +1019,7 @@ jQuery(document).ready(function () {
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
 					
-					if(GLOBAL.viewType == "entityList") {
-						/* var querylist = 'PREFIX foaf:   <http://xmlns.com/foaf/0.1/> ';
-							querylist += 'SELECT ?name ?url ';
-							querylist += 'WHERE { ?url foaf:name ?name . } '; */
-							
+					if(GLOBAL.viewType == "entityList") {							
 						var querylist = 'PREFIX foaf: <http://xmlns.com/foaf/0.1/>' + 
 						'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>' + 
 						'SELECT ?url ?name ?addresslocality ?streetaddress ' + 
