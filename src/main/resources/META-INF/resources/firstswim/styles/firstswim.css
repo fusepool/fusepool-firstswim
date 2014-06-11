@@ -212,7 +212,7 @@ body{
 /* ----- Details box ----- */
 .detailsBox {
     position: absolute;
-    top: 290px;
+    top: 200px;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -756,7 +756,7 @@ body{
     top: 0px;
     left: 0px;
     right: 0px;
-    height: 290px;
+    height: 200px;
 }
 
 .dictionaryListPanel {
@@ -784,7 +784,7 @@ body{
     top: 50px;
     left: 0px;
     right: 0px;
-    height: 245px;
+    height: 155px;
 }
 
 .dictionaryListMobileScrollOpen{
