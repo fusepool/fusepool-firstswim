@@ -25,7 +25,7 @@ enyo.kind(
 
     /**
      * The create function set the css classes, the contents and create an entity
-     * list into the dictonary.
+     * list into the dictionary.
      */
     create: function(){
         this.inherited(arguments);
@@ -50,8 +50,8 @@ enyo.kind(
                     typeFacet: this.entityList[i].typeFacet,
                     entityCount: this.entityList[i].count,
                     parentFunction: 'updateEntities',
-                    // showDetailsFunction: 'updateDetails',
                     showDetailsFunction: 'displayDetails',
+					checkable: (GLOBAL.viewType != 'entityList'),
                     checked: false
                 });
             }

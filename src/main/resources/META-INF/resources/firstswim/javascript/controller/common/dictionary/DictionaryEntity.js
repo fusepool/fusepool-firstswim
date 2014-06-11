@@ -21,6 +21,7 @@ enyo.kind(
         parentFunction: '',
         typeFacet: false,
         checked: false,
+		checkable: true,
         showDetailsFunction: '',
         detailsStart: false
     },
@@ -28,8 +29,13 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.$.main.setClasses(this.mainClass);
-        this.$.entityCheckbox.setValue(this.checked);
-        this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
+		if(this.checkable) {
+			this.$.entityCheckbox.setValue(this.checked);
+			this.$.entityCheckbox.setClasses(this.entityCheckboxClass);
+		}
+		else {
+			this.$.entityCheckbox.hide();
+		}
         this.$.entityLabel.setContent(this.entityText);
         this.$.entityLabel.setClasses(this.entityTextClass);
 		if(this.entityCount > 0) {
@@ -195,11 +201,13 @@ enyo.kind(
      * This function is called when the user clicks on an entity.
      */
     entityClick: function(inSender, inEvent){
-        if(inEvent.which == 3){
-            this.$.facetMenu.show();
-        } else {
-            var cbValue = !this.$.entityCheckbox.getValue();
-            this.callParent(cbValue);            
+		if(GLOBAL.viewType != 'entityList') {
+			if(inEvent.which == 3){
+				this.$.facetMenu.show();
+			} else {
+				var cbValue = !this.$.entityCheckbox.getValue();
+				this.callParent(cbValue);            
+			}
         }
     },
 

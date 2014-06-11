@@ -159,7 +159,6 @@ enyo.kind(
                 entityCountClass: 'entityCount enyo-unselectable',
                 typeFacet: this.checkedEntities[i].typeFacet,
                 parentFunction: 'filter',
-                // showDetailsFunction: 'updateDetails',
                 showDetailsFunction: 'displayDetails',
                 checked: true
             });
@@ -188,7 +187,6 @@ enyo.kind(
                     entityList: dictionaries[i].entities,
                     searchFunction: 'filter',
                     checkedEntities: this.checkedEntities,
-					// showDetailsFunction: 'updateDetails'
 					showDetailsFunction: 'displayDetails'
                 });
             }

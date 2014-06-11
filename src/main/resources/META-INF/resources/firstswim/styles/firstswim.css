@@ -271,7 +271,7 @@ body{
     cursor: pointer;
     display: inline-block;
     height: 15px;
-    margin: 4px;
+    margin-right: 4px;
     vertical-align: middle;
     width: 15px;
 }
@@ -839,7 +839,7 @@ body{
 	border-radius: 5px;
 	float: left;
 	margin: 2px;
-    padding-right: 6px;
+    padding: 0px 4px 4px 4px;
 }
 
 .entityText{

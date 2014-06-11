@@ -187,10 +187,10 @@ enyo.kind(
      * send and ajax request with the new offset value.
      */
     moreBtnPress: function(){
-        this.offset += GLOBAL.items;
-        this.owner[this.moreDocumentsFunction](this.offset);
-        this.$.loader.show();
-        this.$.moreButton.hide();
+		this.offset += GLOBAL.items;
+		this.owner[this.moreDocumentsFunction](this.offset);
+		this.$.loader.show();
+		this.$.moreButton.hide();
     },
 	
     /**
@@ -256,8 +256,13 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.activateSliders.show();
-            this.$.labelPredictionSettings.show();
-			this.$.moreButton.show();
+			if(GLOBAL.viewType != "entityList") {
+				this.$.labelPredictionSettings.show();
+				this.$.moreButton.show();
+			}
+			else {
+				this.$.activateSliders.hide();
+			}
         } else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
