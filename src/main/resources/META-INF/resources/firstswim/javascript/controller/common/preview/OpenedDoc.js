@@ -131,19 +131,19 @@ enyo.kind(
     /**
      * This function clears the document content, shows the loader and sends an
      * open doc request to a URL.
-     * @param {String} documentURI the request URL
+     * @param {String} documentURL the request URL
      */
-    openDoc: function(documentURI){
+    openDoc: function(documentURL){
         this.clearAll();
         this.$.loader.show();
-        this.documentURI = documentURI;
+        this.documentURL = documentURL;
 
         var main = this;
 		if(GLOBAL.viewType == "entityList") {
-			var url = CONSTANTS.ENTITY_DETAILS_URL + '?entityURI=' + documentURI;
+			var url = CONSTANTS.ENTITY_DETAILS_URL + '?entityURI=' + documentURL;
 		}
 		else {
-			var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURI;
+			var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
 		}
         var store = rdfstore.create();
         store.load('remote', url, function(success) {
