@@ -39,7 +39,8 @@ enyo.kind(
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content', allowHtml: true },
+            { tag: 'div', name: 'predicateAnnotatorPanel', allowHtml: true }
         ]}
     ],
 
@@ -76,29 +77,55 @@ enyo.kind(
     /**
      * This function clears the document's content.
      */
-    clearDoc: function(){
+    clearAll: function(){
 		this.$.content.setContent('');
         this.$.content.destroyClientControls();
         this.$.content.render();
+		this.$.predicateAnnotatorPanel.setContent('');
+        this.$.predicateAnnotatorPanel.destroyClientControls();
+        this.$.predicateAnnotatorPanel.render();
     },
 
     /**
      * This function shows a document.
-     * @param {String} doc the document
+     * @param {String} rdf the document
      */
-    showDoc: function(doc){
+    showDoc: function(rdf){
         this.show();
         this.scrollToTop();
         this.$.loader.hide();
-        this.renderPreviewTemplate(doc);
+		this.createPredicateAnnotator(rdf);
+        this.renderPreviewTemplate(rdf);
+    },
+	
+	createPredicateAnnotator: function(rdf) {
+		var props = [];
+		var query = 'SELECT ?p { ?s ?p ?o }';
+		var main = this;
+		rdf.execute(query, function(success, results) {
+			if (success && results.length > 0) {
+				for(var i=0;i<results.length;i++) {
+					if($.inArray(results[i].p.value, props)==-1) {
+						props.push(results[i].p.value);
+					}
+				}
+				main.$.predicateAnnotatorPanel.createComponent({
+                    kind: 'PredicateAnnotator',
+                    searchWord: main.searchWord,
+					documentURL: main.documentURL,
+					predicates: props
+                });
+				main.$.predicateAnnotatorPanel.render();
+			}
+		});
     },
 
     /**
      * This function renders the preview document content through the Uduvudu Library
-     * @param {String} doc the document
+     * @param {String} rdf the document
      */
-    renderPreviewTemplate: function(doc){
-        $("#" + this.$.content.getId()).append(uduvudu.process(doc));
+    renderPreviewTemplate: function(rdf){
+        $("#" + this.$.content.getId()).append(uduvudu.process(rdf));
     },
 
     /**
@@ -107,7 +134,7 @@ enyo.kind(
      * @param {String} documentURI the request URL
      */
     openDoc: function(documentURI){
-        this.clearDoc();
+        this.clearAll();
         this.$.loader.show();
         this.documentURI = documentURI;
 

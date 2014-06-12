@@ -191,6 +191,7 @@ jQuery(document).ready(function () {
 									});
 										
 									this.render();
+									this.search(this.searchWord);
 								}
 							break;
 							case 'docListViewButton':
@@ -214,7 +215,6 @@ jQuery(document).ready(function () {
 																	name: 'dictionaries',
 																	dictionaryTitle: 'Entities',
 																	titleClass: 'dictionariesMainTitle',
-																	// showDetailsFunction: 'updateDetails'
 																	showDetailsFunction: 'displayDetails'
 															},
 															{
@@ -245,8 +245,7 @@ jQuery(document).ready(function () {
 															moreButtonClass: 'moreButton',
 															moreDocumentsFunction: 'moreDocuments'
 														});
-									this.render();
-									
+									this.render();									
 									this.search(this.searchWord);
 								}
 							break;
@@ -537,6 +536,7 @@ jQuery(document).ready(function () {
                     this.searchWord = searchWord;
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
+						this.cleanPreviewBox();
 						switch(GLOBAL.viewType) {
 							case 'entityList':
 							case 'documentList':
@@ -648,14 +648,13 @@ jQuery(document).ready(function () {
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
-                    this.cleanPreviewBox();
-                    this.cleanDetailsBox();
-					if(success) {
+                    if(success) {
 						switch(GLOBAL.viewType) {
 							case 'documentList':
 							case 'entityList':
 								this.updateEntityList(rdf, this.searchWord);
 								this.updateDocumentList(rdf);
+								this.cleanDetailsBox();
 							break;
 							case 'landscape':
 								FusePool.Landscaping.doSearch();

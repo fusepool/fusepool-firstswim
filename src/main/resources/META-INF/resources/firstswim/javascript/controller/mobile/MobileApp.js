@@ -62,7 +62,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function process the get parameters. If there is search word,
-                 * starts a search with the unchecked entitites and if there is
+                 * starts a search with the unchecked entities and if there is
                  * previewed document, opens that.
                  */
                 processGETParameters: function(){

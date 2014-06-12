@@ -243,26 +243,6 @@ function getAPropertyValue(rdf, subject, exclude) {
 }
 
 /**
- * This function gets an rdf object, an existing subject and returns
- * with all the available properties it has in the rdf object.
- * @param {Object} rdf the rdf object
- * @param {String} subject URI of the subject
- * @returns {Array} the value of a found property 
- */
-function getRDFProperties(rdf, subject) {
-	var props = [];
-	var query = 'SELECT * { <'+subject+'> ?p ?o }';
-	rdf.execute(query, function(success, results) {
-		if (success && results.length > 0) {
-			for(var i=0;i<results.length;i++) {
-				props.push(results[i].p.value);
-			}
-		}
-	});
-	return props;
-}
-
-/**
  * This function puts an annotation to the annostore
  * @param {String} annotationString body of the annotation
  */

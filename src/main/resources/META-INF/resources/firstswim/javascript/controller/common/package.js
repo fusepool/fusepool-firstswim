@@ -24,5 +24,7 @@ enyo.depends(
         'preview/popup/AddEntityPopup.js',
         'preview/popup/MoveEntityPopup.js',
         'preview/popup/RemoveEntityPopup.js',
-        'preview/popup/RatePopup.js'
+        'preview/popup/RatePopup.js',
+		'preview/predicateannotator/PredicateAnnotator.js',
+		'preview/predicateannotator/PredicateItem.js'
 );

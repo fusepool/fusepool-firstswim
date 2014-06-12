@@ -456,6 +456,7 @@ body{
 
 .labelListPanel {
     border-top: 1px solid #eeeeee;
+	cursor: default;
 }
 
 .labelDiv, .predictedLabelDiv {
@@ -469,7 +470,7 @@ body{
 }
 
 .labelDiv {
-    background-color: rgba(20, 175, 255, 0.3)
+    background-color: rgba(20, 175, 255, 0.3);
 }
 
 .predictedLabelDiv {
@@ -589,6 +590,50 @@ body{
 
 .documentContent img {
 	max-width: 100%;
+}
+
+/* Predicate annotator */
+
+.predicateAnnotatorPanel  {
+	border-top: 1px solid #EEEEEE;
+	margin: 20px;
+	cursor: default;
+}
+
+.predicateAnnotatorName {
+	margin: 10px 0px;
+	color: #A6A6A6;
+    font-size: 11px;
+}
+
+.predicateItem {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin: 2px;
+	padding: 3px;
+	max-width: 470px;
+	border: 1px solid #dedede;
+	background-color: #f3f3f3;
+}
+
+.acceptPredicateButton, .dismissPredicateButton {
+	color: #555555;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px 2px 0px 4px;
+}
+
+.acceptedPredicate {
+	border-color: #75DE7F;
+	background-color: #F0FFEF;
+}
+
+.dismissedPredicate {
+	border-color: #F16279;
+	background-color: #FFF4F4;
 }
 
 /* ----- Entity menu ----- */
