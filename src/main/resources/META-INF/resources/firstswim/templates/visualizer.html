@@ -1,7 +1,9 @@
 <!--
-# Visualizer Tempaltes
--->
 
+# BASE TYPE DEFINITIONS
+
+URI in comment refers to the class of the object in rdf:range
+-->
 <script id="title" type="text/x-handlebars-template">
   <h1>{{title.u}}</h1>
 </script>
@@ -11,118 +13,72 @@
 </script>
 
 <script id="text" type="text/x-handlebars-template">
-  <div>
-  <p>{{{text.u}}}</p>
-  </div>
+  <p>{{text.u}}</p>
 </script>
 
 <script id="person_name" type="text/x-handlebars-template">
-    <div style="">
-      {{lastName.u}} {{firstName.u}}
-  </div>
+  <div>{{lastName.u}} {{firstName.u}}</div>
 </script>
 
-<script id="address_line3" type="text/x-handlebars-template">
-    <div>
-      {{#each address}}
-          {{this.country.u}}-{{this.postalCode.u}} {{this.city.u}}
-      {{/each}}
-  </div>
+<script id="citedBy" type="text/x-handlebars-template">
+   <p><b>Cited by:</b>
+  {{#each citedBy}}{{#if @index}}, {{/if}}<a href="?uri={{this}}">{{this}}</a>{{/each}}
+  </p>
 </script>
 
-<script id="address" type="text/x-handlebars-template">
-    <div>
-      {{firstName.u}} {{lastName.u}}<br />
-      {{#each address}}
-          {{#if street.u}}{{street.u}}<br />{{/if}}
-          {{#if street2.u}}{{street2.u}}<br />{{/if}}
-          {{country.u}}-{{postalCode.u}} {{city.u}}
-      {{/each}}
-  </div>
-</script>
-
-
-<script id="inventor" type="text/x-handlebars-template">
-    <div>
-      Inventors
-      <ul>
-      {{#each inventor}}
-      <li>{{this.lastName.u}}</li>
-      {{/each}}
-      </ul>
-  </div>
+<script id="neighboringMunicipalities" type="text/x-handlebars-template">
+   <p><b>Neighboring Municipalities:</b>
+  {{#each neighboringMunicipalities.u}}<a href="?uri={{this}}">&#9608;</a> {{/each}}
+  </p>
 </script>
 
 <script id="license" type="text/x-handlebars-template">
-    <div>
-    <p><small>&copy; {{license.u}}</small></p>
-  </div>
+    <p><small>{{#if license.u}}&copy; {{license.u}}{{else}}&copy; <a href="{{uri.u}}">{{uri.u}}</a>{{/if}}</small></p>
 </script>
 
 <script id="title_text" type="text/x-handlebars-template">
-    <div>
+  <div>
     <h1>{{title}}</h1>
     <p>{{text}}</p>
   </div>
 </script>
 
 <script id="community" type="text/x-handlebars-template">
-    <div>
-        <div>
-    <img src="{{img_url.u}}" />
+  <div style="height: 200px">
+  <div style="width: 200px; height: 200px; overflow: hidden" class="pull-right">
+    <img style="min-width: 200px; min-height: 200px; max-width: 300px; max-height: 300px" src="{{img_url.u}}" />
   </div>
     <h1>{{title.u}}</h1>
-    <p>{{{text.u}}}</p>
+    <p>{{text.u}}</p>
   </div>
 </script>
 
 <script id="label_comment" type="text/x-handlebars-template">
     <div>
     <h1>{{title.u}}</h1>
-    <p>{{{text.u}}}</p>
+    <p>{{text.u}}</p>
   </div>
 </script>
 
 <script id="location" type="text/x-handlebars-template">
-    <div id="map-canvas" >
+    <div id="map-canvas" style="height: 200px; width: 400px">
         <big>&#8982;</big> {{lat.u}} / {{long.u}}
-    </div> 
+    </div>
 </script>
-
-<script id="creator" type="text/x-handlebars-template">
-    <div >
-        {{#each creator}}
-            This resource was created by {{this.title.u}}.
-        {{/each}}
-    </div> 
-</script>
-
-<script id="created" type="text/x-handlebars-template">
-    <div >
-        This resource was created on {{created.u}}.
-    </div> 
-</script>
-
-<script id="createMeta" type="text/x-handlebars-template">
-    <div >
-        This resource was created by {{#each creator}}{{this.title.u}}{{/each}} on {{created.u}}
-        
-    </div> 
-</script>
-
 
 <script id="location_js" type="text/x-handlebars-template">
         var script = document.createElement("script");
         script.type = "text/javascript";
         script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyAFRTcPPyYit9ERj9COlgpgYW-Ve-lUeUs&sensor=false&callback=initializeMap";
         document.body.appendChild(script);
-        
+
         initializeMap = function () {
             var myLatlng = new google.maps.LatLng({{lat.u}}, {{long.u}});
             var mapOptions = { center: myLatlng, disableDefaultUI: true, zoomControl: true, zoom: 12, mapTypeId: google.maps.MapTypeId.ROADMAP };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         };
 </script>
+
 
 <!--<script id="pmid" type="text/x-handlebars-template">
   <div>
@@ -131,13 +87,15 @@
 </script>-->
 
 <script id="img" type="text/x-handlebars-template">
-  <div >
-  <img src="{{img_url.u}}" class="img-responsive" />
+  <div style="width: 200px; height: 200px;">
+  <img style="min-width: 200px; min-height: 200px;" src="{{img_url.u}}" class="img-responsive" />
   </div>
 </script>
 
 <script id="literal" type="text/x-handlebars-template">
-    <div ><p title="{{{subject.u}}} - {{{predicate.u}}}"><b>{{{name.u}}}</b>:<br /> {{{text.u}}}</p></div>
+    {{#with literal}}
+    <div><p title="{{{subject.u}}} - {{{predicate.u}}}"><b>{{{name.u}}}</b>:<br /> {{{text.u}}}</p></div>
+    {{/with}}
 </script>
 
 <!-- void -->

@@ -76,17 +76,41 @@ uduvudu.matcher = function (inputGraph, resource, depth) {
  * @returns {string} outputs the string representing the rendred graph.
  */
 uduvudu.visualizer = function (visuals, language, device) {
+    // change to mustache style template
+    /*_.templateSettings = {
+        evaluate    : /<%([\s\S]+?)%>/g,
+        interpolate : /\{\{([\s\S]+?)\}\}/g,
+        escape      : /\{\{\{([\s\S]+?)\}\}\}>/g
+    };*/
+
     var output = "";
     // order visuals
+//    console.log(visuals);
     visuals = _.sortBy(visuals, function (visual) {return -visual.order;});
     _.each(visuals,
         function (visual){
-           var template = Handlebars.compile($("#"+visual.template.name).html());
-           var javascript = $("#"+visual.template.name+"_js").html();
-           output += template(uduvudu.helper.languageFlattener(visual.context, language));
+           // get name of template for the current visual
+           templateName = _.toArray(visual.context)[0].t.name;
+
+//           console.log(templateName, JSON.stringify(visual.context,false, "  "))
+
+           // create content part of output
+           var content = $("#"+templateName).html();
+           if (content) {
+               contentTemplate = Handlebars.compile(content);
+//               contentTemplate = _.template(content);
+           } else {
+               console.log("NoTemplateFound", "There was no template with the name '"+templateName+"' found.")
+               // fallback if no template found
+               contentTemplate = Handlebars.compile('<div>{{'+_.first(_.keys(visual.context))+'.u}}</div>');
+           }
+           output += contentTemplate(uduvudu.helper.prepareLanguage(visual.context, language));
+
+           // create scripting part of output
+           var javascript = $("#"+templateName+"_js").html();
            if (javascript) {
                javascriptTemplate = Handlebars.compile(javascript);
-               output += "<script type=\"text/javascript\">"+javascriptTemplate(uduvudu.helper.languageFlattener(visual.context, language))+"</script>";
+               output += "<script type=\"text/javascript\">"+javascriptTemplate(uduvudu.helper.prepareLanguage(visual.context, language))+"</script>";
            }
        });
     return output;
@@ -105,8 +129,13 @@ uduvudu.helper.createQueries = function (where, modifier) {
             }
 };
 
+/*
+* Try to find function with the support name in the matchFuncs Array, if not found return empty function.
+* @param {name} String The name of the function.
+* @returns {function} Output the a matcher function.
+*/
 uduvudu.helper.findMatchFunc = function(name) {
-    return _.first(_.values(_.find(matchFuncs, function (func) {return _.first(_.keys(func)) == name;})));
+    return _.first(_.values(_.find(matchFuncs, function (func) {return _.first(_.keys(func)) == name;}))) || (function (){return false;});
 }
 
 uduvudu.helper.matchArrayOfFuncs = function(graph, resource, names) {
@@ -142,25 +171,29 @@ uduvudu.helper.handleUnknown = function (graph) {
                     // literal template
                     return   {
                                 elements: 1,
-                                context:    {
-                                                subject: {undefined: result.s.value},
-                                                predicate: {undefined: result.p.value},
-                                                name: {undefined: uduvudu.helper.nameFromPredicate(result.p)},
-                                                text: {undefined: result.o.value}
-                                            },
-                                template: {name: "literal"},
+                                context: {
+                                    literal: {
+                                        subject: {l: {undefined:  result.s.value}},
+                                        predicate: {l: {undefined:  result.p.value}},
+                                        name: {l: {undefined: uduvudu.helper.nameFromPredicate(result.p)}},
+                                        text: {l: {undefined:  result.o.value}},
+                                        t: {name: "literal"}
+                                    }
+                                },
                                 order: 1
                             };
                 } else {
                     // unknown template
                     return   {
                                 elements: 0,
-                                context:    {
-                                                subject: {undefined: uduvudu.helper.prepareTriple(result.s)},
-                                                predicate: {undefined: uduvudu.helper.prepareTriple(result.p)},
-                                                object: {undefined: uduvudu.helper.prepareTriple(result.o)}
-                                            },
-                                template: {name: "unknown"},
+                                context: {
+                                    unknown: {
+                                        subject: {l: {undefined: uduvudu.helper.prepareTriple(result.s)}},
+                                        predicate: {l: {undefined: uduvudu.helper.prepareTriple(result.p)}},
+                                        object: {l: {undefined: uduvudu.helper.prepareTriple(result.o)}},
+                                        t: {name: "unknown"}
+                                    }
+                                },
                                 order: 0
                             };
                 };
@@ -196,61 +229,31 @@ uduvudu.helper.showGraph = function(graph, simple) {
     return ret;
 };
 
-var log;
-
-uduvudu.helper.languageFlattener = function(context, language) {
-    var out = _.object(_.keys(context), _.map(_.values(context), function(val) {
-        if (_.isArray(val)) {
-            return _.map(val, function(l) {return uduvudu.helper.languageFlattener(l, language)});
-        } else {
-            if (_.isString(_.first(_.values(val))))  {
-                var user;
-                if(val[language]) {
-                    user = val[language];
+uduvudu.helper.prepareLanguage = function(val, language) {
+    if (_.isArray(val)) {
+        // if isArray nest
+        return _.map(val, function(l) {return uduvudu.helper.prepareLanguage(l, language)});
+    } else {
+        if (_.isObject(val)){
+            // if not, is leafe node do nest object 
+            if (! (_.has(val,'l'))) {
+                return _.object(_.keys(val),_.map(val, function(l) {return uduvudu.helper.prepareLanguage(l, language)}));
+            // else if is leafe node (denoted by having a key of 'l') create key 'u' with current language
+            } else {
+                if(val.l[language]) {
+                    val.u = val.l[language];
                 } else {
-                    if (val['undefined']) {
-                        user = val['undefined'];
+                    if (val.l['undefined']) {
+                        val.u = val.l['undefined'];
                     } else {
-                        user = _.first(_.toArray(val));
-                    }
-                }
-            } else {
-                return _.object(_.keys(val),_.map(val, function(l) {return uduvudu.helper.languageFlattener(l, language)}));
-            }
-        }
-        return {u: user, l: val}
-        }));
-    return out;
-};
-
-
-/*
-uduvudu.helper.languageFlattener = function(context, language) {
-    var out = _.object(_.keys(context), _.map(_.values(context), function(lang) {
-            if (_.isString(lang)) {
-                return {u: lang}
-            } else {
-                if (_.isArray(lang)) {
-                    return _.map(lang, function(l) {return uduvudu.helper.languageFlattener(l, language)});
-                }
-                else {
-                    var user;
-                    if(lang[language]) {
-                        user = lang[language];
-                    } else {
-                        if (lang['undefined']) {
-                            user = lang['undefined'];
-                        } else {
-                            user = _.first(_.toArray(lang));
-                        }
+                        val.u = _.first(_.toArray(val.l));
                     }
                 }
             }
-            return {u: user, l: lang}
-        }));
-    return out;
-};
-*/
+        } 
+        return val;
+    }
+}
 
 /**
  * Matcher Factories
@@ -261,28 +264,38 @@ uduvudu.matchers.createCombine = function(defArg) {
     return _.object([[defArg.matcherName,
     function (graph, resource) {
         var def = defArg;
+
+        // if no templateVariable is defined get term from predicate
+        def.templateVariable = def.templateVariable || def.matcherName;
         var proposal = false;
         var proposals = uduvudu.helper.matchArrayOfFuncs(graph,resource,def.combineIds);
         if (_.every(proposals, _.identity)) {
             proposal = {
-                                elements: _.reduce(_.pluck(proposals,'elements'), function (m,n){return m+n;},0),
-                                context: _.reduce(_.rest(proposals), function(memo,num){return _.extend(memo,num.context);},_.first(proposals).context),
-                                template: {name: def.templateId},
-                                cquery: _.flatten(_.map(proposals, function(p) {return p.cquery;})),
-                                order: 100000
-                       };
-//            console.log("createCombine", def.matcherName, proposal.context, proposal.elements);
+                elements: _.reduce(_.pluck(proposals,'elements'), function (m,n){return m+n;},0),
+                context:
+                    _.object([[
+                        def.templateVariable,
+                        _.extend(
+                            _.reduce(_.rest(proposals), function(memo,num){return _.extend(memo,num.context);}, _.first(proposals).context),
+                           {'t': {name: def.templateId || def.templateVariable}}
+                        )
+                    ]]),
+                cquery: _.flatten(_.map(proposals, function(p) {return p.cquery;})),
+                order: def.order
+            };
+//          console.log("createCombine", def.matcherName, proposal.context, proposal.elements);
         }
         return proposal;
     }]]);
 }
-
 
 uduvudu.matchers.createLink = function(defArg) {
     return _.object([[defArg.matcherName,
     function (graph, resource) {
         var def = defArg;
 
+        // if no templateVariable is defined get term from predicate
+        def.templateVariable = def.templateVariable || uduvudu.helper.getTerm(def.predicate);
         // look if subject or object position
         if (def.resourcePosition && def.resourcePosition == "object") {
             var where = '{  ?val <'+def.predicate+'> '+resource+'. }';
@@ -298,12 +311,18 @@ uduvudu.matchers.createLink = function(defArg) {
                 var proposals = _.compact(_.map(results, function(result) {return uduvudu.helper.matchArrayOfFuncs(graph,"<"+result.val.value+">",def.linkIds)[0]}));
                 if (_.some(proposals)) {
                     proposal = {
-                                elements: _.reduce(_.pluck(proposals,'elements'), function (m,n){return m+n;},0),
-                                context: _.object([[def.templateVariable, _.map(proposals, function(proposal){return proposal.context})]]),
-                                template: {name: def.templateId},
-                                cquery: _.flatten(_.map(proposals, function(p) {return p.cquery;})),
-                                order: 100000
-                               };
+                        elements: _.reduce(_.pluck(proposals,'elements'), function (m,n){return m+n;},0),
+                        context: 
+                            _.object([[
+                                def.templateVariable, 
+                                _.extend(
+                                    _.map(proposals, function(proposal){return proposal.context}), 
+                                    {'t': {name: def.templateId || def.templateVariable, 'r': resource}}
+                                )
+                            ]]),
+                        cquery: _.flatten(_.map(proposals, function(p) {return p.cquery;})),
+                        order: def.order
+                    };
                 }
 //                console.log("createLink", def.matcherName, proposal.context);
             };
@@ -311,7 +330,6 @@ uduvudu.matchers.createLink = function(defArg) {
         return proposal;
     }]]);
 }
-
 
 uduvudu.matchers.createPredicate = function(defArg) {
     return _.object([[defArg.matcherName,
@@ -333,27 +351,44 @@ uduvudu.matchers.createPredicate = function(defArg) {
         graph.execute(query.select, function(success, results) {
             if(success && (! _.isEmpty(results))) {
                 proposal =  {
-                                elements: results.length,
-                                context: _.object([[def.templateVariable, _.object(_.map(results, function(r){return [r.val.lang,r.val.value]}))]]),
-                                template: {name: def.templateId},
-                                cquery: [query.construct],
-                                order: def.order
-                            };
-//                console.log("createPredicate", proposal.context);
+                    elements: results.length,
+                    context:
+                        _.object([[
+                            def.templateVariable,
+                            {
+                                l: _.object(_.map(results, function(r){return [r.val.lang,r.val.value]})),
+                                t: {name: def.templateId || def.templateVariable},
+                                p: def.predicate,
+                                r: resource
+                            }
+                        ]]),
+                    cquery: [query.construct],
+                    order: def.order
+                };
+//              console.log("createPredicate", proposal.context);
             };
         });
         return proposal;
     }]]);
 }
 
-// initiate matcher functions
-var combineMatcherFuncs = _.map(combineMatchers, function (cM) {return uduvudu.matchers.createCombine(cM);});
-var linkMatcherFuncs = _.map(linkMatchers, function (lM) {return uduvudu.matchers.createLink(lM);});
-var predicateMatcherFuncs = _.map(predicateMatchers, function (pM) {return uduvudu.matchers.createPredicate(pM);});
+var matchFuncs = [];
 
-var matchFuncs = combineMatcherFuncs;
-matchFuncs = _.union(linkMatcherFuncs, matchFuncs);
-matchFuncs = _.union(matchFuncs, predicateMatcherFuncs);
+// initiate matcher functions
+if (! _.isUndefined(window.combineMatchers)) {
+    var combineMatcherFuncs = _.map(combineMatchers, function (cM) {return uduvudu.matchers.createCombine(cM);});
+    matchFuncs = _.union(combineMatcherFuncs, matchFuncs);
+}
+
+if (! _.isUndefined(window.linkMatchers)) {
+    var linkMatcherFuncs = _.map(linkMatchers, function (lM) {return uduvudu.matchers.createLink(lM);});
+    matchFuncs = _.union(linkMatcherFuncs, matchFuncs);
+}
+
+if (! _.isUndefined(window.predicateMatchers)) {
+    var predicateMatcherFuncs = _.map(predicateMatchers, function (pM) {return uduvudu.matchers.createPredicate(pM);});
+    matchFuncs = _.union(predicateMatcherFuncs, matchFuncs);
+}
 
 
 // export
