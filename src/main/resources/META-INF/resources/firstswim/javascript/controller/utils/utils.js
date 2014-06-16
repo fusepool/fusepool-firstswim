@@ -10,8 +10,8 @@ function placeDefaultCookies() {
 }
 
 // var BASE_URL = 'http://localhost:8080/';
-var BASE_URL = 'http://platform.fusepool.info/';
-// var BASE_URL = '/';
+// var BASE_URL = 'http://platform.fusepool.info/';
+var BASE_URL = '/';
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
@@ -32,14 +32,14 @@ var CONSTANTS = {
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.eu',
 
-    CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
-    TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
-    VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
-    IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
-    // CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
-    // TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
-    // VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
-    // IMG_PATH: BASE_URL + 'firstswim/images/'
+    // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
+    // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
+    // VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
+    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
+    CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
+    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
+    VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
+    IMG_PATH: BASE_URL + 'firstswim/images/'
 };
 
 /**
