@@ -2,6 +2,7 @@ jQuery(document).ready(function () {
 
     function initialization(){
 
+		placeDefaultCookies();
         createUI();
 		// setCurrentUser();
         enyo.Scroller.touchScrolling=true;
@@ -254,7 +255,7 @@ jQuery(document).ready(function () {
                     if(checkedEntities.length > 0){
                         url += this.getCheckedEntitesURL(checkedEntities);
                     }
-                    url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
+                    url += '&offset='+offset+'&maxFacets='+readCookie('maxFacets')+'&items='+readCookie('items');
                     return url;
                 },
 

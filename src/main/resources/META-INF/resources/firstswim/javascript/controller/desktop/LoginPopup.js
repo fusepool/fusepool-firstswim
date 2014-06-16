@@ -37,7 +37,7 @@ enyo.kind(
                     { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
                 ]}
             ]},
-            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel', allowHTML: true },
+            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel', allowHtml: true },
             { tag: 'div', classes: 'loginMessage', name: 'loginMessage' },
             { tag: 'div', classes: 'loginButtons', components: [
 				{ kind: 'onyx.Button', content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap:"signOut"},
@@ -50,7 +50,7 @@ enyo.kind(
     ],
 
     initLogin: function(){
-		if(GLOBAL.currentUser=='anonymous') {
+		if(readCookie('currentUser') == 'anonymous') {
 			this.$.emailRow.hide();
 			this.$.passwordConfirmRow.hide();
 			this.$.signOutBtn.hide();
@@ -60,7 +60,9 @@ enyo.kind(
 			this.$.signInBtn.hide();
 			this.$.signUpBtn.hide();
 			this.$.loginTable.hide();
-			this.showCurrentUser('Signed in as <strong>'+GLOBAL.currentUser+'</strong>.');
+			this.showCurrentUser('Signed in as <b>'+readCookie('currentUser')+'</b>.');
+			this.owner.$.loginButton.removeClass('loggedOut');
+			this.owner.$.loginButton.addClass('loggedIn');
 		}
 		this.hideLoginMessage();
 		this.$.loginBackBtn.hide();
@@ -68,7 +70,7 @@ enyo.kind(
 	},
 	
 	signOut: function(){
-		GLOBAL.currentUser = 'anonymous';		
+		updateCookie('currentUser','anonymous',30);	
 		this.hideCurrentUser();
 		
 		this.$.loginTable.show();
@@ -124,9 +126,9 @@ enyo.kind(
     },
 	
 	signInSucceed: function(userName){
-		GLOBAL.currentUser = userName;
+		updateCookie('currentUser',userName,30);
 		this.$.loginStatus;
-		this.showCurrentUser('Signed in as <strong>'+userName+'</strong>.');
+		this.showCurrentUser('Signed in as <b>'+userName+'</b>.');
 		this.hideLoginMessage();
 		
 		this.$.loginTable.hide();

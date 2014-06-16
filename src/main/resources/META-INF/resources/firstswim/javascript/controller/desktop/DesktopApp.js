@@ -4,6 +4,7 @@ jQuery(document).ready(function () {
        
     function initialization(){
 
+		placeDefaultCookies();
         createUI();
 		// setCurrentUser();
         enyo.Scroller.touchScrolling=false;
@@ -23,6 +24,7 @@ jQuery(document).ready(function () {
                     this.inherited(arguments);
                     renderTemplateDiv();
                     this.processGETParameters();
+					this.initViewType();
                 },
 
                 /**
@@ -72,26 +74,26 @@ jQuery(document).ready(function () {
 											name: 'toolbarIcons',
 											classes: 'toolbarIcons',
 											components: [
-												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: 'onViewTypeToggle', components: [
+												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: "onViewTypeToggle", components: [
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png', active: true},
-														{kind: "onyx.Tooltip", content: "Document list view", classes: 'viewTypeTooltip'}
+														{kind: "onyx.IconButton", name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png'},
+														{kind: "onyx.Tooltip", content: "Document list view", classes: 'viewTypeTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
 														{kind: "onyx.IconButton", name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'viewTypeTooltip'}
+														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'viewTypeTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
 														{kind: "onyx.IconButton", name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
-														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'viewTypeTooltip'}
+														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'viewTypeTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
 														{kind: "onyx.IconButton", name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'viewTypeTooltip'}
+														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'viewTypeTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
 														{kind: "onyx.IconButton", name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip'}
+														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip', active: false }
 													]}
 												]},
 												{ontap: 'login', name: 'loginButton', classes: 'loginButton loggedOut' }
@@ -116,49 +118,6 @@ jQuery(document).ready(function () {
                             ]},
                             { kind: 'ClosablePopup', name: 'bookmarkPopup', classes: 'bookmarkPopup', popupClasses: 'bookmarkPopupDiv', closeButtonClasses: 'popupCloseButton' },
                             {
-								name: 'leftDesktopCol',
-                                classes: 'leftDesktopCol',
-                                components: [
-                                    {
-                                            kind: 'DictionaryController',
-                                            openClasses: 'dictionaryListOpen',
-                                            closeClasses: 'dictionaryListClose',
-                                            openScrollerClass: 'dictionaryListScrollOpen',
-                                            closeScrollerClass: 'dictionaryListScrollClose',
-                                            entityCheckboxClass: 'dictionaryCheckbox',
-                                            searchFunction: 'search',
-                                            name: 'dictionaries',
-                                            dictionaryTitle: 'Entities',
-                                            titleClass: 'dictionariesMainTitle',
-                                            showDetailsFunction: 'displayDetails'
-                                    },
-                                    {
-                                            kind: 'DetailsBox',
-                                            name: 'detailsBox',
-                                            classes: 'detailsBox enyo-unselectable',
-                                            detailsMainTitle: 'Details',
-                                            mainTitleClass: 'detailsMainTitle',
-                                            scrollerClass: 'detailsScroll'
-                                    }
-                                ]
-                            },
-                            {
-                                kind: 'DocumentList',
-                                name: 'documents',
-                                openDocFunction: 'openDoc',
-                                openDocEvent: 'ontap',
-                                classes: 'documentList',
-                                loaderClass: 'loader',
-                                scrollerClass: 'documentListScroll',
-                                titleClass: 'documentsMainTitle',
-                                classifyFinishFunction: 'processClassifyResponse',
-                                titleContent: 'Documents ',
-                                documentsCountClass: 'documentsCount',
-                                noDataLabel: 'No data available',
-                                moreButtonClass: 'moreButton',
-                                moreDocumentsFunction: 'moreDocuments'
-                            },
-                            {
                                 kind: 'PreviewBox',
                                 name: 'previewBox',
                                 classes: 'previewBox',
@@ -169,204 +128,224 @@ jQuery(document).ready(function () {
                     }
                 ],
 				
-				/** */
-				onViewTypeToggle:  function(inSender, inEvent) {
-					if (inEvent.originator.getActive()) {
-						//var selected = inEvent.originator.indexInContainer();
-						switch(inEvent.originator.name) {
-							case 'locationViewButton':
-								this.destroyCurrentViewType(GLOBAL.viewType,'locationViewer');
-								
-								if(GLOBAL.viewType!='locationViewer') {
-									GLOBAL.viewType='locationViewer';
-
-									this.createComponent({
-										kind: 'LocationViewer',
-										name: 'locationViewer',
-										classes: 'locationViewerPanel',
-										loaderClass: 'loader',
-										titleClass: 'locationViewerMainTitle',
-										titleContent: 'Location viewer ',
-										noDataLabel: 'No data available'
-									});
-										
-									this.render();
-									this.search(this.searchWord);
-								}
-							break;
-							case 'docListViewButton':
-								this.destroyCurrentViewType(GLOBAL.viewType,'documentList');
-								
-								if(GLOBAL.viewType!='documentList') {									
-									GLOBAL.viewType='documentList';
-										
-									this.createComponent({
-														name: 'leftDesktopCol',
-														classes: 'leftDesktopCol',
-														components: [
-															{
-																	kind: 'DictionaryController',
-																	openClasses: 'dictionaryListOpen',
-																	closeClasses: 'dictionaryListClose',
-																	openScrollerClass: 'dictionaryListScrollOpen',
-																	closeScrollerClass: 'dictionaryListScrollClose',
-																	entityCheckboxClass: 'dictionaryCheckbox',
-																	searchFunction: 'search',
-																	name: 'dictionaries',
-																	dictionaryTitle: 'Entities',
-																	titleClass: 'dictionariesMainTitle',
-																	showDetailsFunction: 'displayDetails'
-															},
-															{
-																	kind: 'DetailsBox',
-																	name: 'detailsBox',
-																	classes: 'detailsBox enyo-unselectable',
-																	detailsMainTitle: 'Details',
-																	mainTitleClass: 'detailsMainTitle',
-																	scrollerClass: 'detailsScroll',
-																	titleClass: 'detailsTitle'
-															}
-														]
-													});
-									
-									this.createComponent({
-															kind: 'DocumentList',
-															name: 'documents',
-															openDocFunction: 'openDoc',
-															openDocEvent: 'ontap',
-															classes: 'documentList',
-															loaderClass: 'loader',
-															scrollerClass: 'documentListScroll',
-															titleClass: 'documentsMainTitle',
-															classifyFinishFunction: 'processClassifyResponse',
-															titleContent: 'Documents ',
-															documentsCountClass: 'documentsCount',
-															noDataLabel: 'No data available',
-															moreButtonClass: 'moreButton',
-															moreDocumentsFunction: 'moreDocuments'
-														});
-									this.render();									
-									this.search(this.searchWord);
-								}
-							break;
-							case 'nGraphViewButton':
-								this.destroyCurrentViewType(GLOBAL.viewType,'nGraph');
-								
-								if(GLOBAL.viewType!='nGraph') {
-									GLOBAL.viewType='nGraph';
-
-									this.createComponent({
-										kind: 'NGraph',
-										name: 'nGraph',
-										openDocFunction: 'openDoc',
-										openDocEvent: 'ontap',
-										classes: 'nGraphPanel',
-										loaderClass: 'loader',
-										titleClass: 'nGraphMainTitle',
-										titleContent: 'Network graph ',
-										noDataLabel: 'No data available'
-									});
-										
-									this.render();
-									this.search(this.searchWord);
-								}
-							break;
-							case 'entityListViewButton':
-								this.destroyCurrentViewType(GLOBAL.viewType,'entityList');
-								if(GLOBAL.viewType!='entityList') {									
-									GLOBAL.viewType='entityList';
-										
-									this.createComponent({
-														name: 'leftDesktopCol',
-														classes: 'leftDesktopCol',
-														components: [
-															{
-																	kind: 'DictionaryController',
-																	openClasses: 'dictionaryListOpen',
-																	closeClasses: 'dictionaryListClose',
-																	openScrollerClass: 'dictionaryListScrollOpen',
-																	closeScrollerClass: 'dictionaryListScrollClose',
-																	entityCheckboxClass: 'dictionaryCheckbox',
-																	searchFunction: 'search',
-																	name: 'dictionaries',
-																	dictionaryTitle: 'Organizations',
-																	titleClass: 'dictionariesMainTitle',
-																	// showDetailsFunction: 'updateDetails'
-																	showDetailsFunction: 'displayDetails'
-															},
-															{
-																	kind: 'DetailsBox',
-																	name: 'detailsBox',
-																	classes: 'detailsBox enyo-unselectable',
-																	detailsMainTitle: 'Details',
-																	mainTitleClass: 'detailsMainTitle',
-																	scrollerClass: 'detailsScroll',
-																	titleClass: 'detailsTitle'
-															}
-														]
-													});
-									
-									this.createComponent({
-															kind: 'DocumentList',
-															name: 'documents',
-															openDocFunction: 'openDoc',
-															openDocEvent: 'ontap',
-															classes: 'documentList',
-															loaderClass: 'loader',
-															scrollerClass: 'documentListScroll',
-															titleClass: 'documentsMainTitle',
-															classifyFinishFunction: 'processClassifyResponse',
-															titleContent: 'People ',
-															documentsCountClass: 'documentsCount',
-															noDataLabel: 'No data available',
-															moreButtonClass: 'moreButton',
-															moreDocumentsFunction: 'moreDocuments'
-														});
-									this.render();
-									
-									this.search(this.searchWord);
-								}
-							break;
-							case 'landscapeViewButton':
-								this.destroyCurrentViewType(GLOBAL.viewType,'landscape');
-								
-								if(GLOBAL.viewType!='landscape') {
-									GLOBAL.viewType='landscape';
-									this.createComponent({
-											kind: 'Landscape',
-											name: 'landscape',
-											classes: 'landscapePanel',
-											loaderClass: 'loader',
-											titleClass: 'landscapeMainTitle',
-											titleContent: 'Landscape '
-										});
-										
-									this.render();
-									this.search(this.searchWord);
-								}
-							break;
-						}
+				initViewType: function() {
+					switch(readCookie('viewType')) {
+						case 'documentList':
+							this.$.docListViewButton.setActive(true);
+						break;
+						case 'entityList':
+							this.$.entityListViewButton.setActive(true);
+						break;
+						case 'locationViewer':
+							this.$.locationViewButton.setActive(true);
+						break;
+						case 'landscape':
+							this.$.landscapeViewButton.setActive(true);
+						break;
+						case 'nGraph':
+							this.$.nGraphViewButton.setActive(true);
+						break;
+						default:
+							this.$.docListViewButton.setActive(true);
+					}
+					this.createViewType(readCookie('viewType'));
+				},
+				
+				toggleViewType: function(clickedButton) {
+					switch(clickedButton) {
+						case 'locationViewButton':
+							if(readCookie('viewType') != 'locationViewer') {
+								updateCookie('viewType','locationViewer',30);
+								this.destroyCurrentViewType('locationViewer');
+								this.createViewType('locationViewer');
+							}
+						break;
+						case 'docListViewButton':
+							if(readCookie('viewType') != 'documentList') {
+								this.destroyCurrentViewType('documentList');
+								updateCookie('viewType','documentList',30);
+								this.createViewType('documentList');
+							}
+						break;
+						case 'nGraphViewButton':
+							if(readCookie('viewType') != 'nGraph') {
+								this.destroyCurrentViewType('nGraph');
+								updateCookie('viewType','nGraph',30);
+								this.createViewType('nGraph');
+							}
+						break;
+						case 'entityListViewButton':
+							if(readCookie('viewType') != 'entityList') {
+								this.destroyCurrentViewType('entityList');
+								updateCookie('viewType','entityList',30);
+								this.createViewType('entityList');
+							}
+						break;
+						case 'landscapeViewButton':
+							if(readCookie('viewType') != 'landscape') {
+								this.destroyCurrentViewType('landscape');
+								updateCookie('viewType','landscape',30);
+								this.createViewType('landscape');
+							}
+						break;
 					}
 				},
 				
-				destroyCurrentViewType: function(currType,newType) {
-					if(currType!=newType) {
-						switch (currType) {
-							case 'nGraph':
-								this.$.nGraph.destroy();
+				createViewType: function(viewType) {
+					switch(viewType) {
+						default:
+						case 'documentList':
+							this.createComponent({	name: 'leftDesktopCol',
+													classes: 'leftDesktopCol',
+													components: [
+														{
+																kind: 'DictionaryController',
+																openClasses: 'dictionaryListOpen',
+																closeClasses: 'dictionaryListClose',
+																openScrollerClass: 'dictionaryListScrollOpen',
+																closeScrollerClass: 'dictionaryListScrollClose',
+																entityCheckboxClass: 'dictionaryCheckbox',
+																searchFunction: 'search',
+																name: 'dictionaries',
+																dictionaryTitle: 'Entities',
+																titleClass: 'dictionariesMainTitle',
+																showDetailsFunction: 'displayDetails'
+														},
+														{
+																kind: 'DetailsBox',
+																name: 'detailsBox',
+																classes: 'detailsBox enyo-unselectable',
+																detailsMainTitle: 'Details',
+																mainTitleClass: 'detailsMainTitle',
+																scrollerClass: 'detailsScroll',
+																titleClass: 'detailsTitle'
+														}
+													]
+												});
+							
+							this.createComponent({	kind: 'DocumentList',
+													name: 'documents',
+													openDocFunction: 'openDoc',
+													openDocEvent: 'ontap',
+													classes: 'documentList',
+													loaderClass: 'loader',
+													scrollerClass: 'documentListScroll',
+													titleClass: 'documentsMainTitle',
+													classifyFinishFunction: 'processClassifyResponse',
+													titleContent: 'Documents ',
+													documentsCountClass: 'documentsCount',
+													noDataLabel: 'No data available',
+													moreButtonClass: 'moreButton',
+													moreDocumentsFunction: 'moreDocuments'
+												});
+						break;
+						case 'entityList':									
+							this.createComponent({	name: 'leftDesktopCol',
+													classes: 'leftDesktopCol',
+													components: [
+														{
+															kind: 'DictionaryController',
+															openClasses: 'dictionaryListOpen',
+															closeClasses: 'dictionaryListClose',
+															openScrollerClass: 'dictionaryListScrollOpen',
+															closeScrollerClass: 'dictionaryListScrollClose',
+															entityCheckboxClass: 'dictionaryCheckbox',
+															searchFunction: 'search',
+															name: 'dictionaries',
+															dictionaryTitle: 'Organizations',
+															titleClass: 'dictionariesMainTitle',
+															showDetailsFunction: 'displayDetails'
+														},
+														{
+															kind: 'DetailsBox',
+															name: 'detailsBox',
+															classes: 'detailsBox enyo-unselectable',
+															detailsMainTitle: 'Details',
+															mainTitleClass: 'detailsMainTitle',
+															scrollerClass: 'detailsScroll',
+															titleClass: 'detailsTitle'
+														}
+													]
+												});
+							
+							this.createComponent({	kind: 'DocumentList',
+													name: 'documents',
+													openDocFunction: 'openDoc',
+													openDocEvent: 'ontap',
+													classes: 'documentList',
+													loaderClass: 'loader',
+													scrollerClass: 'documentListScroll',
+													titleClass: 'documentsMainTitle',
+													classifyFinishFunction: 'processClassifyResponse',
+													titleContent: 'People ',
+													documentsCountClass: 'documentsCount',
+													noDataLabel: 'No data available',
+													moreButtonClass: 'moreButton',
+													moreDocumentsFunction: 'moreDocuments'
+												});
+						break;
+						case 'locationViewer':
+							this.createComponent({
+								kind: 'LocationViewer',
+								name: 'locationViewer',
+								classes: 'locationViewerPanel',
+								loaderClass: 'loader',
+								titleClass: 'locationViewerMainTitle',
+								titleContent: 'Location viewer ',
+								noDataLabel: 'No data available'
+							});
 							break;
-							case 'documentList':	
-							case 'entityList':										
-								this.$.leftDesktopCol.destroy();
-								this.$.documents.destroy();
-							break;
-							case 'landscape':									
-								this.$.landscape.destroy();
-							break;
-							case 'locationViewer':									
-								this.$.locationViewer.destroy();
-							break;
-						}
+						case 'landscape':						
+							this.createComponent({
+									kind: 'Landscape',
+									name: 'landscape',
+									classes: 'landscapePanel',
+									loaderClass: 'loader',
+									titleClass: 'landscapeMainTitle',
+									titleContent: 'Landscape '
+								});								
+						break;
+						case 'nGraph':
+							this.createComponent({
+								kind: 'NGraph',
+								name: 'nGraph',
+								openDocFunction: 'openDoc',
+								openDocEvent: 'ontap',
+								classes: 'nGraphPanel',
+								loaderClass: 'loader',
+								titleClass: 'nGraphMainTitle',
+								titleContent: 'Network graph ',
+								noDataLabel: 'No data available'
+							});
+						break;
+					}
+					this.render();
+				},
+				
+				/** */
+				onViewTypeToggle: function(inSender, inEvent) {
+					if (inEvent.originator.getActive()) {
+						//var selected = inEvent.originator.indexInContainer();
+						this.toggleViewType(inEvent.originator.name);
+					}
+				},
+				
+				destroyCurrentViewType: function(newType) {
+					switch (readCookie('viewType')) {
+						case 'nGraph':
+							this.$.nGraph.destroy();
+						break;
+						case 'documentList':	
+						case 'entityList':										
+							this.$.leftDesktopCol.destroy();
+							this.$.documents.destroy();
+						break;
+						case 'landscape':									
+							this.$.landscape.destroy();
+						break;
+						case 'locationViewer':									
+							this.$.locationViewer.destroy();
+						break;
 					}
 				},
 				
@@ -537,13 +516,13 @@ jQuery(document).ready(function () {
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
 						this.cleanPreviewBox();
-						switch(GLOBAL.viewType) {
+						switch(readCookie('viewType')) {
 							case 'entityList':
 							case 'documentList':
 								this.$.documents.startLoading();
 								this.sendSearchRequest(searchWord, checkedEntities, 'processSearchResponse');
 							break;
-							case 'nGraph':					
+							case 'nGraph':
 								this.$.nGraph.newGraph();	
 							break;
 							case 'landscape':
@@ -588,7 +567,7 @@ jQuery(document).ready(function () {
 					
 					// }
 					
-					if(GLOBAL.viewType == "entityList") {
+					if(readCookie('viewType') == "entityList") {
 						var url = CONSTANTS.ENTITY_SEARCH_URL;
 					}
 					else {
@@ -601,7 +580,7 @@ jQuery(document).ready(function () {
                     if(checkedEntities.length > 0){
                         url += this.getCheckedEntitiesURL(checkedEntities);
                     }
-                    url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
+                    url += '&offset='+offset+'&maxFacets='+readCookie('maxFacets')+'&items='+readCookie('items');
                     return url;
                 },
 
@@ -649,7 +628,7 @@ jQuery(document).ready(function () {
                  */
                 processSearchResponse: function(success, rdf){
                     if(success) {
-						switch(GLOBAL.viewType) {
+						switch(readCookie('viewType')) {
 							case 'documentList':
 							case 'entityList':
 								this.updateEntityList(rdf, this.searchWord);
@@ -839,6 +818,8 @@ jQuery(document).ready(function () {
                     return result;
                 },
 
+				/**
+				*/
                 getFacets: function(rdf){
                     var result = [];
                     var query = 'SELECT * { ?v <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://fusepool.eu/ontologies/ecs#ContentStoreView>.';
@@ -1018,7 +999,7 @@ jQuery(document).ready(function () {
 						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve("rdf:rest")), null).toArray()[0].object;
 					}
 					
-					if(GLOBAL.viewType == "entityList") {							
+					if(readCookie('viewType') == "entityList") {							
 						var querylist = 'PREFIX foaf: <http://xmlns.com/foaf/0.1/>' + 
 						'PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>' + 
 						'SELECT ?url ?name ?addresslocality ?streetaddress ' + 

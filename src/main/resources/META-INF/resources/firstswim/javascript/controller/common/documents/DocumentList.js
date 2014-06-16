@@ -12,7 +12,7 @@ enyo.kind(
         offset: 0,
         searchWord: '',
         checkedDocs: 0,
-        minClassifyDoc: GLOBAL.items, // process button showing number
+        minClassifyDoc: readCookie('items'),  // process button showing number
         documents: null,
         scrollerClass: '',
         titleClass: '',
@@ -68,10 +68,10 @@ enyo.kind(
     ],
 
     toggleLabelPrediction: function(inSender){
-		GLOBAL.labelPrediction = !inSender.checked; //this is weird
+		readCookie('labelPrediction') = !inSender.checked; //this is weird
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
-            shortDocuments[i].togglePredictedLabelLists(GLOBAL.labelPrediction);
+            shortDocuments[i].togglePredictedLabelLists(readCookie('labelPrediction'));
         }
     },
 	
@@ -187,7 +187,7 @@ enyo.kind(
      * send and ajax request with the new offset value.
      */
     moreBtnPress: function(){
-		this.offset += GLOBAL.items;
+		this.offset += readCookie('items');
 		this.owner[this.moreDocumentsFunction](this.offset);
 		this.$.loader.show();
 		this.$.moreButton.hide();
@@ -256,7 +256,7 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.activateSliders.show();
-			if(GLOBAL.viewType != "entityList") {
+			if(readCookie('viewType') != 'entityList') {
 				this.$.labelPredictionSettings.show();
 				this.$.moreButton.show();
 			}
@@ -355,7 +355,7 @@ enyo.kind(
 		// console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
+		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
 		
 		var annotationString = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' +
 								'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +

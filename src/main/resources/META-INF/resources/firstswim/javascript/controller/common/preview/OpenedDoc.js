@@ -139,7 +139,7 @@ enyo.kind(
         this.documentURL = documentURL;
 
         var main = this;
-		if(GLOBAL.viewType == "entityList") {
+		if(readCookie('viewType') == "entityList") {
 			var url = CONSTANTS.ENTITY_DETAILS_URL + '?entityURI=' + documentURL;
 		}
 		else {

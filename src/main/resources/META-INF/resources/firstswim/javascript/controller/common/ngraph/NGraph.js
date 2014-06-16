@@ -150,7 +150,8 @@ enyo.kind(
 	 * @param {Number} level the current level
 	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
-		for(var i=0; i<docNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
+		var nodeLimit = readCookie('nodeLimit').split(',');
+		for(var i=0; i<docNodes.length && i<( level >= nodeLimit.length ? 3 : nodeLimit[level]); i++) {
 			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document", $type: "square", $color: "#239fa0" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
@@ -181,8 +182,9 @@ enyo.kind(
 					var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
-						var subjNodes =  main.getSubjectConnections(success, store);					
-						for(var i=0; i<subjNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
+						var subjNodes = main.getSubjectConnections(success, store);
+						var nodeLimit = readCookie('nodeLimit').split(',');
+						for(var i=0; i<subjNodes.length && i<( level >= nodeLimit.length ? 3 : nodeLimit[level]); i++) {
 							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
 							var ind = nodeObj.children.length-1;
 							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);

@@ -1,17 +1,17 @@
 
-var GLOBAL = {
-	currentUser: 'anonymous',
-	maxFacets: 10,
-	items: 10,
-	nodeLimit: [1,5,3],
-	viewType: 'documentList',
-	labelPrediction: true,
-	userLabels: []
-};
+function placeDefaultCookies() {
+	if(isEmpty(readCookie('currentUser'))) { createCookie('currentUser', 'anonymous', 30); }
+	if(isEmpty(readCookie('maxFacets'))) { createCookie('maxFacets', 10, 30); }
+	if(isEmpty(readCookie('items'))) { createCookie('items', 10, 30); }
+	if(isEmpty(readCookie('nodeLimit'))) { createCookie('nodeLimit', [1,5,3], 30); }
+	if(isEmpty(readCookie('viewType'))) { createCookie('viewType', 'documentList', 30); }
+	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', true, 30); }
+	if(isEmpty(readCookie('userLabels'))) { createCookie('userLabels', [], 30); }
+}
 
 // var BASE_URL = 'http://localhost:8080/';
-// var BASE_URL = 'http://platform.fusepool.info/';
-var BASE_URL = '/';
+var BASE_URL = 'http://platform.fusepool.info/';
+// var BASE_URL = '/';
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
@@ -32,19 +32,19 @@ var CONSTANTS = {
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
     FUSEPOOL_MAIN_URL: 'http://www.fusepool.eu',
 
-    // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
-    // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
-    // VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
-    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
-    CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
-    TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
-    VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
-    IMG_PATH: BASE_URL + 'firstswim/images/'
+    CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
+    TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
+    VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
+    IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
+    // CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
+    // TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
+    // VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
+    // IMG_PATH: BASE_URL + 'firstswim/images/'
 };
 
 /**
 * This function queries the platform for the current, logged in user
-* and sets the currentUser GLOBAL variable
+* and sets the currentUser cookie value
 */
 function setCurrentUser() {
 	var request = new enyo.Ajax({
@@ -57,8 +57,24 @@ function setCurrentUser() {
 	});
 	request.go();
 	request.response(this, function(inSender, inResponse) {
-		GLOBAL.currentUser = inResponse;
+		updateCookie('currentUser', inResponse, 30);
 	});
+}
+
+function createCookie(name, value, days) {
+	$.cookie(name, value, { expires: days });
+}
+
+function readCookie(name) {
+    return $.cookie(name);
+}
+
+function eraseCookie(name) {
+    $.removeCookie(name);
+}
+
+function updateCookie(name, value, days) {
+	createCookie(name, value, days);
 }
 
 /**
@@ -295,7 +311,7 @@ function getUserLabels(userName) {
 	request.go();	
 	request.response(this, function(inSender, inResponse) {
 		var obj = JSON.parse(inResponse);
-		GLOBAL.userLabels = obj.userLabels;
+		updateCookie('userLabels', obj.userLabels, 30);
 	});
 }
 

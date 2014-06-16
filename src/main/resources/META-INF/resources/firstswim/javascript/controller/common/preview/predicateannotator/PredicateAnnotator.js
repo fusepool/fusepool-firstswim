@@ -56,7 +56,7 @@ enyo.kind(
 	sendPredicateAnnotation: function(predicate,action) {
 				
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
+		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
 
 		var annotationString =	'@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' + 
 								'@prefix oa: <http://www.w3.org/ns/oa#> . ' +
@@ -75,6 +75,7 @@ enyo.kind(
 			annotationString +=	'<http://fusepool.eu/ontologies/annostore#dismissedPredicate> <'+predicate+'> ] .';
 		}
 
+		console.log(annotationString);
 		sendAnnotation(annotationString);
 	}
 	

@@ -17,6 +17,7 @@
     <script src="/firstswim/javascript/jquery/ui/jquery-ui.js" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="/firstswim/javascript/jquery/ui/jquery-ui.css" />
     <script src="/firstswim/javascript/jquery/jquery.json.js" type="text/javascript"></script>
+    <script src="/firstswim/javascript/jquery/jquery.cookie.js" type="text/javascript"></script>
     <script src="/firstswim/javascript/jquery/jquery.mousewheel.js" type="text/javascript"></script>
     <script src="/firstswim/javascript/jquery/jquery.htmlClean.min.js" type="text/javascript"></script>
     <!-- underscore -->

@@ -201,7 +201,7 @@ enyo.kind(
      * This function is called when the user clicks on an entity.
      */
     entityClick: function(inSender, inEvent){
-		if(GLOBAL.viewType != 'entityList') {
+		if(readCookie('viewType') != 'entityList') {
 			if(inEvent.which == 3){
 				this.$.facetMenu.show();
 			} else {

@@ -51,7 +51,7 @@ enyo.kind(
                     entityCount: this.entityList[i].count,
                     parentFunction: 'updateEntities',
                     showDetailsFunction: 'displayDetails',
-					checkable: (GLOBAL.viewType != 'entityList'),
+					checkable: (readCookie('viewType') != 'entityList'),
                     checked: false
                 });
             }

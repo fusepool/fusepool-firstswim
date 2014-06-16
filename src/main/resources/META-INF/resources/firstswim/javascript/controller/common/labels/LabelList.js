@@ -74,7 +74,7 @@ enyo.kind(
 		var main = this;
 		var request = new enyo.Ajax({
 			method: 'GET',
-			url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=' + ( GLOBAL.viewType == 'entityList' ? false : true ),
+			url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=' + ( readCookie('viewType') == 'entityList' ? false : true ),
 			handleAs: 'text',
 			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded'},
 			published: { timeout: 60000 }
@@ -118,7 +118,7 @@ enyo.kind(
 						});
 						main.$.predictedLabelList.render();
 					}
-					if(!GLOBAL.labelPrediction) {
+					if(!readCookie('labelPrediction')) {
 						main.$.predictedLabelListName.hide();
 						main.$.predictedLabelList.hide();
 					}
@@ -130,9 +130,10 @@ enyo.kind(
 			}
 		});
 		/*
-		if(GLOBAL.userLabels.length > 0) {
-			for(var i=0;i<GLOBAL.userLabels.length;i++) {
-				main.$.userLabelPicker.createComponent({ content: GLOBAL.userLabels[i] });
+		var userLabels = readCookie('userLabels');
+		if(userLabels.length > 0) {
+			for(var i=0;i<userLabels.length;i++) {
+				main.$.userLabelPicker.createComponent({ content: userLabels[i] });
 			}
 			main.$.userLabelPicker.render();
 		} */
@@ -288,7 +289,7 @@ enyo.kind(
 	sendLabelListAnnotation: function(docURI,labelText,action) {
 				
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
+		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
 		
 		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
 								'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 
