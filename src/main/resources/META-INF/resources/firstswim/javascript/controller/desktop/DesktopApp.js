@@ -151,43 +151,12 @@ jQuery(document).ready(function () {
 					this.createViewType(readCookie('viewType'));
 				},
 				
-				toggleViewType: function(clickedButton) {
-					switch(clickedButton) {
-						case 'locationViewButton':
-							if(readCookie('viewType') != 'locationViewer') {
-								updateCookie('viewType','locationViewer',30);
-								this.destroyCurrentViewType('locationViewer');
-								this.createViewType('locationViewer');
-							}
-						break;
-						case 'docListViewButton':
-							if(readCookie('viewType') != 'documentList') {
-								this.destroyCurrentViewType('documentList');
-								updateCookie('viewType','documentList',30);
-								this.createViewType('documentList');
-							}
-						break;
-						case 'nGraphViewButton':
-							if(readCookie('viewType') != 'nGraph') {
-								this.destroyCurrentViewType('nGraph');
-								updateCookie('viewType','nGraph',30);
-								this.createViewType('nGraph');
-							}
-						break;
-						case 'entityListViewButton':
-							if(readCookie('viewType') != 'entityList') {
-								this.destroyCurrentViewType('entityList');
-								updateCookie('viewType','entityList',30);
-								this.createViewType('entityList');
-							}
-						break;
-						case 'landscapeViewButton':
-							if(readCookie('viewType') != 'landscape') {
-								this.destroyCurrentViewType('landscape');
-								updateCookie('viewType','landscape',30);
-								this.createViewType('landscape');
-							}
-						break;
+				toggleViewType: function(viewType) {
+					if(readCookie('viewType') != viewType) {
+						this.destroyCurrentViewType(viewType);
+						updateCookie('viewType',viewType,30);
+						this.createViewType(viewType);
+						this.search(this.searchWord);
 					}
 				},
 				
@@ -326,7 +295,23 @@ jQuery(document).ready(function () {
 				onViewTypeToggle: function(inSender, inEvent) {
 					if (inEvent.originator.getActive()) {
 						//var selected = inEvent.originator.indexInContainer();
-						this.toggleViewType(inEvent.originator.name);
+						switch(inEvent.originator.name) {
+							case 'docListViewButton':
+								this.toggleViewType('documentList');
+							break;
+							case 'entityListViewButton':
+								this.toggleViewType('entityList');
+							break;
+							case 'locationViewButton':
+								this.toggleViewType('locationViewer');
+							break;
+							case 'landscapeViewButton':
+								this.toggleViewType('landscape');
+							break;
+							case 'nGraphViewButton':
+								this.toggleViewType('nGraph');
+							break;
+						}
 					}
 				},
 				
