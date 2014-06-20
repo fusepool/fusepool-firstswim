@@ -140,7 +140,7 @@ enyo.kind(
 	},
 	
 	togglePredictedLabelLists: function(enable) {
-		if(enable && this.predictedLabelTexts.length > 0) {
+		if(enable=="true" && this.predictedLabelTexts.length > 0) {
 			this.$.predictedLabelListName.show();
 			this.$.predictedLabelList.show();
 		}

@@ -5,8 +5,9 @@ function placeDefaultCookies() {
 	if(isEmpty(readCookie('items'))) { createCookie('items', 10, 30); }
 	if(isEmpty(readCookie('nodeLimit'))) { createCookie('nodeLimit', [1,5,3], 30); }
 	if(isEmpty(readCookie('viewType'))) { createCookie('viewType', 'documentList', 30); }
-	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', true, 30); }
+	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', 1, 30); }
 	if(isEmpty(readCookie('userLabels'))) { createCookie('userLabels', [], 30); }
+	if(isEmpty(readCookie('css'))) { createCookie('css', 'firstswim', 30); }
 }
 
 // var BASE_URL = 'http://localhost:8080/';
@@ -18,6 +19,8 @@ var CONSTANTS = {
     ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
     ENTITY_DETAILS_URL: BASE_URL + 'firstswim/entitydetails/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
+    // GET_PREDICATES_URL: 'http://localhost:8080/' + 'firstswim/getpredicates',
+    GET_PREDICATES_URL: BASE_URL + 'firstswim/getpredicates',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     LANDSCAPE_URL: BASE_URL + 'kmxrdfproxy/landscape/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
@@ -35,11 +38,13 @@ var CONSTANTS = {
     // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
     // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
     // VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
-    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
+    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/',
+    // STYLE_PATH: '../../../../../META-INF/resources/firstswim/styles/'
     CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
     TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
     VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
-    IMG_PATH: BASE_URL + 'firstswim/images/'
+    IMG_PATH: BASE_URL + 'firstswim/images/',
+    STYLE_PATH: BASE_URL + 'firstswim/styles/'
 };
 
 /**
@@ -57,7 +62,7 @@ function setCurrentUser() {
 	});
 	request.go();
 	request.response(this, function(inSender, inResponse) {
-		updateCookie('currentUser', inResponse, 30);
+		createCookie('currentUser', inResponse, 30);
 	});
 }
 
@@ -71,10 +76,6 @@ function readCookie(name) {
 
 function eraseCookie(name) {
     $.removeCookie(name);
-}
-
-function updateCookie(name, value, days) {
-	createCookie(name, value, days);
 }
 
 /**
@@ -311,7 +312,7 @@ function getUserLabels(userName) {
 	request.go();	
 	request.response(this, function(inSender, inResponse) {
 		var obj = JSON.parse(inResponse);
-		updateCookie('userLabels', obj.userLabels, 30);
+		createCookie('userLabels', obj.userLabels, 30);
 	});
 }
 

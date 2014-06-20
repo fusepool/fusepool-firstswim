@@ -7,10 +7,9 @@ body{
     margin: 0;
 	height: 100%;
 	width: 100%;
-	background-color: #eaeaea;
 	font-family: Arial,sans-serif;
 	font-weight: 400;
-	color: #5e5e5e;
+	color: #000000;
 }
 
 .clear {
@@ -35,10 +34,7 @@ body{
 	position: relative;
 	top: 0px;
 	height: 74px;
-    background-image: url("../images/main-toolbar-bg.jpg");
-	-webkit-box-shadow: 0px 0px 15px rgba(50, 50, 50, 0.7);
-	-moz-box-shadow:    0px 0px 15px rgba(50, 50, 50, 0.7);
-	box-shadow:         0px 0px 15px rgba(50, 50, 50, 0.7);
+    background-color: #000000;
 }
 
 .toolbarCenter {
@@ -46,11 +42,7 @@ body{
 }
 
 .toolbarIcons {
-	background-color: rgba(30, 27, 26, 0.5);
-	border: 1px solid rgba(255, 255, 255, 0.17);
-	-webkit-border-radius: 12px;
-	-moz-border-radius: 12px;
-	border-radius: 12px;
+	border: 1px solid #9C9C9C;
 	display: block;
 	padding: 8px;
 	position: absolute;
@@ -68,11 +60,11 @@ body{
 	margin: 0px 2px 0px 2px;
 }
 
-.docListViewButton		{ background-image: url("../images/docListViewButton.png"); }
-.entityListViewButton	{ background-image: url("../images/entityListViewButton.png"); }
-.locationViewButton		{ background-image: url("../images/locationViewButton.png"); }
-.landscapeViewButton	{ background-image: url("../images/landscapeViewButton.png"); }
-.nGraphViewButton		{ background-image: url("../images/nGraphViewButton.png"); }
+.docListViewButton		{ background-image: url("../images/docListViewButton_contrast.png"); }
+.entityListViewButton	{ background-image: url("../images/entityListViewButton_contrast.png"); }
+.locationViewButton		{ background-image: url("../images/locationViewButton_contrast.png"); }
+.landscapeViewButton	{ background-image: url("../images/landscapeViewButton_contrast.png"); }
+.nGraphViewButton		{ background-image: url("../images/nGraphViewButton_contrast.png"); }
 
 .menuItemTooltip {
 	background-color: #716863;
@@ -96,7 +88,7 @@ body{
 	top: 5px;
 	left: -20px;
 	max-width: 30%;
-	background: transparent url("../images/logo_only_turq.png") no-repeat left top;
+	background: transparent url("../images/logo_contrast.png") no-repeat left top;
 	background-size: 100% auto;
 	-o-background-size: 100% auto;
 	-webkit-background-size: 100% auto;
@@ -105,7 +97,7 @@ body{
 
 /* ----------- Login ----------- */
 .loginButton {
-	background-image: url("../images/loginButton.png");
+	background-image: url("../images/loginButton_contrast.png");
     background-repeat: no-repeat;
 	height: 32px;
 	width: 32px;
@@ -129,7 +121,7 @@ body{
 }
 
 .loginPopupDiv{
-	background-color: #534B48;
+	background-color: #6C6C6C;
     font-size: 14px;
     width: 415px;
 }
@@ -137,7 +129,7 @@ body{
 .loginCloseButton{
     width: 30px;
     height: 30px;
-    background-image: url("../images/close_button.png");
+    background-image: url("../images/close_button_contrast.png");
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
@@ -168,7 +160,7 @@ body{
     display: inline;
     margin-right: 10px;
     cursor: pointer;
-	background-color: #bff3ff;
+	background-color: #ffffff;
 }
 
 .currentUserLabel{
@@ -188,7 +180,7 @@ body{
 /* ----------- Style settings ------------- */
 
 .brushButton{
-	background-image: url("../images/brushButton.png");
+	background-image: url("../images/brushButton_contrast.png");
     background-repeat: no-repeat;
 	height: 32px;
 	width: 32px;
@@ -203,7 +195,7 @@ body{
 }
 
 .styleSettingsPopupDiv{
-	background-color: #534B48;
+	background-color: #6C6C6C;
     font-size: 14px;
     width: 216px;
 }
@@ -211,7 +203,7 @@ body{
 .styleSettingsCloseButton{
     width: 30px;
     height: 30px;
-    background-image: url("../images/close_button.png");
+    background-image: url("../images/close_button_contrast.png");
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
@@ -222,12 +214,13 @@ body{
 
 .styleSettingsButton {
     cursor: pointer;
-	background-color: #bff3ff;
+	background-color: #FFFFFF;
 }
 
 .styleSettingsButton.active {
-	background-color: #00AAB3;
+	background-color: #333333;
 }
+
 
 /* ----------- Top message box ----------- */
 .topMessageBox{
@@ -284,10 +277,9 @@ body{
 }
 
 .detailsScroll {
-    background-color: #ffffff;
-	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
+	color: #fff;
+	border: 1px solid #777777;
 	position: absolute;
     top: 50px;
 	left: 0px;
@@ -316,7 +308,7 @@ body{
 }
 
 .dictionaryCheckbox {
-    background: url("../images/checkbox.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/checkbox_contrast.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: inline-block;
     height: 15px;
@@ -432,7 +424,7 @@ body{
 .bookmarkPopupDiv{
     width: 584px !important;
     padding: 16px !important;
-	background-color: #534B48;
+	background-color: #6C6C6C;
 }
 
 .documentList{
@@ -470,8 +462,8 @@ body{
 }
 
 .documentListScroll {
-    background-color: #dddddd;
-    border: 1px #cccccc solid;
+    background-color: #777777;
+    border: 1px #777777 solid;
     bottom: 0;
     left: 0;
     position: absolute;
@@ -572,12 +564,12 @@ body{
 	float: left;
 	margin: 1px;
     padding: 1px 2px 12px 4px;
-	width: 50%;
+	width: 35%;
 }
 
 .moreLabelInput {
 	font-size: 12px !important;
-	color: #555555;
+	color: #000000;
 	width: 100%;
 }
 /* Draggers */
@@ -605,10 +597,10 @@ body{
 }
 
 .previewBoxMainTitle {
-	color: #777777;
+	color: #000000;
 	font-size: 16px;
 	margin: 18px 0px 0px 10px;
-	text-shadow: 1px 1px 0px #fafafa;
+	font-weight: bold;
 }
 
 .previewToolbar {
@@ -634,10 +626,9 @@ body{
 }
 
 .openedDocScroll{
-    background-color: #ffffff;
-	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
+    border: 1px #777777 solid;
+	color: #ffffff;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -799,7 +790,7 @@ body{
     display: inline-block;
     width: 49px;
     height: 54px;
-    background-image: url(../images/logo.png);
+    background-image: url(../images/logo_contrast.png);
     background-repeat: no-repeat;
     margin-top: 5px;
     margin-left: 20px;
@@ -883,10 +874,8 @@ body{
 }
 
 .dictionaryListScrollOpen{
-    background-color: #ffffff;
-    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
+	border: 1px solid #777777;
     position: absolute;
     top: 50px;
     left: 0px;
@@ -895,10 +884,8 @@ body{
 }
 
 .dictionaryListScrollClose{
-    background-color: #ffffff;
-    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
+	border: 1px solid #777777;
     position: absolute;
     top: 50px;
     left: 0px;
@@ -907,10 +894,7 @@ body{
 }
 
 .dictionaryListMobileScrollOpen{
-    background-color: #ffffff;
-    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -919,10 +903,7 @@ body{
 }
 
 .dictionaryListMobileScrollClose{
-    background-color: #ffffff;
-    -webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    -moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-    box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    background-color: #777777;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -931,28 +912,28 @@ body{
 }
 
 .dictionariesMainTitle{
-	color: #777777;
+	color: #000000;
 	font-size: 16px;
 	margin: 18px 0px 0px 10px;
-	text-shadow: 1px 1px 0px #fafafa;
+	font-weight: bold;
 }
 
 .dictionaryName{
     margin-top: 10px;
     margin-bottom: 3px;
-	color: #3a8d8e;
+	color: #FFFFFF;
 	font-size: 14px;
 }
 
 .dictionaryMobileCheckbox {
-    background: url("../images/checkbox_mobile.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/checkbox_mobile_contrast.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
 }
 
 .detailsDiv{
-    background-color: rgba(99, 166, 167, 0.2);
+	background-color: #EEEEEE;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
@@ -1051,18 +1032,17 @@ body{
 
 .documentsMainTitle{
     display: inline-block;
-    color: #777777;
+    color: #000000;
     font-size: 16px;
     margin: 18px 5px 0px 10px;
-    text-shadow: 1px 1px 0px #fafafa;
+	font-weight: bold;
 }
 
 .documentsCount{
     display: inline-block;
-    color: #777777;
+    color: #000000;
     font-size: 11px;
     margin: 18px 0 0 0;
-    text-shadow: 1px 1px 0px #fafafa;
 }
 
 .shortDocumentContainer{
@@ -1103,6 +1083,7 @@ body{
     position: relative;
     text-align: left;
 }
+
 
 .shortDocumentTitle{
     display: block;
@@ -1281,7 +1262,7 @@ body{
 .popupCloseButton {
     width: 30px;
     height: 30px;
-    background-image: url("../images/close_button.png");
+    background-image: url("../images/close_button_contrast.png");
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;

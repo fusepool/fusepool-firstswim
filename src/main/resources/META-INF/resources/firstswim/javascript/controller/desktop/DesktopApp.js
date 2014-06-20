@@ -23,8 +23,8 @@ jQuery(document).ready(function () {
                 create: function(){
                     this.inherited(arguments);
                     renderTemplateDiv();
+					this.processCookieValues();
                     this.processGETParameters();
-					this.initViewType();
                 },
 
                 /**
@@ -35,6 +35,7 @@ jQuery(document).ready(function () {
                     this.inherited(arguments);
                     this.previewOriginHeight = jQuery('#' + this.$.previewBox.getOpenDocId()).height();
                     this.changeBMPopupPosition();
+					this.initDraggers();
                 },
 
                 published: {
@@ -76,27 +77,34 @@ jQuery(document).ready(function () {
 											components: [
 												{kind: 'Group', classes: 'viewTypeToggleButtons', onActivate: "onViewTypeToggle", components: [
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'docListViewButton', src: CONSTANTS.IMG_PATH + 'docListViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Document list view", classes: 'viewTypeTooltip', active: false }
+														{kind: "onyx.IconButton", name: 'docListViewButton', classes: 'docListViewButton' },
+														{kind: "onyx.Tooltip", content: "Document list view", classes: 'menuItemTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'entityListViewButton', src: CONSTANTS.IMG_PATH + 'entityListViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'viewTypeTooltip', active: false }
+														{kind: "onyx.IconButton", name: 'entityListViewButton',  classes: 'entityListViewButton'},
+														{kind: "onyx.Tooltip", content: "Entity list view", classes: 'menuItemTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'locationViewButton', src: CONSTANTS.IMG_PATH + 'locationViewButton.png'},
-														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'viewTypeTooltip', active: false }
+														{kind: "onyx.IconButton", name: 'locationViewButton',  classes: 'locationViewButton'},
+														{kind: "onyx.Tooltip", content: "LocationMapper", classes: 'menuItemTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'landscapeViewButton', src: CONSTANTS.IMG_PATH + 'landscapeViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'viewTypeTooltip', active: false }
+														{kind: "onyx.IconButton", name: 'landscapeViewButton',  classes: 'landscapeViewButton'},
+														{kind: "onyx.Tooltip", content: "Landscape view", classes: 'menuItemTooltip', active: false }
 													]},
 													{kind: "onyx.TooltipDecorator", components: [
-														{kind: "onyx.IconButton", name: 'nGraphViewButton', src: CONSTANTS.IMG_PATH + 'nGraphViewButton.png'},
-														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'viewTypeTooltip', active: false }
+														{kind: "onyx.IconButton", name: 'nGraphViewButton',  classes: 'nGraphViewButton'},
+														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'menuItemTooltip', active: false }
 													]}
 												]},
-												{ontap: 'login', name: 'loginButton', classes: 'loginButton loggedOut' }
+												{kind: "onyx.TooltipDecorator", components: [
+													{kind: "onyx.IconButton", /* ontap: 'styleSettings',*/ name: 'brushButton', classes: 'brushButton' },
+													{kind: "onyx.Tooltip", content: "Style settings (soon)", classes: 'menuItemTooltip', active: false }
+												]},
+												{kind: "onyx.TooltipDecorator", components: [
+													{kind: "onyx.IconButton", ontap: 'login', name: 'loginButton', classes: 'loginButton loggedOut' },
+													{kind: "onyx.Tooltip", content: "Login", classes: 'menuItemTooltip', active: false }
+												]}
 												/*,
 												{
 													name: 'bookmark',
@@ -113,6 +121,11 @@ jQuery(document).ready(function () {
 											kind: 'LoginPopup',
 											name: 'loginPopup',
 											classes: 'loginPopup'
+										},
+										{
+											kind: 'StyleSettingsPopup',
+											name: 'styleSettingsPopup',
+											classes: 'styleSettingsPopup'
 										}
                                 ]}
                             ]},
@@ -127,6 +140,15 @@ jQuery(document).ready(function () {
                         ]
                     }
                 ],
+				
+				processCookieValues: function() {
+					this.initViewType();
+					this.initCss();
+				},
+				
+				initCss: function() {
+					this.$.styleSettingsPopup.setRadioActive(readCookie('css'));
+				},
 				
 				initViewType: function() {
 					switch(readCookie('viewType')) {
@@ -154,7 +176,7 @@ jQuery(document).ready(function () {
 				toggleViewType: function(viewType) {
 					if(readCookie('viewType') != viewType) {
 						this.destroyCurrentViewType(viewType);
-						updateCookie('viewType',viewType,30);
+						createCookie('viewType',viewType,30);
 						this.createViewType(viewType);
 						this.search(this.searchWord);
 					}
@@ -191,6 +213,8 @@ jQuery(document).ready(function () {
 														}
 													]
 												});
+												
+							this.createComponent({	name: 'firstDocDragger', classes: 'firstDocDragger verticalDragger' });
 							
 							this.createComponent({	kind: 'DocumentList',
 													name: 'documents',
@@ -207,6 +231,11 @@ jQuery(document).ready(function () {
 													moreButtonClass: 'moreButton',
 													moreDocumentsFunction: 'moreDocuments'
 												});
+												
+							this.createComponent({	name: 'secondDocDragger', classes: 'secondDocDragger verticalDragger' });
+							
+							this.render();							
+							
 						break;
 						case 'entityList':									
 							this.createComponent({	name: 'leftDesktopCol',
@@ -236,6 +265,8 @@ jQuery(document).ready(function () {
 														}
 													]
 												});
+												
+							this.createComponent({	name: 'firstDocDragger', classes: 'firstDocDragger verticalDragger' });
 							
 							this.createComponent({	kind: 'DocumentList',
 													name: 'documents',
@@ -252,6 +283,11 @@ jQuery(document).ready(function () {
 													moreButtonClass: 'moreButton',
 													moreDocumentsFunction: 'moreDocuments'
 												});
+												
+							this.createComponent({	name: 'secondDocDragger', classes: 'secondDocDragger verticalDragger' });
+							
+							this.render();
+							
 						break;
 						case 'locationViewer':
 							this.createComponent({
@@ -263,7 +299,8 @@ jQuery(document).ready(function () {
 								titleContent: 'Location viewer ',
 								noDataLabel: 'No data available'
 							});
-							break;
+							this.render();
+						break;
 						case 'landscape':						
 							this.createComponent({
 									kind: 'Landscape',
@@ -272,7 +309,8 @@ jQuery(document).ready(function () {
 									loaderClass: 'loader',
 									titleClass: 'landscapeMainTitle',
 									titleContent: 'Landscape '
-								});								
+								});
+							this.render();
 						break;
 						case 'nGraph':
 							this.createComponent({
@@ -286,9 +324,9 @@ jQuery(document).ready(function () {
 								titleContent: 'Network graph ',
 								noDataLabel: 'No data available'
 							});
+							this.render();
 						break;
 					}
-					this.render();
 				},
 				
 				/** */
@@ -323,7 +361,9 @@ jQuery(document).ready(function () {
 						case 'documentList':	
 						case 'entityList':										
 							this.$.leftDesktopCol.destroy();
+							this.$.firstDocDragger.destroy();
 							this.$.documents.destroy();
+							this.$.secondDocDragger.destroy();
 						break;
 						case 'landscape':									
 							this.$.landscape.destroy();
@@ -334,12 +374,57 @@ jQuery(document).ready(function () {
 					}
 				},
 				
+				initDraggers: function() {
+					if($('.firstDocDragger').length > 0) {
+						$('.firstDocDragger').draggable({
+							axis: "x",
+							drag: function( event, ui ) {								
+								var docListCalcWidth = parseInt($('.previewBox').css('left'), 10) - ((ui.position.left - 10 ) + 30);								
+								if( ui.position.left > 80 && docListCalcWidth > 160 ) {
+									$('.leftDesktopCol').css('width', ( ui.position.left - 10 )+'px');
+									$('.documentList').css('left', ( ui.position.left + 10 )+'px');
+									$('.documentList').css('width', docListCalcWidth+'px');
+								}
+								else {
+									event.type = 'mouseup';
+									$('.firstDocDragger').trigger(event);
+								}
+							}
+						});
+						
+					}
+					if($('.secondDocDragger').length > 0) {
+						$('.secondDocDragger').draggable({
+							axis: "x",
+							drag: function( event, ui ) {
+								var docListCalcWidth = ui.position.left - ($('.leftDesktopCol').width() + 20);
+								if( ($(document).width() - ui.position.left ) > 80 && docListCalcWidth > 160 ) {
+									$('.documentList').css('width', docListCalcWidth+'px');
+									$('.previewBox').css('left', ( ui.position.left + 10 )+'px');
+								}
+								else {
+									event.type = 'mouseup';
+									$('.secondDocDragger').trigger(event);
+								}
+							}
+						});
+					}
+				},
+				
                 /**
-                 * This function is called, when the user click the login button.
-                 * It shows the login popup window.
+                 * This function is called, when the user clicks on the login button.
+                 * It displays the login popup window.
                  */
                 login: function(){
                     this.$.loginPopup.showLogin();
+                },
+				
+                /**
+                 * This function is called, when the user clicks on the style settings button.
+                 * It displays the style settings window.
+                 */
+                styleSettings: function(){
+                    this.$.styleSettingsPopup.showStyleSettings();
                 },
 
                 /**
@@ -498,6 +583,7 @@ jQuery(document).ready(function () {
                 search: function(searchWord, checkedEntities){
 					checkedEntities = typeof checkedEntities !== 'undefined' ? checkedEntities : [];
                     this.searchWord = searchWord;
+					createCookie('lastSearch',searchWord,30);
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
 						this.cleanPreviewBox();
@@ -662,14 +748,6 @@ jQuery(document).ready(function () {
                     var documents = [];
                     var main = this;
 
-//                    var query = 'SELECT * { ?s ?p ?o }';
-//                    rdf.execute(query, function(success, results) {
-//                        for(var i=0;i<results.length;i++){
-//                            var row = results[i];
-//                            console.log(row.s.value + ' - ' + row.p.value + ' - ' + row.o.value);
-//                        }
-//                    });
-
                     var query = 'SELECT * { ?url <http://fusepool.eu/ontologies/ecs#textPreview> ?preview';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/title> ?title }';
                     query += '      OPTIONAL { ?url <http://purl.org/dc/terms/abstract> ?content }';
@@ -777,7 +855,12 @@ jQuery(document).ready(function () {
                     query += '       ?v <http://fusepool.eu/ontologies/ecs#typeFacet> ?f. ';
                     query += '       ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. ';
                     query += '       ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id. ';
-                    query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
+					query += '		OPTIONAL { { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity .';
+					query += '        filter ( lang(?entity) = "en")';
+					query += '      } UNION {  ';
+					query += '        ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity .';
+					query += '        filter ( lang(?entity) = "")';
+					query += '      } } ';
                     query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
                     query += '}';
                     rdf.execute(query, function(success, results) {
@@ -811,7 +894,12 @@ jQuery(document).ready(function () {
                     query += '       ?v <http://fusepool.eu/ontologies/ecs#facet> ?f. ';
                     query += '       ?f <http://fusepool.eu/ontologies/ecs#facetCount> ?count. ';
                     query += '       ?f <http://fusepool.eu/ontologies/ecs#facetValue> ?id. ';
-                    query += '      OPTIONAL { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity }';
+					query += '		OPTIONAL { { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity .';
+					query += '        filter ( lang(?entity) = "en")';
+					query += '      } UNION {  ';
+					query += '        ?id <http://www.w3.org/2000/01/rdf-schema#label> ?entity .';
+					query += '        filter ( lang(?entity) = "")';
+					query += '      } } ';
                     query += '      OPTIONAL { ?id <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?type }';
                     query += '}';
                     rdf.execute(query, function(success, results) {

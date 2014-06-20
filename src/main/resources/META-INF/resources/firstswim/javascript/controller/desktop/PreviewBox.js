@@ -160,6 +160,7 @@ enyo.kind(
         {
             kind: 'OpenedDoc',
             name: 'openedDoc',
+			searchWord: '',
             ondown: 'clickText',
             classes: 'openedDocument',
             documentContentClass: 'documentContent',
