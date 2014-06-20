@@ -10,6 +10,7 @@ enyo.kind(
 
     published: {
         predicateText: '',
+		accepted: true,
         dismissFunction: '',
         acceptFunction: ''
     },
@@ -17,7 +18,14 @@ enyo.kind(
     create: function(){
         this.inherited(arguments);
         this.$.predicateText.setContent(this.predicateText);
-		this.setClasses('predicateItem');
+		if(this.accepted) {
+			this.setClasses('predicateItem acceptedPredicate');
+			this.$.acceptPredicateButton.hide();
+		}
+		else {
+			this.setClasses('predicateItem dismissedPredicate');
+			this.$.dismissPredicateButton.hide();
+		}
     },
 	
     rendered: function(){
@@ -36,15 +44,15 @@ enyo.kind(
 
     dismissPredicate: function(){
         this.owner.owner[this.dismissFunction](this.predicateText);
-		this.$.acceptPredicateButton.destroy();
-		this.$.dismissPredicateButton.destroy();
-		this.addClass('dismissedPredicate');
+		this.$.acceptPredicateButton.show();
+		this.$.dismissPredicateButton.hide();
+		this.setClasses('predicateItem dismissedPredicate');
     },
 	
 	acceptPredicate: function(){
         this.owner.owner[this.acceptFunction](this.predicateText);
-		this.$.acceptPredicateButton.destroy();
-		this.$.dismissPredicateButton.destroy();
-		this.addClass('acceptedPredicate');
+		this.$.acceptPredicateButton.hide();
+		this.$.dismissPredicateButton.show();
+		this.setClasses('predicateItem acceptedPredicate');
 	}
 });

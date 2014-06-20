@@ -13,7 +13,8 @@ enyo.kind(
         documentContentClass: '',
         loaderClass: '',
         openedDocScrollerClass: '',
-        lang: 'en'
+        lang: 'en',
+		openedDocStore: null
     },
 
     /**
@@ -90,43 +91,62 @@ enyo.kind(
      * This function shows a document.
      * @param {String} rdf the document
      */
-    showDoc: function(rdf){
+    showDoc: function(){
         this.show();
         this.scrollToTop();
-        this.$.loader.hide();
-		this.createPredicateAnnotator(rdf);
-        this.renderPreviewTemplate(rdf);
+		/*
+		var main = this;
+		var request = new enyo.Ajax({
+			method: 'GET',
+			url: CONSTANTS.GET_PREDICATES_URL+'?user=' + readCookie('currentUser') + '&document=' + this.documentURL + '&query=' + readCookie('lastSearch'),
+			handleAs: 'text',
+			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded' },
+			published: { timeout: 60000 }
+		});
+		request.go();	
+		request.response(this, function(inSender, inResponse) {
+		
+			var predicates = JSON.parse(inResponse);
+		
+			main.$.predicateAnnotatorPanel.createComponent({
+				kind: 'PredicateAnnotator',
+				searchWord: main.searchWord,
+				documentURL: main.documentURL,
+				predicates: predicates
+			});
+			main.$.predicateAnnotatorPanel.render();
+			main.filterGraph(predicates);
+		});
+		*/
+		this.filterGraph([]);
     },
 	
-	createPredicateAnnotator: function(rdf) {
-		var props = [];
-		var query = 'SELECT ?p { ?s ?p ?o }';
-		var main = this;
-		rdf.execute(query, function(success, results) {
-			if (success && results.length > 0) {
-				for(var i=0;i<results.length;i++) {
-					if($.inArray(results[i].p.value, props)==-1) {
-						props.push(results[i].p.value);
-					}
-				}
-				main.$.predicateAnnotatorPanel.createComponent({
-                    kind: 'PredicateAnnotator',
-                    searchWord: main.searchWord,
-					documentURL: main.documentURL,
-					predicates: props
-                });
-				main.$.predicateAnnotatorPanel.render();
+	filterGraph: function(predicates) {
+	
+		var query = 'CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o }';
+	
+		for(var i=0;i<predicates.length;i++) {
+			if(predicates[i].accepted) {
+				query += ' ';
 			}
+		}
+		
+		var main = this;		
+		this.openedDocStore.execute(query, function(success, results){
+			if (success && results.length > 0) {
+			
+				// console.log(results);
+				var cutGraphStore = rdfstore.create();
+				
+				cutGraphStore.insert(results, function() {				
+					$("#" + main.$.content.getId()).html('').append(uduvudu.process(cutGraphStore));	
+				});
+			}
+			
+			main.$.loader.hide();
 		});
-    },
-
-    /**
-     * This function renders the preview document content through the Uduvudu Library
-     * @param {String} rdf the document
-     */
-    renderPreviewTemplate: function(rdf){
-        $("#" + this.$.content.getId()).append(uduvudu.process(rdf));
-    },
+		
+	},
 
     /**
      * This function clears the document content, shows the loader and sends an
@@ -145,21 +165,10 @@ enyo.kind(
 		else {
 			var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
 		}
-        var store = rdfstore.create();
-        store.load('remote', url, function(success) {
-            main.processOpenDocResponse(success, store);
+        this.openedDocStore = rdfstore.create();
+        this.openedDocStore.load('remote', url, this.openedDocStore.rdf, function(success) {
+			main.showDoc();
         });
-    },
-
-    /**
-     * This function runs when the response of the open doc ajax event is arrived.
-     * It processes the response data, delete the bad type rows, parse it and call
-     * the document show function.
-     * @param {Boolean} success the ajax query was success or not
-     * @param {Object} rdf the rdf object
-     */
-    processOpenDocResponse: function(success, rdf){
-        this.showDoc(rdf);
     },
 
     /**
