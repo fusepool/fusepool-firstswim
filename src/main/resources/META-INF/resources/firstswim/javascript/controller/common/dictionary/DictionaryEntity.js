@@ -125,65 +125,12 @@ enyo.kind(
 
     /**
      * This functions runs when the details ajax response is arrived about the details.
-     * It calls the getAddresses function for more information if the details has address.
      * @param {Boolean} success the search query was success or not
      * @param {Object} rdf the response rdf object
      */
     processDetailsResponse: function(success, rdf){
         if(!isEmpty(this.owner)){
             this.owner.owner[this.showDetailsFunction](rdf);
-        }
-	/*
-        var title = getRDFPropertyValue(rdf, 'http://www.w3.org/2000/01/rdf-schema#label');
-        var addressID = getRDFPropertyValue(rdf, 'http://schema.org/address');
-        if(!isEmpty(addressID)){
-            this.getAddresses(addressID, title);   
-        } else {
-            this.showDetails(title, null);
-        } */
-    },
-
-    /**
-     * This function send an ajax request to get an entity's address.
-	 * Currently unused.
-     * @param {String} addressID id of the address
-     * @param {String} title the title of the details
-     */
-    getAddresses: function(addressID, title){
-        var main = this;
-        var url = this.addressURL + '?iri=' + addressID;
-        var store = rdfstore.create();
-        store.load('remote', url, function(success) {
-            main.processAddressResponse(success, store, title);
-        });
-    },
-
-    /**
-     * This functions runs when the ajax response is arrived with the address.
-     * It calls the 'show' function.
-	 * Currently unused.
-     * @param {Boolean} success the ajax query was success or not
-     * @param {Object} rdf the response rdf object
-     * @param {String} title the title of the details
-     */
-    processAddressResponse: function(success, rdf, title){
-        var addressObject = {};
-        addressObject.locality = getRDFPropertyValue(rdf, 'http://schema.org/addressLocality');
-        addressObject.street = getRDFPropertyValue(rdf, 'http://schema.org/streetAddress');
-        addressObject.country = getRDFPropertyValue(rdf, 'http://schema.org/addressCountry');
-        this.showDetails(title, addressObject);
-    },
-
-    /**
-     * This function calls the parent's function to show the new details in the
-     * details box.
-	 * Currently unused.
-     * @param {String} title the title of the details
-     * @param {Object} addressObject the address of the details
-     */
-    showDetails: function(title, addressObject){
-        if(!isEmpty(this.owner)){
-            this.owner.owner[this.showDetailsFunction](title, addressObject);
         }
     },
 
