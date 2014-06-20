@@ -383,7 +383,7 @@ public class GUIProvider {
     
     @GET
     @Path("entitydetails")
-    public String serviceEntry3(@Context final UriInfo uriInfo,
+    public String serviceEntry4(@Context final UriInfo uriInfo,
             @QueryParam("entityURI") final String entityURI
             ) throws Exception {
         
@@ -416,6 +416,50 @@ public class GUIProvider {
         }
 
         return predictionResult;
+    }
+    @GET
+    @Path("getpredicates")
+    public String serviceEntry3(@Context final UriInfo uriInfo,
+            @QueryParam("user") final String user,
+            @QueryParam("document") final String document,
+            @QueryParam("query") final String query
+            ) throws Exception {
+        /*
+        // json response for the client
+        String predictionResult = null;
+        
+        try {                    
+            // add the properties to a hashmap 
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("user", user);
+            params.put("document", document);
+            params.put("query", query);
+            
+            // get prediction
+            predictionResult = predictionHub.predict("LUP55", params);
+            
+            if (predictionResult == null) {
+                log.error("Error: {}", "LUP55 return null");
+                return "";
+            }
+            else{
+                if(predictionResult.equals("__error__")){
+                    log.error("Error: {}", "LUP55 returned error string");
+                    return "";
+                }
+            }
+                              
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+            return "";
+        } 
+        
+        return predictionResult;
+        */
+
+		return "[{\"text\": \"predicate-0\", \"accepted\": false}, {\"text\": \"predicate-1\", \"accepted\": true}, {\"text\": \"predicate-2\", \"accepted\": false}, {\"text\": \"predicate-3\", \"accepted\": true}]";
+        
     }
     
     private String CreateEmptyResult(String search, int offset, int maxFacets, int items){
