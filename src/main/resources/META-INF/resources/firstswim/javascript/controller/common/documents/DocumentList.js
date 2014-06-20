@@ -68,7 +68,7 @@ enyo.kind(
     ],
 
     toggleLabelPrediction: function(inSender){
-		readCookie('labelPrediction') = !inSender.checked; //this is weird
+		createCookie('labelPrediction', !inSender.checked, 30); //this is weird
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
             shortDocuments[i].togglePredictedLabelLists(readCookie('labelPrediction'));
@@ -215,6 +215,7 @@ enyo.kind(
      * @param {Array} checkedEntities the checked facets and type facets
      */
     updateList: function(documents, searchWord, checkedEntities){
+		createCookie('lastSearch',searchWord,30);
         this.checkedEntities = checkedEntities;
         this.searchWord = searchWord;
         this.offset = 0;
@@ -233,7 +234,7 @@ enyo.kind(
                     removeCheckFunction: 'removeCheck',
                     showSlidebar: this.activeClassify,
                     titleClass: 'shortDocumentTitle',
-                    shortDocumentClass: 'shortDocument',
+                    shortDocumentClass: (readCookie('viewType') == 'entityList' ? 'personItem' : 'shortDocument'),
                     contentClass: 'shortDocumentContent',
                     openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
@@ -306,7 +307,7 @@ enyo.kind(
                 removeCheckFunction: 'removeCheck',
                 showSlidebar: this.activeClassify,
                 titleClass: 'shortDocumentTitle',
-                shortDocumentClass: 'shortDocument',
+                shortDocumentClass: (readCookie('viewType') == 'entityList' ? 'personItem' : 'shortDocument'),
                 contentClass: 'shortDocumentContent',
                 openDocEvent: this.openDocEvent,
                 openButtonClass: 'openDocButton',
@@ -394,7 +395,7 @@ enyo.kind(
         this.$.scroller.top = 0;
         this.$.scroller.setScrollTop(0);
         this.$.scroller.scrollTo(0,0);
-        this.render();
+        // this.render();
     },
 
     /**

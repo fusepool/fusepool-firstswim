@@ -70,7 +70,7 @@ enyo.kind(
 	},
 	
 	signOut: function(){
-		updateCookie('currentUser','anonymous',30);	
+		createCookie('currentUser','anonymous',30);	
 		this.hideCurrentUser();
 		
 		this.$.loginTable.show();
@@ -126,7 +126,7 @@ enyo.kind(
     },
 	
 	signInSucceed: function(userName){
-		updateCookie('currentUser',userName,30);
+		createCookie('currentUser',userName,30);
 		this.$.loginStatus;
 		this.showCurrentUser('Signed in as <b>'+userName+'</b>.');
 		this.hideLoginMessage();

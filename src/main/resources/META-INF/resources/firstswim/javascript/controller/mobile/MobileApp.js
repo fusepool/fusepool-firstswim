@@ -214,6 +214,7 @@ jQuery(document).ready(function () {
                 search: function(searchWord, checkedEntities){
                     this.cleanPreviewBox();
                     this.searchWord = searchWord;
+					createCookie('lastSearch',searchWord,30);
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
                         this.$.middlePanel.startSearching();
