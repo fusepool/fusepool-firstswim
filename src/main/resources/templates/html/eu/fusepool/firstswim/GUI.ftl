@@ -33,8 +33,8 @@
     <script src="/firstswim/javascript/lib/onyx/package.js" type="text/javascript"></script>
     <!-- controller -->
     <script src="/firstswim/javascript/controller/package.js" type="text/javascript"></script>
-    <link type="text/css" rel="stylesheet" href="/firstswim/styles/firstswim.css" />
-    <link type="text/css" rel="stylesheet" href="/firstswim/styles/autocomplete.css" />
+    <link type="text/css" rel="stylesheet" href="/firstswim/styles/firstswim.css" id="mainCss" />
+    <link type="text/css" rel="stylesheet" href="/firstswim/styles/autocomplete.css" id="autocompleteCss" />
   </head>
 
   <body>
