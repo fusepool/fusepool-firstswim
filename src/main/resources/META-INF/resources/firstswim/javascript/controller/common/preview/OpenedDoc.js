@@ -94,7 +94,7 @@ enyo.kind(
     showDoc: function(){
         this.show();
         this.scrollToTop();
-		/*
+		
 		var main = this;
 		var request = new enyo.Ajax({
 			method: 'GET',
@@ -117,8 +117,8 @@ enyo.kind(
 			main.$.predicateAnnotatorPanel.render();
 			main.filterGraph(predicates);
 		});
-		*/
-		this.filterGraph([]);
+		
+		// this.filterGraph([]);
     },
 	
 	filterGraph: function(predicates) {
