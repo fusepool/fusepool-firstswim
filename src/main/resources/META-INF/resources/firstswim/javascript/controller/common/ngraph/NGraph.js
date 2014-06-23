@@ -167,9 +167,6 @@ enyo.kind(
 	 */
 	buildGraphJSON: function(nodeObj,URI,level) {
 		var main = this;
-		if(level > 0 && nodeObj.data.type=="subject") {
-			nodeObj.name = cutStr(this.getTitleByURI(URI),60);
-		}
 		level++;
 		
 		if(level < 3) {
@@ -177,23 +174,53 @@ enyo.kind(
 				case "query":
 				case "subject":
 					this.search(nodeObj,URI,level);
+					this.redrawGraph();
 				break;
 				case "document":
 					var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
 						var subjNodes = main.getSubjectConnections(success, store);
-						var nodeLimit = readCookie('nodeLimit').split(',');
-						for(var i=0; i<subjNodes.length && i<( level >= nodeLimit.length ? 3 : nodeLimit[level]); i++) {
-							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
-							var ind = nodeObj.children.length-1;
-							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
-						}
+						var nodeLimit = readCookie('nodeLimit').split(',');						
+						main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, 0);						
 					});				
 				break;
 			}
 		}
-		this.redrawGraph();
+	},
+	
+	/**
+	* After getting the subject children of a given document,
+	* this function iterates through them and initialize the 
+	* nodes in the graph after getting the label information.
+	* @param {Object} nodeObj the parent node
+	* @param {Object} subjNodes the extracted children
+	* @param {Number} nodeLimit the node limit on the current level
+	* @param {Number} level the current level 
+	* @param {Number} i the current index 
+	*/
+	createSubjNodes: function(nodeObj, subjNodes, nodeLimit, level, i){
+		var main=this;
+		if(i<( level >= nodeLimit.length ? 3 : nodeLimit[level]) && i<subjNodes.length) {
+			var title = '(?)';
+			var url = CONSTANTS.DETAILS_URL + '?iri=' + subjNodes[i];
+			var sstore = rdfstore.create();
+			sstore.load('remote', url, function(success) {				
+				var query = 'SELECT * { ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o }';
+				sstore.execute(query, function(success, results) {
+					if(success && !isEmpty(results[0])) {
+						if (success && results.length > 0) {
+							nodeObj.children.push({ id: subjNodes[i], name: results[0].o.value, children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
+							var ind = nodeObj.children.length-1;
+							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
+							main.redrawGraph();	
+						}
+					}
+					i++;
+					main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, i);	
+				});								
+			});
+		}
 	},
 	
 	/**
