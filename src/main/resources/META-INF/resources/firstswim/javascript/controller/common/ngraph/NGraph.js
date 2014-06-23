@@ -151,7 +151,7 @@ enyo.kind(
 	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
 		var nodeLimit = readCookie('nodeLimit').split(',');
-		for(var i=0; i<docNodes.length && i<( level >= nodeLimit.length ? 3 : nodeLimit[level]); i++) {
+		for(var i=0; i<docNodes.length && i<( level >= nodeLimit.length ? 4 : nodeLimit[level]); i++) {
 			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document", $type: "square", $color: "#239fa0" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
@@ -169,7 +169,7 @@ enyo.kind(
 		var main = this;
 		level++;
 		
-		if(level < 3) {
+		if(level < 4) {
 			switch(nodeObj.data.type) {
 				case "query":
 				case "subject":
@@ -201,7 +201,7 @@ enyo.kind(
 	*/
 	createSubjNodes: function(nodeObj, subjNodes, nodeLimit, level, i){
 		var main=this;
-		if(i<( level >= nodeLimit.length ? 3 : nodeLimit[level]) && i<subjNodes.length) {
+		if(i<( level >= nodeLimit.length ? 4 : nodeLimit[level]) && i<subjNodes.length) {
 			var title = '(?)';
 			var url = CONSTANTS.DETAILS_URL + '?iri=' + subjNodes[i];
 			var sstore = rdfstore.create();

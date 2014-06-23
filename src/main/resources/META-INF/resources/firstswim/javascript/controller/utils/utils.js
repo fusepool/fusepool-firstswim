@@ -3,7 +3,7 @@ function placeDefaultCookies() {
 	if(isEmpty(readCookie('currentUser'))) { createCookie('currentUser', 'anonymous', 30); }
 	if(isEmpty(readCookie('maxFacets'))) { createCookie('maxFacets', 10, 30); }
 	if(isEmpty(readCookie('items'))) { createCookie('items', 10, 30); }
-	if(isEmpty(readCookie('nodeLimit'))) { createCookie('nodeLimit', [1,5,3], 30); }
+	if(isEmpty(readCookie('nodeLimit'))) { createCookie('nodeLimit', [1,5,3,3], 30); }
 	if(isEmpty(readCookie('viewType'))) { createCookie('viewType', 'documentList', 30); }
 	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', 1, 30); }
 	if(isEmpty(readCookie('userLabels'))) { createCookie('userLabels', [], 30); }
