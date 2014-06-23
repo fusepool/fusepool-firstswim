@@ -21,7 +21,8 @@ enyo.kind(
             { tag: 'div', classes: 'styleSettingsButtons', components: [
 				{ kind: 'onyx.RadioGroup', name: 'styleSettingsRadio', onActivate: 'setCss', components: [
 					{ content: 'Default', name: 'firstswimBtn', classes: 'styleSettingsButton', value: 'firstswim' },
-					{ content: 'High contrast', name: 'contrastBtn', classes: 'styleSettingsButton', value: 'contrast' }
+					{ content: 'High contrast', name: 'contrastBtn', classes: 'styleSettingsButton', value: 'contrast' },
+					{ content: 'Orange', name: 'beerBtn', classes: 'styleSettingsButton', value: 'beer' }
 				]},				
             ]}
         ]},
@@ -40,6 +41,7 @@ enyo.kind(
 		switch(cssName) {
 			case 'firstswim':
 			case 'contrast':
+			case 'beer':
 				this.$[cssName+'Btn'].setActive(true);
 			break;
 			default:

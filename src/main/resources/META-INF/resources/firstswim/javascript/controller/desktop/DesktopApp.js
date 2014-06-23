@@ -633,8 +633,12 @@ jQuery(document).ready(function () {
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
 					
-					// var labelPattern = /^'label:'.*$/;
+					// var labelPattern = /^.*'label:'.*$/;
 					// if(labelPattern.test(searchWord)) {
+					
+					// }
+					// var predictedLabelPattern = /^.*'predicted label:'.*$/;
+					// if(predictedLabelPattern.test(searchWord)) {
 					
 					// }
 					

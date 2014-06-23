@@ -248,6 +248,16 @@ jQuery(document).ready(function () {
                  * @returns {String} the search url
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
+				
+					// var labelPattern = /^.*'label:'.*$/;
+					// if(labelPattern.test(searchWord)) {
+					
+					// }
+					// var predictedLabelPattern = /^.*'predicted label:'.*$/;
+					// if(predictedLabelPattern.test(searchWord)) {
+					
+					// }
+					
                     var url = CONSTANTS.SEARCH_URL;
                     if(isEmpty(offset)){
                         offset = 0;
