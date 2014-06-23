@@ -12,7 +12,7 @@ enyo.kind(
         offset: 0,
         searchWord: '',
         checkedDocs: 0,
-        minClassifyDoc: readCookie('items'),  // process button showing number
+        minClassifyDoc: readCookie('minClassifyDoc'),  // process button showing number
         documents: null,
         scrollerClass: '',
         titleClass: '',
