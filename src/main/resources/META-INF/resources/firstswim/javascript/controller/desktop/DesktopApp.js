@@ -98,7 +98,7 @@ jQuery(document).ready(function () {
 													]}
 												]},
 												{kind: "onyx.TooltipDecorator", components: [
-													{kind: "onyx.IconButton", /* ontap: 'styleSettings',*/ name: 'brushButton', classes: 'brushButton' },
+													{kind: "onyx.IconButton",  ontap: 'styleSettings',/**/ name: 'brushButton', classes: 'brushButton' },
 													{kind: "onyx.Tooltip", content: "Style settings (soon)", classes: 'menuItemTooltip', active: false }
 												]},
 												{kind: "onyx.TooltipDecorator", components: [
