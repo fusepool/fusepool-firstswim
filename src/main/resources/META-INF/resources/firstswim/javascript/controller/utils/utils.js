@@ -20,7 +20,6 @@ var CONSTANTS = {
     ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
     ENTITY_DETAILS_URL: BASE_URL + 'firstswim/entitydetails/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
-    // GET_PREDICATES_URL: 'http://localhost:8080/' + 'firstswim/getpredicates',
     GET_PREDICATES_URL: BASE_URL + 'firstswim/getpredicates',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
     LANDSCAPE_URL: BASE_URL + 'kmxrdfproxy/landscape/',
