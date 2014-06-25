@@ -86,7 +86,7 @@ public class GUIProvider {
     private final double THRESHOLD = 0.0;
     
     // limit the number of prediced labels returned
-    private final int LABEL_LIMIT = 20;
+    private final int LABEL_LIMIT = 10;
     
     @Reference
     private HubEngine predictionHub;
@@ -424,7 +424,7 @@ public class GUIProvider {
             @QueryParam("document") final String document,
             @QueryParam("query") final String query
             ) throws Exception {
-        /*
+        
         // json response for the client
         String predictionResult = null;
         
@@ -456,9 +456,6 @@ public class GUIProvider {
         } 
         
         return predictionResult;
-        */
-
-		return "[{\"text\": \"predicate-0\", \"accepted\": false}, {\"text\": \"predicate-1\", \"accepted\": true}, {\"text\": \"predicate-2\", \"accepted\": false}, {\"text\": \"predicate-3\", \"accepted\": true}]";
         
     }
     
