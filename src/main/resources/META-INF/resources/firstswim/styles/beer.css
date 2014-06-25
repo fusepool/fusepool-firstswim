@@ -13,6 +13,10 @@ body{
 	color: #5e5e5e;
 }
 
+h1 {
+	line-height: 1.2em
+}
+
 .clear {
 	clear: both;
 }

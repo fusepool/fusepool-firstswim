@@ -12,6 +12,10 @@ body{
 	color: #000000;
 }
 
+h1 {
+	line-height: 1.2em
+}
+
 .clear {
 	clear: both;
 }
