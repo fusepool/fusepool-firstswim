@@ -75,6 +75,7 @@ enyo.kind(
 		var request = new enyo.Ajax({
 			method: 'GET',
 			url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=' + ( readCookie('viewType') == 'entityList' ? false : true ),
+			// url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=false',
 			handleAs: 'text',
 			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded'},
 			published: { timeout: 60000 }
@@ -130,7 +131,7 @@ enyo.kind(
 			}
 		});
 		/*
-		var userLabels = readCookie('userLabels');
+		var userLabels = readCookie('userLabels'); // array!
 		if(userLabels.length > 0) {
 			for(var i=0;i<userLabels.length;i++) {
 				main.$.userLabelPicker.createComponent({ content: userLabels[i] });

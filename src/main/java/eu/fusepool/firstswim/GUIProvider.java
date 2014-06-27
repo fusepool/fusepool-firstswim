@@ -427,7 +427,7 @@ public class GUIProvider {
         
         // json response for the client
         String predictionResult = null;
-        
+        /*
         try {                    
             // add the properties to a hashmap 
             HashMap<String, String> params = new HashMap<String, String>();
@@ -456,6 +456,8 @@ public class GUIProvider {
         } 
         
         return predictionResult;
+		*/
+		return "[{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#publicationNumber\", \"accepted\": true},{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#kindCode\", \"accepted\": false},{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#dateOfPublication\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/issued\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/abstract\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/identifier\", \"accepted\": false}]";
         
     }
     

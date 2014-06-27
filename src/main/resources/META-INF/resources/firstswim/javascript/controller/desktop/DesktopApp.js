@@ -97,9 +97,14 @@ jQuery(document).ready(function () {
 														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'menuItemTooltip', active: false }
 													]}
 												]},
-												{kind: "onyx.TooltipDecorator", components: [
-													{kind: "onyx.IconButton",  ontap: 'styleSettings',/**/ name: 'brushButton', classes: 'brushButton' },
-													{kind: "onyx.Tooltip", content: "Style settings (soon)", classes: 'menuItemTooltip', active: false }
+												{kind: 'onyx.MenuDecorator', name: 'styleSettingsSelect', onSelect: 'selectCss', components: [
+													{kind: "onyx.IconButton", name: 'brushButton', classes: 'brushButton' },
+													{kind: "onyx.Tooltip", content: "Style settings", classes: 'menuItemTooltip', active: false },
+													{kind: "onyx.Menu", name: 'styleSettingsMenu', components: [
+														{content: "Default", name: "firstswim", classes: "stylePickerItem", value: 'firstswim'},
+														{content: "High contrast", name: "contrast", classes: "stylePickerItem", value: 'contrast'},
+														{content: "Orange", name: "beer", classes: "stylePickerItem", value: 'beer'}
+													]}
 												]},
 												{kind: "onyx.TooltipDecorator", components: [
 													{kind: "onyx.IconButton", ontap: 'login', name: 'loginButton', classes: 'loginButton loggedOut' },
@@ -121,11 +126,6 @@ jQuery(document).ready(function () {
 											kind: 'LoginPopup',
 											name: 'loginPopup',
 											classes: 'loginPopup'
-										},
-										{
-											kind: 'StyleSettingsPopup',
-											name: 'styleSettingsPopup',
-											classes: 'styleSettingsPopup'
 										}
                                 ]}
                             ]},
@@ -143,11 +143,16 @@ jQuery(document).ready(function () {
 				
 				processCookieValues: function() {
 					this.initViewType();
-					this.initCss();
+					this.setCss(readCookie('css'));
 				},
 				
-				initCss: function() {
-					this.$.styleSettingsPopup.setRadioActive(readCookie('css'));
+				selectCss: function(inSender, inEvent) {
+					this.setCss(inEvent.originator.value);
+				},
+				
+				setCss: function(cssName) {
+					$("#mainCss").attr("href", CONSTANTS.STYLE_PATH + cssName + ".css");
+					createCookie('css', cssName, 30);
 				},
 				
 				initViewType: function() {
@@ -417,14 +422,6 @@ jQuery(document).ready(function () {
                  */
                 login: function(){
                     this.$.loginPopup.showLogin();
-                },
-				
-                /**
-                 * This function is called, when the user clicks on the style settings button.
-                 * It displays the style settings window.
-                 */
-                styleSettings: function(){
-                    this.$.styleSettingsPopup.showStyleSettings();
                 },
 
                 /**

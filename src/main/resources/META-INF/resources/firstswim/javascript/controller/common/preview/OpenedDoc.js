@@ -123,6 +123,7 @@ enyo.kind(
 	
 	filterGraph: function(predicates) {
 	
+	/*
 		var query = 'CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o }';
 	
 		for(var i=0;i<predicates.length;i++) {
@@ -144,7 +145,11 @@ enyo.kind(
 			}
 			
 			main.$.loader.hide();
-		});
+		}); */
+		
+		
+		$("#" + this.$.content.getId()).html('').append(uduvudu.process(this.openedDocStore));	
+		this.$.loader.hide();
 		
 	},
 

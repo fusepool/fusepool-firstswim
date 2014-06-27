@@ -199,38 +199,12 @@ h1 {
 	margin: 0px 2px 0px 2px;
 }
 
-.styleSettingsPopup {
-    right: 65px;
-    position: absolute;
-    top: 63px;
-	width: 230px;
+.stylePickerItem {
+	width: 100%;
 }
 
-.styleSettingsPopupDiv{
-	background-color: #534B48;
-    font-size: 14px;
-    width: 216px;
-}
-
-.styleSettingsCloseButton{
-    width: 30px;
-    height: 30px;
-    background-image: url("../images/close_button.png");
-    background-repeat: no-repeat;
-    cursor: pointer;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    z-index: 9999;
-}
-
-.styleSettingsButton {
-    cursor: pointer;
-	background-color: #bff3ff;
-}
-
-.styleSettingsButton.active {
-	background-color: #00AAB3;
+.stylePickerItem:hover {
+	background-color: #655B53;
 }
 
 /* ----------- Top message box ----------- */
