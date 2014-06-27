@@ -30,9 +30,9 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
-		this.canvasResizer(); 
+		this.canvasResizer();
     },
-
+	
     components: [
         { tag: 'div', name: 'title' },
 		{ name: 'loader' },
@@ -392,5 +392,12 @@ enyo.kind(
 				main.rGraph.canvas.resize($('.nGraphDiv').width(), $('.nGraphDiv').height()); 
 			}
 		});
+	},
+	
+	onDivResize: function() {
+		var main=this;
+		if(!isEmpty(main.rGraph)) {
+			main.rGraph.canvas.resize($('.nGraphDiv').width(), $('.nGraphDiv').height()); 
+		}
 	}
 });

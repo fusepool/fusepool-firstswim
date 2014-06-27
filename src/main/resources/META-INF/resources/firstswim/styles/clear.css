@@ -7,9 +7,10 @@ body{
     margin: 0;
 	height: 100%;
 	width: 100%;
+	background-color: #ffffff;
 	font-family: Arial,sans-serif;
 	font-weight: 400;
-	color: #000000;
+	color: #5e5e5e;
 }
 
 h1 {
@@ -38,7 +39,6 @@ h1 {
 	position: relative;
 	top: 0px;
 	height: 74px;
-    background-color: #000000;
 }
 
 .toolbarCenter {
@@ -46,7 +46,7 @@ h1 {
 }
 
 .toolbarIcons {
-	border: 1px solid #9C9C9C;
+	border: 1px solid #cccccc;
 	display: block;
 	padding: 8px;
 	position: absolute;
@@ -64,20 +64,23 @@ h1 {
 	margin: 0px 2px 0px 2px;
 }
 
-.docListViewButton		{ background-image: url("../images/docListViewButton_contrast.png"); }
-.entityListViewButton	{ background-image: url("../images/entityListViewButton_contrast.png"); }
-.locationViewButton		{ background-image: url("../images/locationViewButton_contrast.png"); }
-.landscapeViewButton	{ background-image: url("../images/landscapeViewButton_contrast.png"); }
-.nGraphViewButton		{ background-image: url("../images/nGraphViewButton_contrast.png"); }
+.docListViewButton		{ background-image: url("../images/clear/docListViewButton.png"); }
+.entityListViewButton	{ background-image: url("../images/clear/entityListViewButton.png"); }
+.locationViewButton		{ background-image: url("../images/clear/locationViewButton.png"); }
+.landscapeViewButton	{ background-image: url("../images/clear/landscapeViewButton.png"); }
+.nGraphViewButton		{ background-image: url("../images/clear/nGraphViewButton.png"); }
 
 .menuItemTooltip {
-	background-color: #716863;
+	background-image: none;
+	background-color: #bbbbbb;
 	color: #fffbdf;
 	font-size: 13px;
+	border: none;
+    box-shadow: none;
 } 
 
 .menuItemTooltip.below.left-arrow:before {
-	border-bottom: 6px solid #716863;
+	border-bottom: 6px solid #bbbbbb;
 }
 
 .menuItemTooltip.below {
@@ -92,7 +95,7 @@ h1 {
 	top: 5px;
 	left: -20px;
 	max-width: 30%;
-	background: transparent url("../images/logo_contrast.png") no-repeat left top;
+	background: transparent url("../images/clear/logo.png") no-repeat left top;
 	background-size: 100% auto;
 	-o-background-size: 100% auto;
 	-webkit-background-size: 100% auto;
@@ -101,7 +104,7 @@ h1 {
 
 /* ----------- Login ----------- */
 .loginButton {
-	background-image: url("../images/loginButton_contrast.png");
+	background-image: url("../images/clear/loginButton.png");
     background-repeat: no-repeat;
 	height: 32px;
 	width: 32px;
@@ -125,15 +128,20 @@ h1 {
 }
 
 .loginPopupDiv{
-	background-color: #6C6C6C;
+	background-color: #ffffff;
+	background-image: none;
+	-webkit-border-radius: none;
+	-moz-border-radius: none;
+	border-radius: none;
     font-size: 14px;
     width: 415px;
+	color: #5e5e5e;
 }
 
 .loginCloseButton{
     width: 30px;
     height: 30px;
-    background-image: url("../images/close_button_contrast.png");
+    background-image: url("../images/clear/close_button.png");
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
@@ -164,7 +172,16 @@ h1 {
     display: inline;
     margin-right: 10px;
     cursor: pointer;
-	background-color: #ffffff;
+	background-color: #22b4ff;
+	color: white;
+	border: none;
+	background-image: none;
+}
+
+.loginBackBtn:active, .signInBtn:active, .signOutBtn:active, .signUpBtn:active {
+	background-color: #008FDC;
+	border: none !important;
+	background-image: none !important;
 }
 
 .currentUserLabel{
@@ -179,24 +196,32 @@ h1 {
 	font-style: italic;
 	margin: 15px auto;
 	width: 320px;
-	color: #FFCD9C;
+	color: #FF0000;
 }
 /* ----------- Style settings ------------- */
 
 .brushButton{
-	background-image: url("../images/brushButton_contrast.png");
+	background-image: url("../images/clear/brushButton.png");
     background-repeat: no-repeat;
 	height: 32px;
 	width: 32px;
 	margin: 0px 2px 0px 2px;
 }
 
+.styleSettingsMenu {
+	background-image: none;
+	background-color: #ffffff;
+	color: #555555;
+}
+
 .stylePickerItem {
 	width: 100%;
+	border-bottom: 1px solid #dddddd;
 }
 
 .stylePickerItem:hover {
-	background-color: #000000;
+	background-color: #22b4ff;
+	color: white;
 }
 
 /* ----------- Top message box ----------- */
@@ -255,8 +280,7 @@ h1 {
 
 .detailsScroll {
     background-color: #ffffff;
-	color: #000000;
-	border: 3px solid #777777;
+	border: 1px solid #cccccc;
 	position: absolute;
     top: 50px;
 	left: 0px;
@@ -285,7 +309,7 @@ h1 {
 }
 
 .dictionaryCheckbox {
-    background: url("../images/checkbox_contrast.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/clear/checkbox.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: inline-block;
     height: 15px;
@@ -317,13 +341,13 @@ h1 {
     color: #777777;
     font-size: 16px;
     margin: 18px 0 0 10px;
-    text-shadow: 1px 1px 0 #FAFAFA;
+    text-shadow: 1px 1px 0 #fafafa;
 }
 
 .nGraphDiv {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     bottom: 0px;
-    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+	border: 1px solid #cccccc;
     left: 0px;
     position: absolute;
     right: 0px;
@@ -352,7 +376,7 @@ h1 {
 .mapDiv {
     background-color: #FFFFFF;
     bottom: 0px;
-    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+	border: 1px solid #cccccc;
     left: 0px;
     position: absolute;
     right: 0px;
@@ -380,7 +404,7 @@ h1 {
 
 .landscapeDiv {
     background-color: #FFFFFF;
-    box-shadow: 0 0 5px rgba(50, 50, 50, 0.5) inset;
+	border: 1px solid #cccccc;
     position: absolute;
     left: 0px;
     bottom: 0px;
@@ -401,7 +425,7 @@ h1 {
 .bookmarkPopupDiv{
     width: 584px !important;
     padding: 16px !important;
-	background-color: #6C6C6C;
+	background-color: #534B48;
 }
 
 .documentList{
@@ -439,8 +463,8 @@ h1 {
 }
 
 .documentListScroll {
-    background-color: #777777;
-    border: 1px #777777 solid;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
     bottom: 0;
     left: 0;
     position: absolute;
@@ -541,12 +565,12 @@ h1 {
 	float: left;
 	margin: 1px;
     padding: 1px 2px 12px 4px;
-	width: 35%;
+	width: 50%;
 }
 
 .moreLabelInput {
 	font-size: 12px !important;
-	color: #000000;
+	color: #555555;
 	width: 100%;
 }
 /* Draggers */
@@ -561,6 +585,7 @@ h1 {
 
 .firstDocDragger { left: 310px; }
 .secondDocDragger { left: 760px; }
+.nGraphDragger { left: 760px; }
 
 /* ----------- RIGHT ----------- */
 
@@ -574,10 +599,10 @@ h1 {
 }
 
 .previewBoxMainTitle {
-	color: #000000;
+	color: #777777;
 	font-size: 16px;
 	margin: 18px 0px 0px 10px;
-	font-weight: bold;
+	text-shadow: 1px 1px 0px #fafafa;
 }
 
 .previewToolbar {
@@ -604,8 +629,7 @@ h1 {
 
 .openedDocScroll{
     background-color: #ffffff;
-    border: 3px #777777 solid;
-	color: #000000;
+	border: 1px solid #cccccc;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -767,7 +791,7 @@ h1 {
     display: inline-block;
     width: 49px;
     height: 54px;
-    background-image: url(../images/logo_contrast.png);
+    background-image: url(../images/clear/logo.png);
     background-repeat: no-repeat;
     margin-top: 5px;
     margin-left: 20px;
@@ -784,9 +808,7 @@ h1 {
 /* ----- Details box ----- */
 .detailsMobileBox{
     background-color: #ffffff;
-	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
-	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+	border: 1px solid #cccccc;
 	position: absolute;
 	top: 235px;
 	bottom: 54px;
@@ -851,8 +873,8 @@ h1 {
 }
 
 .dictionaryListScrollOpen{
-    background-color: #777777;
-	border: 1px solid #777777;
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
     position: absolute;
     top: 50px;
     left: 0px;
@@ -861,8 +883,8 @@ h1 {
 }
 
 .dictionaryListScrollClose{
-    background-color: #777777;
-	border: 1px solid #777777;
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
     position: absolute;
     top: 50px;
     left: 0px;
@@ -871,7 +893,8 @@ h1 {
 }
 
 .dictionaryListMobileScrollOpen{
-    background-color: #777777;
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -880,7 +903,8 @@ h1 {
 }
 
 .dictionaryListMobileScrollClose{
-    background-color: #777777;
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -889,34 +913,34 @@ h1 {
 }
 
 .dictionariesMainTitle{
-	color: #000000;
+	color: #777777;
 	font-size: 16px;
 	margin: 18px 0px 0px 10px;
-	font-weight: bold;
+	text-shadow: 1px 1px 0px #fafafa;
 }
 
 .dictionaryName{
     margin-top: 10px;
     margin-bottom: 3px;
-	color: #FFFFFF;
+	color: #22b4ff;
 	font-size: 14px;
 }
 
 .dictionaryMobileCheckbox {
-    background: url("../images/checkbox_mobile_contrast.png") no-repeat scroll 0 0 transparent;
+    background: url("../images/clear/checkbox_mobile.png") no-repeat scroll 0 0 transparent;
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
 }
 
 .detailsDiv{
-	background-color: #EEEEEE;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
 	float: left;
 	margin: 2px;
     padding: 0px 4px 4px 4px;
+}
+
+.detailsDiv:hover{ 
+	background-color: #E2ECF7;
 }
 
 .entityText{
@@ -958,7 +982,7 @@ h1 {
 
 /* ----- Bookmark ----- */
 .bookmarkButton {
-    background-image: url(../images/bookmark.png);
+    background-image: url(../images/clear/bookmark.png);
     background-repeat: no-repeat;
 	width: 18px;
 	height: 32px;
@@ -969,7 +993,7 @@ h1 {
 .bookmarkMobileButton {
     width: 50px;
     height: 60px;
-    background-image: url(../images/bookmark_mobile.png);
+    background-image: url(../images/clear/bookmark_mobile.png);
     background-repeat: no-repeat;
     position: absolute;
     top: 0px;
@@ -1009,23 +1033,28 @@ h1 {
 
 .documentsMainTitle{
     display: inline-block;
-    color: #000000;
+    color: #777777;
     font-size: 16px;
     margin: 18px 5px 0px 10px;
-	font-weight: bold;
+    text-shadow: 1px 1px 0px #fafafa;
 }
 
 .documentsCount{
     display: inline-block;
-    color: #000000;
+    color: #777777;
     font-size: 11px;
     margin: 18px 0 0 0;
+    text-shadow: 1px 1px 0px #fafafa;
 }
 
 .shortDocumentContainer{
     position: relative;
-    margin: 10px;
+	margin: 0px;
     word-wrap: break-word;
+}
+
+.shortDocumentContainer:hover {
+    background-color: #f6f6f6;
 }
 
 .shortDocumentIcon{
@@ -1042,8 +1071,8 @@ h1 {
 }
 
 .shortDocument{
-    background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
-    border-bottom: 5px solid #b1b1b1;
+    background: transparent url("../images/clear/document-icon.png") no-repeat scroll left top;
+    border-bottom: 1px solid #cccccc;
     font-size: 13px;
     padding: 10px 10px 10px 10px;
     min-height: 35px;
@@ -1052,15 +1081,14 @@ h1 {
 }
 
 .personItem{
-    background: #ffffff url("../images/person-icon.png") no-repeat scroll left top;
-    border-bottom: 5px solid #b1b1b1;
+    background: transparent url("../images/clear/person-icon.png") no-repeat scroll left top;
+    border-bottom: 1px solid #cccccc;
     font-size: 13px;
     padding: 10px 10px 10px 10px;
     min-height: 35px;
     position: relative;
     text-align: left;
 }
-
 
 .shortDocumentTitle{
     display: block;
@@ -1087,7 +1115,7 @@ h1 {
 .openDocButton{
     width: 30px;
     height: 34px;
-    background-image: url(../images/open-doc-icon.png);
+    background-image: url(../images/clear/open-doc-icon.png);
     background-repeat: no-repeat;
     position: absolute;
     right: -25px;
@@ -1130,7 +1158,7 @@ h1 {
     display: inline-block;
     width: 32px;
     height: 32px;
-    background-image: url(../images/positive-rate-icon.jpg);
+    background-image: url(../images/clear/positive-rate-icon.jpg);
     background-repeat: no-repeat;
     margin: 15px 10px;
     cursor: pointer;
@@ -1140,7 +1168,7 @@ h1 {
     display: inline-block;
     width: 32px;
     height: 32px;
-    background-image: url(../images/negative-rate-icon.jpg);
+    background-image: url(../images/clear/negative-rate-icon.jpg);
     background-repeat: no-repeat;
     cursor: pointer;
     margin: 15px 10px;
@@ -1150,7 +1178,7 @@ h1 {
     display: inline-block;
     width: 32px;
     height: 32px;
-    background-image: url(../images/full-view-icon.jpg);
+    background-image: url(../images/clear/full-view-icon.jpg);
     background-repeat: no-repeat;
     cursor: pointer;
     margin: 15px 10px;
@@ -1172,7 +1200,7 @@ h1 {
 }
 
 .loader{
-    background-image: url("../images/loader.gif");
+    background-image: url("../images/clear/loader.gif");
     background-repeat: no-repeat;
     height: 32px;
     width: 32px;
@@ -1239,7 +1267,7 @@ h1 {
 .popupCloseButton {
     width: 30px;
     height: 30px;
-    background-image: url("../images/close_button_contrast.png");
+    background-image: url("../images/clear/close_button.png");
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
@@ -1264,7 +1292,7 @@ h1 {
 .searchImage {
     width: 20px;
     height: 20px;
-    background-image: url(../images/search-icon.png);
+    background-image: url(../images/clear/search-icon.png);
     background-repeat: no-repeat;
 	max-width: 30%;
 	cursor: pointer;
@@ -1283,10 +1311,7 @@ h1 {
 }
 
 .decorator{
-    border: 1px solid rgba(0, 0, 0, 0.1);
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+    border: 1px solid #cccccc;
     margin: 0;
     padding: 6px 8px 10px;
     width: 100%;
@@ -1296,7 +1321,7 @@ h1 {
 
 /* ----- Full view button and rate buttons ----- */
 .fullViewButton{
-    background-image: url("../images/full-view-icon.jpg");
+    background-image: url("../images/clear/full-view-icon.jpg");
     background-repeat: no-repeat;
     cursor: pointer;
 	float: left;
@@ -1305,7 +1330,7 @@ h1 {
 }
 
 .positiveRateButton{
-    background-image: url("../images/positive-rate-icon.jpg");
+    background-image: url("../images/clear/positive-rate-icon.jpg");
     background-repeat: no-repeat;
     cursor: pointer;
 	float: left;
@@ -1314,7 +1339,7 @@ h1 {
 }
 
 .negativeRateButton{
-    background-image: url("../images/negative-rate-icon.jpg");
+    background-image: url("../images/clear/negative-rate-icon.jpg");
     background-repeat: no-repeat;
     cursor: pointer;
 	float: left;

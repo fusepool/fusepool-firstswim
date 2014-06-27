@@ -97,13 +97,14 @@ jQuery(document).ready(function () {
 														{kind: "onyx.Tooltip", content: "Network graph view", classes: 'menuItemTooltip', active: false }
 													]}
 												]},
-												{kind: 'onyx.MenuDecorator', name: 'styleSettingsSelect', onSelect: 'selectCss', components: [
+												{kind: 'onyx.MenuDecorator', name: 'styleSettingsSelect', classes: 'styleSettingsSelect', onSelect: 'selectCss', components: [
 													{kind: "onyx.IconButton", name: 'brushButton', classes: 'brushButton' },
 													{kind: "onyx.Tooltip", content: "Style settings", classes: 'menuItemTooltip', active: false },
-													{kind: "onyx.Menu", name: 'styleSettingsMenu', components: [
+													{kind: "onyx.Menu", name: 'styleSettingsMenu', classes: 'styleSettingsMenu', components: [
 														{content: "Default", name: "firstswim", classes: "stylePickerItem", value: 'firstswim'},
 														{content: "High contrast", name: "contrast", classes: "stylePickerItem", value: 'contrast'},
-														{content: "Orange", name: "beer", classes: "stylePickerItem", value: 'beer'}
+														{content: "Orange", name: "beer", classes: "stylePickerItem", value: 'beer'},
+														{content: "Clear", name: "clear", classes: "stylePickerItem", value: 'clear'}
 													]}
 												]},
 												{kind: "onyx.TooltipDecorator", components: [
@@ -329,6 +330,7 @@ jQuery(document).ready(function () {
 								titleContent: 'Network graph ',
 								noDataLabel: 'No data available'
 							});
+							this.createComponent({	name: 'nGraphDragger', classes: 'nGraphDragger verticalDragger' });
 							this.render();
 						break;
 					}
@@ -362,6 +364,7 @@ jQuery(document).ready(function () {
 					switch (readCookie('viewType')) {
 						case 'nGraph':
 							this.$.nGraph.destroy();
+							this.$.nGraphDragger.destroy();
 						break;
 						case 'documentList':	
 						case 'entityList':										
@@ -404,13 +407,31 @@ jQuery(document).ready(function () {
 							drag: function( event, ui ) {
 								var docListCalcWidth = ui.position.left - ($('.leftDesktopCol').width() + 20);
 								if( ($(document).width() - ui.position.left ) > 80 && docListCalcWidth > 160 ) {
-									$('.documentList').css('width', docListCalcWidth+'px');
+									$('.documentList').css('width', docListCalcWidth + 'px');
 									$('.previewBox').css('left', ( ui.position.left + 10 )+'px');
 								}
 								else {
 									event.type = 'mouseup';
 									$('.secondDocDragger').trigger(event);
 								}
+							}
+						});
+					}
+					if($('.nGraphDragger').length > 0) {
+						var main = this;
+						$('.nGraphDragger').draggable({
+							axis: "x",
+							drag: function( event, ui ) {
+								var nGraphCalcWidth = ui.position.left - 10;
+								if( ($(document).width() - ui.position.left ) > 80 && nGraphCalcWidth > 160 ) {
+									$('.nGraphDiv').css('width', nGraphCalcWidth + 'px');
+									$('.previewBox').css('left', ( ui.position.left + 10 )+'px');
+								}
+								else {
+									event.type = 'mouseup';
+									$('.nGraphDragger').trigger(event);
+								}
+								main.$.nGraph.onDivResize();
 							}
 						});
 					}
