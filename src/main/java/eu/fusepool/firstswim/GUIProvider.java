@@ -425,9 +425,11 @@ public class GUIProvider {
             @QueryParam("query") final String query
             ) throws Exception {
         
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
         // json response for the client
         String predictionResult = null;
-        /*
+        
         try {                    
             // add the properties to a hashmap 
             HashMap<String, String> params = new HashMap<String, String>();
@@ -438,6 +440,10 @@ public class GUIProvider {
             // get prediction
             predictionResult = predictionHub.predict("LUP55", params);
             
+            String predictedLabel;
+            double predictedScore;
+            List<Label> lbls;
+            
             if (predictionResult == null) {
                 log.error("Error: {}", "LUP55 return null");
                 return "";
@@ -447,6 +453,43 @@ public class GUIProvider {
                     log.error("Error: {}", "LUP55 returned error string");
                     return "";
                 }
+                else{
+                    lbls = new ArrayList<Label>();
+                    for (String lbl : predictionResult.split("##")) {
+                        String[] lblsrt = lbl.split("__");
+                        predictedLabel = lblsrt[0];
+                        predictedScore = 0.0;
+                        // try parsing the score value, otherwise it is set to 0.0
+                        try {
+                            predictedScore = Double.parseDouble(lblsrt[1]);
+                        } catch (NumberFormatException e) {
+                            log.warn("Warning: {}", e.getMessage());
+                        }
+                        lbls.add(new Label(predictedLabel, predictedScore));
+                       
+                    }
+                    
+                    int counter = 0;
+                    
+                    
+                    JSONObject object;
+                    // splitting ## separated prediction result string and adding them to json response
+                    for (Label lbl : lbls) {
+                        if(lbl.getScore() > 0.2){
+                            object = new JSONObject();
+                            object.put("text", lbl.getLabel());
+                            object.put("accepted", "true");
+                            array.add(object);
+                            
+                        }
+                        else{
+                            object = new JSONObject();
+                            object.put("text", lbl.getLabel());
+                            object.put("accepted", "false");
+                            array.add(object);
+                        }
+                    }
+                }
             }
                               
         } catch (Exception e) {
@@ -454,11 +497,7 @@ public class GUIProvider {
             log.error("Error", e);
             return "";
         } 
-        
-        return predictionResult;
-		*/
-		return "[{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#publicationNumber\", \"accepted\": true},{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#kindCode\", \"accepted\": false},{\"text\":\"http://www.patexpert.org/ontologies/pmo.owl#dateOfPublication\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/issued\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/abstract\", \"accepted\": true},{\"text\":\"http://purl.org/dc/terms/identifier\", \"accepted\": false}]";
-        
+        return array.toString();
     }
     
     private String CreateEmptyResult(String search, int offset, int maxFacets, int items){
