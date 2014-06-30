@@ -417,6 +417,7 @@ public class GUIProvider {
 
         return predictionResult;
     }
+    
     @GET
     @Path("getpredicates")
     public String serviceEntry3(@Context final UriInfo uriInfo,
@@ -433,25 +434,25 @@ public class GUIProvider {
         try {                    
             // add the properties to a hashmap 
             HashMap<String, String> params = new HashMap<String, String>();
-            params.put("user", user);
+            params.put("user", "http://fusepool.info/users/" + user);
             params.put("document", document);
             params.put("query", query);
             
             // get prediction
             predictionResult = predictionHub.predict("LUP55", params);
-            
+                        
             String predictedLabel;
             double predictedScore;
             List<Label> lbls;
             
             if (predictionResult == null) {
                 log.error("Error: {}", "LUP55 return null");
-                return "";
+                return "LUP55 return null";
             }
             else{
                 if(predictionResult.equals("__error__")){
                     log.error("Error: {}", "LUP55 returned error string");
-                    return "";
+                    return "LUP55 returned error string";
                 }
                 else{
                     lbls = new ArrayList<Label>();
@@ -469,8 +470,7 @@ public class GUIProvider {
                        
                     }
                     
-                    int counter = 0;
-                    
+                    int counter = 0;                    
                     
                     JSONObject object;
                     // splitting ## separated prediction result string and adding them to json response
@@ -495,7 +495,7 @@ public class GUIProvider {
         } catch (Exception e) {
             System.out.println("Exception: " + e.getMessage());
             log.error("Error", e);
-            return "";
+            return "Exception: " + e.getMessage();
         } 
         return array.toString();
     }
