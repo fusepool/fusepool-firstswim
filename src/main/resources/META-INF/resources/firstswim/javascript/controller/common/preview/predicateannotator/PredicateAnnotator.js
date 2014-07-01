@@ -15,7 +15,7 @@ enyo.kind(
     },
 
     components: [
-		{ tag: 'div', name: 'predicateAnnotatorName', classes: 'predicateAnnotatorName', content: 'You can configure whether you\'re interested in a specific preditace in this preview or not:' },
+		{ tag: 'div', name: 'predicateAnnotatorName', classes: 'predicateAnnotatorName', content: 'You can configure whether you\'re interested in a specific predicate in this preview or not:' },
 		{ classes: 'clear' },
 		{ tag: 'div', name: 'showPredicateAnnotator', content: 'Customize predicates', classes: 'showPredicateAnnotator', ontap: 'showPredicateAnnotator' },
 		{ classes: 'clear' },
