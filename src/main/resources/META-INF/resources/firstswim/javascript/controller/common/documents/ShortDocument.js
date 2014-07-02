@@ -111,6 +111,12 @@ enyo.kind(
         ]}
     ],
 
+	/**
+	* This function is called when the user enables/disables
+	* label prediction. It calls the toggle function of each
+	* label lists'.
+	* @param {Boolean} enable state of label prediction
+	*/
 	togglePredictedLabelLists: function(enable) {
         var labelList = this.$.labelListContainer.children;
         for(var i=0;i<labelList.length;i++){
@@ -126,7 +132,8 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user click on the 'Open in new tab' menuitem.
+     * This function is called when the user clicks on the
+	 * 'Open in new tab' menu item.
      */
     openInNewTab: function(){
         this.$.documentMenu.hide();
@@ -134,11 +141,10 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user do a same event with the openDocEvent
-     * event (like ontap, ontouch, onenter, etc). It calls the parent's function,
-     * which can open a document to preview.
-     * @param {Object} inSender the component where the event is created (shortDoc)
-     * @param {Object} inEvent the event which is created (inEvent is important in the desktop version)
+     * This function runs on 'openDocEvent' events (ontap, ontouch, onenter, etc).
+	 * It calls the parent's function which opens the document in the preview.
+     * @param {Object} inSender the component where the event is fired (shortDoc)
+     * @param {Object} inEvent the fired event (important in the desktop version)
      */
     openDoc: function(inSender, inEvent){
         this.$.documentMenu.hide();
@@ -146,7 +152,7 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user click on the document icon.
+     * This function runs when the user clicsk on the document icon.
      * @param {Object} inSender the document icon
      * @param {Object} inEvent the click event
      */
@@ -157,20 +163,23 @@ enyo.kind(
     },
 
     /**
-     * This function shows the slider bar if the activated parameter is true, hides the bar otherwise
+     * This function shows/hides the slider bar according to the
+	 * 'activated' parameter
      * @param {Boolean} activated show the slidebar or not
      */
     updateRatings: function(activated){
         this.showSlidebar = activated;
         if(activated){
             this.$.rateSlider.show();
-        } else {
+        }
+		else {
             this.$.rateSlider.hide();
         }
     },
 
     /**
-     * This function runs when the slides the bar. It calls the parent addCheck or removeCheck function
+     * This function runs when the user slides the bar.
+	 * It calls the parent addCheck or removeCheck function.
      */
     checking: function(){
         if(this.prevCheckVal === 1){
@@ -179,9 +188,11 @@ enyo.kind(
         if(this.slideValue === 1){
             this.owner[this.removeCheckFunction]();
             this.$.rateSlider.applyStyle('background-color', 'white');
-        } else if(this.slideValue === 2){
+        }
+		else if(this.slideValue === 2){
             this.$.rateSlider.applyStyle('background-color', 'lightgreen');
-        } else {
+        }
+		else {
             this.$.rateSlider.applyStyle('background-color', 'lightcoral');
         }
         this.prevCheckVal = this.slideValue;

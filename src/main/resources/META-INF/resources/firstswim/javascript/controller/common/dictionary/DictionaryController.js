@@ -22,7 +22,7 @@ enyo.kind(
     },
 
     /**
-     * When the component is created the program set the title's properties and
+     * When the component is created the program sets the title's properties and
      * hides it.
      */
     create: function(){

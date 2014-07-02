@@ -18,9 +18,9 @@ enyo.kind(
     },
 
     /**
-     * When this component is created, it overwrite the right click listener
-     * because the desktop version contains a popup menu, and the program hides
-     * the default popup menu. The content's and loader's property will be set.
+     * When this component is created, it overwrites the right click listener
+     * because of the popup menu in the desktop version. It disables the default popup menu.
+	 * The content's and loader's properties are being set.
      */
     create: function(){
         this.inherited(arguments);
@@ -46,8 +46,8 @@ enyo.kind(
     ],
 
     /**
-     * This function is called when the window size is changing and it should
-     * change the opened document's height.
+     * This function is called when window size is changing and it should
+     * modify the opened document's height too.
      * @param {Number} newHeight the new height in pixels
      */
     changeHeight: function(newHeight){
@@ -76,7 +76,8 @@ enyo.kind(
     },
 
     /**
-     * This function clears the document's content.
+     * This function clears the document's content and 
+	 * the predicate annotator.
      */
     clearAll: function(){
 		this.$.content.setContent('');
@@ -88,10 +89,12 @@ enyo.kind(
     },
 
     /**
-     * This function shows a document.
-     * @param {String} rdf the document
+     * This function is called after the main kind has loaded the 
+	 * meta-graph of the given document. It asks for predicate 
+	 * prediction, creates the predicate annotator panel and 
+	 * calls a function which processes the prediction result.
      */
-    showDoc: function(){
+    processDocGraph: function(){
         this.show();
         this.scrollToTop();
 		
@@ -125,33 +128,46 @@ enyo.kind(
 		}
     },
 	
-	filterGraph: function(predicates) {
-				
+	/**
+	* This function is responsible for sending the opened
+	* document's graph to the visualizer. It gets an array of 
+	* predicates and cuts the graph according to the status
+	* (accepted: true/false) of this set.
+	* @param {Array} predicates array of predicates 
+	*/
+	filterGraph: function(predicates) {				
 		this.clearVisualization();
-        this.$.loader.show();
-		
 		var main = this;
-		this.openedDocStore.graph(function(success, triples) {
-			
-			for(var i=0;i<predicates.length;i++) {
-				if(!predicates[i].accepted) {
-					triples.removeMatches(null, predicates[i].text, null);
-				}
-			}
-			
-			var tempStore = rdfstore.create();				
-			tempStore.insert(triples, function() {
-				main.showVisualization(tempStore);
-				main.$.loader.hide();
+		$('html,body').css('cursor','wait');
+		setTimeout(function(){
+			main.openedDocStore.graph(function(success, triples) {				
+				for(var i=0;i<predicates.length;i++) {
+					if(!predicates[i].accepted) {
+						triples.removeMatches(null, predicates[i].text, null);
+					}
+				}				
+				var tempStore = rdfstore.create();				
+				tempStore.insert(triples, function() {
+					main.showVisualization(tempStore);
+					main.$.loader.hide();
+					$('body').css('cursor','auto');
+				});
 			});
-			
-		});
+		},100);
 	},
 	
+	/**
+	* This function clears the visualizer panel.
+	*/
 	clearVisualization: function() {
 		$("#" + this.$.content.getId()).html('');
 	},
 	
+	/**
+	* This function passes a given RDF store object to 
+	* Uduvudu which displays the document.
+	* @param {Object} store the store object
+	*/
 	showVisualization: function(store) {
 		$("#" + this.$.content.getId()).html('').append(uduvudu.process(store));
 	},
@@ -175,32 +191,8 @@ enyo.kind(
 		}
         this.openedDocStore = rdfstore.create();
         this.openedDocStore.load('remote', url, this.openedDocStore.rdf, function(success) {
-			main.showDoc();
+			main.processDocGraph();
         });
-    },
-
-    /**
-     * This function search the title in the rdf object.
-     * @param {Object} rdf the rdf object
-     * @returns {String} title, might by empty
-     */
-    getTitle: function(rdf){
-        var title = '';
-        var main = this;
-
-        var query = 'SELECT * { ?s <http://purl.org/dc/terms/title> ?title }';
-        rdf.execute(query, function(success, results) {
-			try {
-				var row = results[0];
-				if (success && (isEmpty(row.title.lang) || row.title.lang === main.lang)) {
-					title = row.title.value;
-				}
-			}
-			catch(e) {
-				title = 'Title not found';
-			}
-        });
-        return title;
     },
 
     /**

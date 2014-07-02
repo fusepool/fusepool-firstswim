@@ -27,7 +27,7 @@ enyo.kind(
     ],
 
     /**
-     * The create function sets the content of the label list based on the doc URI
+     * The create function initializes the annotator panel.
      */
     create: function(){
         this.inherited(arguments);
@@ -35,6 +35,10 @@ enyo.kind(
 		this.$.annotatorPanel.hide();
     },
 	
+	/**
+	* This function initializes the predicate list based
+	* on the predicates array.
+	*/
 	initPredicates: function() {
 		for(var i=0;i<this.predicates.length;i++){
 			this.$.predicateList.createComponent({
@@ -49,6 +53,12 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	* This function sets the state of a predicate element
+	* based on the given properties.
+	* @param {String} predicateName label of the predicate
+	* @param {Boolean} state desired state
+	*/
 	setPredicateState: function(predicateName, state) {
 		for(var i=0;i<this.predicates.length;i++){
 			if(this.predicates[i].text == predicateName) {
@@ -58,8 +68,10 @@ enyo.kind(
 	},
 	
     /**
-     * This function deletes a label from the GUI and sends an annotation
-	 * to the server about this action.
+     * This function is called when the user clicks on the 
+	 * dismiss icon on a predicate element. It fires the proper
+	 * functions.
+	 * @param {String} predicateName label of the clicked element
      */
     dismissPredicate: function(predicateName){
 		this.sendPredicateAnnotation(predicateName,-1);
@@ -67,23 +79,43 @@ enyo.kind(
         this.owner.owner.filterGraph(this.predicates);
     },
 	
+    /**
+     * This function is called when the user clicks on the 
+	 * accept icon on a predicate element. It fires the proper
+	 * functions.
+	 * @param {String} predicateName label of the clicked element
+     */
     acceptPredicate: function(predicateName){
 		this.sendPredicateAnnotation(predicateName,1);
 		this.setPredicateState(predicateName,true);
         this.owner.owner.filterGraph(this.predicates);
     },
 	
+	/**
+	* This function shows the annotator panel and hides the
+	* 'Customize predicates' button.
+	*/
 	showPredicateAnnotator: function() {
 		this.$.annotatorPanel.show();
 		this.$.showPredicateAnnotator.hide();
 	},
 	
+	/**
+	* This function hides the annotator panel and shows the
+	* 'Customize predicates' button.
+	*/
 	hidePredicateAnnotator: function() {
 		this.$.annotatorPanel.hide();
 		this.$.showPredicateAnnotator.show();
 	},
 	
-	sendPredicateAnnotation: function(predicate,action) {
+	/**
+	* This function creates the proper annotation string
+	* and fires the annotation sender function.
+	* @param {String} predicateName label of the clicked predicate element
+	* @param {Number} action type of the click action (1 = accept; -1 = dismiss)
+	*/
+	sendPredicateAnnotation: function(predicateName, action) {
 				
 		var currentDate = new Date().toISOString();
 		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
@@ -101,10 +133,10 @@ enyo.kind(
 								'	a <http://fusepool.eu/ontologies/annostore#RecipeAnnotation> ; ';
 								
 		if(action==1) {
-			annotationString +=	'<http://fusepool.eu/ontologies/annostore#acceptedPredicate> <'+predicate+'> ] .';
+			annotationString +=	'<http://fusepool.eu/ontologies/annostore#acceptedPredicate> <'+predicateName+'> ] .';
 		}
 		else {
-			annotationString +=	'<http://fusepool.eu/ontologies/annostore#dismissedPredicate> <'+predicate+'> ] .';
+			annotationString +=	'<http://fusepool.eu/ontologies/annostore#dismissedPredicate> <'+predicateName+'> ] .';
 		}
 
 		// console.log(annotationString);

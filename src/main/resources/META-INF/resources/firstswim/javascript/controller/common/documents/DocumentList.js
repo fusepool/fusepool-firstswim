@@ -389,17 +389,16 @@ enyo.kind(
     },
 
     /**
-     * This functions scroll to the top.
+     * This function scrolls to the top.
      */
     scrollToTop: function(){
         this.$.scroller.top = 0;
         this.$.scroller.setScrollTop(0);
         this.$.scroller.scrollTo(0,0);
-        // this.render();
     },
 
     /**
-     * This function increses the number of checked documents and updates the
+     * This function increases the number of checked documents and updates the
      * checked number text.
      */
     addCheck: function(){
@@ -419,8 +418,8 @@ enyo.kind(
     },
 
     /**
-     * This functions decides that we should show the process button or not (by the checkedDocs value)
-     * and shows or hides it
+     * This functions shows/hides the process button based on the
+	 * current value of 'checkedDocs'.
      */
     showOrHideProcessButton: function(){
         if(this.activeClassify && this.checkedDocs >= this.minClassifyDoc){

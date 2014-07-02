@@ -24,7 +24,7 @@ enyo.kind(
     ],
 
     /**
-     * The create function set the css classes, the contents and create an entity
+     * The create function set the css classes, the contents and creates an entity
      * list into the dictionary.
      */
     create: function(){
@@ -101,8 +101,8 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user checked/unchecked one entity.
-     * It handles the unchecked entity list and call the parent filter function.
+     * This function is called when the user checks/unchecks an entity.
+     * It handles the unchecked entity list and calls the parent filter function.
      * @param {Object} entity the chosen entity
      * @param {Boolean} checked the entity is checked or not
      */
