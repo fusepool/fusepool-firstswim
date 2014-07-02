@@ -95,62 +95,65 @@ enyo.kind(
         this.show();
         this.scrollToTop();
 		
-		var main = this;
-		var request = new enyo.Ajax({
-			method: 'GET',
-			url: CONSTANTS.GET_PREDICATES_URL+'?user=' + readCookie('currentUser') + '&document=' + this.documentURL + '&query=' + readCookie('lastSearch'),
-			handleAs: 'text',
-			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded' },
-			published: { timeout: 60000 }
-		});
-		request.go();	
-		request.response(this, function(inSender, inResponse) {
-		
-			var predicates = JSON.parse(inResponse);
-		
-			main.$.predicateAnnotatorPanel.createComponent({
-				kind: 'PredicateAnnotator',
-				searchWord: main.searchWord,
-				documentURL: main.documentURL,
-				predicates: predicates
+		if(readCookie('currentUser') != 'anonymous' ) {
+			var main = this;
+			var request = new enyo.Ajax({
+				method: 'GET',
+				url: CONSTANTS.GET_PREDICATES_URL+'?user=' + readCookie('currentUser') + '&document=' + this.documentURL + '&query=' + readCookie('lastSearch'),
+				handleAs: 'text',
+				headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded' },
+				published: { timeout: 60000 }
 			});
-			main.$.predicateAnnotatorPanel.render();
-			main.filterGraph(predicates);
-		});
-		
-		// this.filterGraph([]);
+			request.go();
+			request.response(this, function(inSender, inResponse) {
+			
+				var predicates = JSON.parse(inResponse);
+			
+				main.$.predicateAnnotatorPanel.createComponent({
+					kind: 'PredicateAnnotator',
+					searchWord: main.searchWord,
+					documentURL: main.documentURL,
+					predicates: predicates
+				});
+				main.$.predicateAnnotatorPanel.render();
+				main.filterGraph(predicates);
+			});
+		}
+		else {
+			this.showVisualization(this.openedDocStore);
+			this.$.loader.hide();
+		}
     },
 	
 	filterGraph: function(predicates) {
-	
-	/*
-		var query = 'CONSTRUCT { ?s ?p ?o } WHERE { ?s ?p ?o }';
-	
-		for(var i=0;i<predicates.length;i++) {
-			if(predicates[i].accepted) {
-				query += ' ';
-			}
-		}
-		
-		var main = this;		
-		this.openedDocStore.execute(query, function(success, results){
-			if (success && results.length > 0) {
-			
-				// console.log(results);
-				var cutGraphStore = rdfstore.create();
 				
-				cutGraphStore.insert(results, function() {				
-					$("#" + main.$.content.getId()).html('').append(uduvudu.process(cutGraphStore));	
-				});
+		this.clearVisualization();
+        this.$.loader.show();
+		
+		var main = this;
+		this.openedDocStore.graph(function(success, triples) {
+			
+			for(var i=0;i<predicates.length;i++) {
+				if(!predicates[i].accepted) {
+					triples.removeMatches(null, predicates[i].text, null);
+				}
 			}
 			
-			main.$.loader.hide();
-		}); */
-		
-		
-		$("#" + this.$.content.getId()).html('').append(uduvudu.process(this.openedDocStore));	
-		this.$.loader.hide();
-		
+			var tempStore = rdfstore.create();				
+			tempStore.insert(triples, function() {
+				main.showVisualization(tempStore);
+				main.$.loader.hide();
+			});
+			
+		});
+	},
+	
+	clearVisualization: function() {
+		$("#" + this.$.content.getId()).html('');
+	},
+	
+	showVisualization: function(store) {
+		$("#" + this.$.content.getId()).html('').append(uduvudu.process(store));
 	},
 
     /**
