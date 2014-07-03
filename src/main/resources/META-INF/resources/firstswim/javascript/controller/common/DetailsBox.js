@@ -25,37 +25,15 @@ enyo.kind(
         this.$.scroller.setClasses(this.scrollerClass);
         this.$.detailsMainTitle.setContent(this.detailsMainTitle);
         this.$.detailsMainTitle.setClasses(this.mainTitleClass);
-        this.$.detailsTitle.setClasses(this.titleClass);
         this.hide();
     },
 
     components: [
         { name: 'detailsMainTitle' },
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
-            { name: 'detailsPanel', classes: 'detailsPanel' , components: [
-                { tag: 'div', name: 'detailsTitle' } /*,
-                { tag: 'div', name: 'country' },
-                { tag: 'div', name: 'local' },
-                { tag: 'div', name: 'street' } */
-            ] }
+            { name: 'detailsPanel', classes: 'detailsPanel' }
         ]}
     ],
-
-    /**
-     * This function updates the content of the details
-     * @param {String} title the title of the details
-     * @param {Object} addressObject the address object
-     */
-    updateDetails: function(title, addressObject){
-        this.scrollToTop();
-        this.$.detailsTitle.setContent(title);
-        if(!isEmpty(addressObject)){   
-            this.$.country.setContent(this.getCountryCode(addressObject.country));
-            this.$.local.setContent(addressObject.locality);
-            this.$.street.setContent(addressObject.street);
-        }
-        this.show();
-    },
 	
 	/**
      * This function updates the content of the details
@@ -66,6 +44,13 @@ enyo.kind(
         $("#" + this.$.detailsPanel.getId()).append(uduvudu.process(rdf));
         this.show();
 	},
+	
+    /**
+     * This function cleans the content.
+     */
+    clean: function(){
+		this.$.detailsPanel.setContent('');
+    },
 
     /**
      * This functions returns the country code from a URL

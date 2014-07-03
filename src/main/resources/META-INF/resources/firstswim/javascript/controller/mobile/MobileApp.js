@@ -2,6 +2,7 @@ jQuery(document).ready(function () {
 
     function initialization(){
 
+		placeDefaultCookies();
         createUI();
 		// setCurrentUser();
         enyo.Scroller.touchScrolling=true;
@@ -62,7 +63,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function process the get parameters. If there is search word,
-                 * starts a search with the unchecked entitites and if there is
+                 * starts a search with the unchecked entities and if there is
                  * previewed document, opens that.
                  */
                 processGETParameters: function(){
@@ -213,6 +214,7 @@ jQuery(document).ready(function () {
                 search: function(searchWord, checkedEntities){
                     this.cleanPreviewBox();
                     this.searchWord = searchWord;
+					createCookie('lastSearch',searchWord,30);
                     this.checkedEntities = checkedEntities;
                     if(!isEmpty(searchWord)){
                         this.$.middlePanel.startSearching();
@@ -246,6 +248,16 @@ jQuery(document).ready(function () {
                  * @returns {String} the search url
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
+				
+					// var labelPattern = /^.*'label:'.*$/;
+					// if(labelPattern.test(searchWord)) {
+					
+					// }
+					// var predictedLabelPattern = /^.*'predicted label:'.*$/;
+					// if(predictedLabelPattern.test(searchWord)) {
+					
+					// }
+					
                     var url = CONSTANTS.SEARCH_URL;
                     if(isEmpty(offset)){
                         offset = 0;
@@ -254,7 +266,7 @@ jQuery(document).ready(function () {
                     if(checkedEntities.length > 0){
                         url += this.getCheckedEntitesURL(checkedEntities);
                     }
-                    url += '&offset='+offset+'&maxFacets='+GLOBAL.maxFacets+'&items='+GLOBAL.items;
+                    url += '&offset='+offset+'&maxFacets='+readCookie('maxFacets')+'&items='+readCookie('items');
                     return url;
                 },
 

@@ -13,13 +13,14 @@ enyo.kind(
         documentContentClass: '',
         loaderClass: '',
         openedDocScrollerClass: '',
-        lang: 'en'
+        lang: 'en',
+		openedDocStore: null
     },
 
     /**
-     * When this component is created, it overwrite the right click listener
-     * because the desktop version contains a popup menu, and the program hides
-     * the default popup menu. The content's and loader's property will be set.
+     * When this component is created, it overwrites the right click listener
+     * because of the popup menu in the desktop version. It disables the default popup menu.
+	 * The content's and loader's properties are being set.
      */
     create: function(){
         this.inherited(arguments);
@@ -39,13 +40,14 @@ enyo.kind(
     components: [
         { kind: 'enyo.Scroller', name: 'scroller', fit: true, touchOverscroll: false, components: [
             { name: 'loader' },
-            { tag: 'div', name: 'content', allowHtml: true }
+            { tag: 'div', name: 'content', allowHtml: true },
+            { tag: 'div', name: 'predicateAnnotatorPanel', allowHtml: true }
         ]}
     ],
 
     /**
-     * This function is called when the window size is changing and it should
-     * change the opened document's height.
+     * This function is called when window size is changing and it should
+     * modify the opened document's height too.
      * @param {Number} newHeight the new height in pixels
      */
     changeHeight: function(newHeight){
@@ -74,83 +76,123 @@ enyo.kind(
     },
 
     /**
-     * This function clear the document's content.
+     * This function clears the document's content and 
+	 * the predicate annotator.
      */
-    clearDoc: function(){
+    clearAll: function(){
+		this.$.content.setContent('');
         this.$.content.destroyClientControls();
         this.$.content.render();
+		this.$.predicateAnnotatorPanel.setContent('');
+        this.$.predicateAnnotatorPanel.destroyClientControls();
+        this.$.predicateAnnotatorPanel.render();
     },
 
     /**
-     * This function shows a document.
-     * @param {String} doc the document
+     * This function is called after the main kind has loaded the 
+	 * meta-graph of the given document. It asks for predicate 
+	 * prediction, creates the predicate annotator panel and 
+	 * calls a function which processes the prediction result.
      */
-    showDoc: function(doc){
+    processDocGraph: function(){
         this.show();
         this.scrollToTop();
-        this.$.loader.hide();
-        this.renderPreviewTemplate(doc);
+		
+		if(readCookie('currentUser') != 'anonymous' ) {
+			var main = this;
+			var request = new enyo.Ajax({
+				method: 'GET',
+				url: CONSTANTS.GET_PREDICATES_URL+'?user=' + readCookie('currentUser') + '&document=' + this.documentURL + '&query=' + readCookie('lastSearch'),
+				handleAs: 'text',
+				headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded' },
+				published: { timeout: 60000 }
+			});
+			request.go();
+			request.response(this, function(inSender, inResponse) {
+			
+				var predicates = JSON.parse(inResponse);
+			
+				main.$.predicateAnnotatorPanel.createComponent({
+					kind: 'PredicateAnnotator',
+					searchWord: main.searchWord,
+					documentURL: main.documentURL,
+					predicates: predicates
+				});
+				main.$.predicateAnnotatorPanel.render();
+				main.filterGraph(predicates);
+			});
+		}
+		else {
+			this.showVisualization(this.openedDocStore);
+			this.$.loader.hide();
+		}
     },
+	
+	/**
+	* This function is responsible for sending the opened
+	* document's graph to the visualizer. It gets an array of 
+	* predicates and cuts the graph according to the status
+	* (accepted: true/false) of this set.
+	* @param {Array} predicates array of predicates 
+	*/
+	filterGraph: function(predicates) {				
+		this.clearVisualization();
+		var main = this;
+		$('html,body').css('cursor','wait');
+		setTimeout(function(){
+			main.openedDocStore.graph(function(success, triples) {				
+				for(var i=0;i<predicates.length;i++) {
+					if(!predicates[i].accepted) {
+						triples.removeMatches(null, predicates[i].text, null);
+					}
+				}				
+				var tempStore = rdfstore.create();				
+				tempStore.insert(triples, function() {
+					main.showVisualization(tempStore);
+					main.$.loader.hide();
+					$('body').css('cursor','auto');
+				});
+			});
+		},100);
+	},
+	
+	/**
+	* This function clears the visualizer panel.
+	*/
+	clearVisualization: function() {
+		$("#" + this.$.content.getId()).html('');
+	},
+	
+	/**
+	* This function passes a given RDF store object to 
+	* Uduvudu which displays the document.
+	* @param {Object} store the store object
+	*/
+	showVisualization: function(store) {
+		$("#" + this.$.content.getId()).html('').append(uduvudu.process(store));
+	},
 
     /**
-     * This function render the preview document content through the Uduvudu Library
-     * @param {String} doc the document
-     */
-    renderPreviewTemplate: function(doc){
-        $("#" + this.$.content.getId()).append(uduvudu.process(doc));
-    },
-
-    /**
-     * This function clear the document content, shows the loader and send an
+     * This function clears the document content, shows the loader and sends an
      * open doc request to a URL.
      * @param {String} documentURL the request URL
      */
     openDoc: function(documentURL){
-        this.clearDoc();
+        this.clearAll();
         this.$.loader.show();
         this.documentURL = documentURL;
 
         var main = this;
-        var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
-        var store = rdfstore.create();
-        store.load('remote', url, function(success) {
-            main.processOpenDocResponse(success, store);
+		if(readCookie('viewType') == "entityList") {
+			var url = CONSTANTS.ENTITY_DETAILS_URL + '?entityURI=' + documentURL;
+		}
+		else {
+			var url = CONSTANTS.OPEN_DOC_URL + '?iri=' + documentURL;
+		}
+        this.openedDocStore = rdfstore.create();
+        this.openedDocStore.load('remote', url, this.openedDocStore.rdf, function(success) {
+			main.processDocGraph();
         });
-    },
-
-    /**
-     * This function runs when the response of the open doc ajax event is arrived.
-     * It processes the response data, delete the bad type rows, parse it and call
-     * the document show function.
-     * @param {Boolean} success the ajax query was success or not
-     * @param {String} rdf the rdf object
-     */
-    processOpenDocResponse: function(success, rdf){
-        this.showDoc(rdf);
-    },
-
-    /**
-     * This function search the title in the rdf object.
-     * @param {Object} rdf the rdf object
-     * @returns {String} title, might by empty
-     */
-    getTitle: function(rdf){
-        var title = '';
-        var main = this;
-
-        var query = 'SELECT * { ?s <http://purl.org/dc/terms/title> ?title }';
-        rdf.execute(query, function(success, results) {
-			try {
-				var row = results[0];
-				if (success && (isEmpty(row.title.lang) || row.title.lang === main.lang)) {
-					title = row.title.value;
-				}
-			}
-			catch(e) {
-				title = 'Title not found';
-			}
-        });
-        return title;
     },
 
     /**

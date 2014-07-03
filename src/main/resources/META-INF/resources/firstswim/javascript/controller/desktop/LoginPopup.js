@@ -24,33 +24,33 @@ enyo.kind(
                     { tag: 'td', classes: 'loginTableLeftCol', content: 'Username: ' },
                     { tag: 'td', components: [{ name: 'usernameInput', kind: enyo.Input }]}
                 ]},
-                { tag: 'tr', name: 'emailRow', components: [
+                { tag: 'tr', classes: 'loginTableLeftCol', name: 'emailRow', components: [
                     { tag: 'td', content: 'E-mail address: ' },
                     { tag: 'td', components: [{ name: 'email', kind: enyo.Input }]}
                 ]},
                 { tag: 'tr', components: [
-                    { tag: 'td', content: 'Password: ' },
+                    { tag: 'td', classes: 'loginTableLeftCol', content: 'Password: ' },
                     { tag: 'td', components: [{ name: 'passwordInput', type: 'password', kind: enyo.Input, onkeydown: 'onKeydown' }]}
                 ]},
                 { tag: 'tr', name: 'passwordConfirmRow', components: [
-                    { tag: 'td', content: 'Password confirm: ' },
+                    { tag: 'td', classes: 'loginTableLeftCol', content: 'Password confirm: ' },
                     { tag: 'td', components: [{ name: 'passwordConfirmInput', type: 'password', kind: enyo.Input }]}
                 ]}
             ]},
-            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel' },
+            { tag: 'div', classes: 'currentUserLabel', name: 'currentUserLabel', allowHtml: true },
             { tag: 'div', classes: 'loginMessage', name: 'loginMessage' },
             { tag: 'div', classes: 'loginButtons', components: [
-                { content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap: 'signOut' },
-                { content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap: 'back' },
-                { content: 'Sign In', name: 'signInBtn', classes: 'signInBtn', ontap: 'signIn' },
-                { content: 'Sign Up', name: 'signUpBtn', classes: 'signUpBtn', ontap: 'signUp' }
+				{ kind: 'onyx.Button', content: 'Sign out', name: 'signOutBtn', classes: 'signOutBtn', ontap:"signOut"},
+				{ kind: 'onyx.Button', content: 'Back', name: 'loginBackBtn', classes: 'loginBackBtn', ontap:"back"},
+				{ kind: 'onyx.Button', content: 'Sign in', name: 'signInBtn', classes: 'signInBtn', ontap:"signIn"},
+				{ kind: 'onyx.Button', content: 'Register', name: 'signUpBtn', classes: 'signUpBtn', ontap:"signUp"}
             ]}
         ]},
         { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }
     ],
 
     initLogin: function(){
-		if(GLOBAL.currentUser=='anonymous') {
+		if(readCookie('currentUser') == 'anonymous') {
 			this.$.emailRow.hide();
 			this.$.passwordConfirmRow.hide();
 			this.$.signOutBtn.hide();
@@ -60,7 +60,9 @@ enyo.kind(
 			this.$.signInBtn.hide();
 			this.$.signUpBtn.hide();
 			this.$.loginTable.hide();
-			this.showCurrentUser('Signed in as '+GLOBAL.currentUser+'.');
+			this.showCurrentUser('Signed in as <b>'+readCookie('currentUser')+'</b>.');
+			this.owner.$.loginButton.removeClass('loggedOut');
+			this.owner.$.loginButton.addClass('loggedIn');
 		}
 		this.hideLoginMessage();
 		this.$.loginBackBtn.hide();
@@ -68,7 +70,7 @@ enyo.kind(
 	},
 	
 	signOut: function(){
-		GLOBAL.currentUser = 'anonymous';		
+		createCookie('currentUser','anonymous',30);	
 		this.hideCurrentUser();
 		
 		this.$.loginTable.show();
@@ -79,6 +81,9 @@ enyo.kind(
 		this.$.passwordConfirmRow.hide();
 		this.$.signOutBtn.hide();
 		this.$.loginBackBtn.hide();
+		
+		this.owner.$.loginButton.removeClass('loggedIn');
+		this.owner.$.loginButton.addClass('loggedOut');
 	},
 	
     /**
@@ -113,7 +118,7 @@ enyo.kind(
 		});
 		request.go();
 		request.error(enyo.bind(this, function(inSender, inResponse) {
-			main.registrationFailed(inSender.xhrResponse.body);
+			main.signInFailed(inSender.xhrResponse.body);
 		}));				
 		request.response(this, function(inSender, inResponse) {
 			main.signInSucceed(name, main);
@@ -121,9 +126,9 @@ enyo.kind(
     },
 	
 	signInSucceed: function(userName){
-		GLOBAL.currentUser = userName;
+		createCookie('currentUser',userName,30);
 		this.$.loginStatus;
-		this.showCurrentUser('Signed in as '+userName+'.');
+		this.showCurrentUser('Signed in as <b>'+userName+'</b>.');
 		this.hideLoginMessage();
 		
 		this.$.loginTable.hide();
@@ -131,6 +136,9 @@ enyo.kind(
 		this.$.signUpBtn.hide();
 		
 		this.$.signOutBtn.show();
+		
+		this.owner.$.loginButton.removeClass('loggedOut');
+		this.owner.$.loginButton.addClass('loggedIn');
 		
 		getUserLabels(userName);
     },

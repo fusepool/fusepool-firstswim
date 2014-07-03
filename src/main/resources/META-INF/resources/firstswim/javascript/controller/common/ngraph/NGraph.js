@@ -21,8 +21,8 @@ enyo.kind(
     },
 
     /**
-     * When the component is created the program sets the title's properties and
-     * hides the loader.
+     * When the component is created, the program sets the title's properties,
+     * hides the loader and calls the function which handles resizing actions.
      */
     create: function(){
         this.inherited(arguments);
@@ -30,9 +30,9 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
-		this.canvasResizer(); 
+		this.canvasResizer();
     },
-
+	
     components: [
         { tag: 'div', name: 'title' },
 		{ name: 'loader' },
@@ -40,7 +40,7 @@ enyo.kind(
     ],
 		
     /**
-     * This function runs, when the user starts a search. It clears the current 
+     * This function runs when the user starts a search. It clears the current 
      * content and shows the loader.
      */
     startLoading: function(){
@@ -78,9 +78,10 @@ enyo.kind(
 	},
 	
 	/**
-	 * This function runs a search for documents.
-	 * @param {String} searchWord a search term
-	 * @param {String} URI an entity that filters the result. "query" means no filter needed.
+	 * This function runs a search.
+	 * @param {Object} nodeObj the current node
+	 * @param {String} URI URI of the node
+	 * @param {Number} level the current level
 	 */
 	search: function(nodeObj,URI,level){
 		var main = this;
@@ -105,7 +106,7 @@ enyo.kind(
 	},
 	
 	/**
-	 * This function create the document list from the rdf object.
+	 * This function creates the document list from the rdf object.
 	 * @param {Object} rdf the rdf object, which contains the documents
 	 * @returns {Array} the document list
 	 */
@@ -142,15 +143,16 @@ enyo.kind(
 	},
 	
 	/**
-	* This function gets the documents and pushes them to the nodeObj
-	* as child nodes, and calls the buildGraphJSON to continue building
-	* the graph on the given branch. 
+	 * This function gets the documents and pushes them to the nodeObj
+	 * as child nodes, and calls the buildGraphJSON to continue building
+	 * the graph on the given branch. 
 	 * @param {Object} docNodes retrieved documents
 	 * @param {Object} nodeObj points to the parent node
 	 * @param {Number} level the current level
 	*/
 	addDocNodes: function(docNodes,nodeObj,level) {
-		for(var i=0; i<docNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
+		var nodeLimit = readCookie('nodeLimit').split(',');
+		for(var i=0; i<docNodes.length && i<( level >= nodeLimit.length ? 4 : nodeLimit[level]); i++) {
 			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: "document", $type: "square", $color: "#239fa0" }});
 			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
 		}
@@ -158,40 +160,69 @@ enyo.kind(
 	
 	/**
 	 * This function builds an object recursively until it reaches the desired level. 
-	 * It's set to 2, the centre node is level 0. This object will be used to feed the 
+	 * It's set to 3, the centre node is level 0. This object will be used to feed the 
 	 * graph. Important: The centre node must be initialized already before calling
 	 * this function.
-	 * @param {String} searchWord a search term
+	 * @param {Object} nodeObj the current node
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
+	 * @param {Number} level the current level
 	 */
 	buildGraphJSON: function(nodeObj,URI,level) {
 		var main = this;
-		if(level > 0 && nodeObj.data.type=="subject") {
-			nodeObj.name = cutStr(this.getTitleByURI(URI),60);
-		}
 		level++;
 		
-		if(level < 3) {
+		if(level < 4) {
 			switch(nodeObj.data.type) {
 				case "query":
 				case "subject":
 					this.search(nodeObj,URI,level);
+					this.redrawGraph();
 				break;
 				case "document":
 					var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
 					var store = rdfstore.create();
 					store.load('remote', url, function(success) {
-						var subjNodes =  main.getSubjectConnections(success, store);					
-						for(var i=0; i<subjNodes.length && i<( level >= GLOBAL.nodeLimit.length ? 3 : GLOBAL.nodeLimit[level]); i++) {
-							nodeObj.children.push({ id: subjNodes[i], name: "", children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
-							var ind = nodeObj.children.length-1;
-							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
-						}
+						var subjNodes = main.getSubjectConnections(success, store);
+						var nodeLimit = readCookie('nodeLimit').split(',');						
+						main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, 0);						
 					});				
 				break;
 			}
 		}
-		this.redrawGraph();
+	},
+	
+	/**
+	* After getting the subject children of a given document,
+	* this function iterates through them and initializes the 
+	* nodes in the graph after getting the label information.
+	* @param {Object} nodeObj the parent node
+	* @param {Object} subjNodes the extracted children
+	* @param {Number} nodeLimit the node limit on the current level
+	* @param {Number} level the current level 
+	* @param {Number} i the current index 
+	*/
+	createSubjNodes: function(nodeObj, subjNodes, nodeLimit, level, i){
+		var main=this;
+		if(i<( level >= nodeLimit.length ? 4 : nodeLimit[level]) && i<subjNodes.length) {
+			var title = '(?)';
+			var url = CONSTANTS.DETAILS_URL + '?iri=' + subjNodes[i];
+			var store = rdfstore.create();
+			store.load('remote', url, function(success) {				
+				var query = 'SELECT * { ?s <http://www.w3.org/2000/01/rdf-schema#label> ?o }';
+				store.execute(query, function(success, results) {
+					if(success && !isEmpty(results[0])) {
+						if (success && results.length > 0) {
+							nodeObj.children.push({ id: subjNodes[i], name: results[0].o.value, children: [], data: { type: "subject", $type: "triangle", $color: "#55cdff" }});
+							var ind = nodeObj.children.length-1;
+							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
+							main.redrawGraph();	
+						}
+					}
+					i++;
+					main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, i);	
+				});								
+			});
+		}
 	},
 	
 	/**
@@ -220,24 +251,8 @@ enyo.kind(
     },
 
 	/**
-	 * This function queries the platform using a URI for getting the title of the entity.
-	 * @param {String} URI the entity's URI which title is needed
-	 * @returns {String} title of the given entity
-	 */
-	getTitleByURI: function(URI) {
-		var title = '(?)';
-		var url = CONSTANTS.DETAILS_URL + '?iri=' + URI;
-		var store = rdfstore.create();
-		store.load('remote', url, function(success) {
-			title = getRDFPropertyValue(store, 'http://www.w3.org/2000/01/rdf-schema#label');
-		});
-		return title;
-	},
-	
-	/**
 	 * After a new search term has been entered, the graph is being redrawn.
 	 * In case of the very first search, a completely new graph is being initialized.
-	 * @param {String} searchWord the search word
 	 */
 	newGraph: function() {
         this.searchWord = this.owner.searchWord;
@@ -354,14 +369,21 @@ enyo.kind(
 	
 	/**
 	 * This function defines a function on window resize event which 
-	 * resizes the graph canvas to the proper size.
+	 * which calls the div resize handler function.
 	 */
 	canvasResizer: function() {
 		var main=this;
-		$(window).resize(function() {
-			if(!isEmpty(main.rGraph)) {
-				main.rGraph.canvas.resize($('.nGraphDiv').width(), $('.nGraphDiv').height()); 
-			}
-		});
+		$(window).resize(function() { main.onDivResize(); });
+	},
+	
+	/**
+	 * This function resizes the graph canvas to the proper size.
+	 * It should be called after any resize event happens.
+	 */
+	onDivResize: function() {
+		var main=this;
+		if(!isEmpty(main.rGraph)) {
+			main.rGraph.canvas.resize($('.nGraphDiv').width(), $('.nGraphDiv').height()); 
+		}
 	}
 });

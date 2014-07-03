@@ -10,7 +10,8 @@ enyo.kind(
     published: {
         titleClass: '',
         titleContent: '',
-        loaderClass: ''
+        loaderClass: '',
+        searchWord: ''
     },
 
     /**
@@ -23,20 +24,34 @@ enyo.kind(
         this.$.title.setContent(this.titleContent);
         this.$.title.setClasses(this.titleClass);
         this.$.loader.setClasses(this.loaderClass);
-		// FusePool.Landscaping.initialize('.landscapeDiv');
     },
 
     components: [
         { tag: 'div', name: 'title' },
 		{ name: 'loader' },
-		{ tag: 'div', name: 'landscapeDiv', published: { id: 'landscapeDiv'}, classes: 'landscapeDiv', content: 'Coming soon...' }
+		{ tag: 'div', name: 'landscapeDiv', classes: 'landscapeDiv', content: 'Initializing...' }
     ],
 	
     /**
      * This function runs, when the user starts a search. It only shows the loader yet.
      */
-    startLoading: function(){
-        this.$.loader.show();
-	}
+    startLoading: function(){ },
 	
+	/**
+	* After the elements have been rendered, the Landscape
+	* module is being initialized.
+	*/
+	rendered: function() {
+		this.inherited(arguments); // important! must call the inherited method
+		if (this.hasNode()) {
+			this.$.landscapeDiv.setContent('');
+			if (window['FusePool'] === undefined ||
+				FusePool['Landscaping'] === undefined) {
+				this.$.landscapeDiv.setContent('Landscape currently unavailable.');
+			}
+			else {
+				FusePool.Landscaping.initialize('.landscapeDiv', this);
+			}
+		}
+	}	
 });

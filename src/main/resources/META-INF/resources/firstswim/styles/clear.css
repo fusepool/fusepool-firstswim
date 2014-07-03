@@ -1,0 +1,1357 @@
+/* ----------- MAIN ----------- */
+html{
+    height:100%;
+}
+
+body{
+    margin: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #ffffff;
+	font-family: Arial,sans-serif;
+	font-weight: 400;
+	color: #5e5e5e;
+}
+
+h1 {
+	line-height: 1.2em
+}
+
+.clear {
+	clear: both;
+}
+
+.docApp{
+    position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
+
+#map-canvas {
+	width: 200px;
+	height: 200px;
+}
+
+/* ----------- Toolbar ----------- */
+.toolbar {
+	position: relative;
+	top: 0px;
+	height: 74px;
+}
+
+.toolbarCenter {
+	position: relative;
+}
+
+.toolbarIcons {
+	border: 1px solid #cccccc;
+	display: block;
+	padding: 8px;
+	position: absolute;
+	right: 12px;
+	top: 12px;
+	max-width: 25%;
+}
+
+.toolbarIcons * {
+	cursor: pointer;
+	float: left;
+}
+
+.viewTypeToggleButtons {
+	margin: 0px 2px 0px 2px;
+}
+
+.docListViewButton		{ background-image: url("../images/clear/docListViewButton.png"); }
+.entityListViewButton	{ background-image: url("../images/clear/entityListViewButton.png"); }
+.locationViewButton		{ background-image: url("../images/clear/locationViewButton.png"); }
+.landscapeViewButton	{ background-image: url("../images/clear/landscapeViewButton.png"); }
+.nGraphViewButton		{ background-image: url("../images/clear/nGraphViewButton.png"); }
+
+.menuItemTooltip {
+	background-image: none;
+	background-color: #bbbbbb;
+	color: #fffbdf;
+	font-size: 13px;
+	border: none;
+    box-shadow: none;
+} 
+
+.menuItemTooltip.below.left-arrow:before {
+	border-bottom: 6px solid #bbbbbb;
+}
+
+.menuItemTooltip.below {
+    top: 120%;
+}
+
+.mainLogo {
+	cursor: pointer;
+	width: 271px;
+	height: 111px;
+	position: absolute;
+	top: 5px;
+	left: -20px;
+	max-width: 30%;
+	background: transparent url("../images/clear/logo.png") no-repeat left top;
+	background-size: 100% auto;
+	-o-background-size: 100% auto;
+	-webkit-background-size: 100% auto;
+	-moz-background-size: 100% auto;
+}
+
+/* ----------- Login ----------- */
+.loginButton {
+	background-image: url("../images/clear/loginButton.png");
+    background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 0px 2px 0px 2px;
+}
+
+.loggedOut {
+	background-position: 0px 0px;
+}
+
+.loggedIn{
+	background-position: 0px -32px;
+}
+
+.loginPopup{
+    right: 25px;
+    position: absolute;
+    top: 63px;
+    width: 430px;
+    word-wrap: break-word;
+}
+
+.loginPopupDiv{
+	background-color: #ffffff;
+	background-image: none;
+	-webkit-border-radius: none;
+	-moz-border-radius: none;
+	border-radius: none;
+    font-size: 14px;
+    width: 415px;
+	color: #5e5e5e;
+}
+
+.loginCloseButton{
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/clear/close_button.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 9999;
+}
+
+.loginTable{
+    margin: 10px auto 10px;
+}
+
+.loginTableLeftCol{
+    width: 130px;
+	text-align: right;
+}
+
+.loginTable input{
+    width: 175px;
+}
+
+.loginButtons{
+    margin: 0 auto 20px;
+	text-align: center;
+}
+
+.loginBackBtn, .signInBtn, .signOutBtn, .signUpBtn{
+    display: inline;
+    margin-right: 10px;
+    cursor: pointer;
+	background-color: #22b4ff;
+	color: white;
+	border: none;
+	background-image: none;
+}
+
+.loginBackBtn:active, .signInBtn:active, .signOutBtn:active, .signUpBtn:active {
+	background-color: #008FDC;
+	border: none !important;
+	background-image: none !important;
+}
+
+.currentUserLabel{
+	display: block;
+	margin: 15px auto;
+	width: 320px;
+}
+
+.loginMessage{
+	display: block;
+	font-size: 12px;
+	font-style: italic;
+	margin: 15px auto;
+	width: 320px;
+	color: #FF0000;
+}
+/* ----------- Style settings ------------- */
+
+.brushButton{
+	background-image: url("../images/clear/brushButton.png");
+    background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 0px 2px 0px 2px;
+}
+
+.styleSettingsMenu {
+	background-image: none;
+	background-color: #ffffff;
+	color: #555555;
+}
+
+.stylePickerItem {
+	width: 100%;
+	border-bottom: 1px solid #dddddd;
+}
+
+.stylePickerItem:hover {
+	background-color: #22b4ff;
+	color: white;
+}
+
+/* ----------- Top message box ----------- */
+.topMessageBox{
+    padding: 15px;
+    text-align: center;
+    height: 70px;
+    background-color: #EAEAEA;
+    font-size: 18px;
+    position: relative;
+}
+
+.topMsgCloseBtn{
+    font-size: 14px;
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+    cursor: pointer;
+}
+
+/* ----------- LEFT ----------- */
+.leftDesktopCol{
+    display: inline-block;
+	position: absolute;
+	top: 75px;
+	bottom: 10px;
+	left: 10px;
+	width: 300px;
+    /*-vertical-align: top;*/
+}
+
+/* ----- Details box ----- */
+.detailsBox {
+    position: absolute;
+    top: 200px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+	font-size: 0.7em;
+}
+
+.detailsMainTitle {
+	color: #777777;
+	font-size: 16px;
+	margin: 18px 0 0 10px;
+	text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.detailsPanel {
+	margin: 12px 20px 20px 20px;
+}
+
+.detailsPanel img {
+	max-width: 100%;
+}
+
+.detailsScroll {
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+	position: absolute;
+    top: 50px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+}
+
+.detailsTitle{
+    font-size: 13px;
+    font-weight: bold;
+    margin: 18px 0px 18px 0px;
+    text-align: center;
+}
+
+.detailsImage{
+    padding: 0px 0px 0px 16px;
+    width: 130px;
+	float: right;
+}
+
+.detailsContent{
+    font-size: 12px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+	text-align: justify;
+}
+
+.dictionaryCheckbox {
+    background: url("../images/clear/checkbox.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: inline-block;
+    height: 15px;
+    margin-right: 4px;
+    vertical-align: middle;
+    width: 15px;
+}
+
+.dictionaryCheckbox[checked] {
+    background-position: 0 -15px;
+}
+
+.dictionaryCheckbox[disabled] {
+    opacity: 0.4;
+}
+
+/* ---------- NGRAPH ------------ */
+
+.nGraphPanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 750px;
+}
+
+.nGraphMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #fafafa;
+}
+
+.nGraphDiv {
+    background-color: #ffffff;
+    bottom: 0px;
+	border: 1px solid #cccccc;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+	overflow: hidden;
+}
+
+/* ---------- LOCATIONVIEWER ------------ */
+
+.locationViewerPanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 750px;
+}
+
+.locationViewerMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.mapDiv {
+    background-color: #FFFFFF;
+    bottom: 0px;
+	border: 1px solid #cccccc;
+    left: 0px;
+    position: absolute;
+    right: 0px;
+    top: 50px;
+	overflow: hidden;
+}
+
+/* ---------- LANDSCAPE ------------ */
+
+.landscapePanel {
+	bottom: 10px;
+    display: inline-block;
+    left: 10px;
+    position: absolute;
+    top: 75px;
+	width: 750px;
+}
+
+.landscapeMainTitle {
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 0 0 10px;
+    text-shadow: 1px 1px 0 #FAFAFA;
+}
+
+.landscapeDiv {
+    background-color: #FFFFFF;
+	border: 1px solid #cccccc;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    top: 50px;
+	overflow: hidden;
+}
+
+/* ----------- MIDDLE ----------- */
+
+.bookmarkPopup{
+    position: absolute;
+    word-wrap: break-word;
+    width: 600px;
+    top: 100px;
+}
+
+.bookmarkPopupDiv{
+    width: 584px !important;
+    padding: 16px !important;
+	background-color: #534B48;
+}
+
+.documentList{
+    position: absolute;
+    top: 75px;
+    left: 320px;
+    bottom: 10px;
+    display: inline-block;
+	width: 440px;
+}
+
+.activateSliders{
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.sliderText{
+    display: inline-block;
+    font-size: 14px;
+}
+
+.checkedNumbers{
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 6px;
+}
+
+.processClassifyButton{
+    margin-left: 7px;
+    width: 96px;
+}
+
+.docListMessageLabel{
+	margin: 20px;
+}
+
+.documentListScroll {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50px;
+}
+
+.documentMenu{
+    left: 40px;
+    position: absolute;
+    top: 15px;
+}
+
+.moreButton{
+    display: block; 
+    margin: 20px auto 20px auto;
+}
+
+/* ------- Labels ------- */
+
+.labelListContainer {
+    margin: 10px 10px 10px 43px;
+}
+
+.labelListName {
+	color: #a6a6a6;
+	font-size: 11px;
+	margin: 4px;
+}
+
+.labelListPanel {
+    border-top: 1px solid #eeeeee;
+	cursor: default;
+}
+
+.labelDiv, .predictedLabelDiv {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin: 2px;
+	padding: 4px;
+	max-width: 470px;
+}
+
+.labelDiv {
+    background-color: rgba(20, 175, 255, 0.3);
+}
+
+.predictedLabelDiv {
+    background-color: rgba(28, 215, 50, 0.25);
+}
+
+.labelText {
+	font-size: 12px;
+}
+
+.labelDeleteButton, .labelAddButton {
+	color: #555555;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px 2px 0px 4px;
+}
+
+.addMoreLabelsButton {
+	margin-top: 2px;
+}
+
+.addMoreLabelsButton, .addLabelButton, .hideAddingPanelButton {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #f1f1f1;
+	cursor: pointer;
+	font-size: 12px;
+	border: 1px solid #d8d8d8;
+	float: left;
+	margin: 1px 2px;
+    padding: 4px 4px 3px 4px;
+}
+
+.addMoreLabelsButton:hover, .addLabelButton:hover, .hideAddingPanelButton:hover {
+    background-color: #eaeaea;
+}
+
+.addMoreLabelsButton:active, .addLabelButton:active, .hideAddingPanelButton:active {
+    background-color: #dddddd;
+}
+
+.moreLabelsPanel {
+	clear: both;
+}
+
+.moreLabelInputDec {
+	height: 10px;
+	float: left;
+	margin: 1px;
+    padding: 1px 2px 12px 4px;
+	width: 50%;
+}
+
+.moreLabelInput {
+	font-size: 12px !important;
+	color: #555555;
+	width: 100%;
+}
+/* Draggers */
+
+.verticalDragger {
+    position: absolute !important;
+    top: 125px;
+	bottom: 10px;
+    width: 10px;
+    cursor: e-resize;
+}
+
+.firstDocDragger { left: 310px; }
+.secondDocDragger { left: 760px; }
+.nGraphDragger { left: 760px; }
+
+/* ----------- RIGHT ----------- */
+
+/* ----- Preview document ----- */
+.previewBox {
+	position: absolute;
+	top: 75px;
+	right: 10px;
+	bottom: 10px;
+	left: 770px;
+}
+
+.previewBoxMainTitle {
+	color: #777777;
+	font-size: 16px;
+	margin: 18px 0px 0px 10px;
+	text-shadow: 1px 1px 0px #fafafa;
+}
+
+.previewToolbar {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 0px;
+	/*height: 30px;*/
+	padding: 10px 0px;
+}
+
+.openedDocument{
+	position: absolute;
+	top: 50px;
+	right: 0px;
+	/*bottom: 50px;*/
+	bottom: 0px;
+	left: 0px;
+    word-wrap: break-word;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.openedDocScroll{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+
+.documentContent{
+	margin: 20px;
+}
+
+.documentContent img {
+	max-width: 100%;
+}
+
+/* Predicate annotator */
+
+.predicateAnnotatorPanel  {
+	border-top: 1px solid #EEEEEE;
+	margin: 20px;
+	cursor: default;
+}
+
+.predicateAnnotatorName {
+	margin: 4px 0px;
+	color: #A6A6A6;
+    font-size: 11px;
+}
+
+.predicateItem {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin: 2px;
+	padding: 3px;
+	max-width: 470px;
+	border: 1px solid #dedede;
+	background-color: #f3f3f3;
+}
+
+.acceptPredicateButton, .dismissPredicateButton {
+	color: #555555;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px 2px 0px 4px;
+}
+
+.acceptedPredicate {
+	border-color: #75DE7F;
+	background-color: #F0FFEF;
+}
+
+.dismissedPredicate {
+	border-color: #F16279;
+	background-color: #FFF4F4;
+}
+
+.showPredicateAnnotator, .hidePredicateAnnotator {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #f1f1f1;
+	cursor: pointer;
+	font-size: 12px;
+	border: 1px solid #d8d8d8;
+	float: left;
+	margin: 6px 0px;
+    padding: 4px 4px 3px 4px;
+}
+
+/* ----- Entity menu ----- */
+.entityMenu{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+	-webkit-box-shadow: 1px 1px 2px #555555;
+	-moz-box-shadow:    1px 1px 2px #555555;
+	box-shadow: 		1px 1px 2px #555555;
+}
+
+.entityMenuItem{
+	background-color: #eaeaea;
+    border-left: 1px solid #e6e6e6;
+    border-top: 1px solid #e6e6e6;
+    cursor: pointer;
+    height: 28px;
+    line-height: 28px;
+    padding: 0px 22px 0px 8px;
+    text-align: left;
+	font-size: 13px;
+}
+
+.entityMenuItem:hover, .menuItemHover{
+    background-color: #f7f7f7;
+}
+
+/* ----- Entity popups ----- */
+.addEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -45px;
+    width: 250px;
+    height: 90px;
+}
+
+.moveEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -75px;
+    width: 250px;
+    height: 150px;
+}
+
+.removeEntityPopup{
+    background: white;
+    color: black;
+    left: -125px;
+    top: -45px;
+    width: 250px;
+    height: 90px;
+}
+
+/************* MOBILE *************/
+
+/* ----------- MAIN ----------- */
+.bookmarkMobilePopup{
+    position: absolute;
+    word-wrap: break-word;
+    top: 100px;
+}
+
+/* ----------- LEFT ----------- */
+.facetMenu{
+    left: 0px;
+    position: absolute;
+    top: 0px;
+}
+
+.leftPanel{
+    position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+    background-color: #eaeaea;
+    width: 350px;
+}
+
+/* ----- Logo ----- */
+.leftHeader{
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.logoImage{
+    display: inline-block;
+    width: 49px;
+    height: 54px;
+    background-image: url(../images/clear/logo.png);
+    background-repeat: no-repeat;
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.logoText{
+    display: inline-block;
+    vertical-align: top;
+    padding: 30px 0 0 15px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* ----- Details box ----- */
+.detailsMobileBox{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+	position: absolute;
+	top: 235px;
+	bottom: 54px;
+	left: 0px;
+	right: 0px;
+}
+
+.detailsMobileScroll{
+    height: 100%;
+}
+
+.detailsMobileTitle{
+    font-size: 16px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.detailsMobileImage{
+    display: block;
+    margin: 10px auto;
+    width: 130px;
+}
+
+.detailsMobileContent{
+    font-size: 12px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding: 7px;
+}
+
+/* ----- Documents button ----- */
+.docsButton{
+    background-color: #FFED8A;
+    float: right;
+    height: 25px;
+    padding-top: 6px;
+    text-align: center;
+    width: 100px;
+}
+
+/* ----- Dictionary and entity list ----- */
+.dictionaryListOpen{
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+}
+
+.dictionaryListClose{
+    display: inline-block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 200px;
+}
+
+.dictionaryListPanel {
+    margin: 12px 20px 20px 20px;
+}
+
+.dictionaryListScrollOpen{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+}
+
+.dictionaryListScrollClose{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    right: 0px;
+    height: 155px;
+}
+
+.dictionaryListMobileScrollOpen{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 54px;
+}
+
+.dictionaryListMobileScrollClose{
+    background-color: #ffffff;
+	border: 1px solid #cccccc;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 230px;
+}
+
+.dictionariesMainTitle{
+	color: #777777;
+	font-size: 16px;
+	margin: 18px 0px 0px 10px;
+	text-shadow: 1px 1px 0px #fafafa;
+}
+
+.dictionaryName{
+    margin-top: 10px;
+    margin-bottom: 3px;
+	color: #22b4ff;
+	font-size: 14px;
+}
+
+.dictionaryMobileCheckbox {
+    background: url("../images/clear/checkbox_mobile.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.detailsDiv{
+	float: left;
+	margin: 2px;
+    padding: 0px 4px 4px 4px;
+}
+
+.detailsDiv:hover{ 
+	background-color: #E2ECF7;
+}
+
+.entityText{
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 2px;
+}
+
+.entityText:hover{
+}
+
+.entityCount {
+	font-size: 10px;
+	margin-left: 5px;
+	color: #666666;
+}
+
+/* ------ entitiesToolbar ------ */
+
+.entitiesMobileToolbar{
+	background: #eaeaea;
+	background-image: none;
+	border: none;
+	color: inherit;
+	padding: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 54px;
+}
+
+/* ----------- MIDDLE ----------- */
+
+#documentMobileApp .searchBox {
+	width: 90%;
+	max-width: none;
+}
+
+/* ----- Bookmark ----- */
+.bookmarkButton {
+    background-image: url(../images/clear/bookmark.png);
+    background-repeat: no-repeat;
+	width: 18px;
+	height: 32px;
+	margin: 0px 2px 0px 2px;
+	
+}
+
+.bookmarkMobileButton {
+    width: 50px;
+    height: 60px;
+    background-image: url(../images/clear/bookmark_mobile.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/** ----- Entities button ----- **/
+.entitiesButton{
+    background-color: #FFED8A;
+    height: 30px;
+    padding-top: 6px;
+    text-align: center;
+    width: 100px;
+}
+
+/** ----- Document list ----- **/
+.documentMobileList{
+	position: absolute;
+	top: 70px;
+	left: 0px;
+	right: 0px;
+	bottom: 54px;
+    display: inline-block;
+	background-color: #eaeaea;
+}
+
+.documentListMobileScroll {
+	background-color: #e3e3e3;
+    border: 1px solid #cccccc;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.documentsMainTitle{
+    display: inline-block;
+    color: #777777;
+    font-size: 16px;
+    margin: 18px 5px 0px 10px;
+    text-shadow: 1px 1px 0px #fafafa;
+}
+
+.documentsCount{
+    display: inline-block;
+    color: #777777;
+    font-size: 11px;
+    margin: 18px 0 0 0;
+    text-shadow: 1px 1px 0px #fafafa;
+}
+
+.shortDocumentContainer{
+    position: relative;
+	margin: 0px;
+    word-wrap: break-word;
+}
+
+.shortDocumentContainer:hover {
+    background-color: #f6f6f6;
+}
+
+.shortDocumentIcon{
+    height: 43px;
+    position: relative;
+    width: 43px;
+}
+
+.shortDocumentControls {
+	display: block;
+    float: left;
+    height: 100%;
+    width: 43px;
+}
+
+.shortDocument{
+    background: transparent url("../images/clear/document-icon.png") no-repeat scroll left top;
+    border-bottom: 1px solid #cccccc;
+    font-size: 13px;
+    padding: 10px 10px 10px 10px;
+    min-height: 35px;
+    position: relative;
+    text-align: left;
+}
+
+.personItem{
+    background: transparent url("../images/clear/person-icon.png") no-repeat scroll left top;
+    border-bottom: 1px solid #cccccc;
+    font-size: 13px;
+    padding: 10px 10px 10px 10px;
+    min-height: 35px;
+    position: relative;
+    text-align: left;
+}
+
+.shortDocumentTitle{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+	margin-left: 43px;
+}
+
+.shortDocumentContent{
+	margin-left: 43px;
+}
+
+.rateSlider{
+	float: left;
+	height: 45px;
+	margin: 5px 0px 0px 10px;
+	position: relative;
+}
+
+.shortDocument:hover {
+	/*background-color: #eaf1f1;*/
+}
+
+.openDocButton{
+    width: 30px;
+    height: 34px;
+    background-image: url(../images/clear/open-doc-icon.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    right: -25px;
+    top: -15px;
+    cursor: pointer;
+}
+
+/* ------ DocumentList Toolbar ------ */
+.documentListMobileToolbar{
+	background: #eaeaea;
+	background-image: none;
+	border: none;
+	color: inherit;
+	padding: 10px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 54px;
+}
+
+.documentsMobileCount{
+    display: inline-block;
+    text-shadow: 1px 1px 0px #fafafa;
+}
+
+/* ----------- RIGHT ----------- */
+.rightPanel{
+    background-color: lightgrey;
+}
+
+/** ----- Header ----- **/
+.openedDocHeader{
+    height: 70px;
+    background-color: #eaeaea;
+	text-align: right;
+}
+
+.positiveMobileRateButton{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/clear/positive-rate-icon.jpg);
+    background-repeat: no-repeat;
+    margin: 15px 10px;
+    cursor: pointer;
+}
+
+.negativeMobileRateButton{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/clear/negative-rate-icon.jpg);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin: 15px 10px;
+}
+
+.fullMobileViewButton{
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/clear/full-view-icon.jpg);
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin: 15px 10px;
+}
+
+/** ----- Opened document ----- **/
+.openedMobileDocument{
+    background-color: #ffffff;
+	-webkit-box-shadow: 0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+	-moz-box-shadow:    0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+	box-shadow:         0px 0px 5px rgba(50, 50, 50, 0.5) inset;
+    padding: 15px;
+    word-wrap: break-word;
+    font-size: 12px;
+}
+
+.openedMobileDocument img {
+	max-width: 100%;
+}
+
+.loader{
+    background-image: url("../images/clear/loader.gif");
+    background-repeat: no-repeat;
+    height: 32px;
+    width: 32px;
+    margin: 50px auto;
+	position: relative;
+    z-index: 1;
+}
+
+.openedDocMobileToolbar{
+	background: #eaeaea;
+	background-image: none;
+	border: none;
+	color: inherit;
+	padding: 10px;
+	text-align: right;
+}
+
+.docButtonToolBar{
+    position: relative;
+}
+
+.lightButton{
+	margin-right: 8px;
+}
+
+/** ----- Entity popups ----- **/
+.addEntityMobilePopup{
+    background: white;
+    color: black;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
+}
+
+.moveEntityMobilePopup{
+    background: white;
+    color: black;
+    width: 100%;
+    height: 150px;
+    top: 0;
+    left: 0;
+}
+
+.removeEntityMobilePopup{
+    background: white;
+    color: black;
+    width: 100%;
+    height: 80px;
+    top: 0;
+    left: 0;
+}
+
+/************* COMMON *************/
+
+/* ----- Entity ----- */
+.entitySeparator{
+    width: 100%;
+    height: 1px;
+    background-color: #9ba09f;
+    margin-top: 15px;
+}
+
+.popupCloseButton {
+    width: 30px;
+    height: 30px;
+    background-image: url("../images/clear/close_button.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    right: -16px;
+    top: 0px;
+    z-index: 9999;
+}
+
+/* ----- Search box ----- */
+.searchLabel {
+    padding: 9px !important;
+}
+
+.searchBox {
+	margin: auto;
+	padding: 15px 0px 0px 0px;
+    width: 400px;
+    position: relative;
+	max-width: 30%;
+}
+
+.searchImage {
+    width: 20px;
+    height: 20px;
+    background-image: url(../images/clear/search-icon.png);
+    background-repeat: no-repeat;
+	max-width: 30%;
+	cursor: pointer;
+    position: relative;
+	float: right;
+}
+
+.searchButton {
+	display: none; /**/
+    height: 40px;
+    margin-left: 11px;
+    position: absolute;
+    right: 14px;
+    top: 0px;
+    width: 50px;
+}
+
+.decorator{
+    border: 1px solid #cccccc;
+    margin: 0;
+    padding: 6px 8px 10px;
+    width: 100%;
+    height: 23px;
+	background-color: #ffffff;
+}
+
+/* ----- Full view button and rate buttons ----- */
+.fullViewButton{
+    background-image: url("../images/clear/full-view-icon.jpg");
+    background-repeat: no-repeat;
+    cursor: pointer;
+	float: left;
+    height: 32px;
+    width: 32px;
+}
+
+.positiveRateButton{
+    background-image: url("../images/clear/positive-rate-icon.jpg");
+    background-repeat: no-repeat;
+    cursor: pointer;
+	float: left;
+    height: 36px;
+    width: 40px;
+}
+
+.negativeRateButton{
+    background-image: url("../images/clear/negative-rate-icon.jpg");
+    background-repeat: no-repeat;
+    cursor: pointer;
+	float: left;
+    height: 36px;
+    width: 40px;
+}
+
+.ratePopup{
+    background: white;
+    color: black;
+    width: 330px;
+    height: 65px;
+    top: 0;
+    right: 10px;
+}

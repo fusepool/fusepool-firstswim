@@ -160,6 +160,7 @@ enyo.kind(
         {
             kind: 'OpenedDoc',
             name: 'openedDoc',
+			searchWord: '',
             ondown: 'clickText',
             classes: 'openedDocument',
             documentContentClass: 'documentContent',
@@ -259,19 +260,19 @@ enyo.kind(
 
     /**
      * This function call the opened doc's openDoc function and shows the buttons.
-     * @param {Object} previewDoc the previewed document
+     * @param {String} docURI URI of the document to be opened
      */
-    openDoc: function(previewDoc){
-        this.$.openedDoc.openDoc(previewDoc);
+    openDoc: function(docURI){
+        this.$.openedDoc.openDoc(docURI);
         this.$.openedDoc.show();
         this.showRateButtons();
     },
 
     /**
-     * This function clean the document content.
+     * This function cleans the document content.
      */
     clean: function(){
-       // this.$.openedDoc.hide();
+		this.$.openedDoc.clearAll();
         this.hideRateButtons();
     },
 

@@ -60,6 +60,10 @@ enyo.kind(
 		this.$.moreLabelsPanel.hide();
     },
 	
+	/**
+	* This function is fired when the user selects a label
+	* from user label list.
+	*/
 	userLabelSelection: function(inSender, inEvent) {
 		this.addUserLabel(inEvent.selected.content);
 	},
@@ -67,6 +71,10 @@ enyo.kind(
 	initUserLabelSelect: function(inSender, inEvent) {
 	},
 	
+	/**
+	* This function calls the back-end for predicted and existing 
+	* labels and initializes the lists based on the return value.
+	*/
 	initLabels: function() {
 		this.labelTexts = [];
 		this.predictedLabelTexts = [];
@@ -74,7 +82,8 @@ enyo.kind(
 		var main = this;
 		var request = new enyo.Ajax({
 			method: 'GET',
-			url: CONSTANTS.GET_LABELS_URL+'?iri='+this.labelListId,
+			url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=' + ( readCookie('viewType') == 'entityList' ? false : true ),
+			// url: CONSTANTS.GET_LABELS_URL + '?iri=' + this.labelListId + '&usePrediction=false',
 			handleAs: 'text',
 			headers: { Accept : 'application/json', 'Content-Type' : 'application/x-www-form-urlencoded'},
 			published: { timeout: 60000 }
@@ -101,7 +110,7 @@ enyo.kind(
 					});
 					main.$.labelList.render();
 				}
-				if(obj.predictedLabels.length > 0) {
+				if(obj.predictedLabels.length > 0 ) {
 					for(var i=0;i<obj.predictedLabels.length;i++){
 						main.predictedLabelTexts.push(obj.predictedLabels[i]);
 						main.$.predictedLabelList.createComponent({
@@ -118,7 +127,7 @@ enyo.kind(
 						});
 						main.$.predictedLabelList.render();
 					}
-					if(!GLOBAL.labelPrediction) {
+					if(!readCookie('labelPrediction')) {
 						main.$.predictedLabelListName.hide();
 						main.$.predictedLabelList.hide();
 					}
@@ -130,16 +139,22 @@ enyo.kind(
 			}
 		});
 		/*
-		if(GLOBAL.userLabels.length > 0) {
-			for(var i=0;i<GLOBAL.userLabels.length;i++) {
-				main.$.userLabelPicker.createComponent({ content: GLOBAL.userLabels[i] });
+		var userLabels = readCookie('userLabels'); // array!
+		if(userLabels.length > 0) {
+			for(var i=0;i<userLabels.length;i++) {
+				main.$.userLabelPicker.createComponent({ content: userLabels[i] });
 			}
 			main.$.userLabelPicker.render();
 		} */
 	},
-	
+		
+	/**
+	* This function shows/hides the list of predicted labels
+	* based on the 'enable' parameter.
+	* @param {Boolean} enable enable/disable label prediction 
+	*/
 	togglePredictedLabelLists: function(enable) {
-		if(enable && this.predictedLabelTexts.length > 0) {
+		if(enable=="true" && this.predictedLabelTexts.length > 0) {
 			this.$.predictedLabelListName.show();
 			this.$.predictedLabelList.show();
 		}
@@ -149,17 +164,34 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	* This function runs when the user clicks on the 
+	* 'Add label' button. It displays the panel in which
+	* users can add labels using the input field.
+	*/
 	addMoreLabelsBtnPress: function() {
 		this.$.addMoreLabelsButton.hide();
 		this.$.moreLabelsPanel.show();
         this.$.moreLabelInput.focus();
 	},
-	
+		
+	/**
+	* This function runs when the user clicks on the 
+	* 'Close' button. It hides the panel in which
+	* users can add labels using the input field.
+	*/
 	hideAddingPanelBtnPress: function() {
 		this.$.addMoreLabelsButton.show();
 		this.$.moreLabelsPanel.hide();		
 	},
 	
+	/**
+	* This function handles keypress events. On pressing 
+	* 'Enter' it adds the entered label. On pressing 'Esc'
+	* it closes the panel.
+	* @param {Object} inSender the sender object
+	* @param {Object} inEvent the fired event
+	*/
 	onKeydown: function(inSender, inEvent) {
 		switch(inEvent.keyCode) {
 			case 13:	// Enter
@@ -171,6 +203,10 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	* This function adds a label from the input field to the
+	* list of existing labels. 
+	*/
 	addNewLabel: function() {		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
@@ -201,6 +237,9 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	* This function adds a predicted label to the list of existing labels. 
+	*/
 	addPredictedLabel: function(labelText,labelElement) {		
 		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
 			
@@ -232,6 +271,9 @@ enyo.kind(
 		}
 	},
 	
+	/**
+	* This function adds a user label to the list of existing labels. 
+	*/
 	addUserLabel: function(labelText) {		
 		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
 			
@@ -263,7 +305,9 @@ enyo.kind(
 
     /**
      * This function deletes a label from the GUI and sends an annotation
-	 * to the server about this action.
+	 * to the server about it.
+	 * @param {String} labelText name of the label
+	 * @param {Object} labelElement the label element
      */
     deleteLabel: function(labelText,labelElement){
 		var ind = $.inArray(labelText,this.labelTexts);
@@ -285,10 +329,17 @@ enyo.kind(
 		}
     },
 	
+	/**
+	* This function creates the proper annotation string
+	* and fires the annotation sender function.
+	* @param {String} docURI URI of the related document
+	* @param {String} labelText name of the label
+	* @param {Number} action type of the click action (1 = accept; -1 = dismiss)
+	*/
 	sendLabelListAnnotation: function(docURI,labelText,action) {
 				
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
+		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
 		
 		var annotationString =	'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
 								'@prefix cnt: <http://www.w3.org/2011/content#> . ' + 

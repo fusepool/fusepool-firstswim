@@ -1,23 +1,28 @@
 
-var GLOBAL= {
-	currentUser: 'anonymous',
-	maxFacets: 10,
-	items: 10,
-	nodeLimit: [1,5,3],
-	viewType: 'documentList',
-	labelPrediction: true,
-	userLabels: []
-};
+function placeDefaultCookies() {
+	if(isEmpty(readCookie('currentUser'))) { createCookie('currentUser', 'anonymous', 30); }
+	if(isEmpty(readCookie('maxFacets'))) { createCookie('maxFacets', 10, 30); }
+	if(isEmpty(readCookie('minClassifyDoc'))) { createCookie('minClassifyDoc', 10, 30); }
+	if(isEmpty(readCookie('items'))) { createCookie('items', 10, 30); }
+	if(isEmpty(readCookie('nodeLimit'))) { createCookie('nodeLimit', [1,5,3,3], 30); }
+	if(isEmpty(readCookie('viewType'))) { createCookie('viewType', 'documentList', 30); }
+	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', 1, 30); }
+	if(isEmpty(readCookie('userLabels'))) { createCookie('userLabels', [], 30); }
+	if(isEmpty(readCookie('css'))) { createCookie('css', 'firstswim', 30); }
+}
 
-// var BASE_URL = 'http://localhost:8080/'; /* lokal, sajaton futo fp peldannyal */
-// var BASE_URL = 'http://beta.fusepool.com/'; /* lokal, betas fp peldannyal */
-var BASE_URL = '/'; /* commithoz */
+// var BASE_URL = 'http://localhost:8080/';
+// var BASE_URL = 'http://platform.fusepool.info/';
+var BASE_URL = '/';
 
 var CONSTANTS = {
     SEARCH_URL: BASE_URL + 'ecs/',
     ENTITY_SEARCH_URL: BASE_URL + 'firstswim/entitysearch/',
+    ENTITY_DETAILS_URL: BASE_URL + 'firstswim/entitydetails/',
     DETAILS_URL: BASE_URL + 'ecs/meta',
+    GET_PREDICATES_URL: BASE_URL + 'firstswim/getpredicates',
     CLASSIFY_URL: BASE_URL + 'kmxrdfproxy/ranking/',
+    LANDSCAPE_URL: BASE_URL + 'kmxrdfproxy/landscape/',
     ANNOTATION_URL: BASE_URL + 'annostore/',
     GET_LABELS_URL: BASE_URL + 'firstswim/getlabels/',
     GET_USER_LABELS_URL: BASE_URL + 'firstswim/getuserlabels/',
@@ -28,21 +33,23 @@ var CONSTANTS = {
 	SIGNIN_URL: BASE_URL + 'firstswim/authUser/',
     AUTOSUGGEST_URL: BASE_URL + 'solr/default/suggester/sbsuggest?df=id&wt=json',
     DETAILS_SUBJECT_URL: 'http://fusepool.info/id/',
-    FUSEPOOL_MAIN_URL: 'http://www.fusepool.com',
+    FUSEPOOL_MAIN_URL: 'http://www.fusepool.eu',
 
     // CLIPBOARD_COPY_PATH: '../../../../../META-INF/resources/firstswim/javascript/zeroclipboard/ZeroClipboard.swf', 
     // TEMPLATES_URL: '../../../../../META-INF/resources/firstswim/templates/templates.html',
     // VISUALIZER_URL: '../../../../../META-INF/resources/firstswim/templates/visualizer.html',
-    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/'
+    // IMG_PATH: '../../../../../META-INF/resources/firstswim/images/',
+    // STYLE_PATH: '../../../../../META-INF/resources/firstswim/styles/'
     CLIPBOARD_COPY_PATH: 'firstswim/javascript/zeroclipboard/ZeroClipboard.swf',
     TEMPLATES_URL: BASE_URL + 'firstswim/templates/templates.html',
     VISUALIZER_URL: BASE_URL + 'firstswim/templates/visualizer.html',
-    IMG_PATH: BASE_URL + 'firstswim/images/'
+    IMG_PATH: BASE_URL + 'firstswim/images/',
+    STYLE_PATH: BASE_URL + 'firstswim/styles/'
 };
 
 /**
 * This function queries the platform for the current, logged in user
-* and sets the currentUser GLOBAL variable
+* and sets the currentUser cookie value
 */
 function setCurrentUser() {
 	var request = new enyo.Ajax({
@@ -55,8 +62,20 @@ function setCurrentUser() {
 	});
 	request.go();
 	request.response(this, function(inSender, inResponse) {
-		GLOBAL.currentUser = inResponse;
+		createCookie('currentUser', inResponse, 30);
 	});
+}
+
+function createCookie(name, value, days) {
+	$.cookie(name, value, { expires: days });
+}
+
+function readCookie(name) {
+    return $.cookie(name);
+}
+
+function eraseCookie(name) {
+    $.removeCookie(name);
 }
 
 /**
@@ -72,12 +91,24 @@ function isEmpty(data){
 }
 
 /**
+ * This function formats the given string and clears from the
+ * html tags that could cause trouble on the GUI. (Using jquery-clean 
+ * jQuery plug-in.)
+ * @param {String} string to be cleaned
+ * @return {String} clean string
+*/
+function removeTags(str) {
+	var tagWhiteList = ["b", "big", "i", "small", "tt", "abbr", "acronym", "cite", "code", "dfn", "em", "kbd", "strong", "samp", "var", "bdo", "br", "q", "span", "sub", "sup", "label"];
+	return $.htmlClean(str, {format: true, allowedTags: tagWhiteList });
+}
+
+/**
  * This function check a text and decide that the
  * text's length is between the minimum and maximum length
- * @param {String} text the text, what the funtion checks
+ * @param {String} text the text, what the function checks
  * @param {Number} min minimum length
  * @param {Number} max maximum length
- * @return {Boolean} true, if the text's length larger or equals the mimumum length
+ * @return {Boolean} true, if the text's length is greater or equals the minimum length
  * and shorter or equals the maximum length
  */
 function textLengthBetween(text, min, max){
@@ -229,26 +260,6 @@ function getAPropertyValue(rdf, subject, exclude) {
 }
 
 /**
- * This function gets an rdf object, an existing subject and returns
- * with all the available properties it has in the rdf object.
- * @param {Object} rdf the rdf object
- * @param {String} subject URI of the subject
- * @returns {Array} the value of a found property 
- */
-function getRDFProperties(rdf, subject) {
-	var props = [];
-	var query = 'SELECT * { <'+subject+'> ?p ?o }';
-	rdf.execute(query, function(success, results) {
-		if (success && results.length > 0) {
-			for(var i=0;i<results.length;i++) {
-				props.push(results[i].p.value);
-			}
-		}
-	});
-	return props;
-}
-
-/**
  * This function puts an annotation to the annostore
  * @param {String} annotationString body of the annotation
  */
@@ -301,7 +312,7 @@ function getUserLabels(userName) {
 	request.go();	
 	request.response(this, function(inSender, inResponse) {
 		var obj = JSON.parse(inResponse);
-		GLOBAL.userLabels = obj.userLabels;
+		createCookie('userLabels', obj.userLabels, 30);
 	});
 }
 

@@ -86,7 +86,7 @@ public class GUIProvider {
     private final double THRESHOLD = 0.0;
     
     // limit the number of prediced labels returned
-    private final int LABEL_LIMIT = 20;
+    private final int LABEL_LIMIT = 10;
     
     @Reference
     private HubEngine predictionHub;
@@ -145,7 +145,8 @@ public class GUIProvider {
     @GET
     @Path("getlabels")
     public String serviceEntry(@Context final UriInfo uriInfo,
-            @QueryParam("iri") final UriRef iri) throws Exception {
+            @QueryParam("iri") final UriRef iri,
+            @QueryParam("usePrediction") final String usePrediction ) throws Exception {
         
         // json response for the client
         JSONObject response = new JSONObject();
@@ -246,9 +247,15 @@ public class GUIProvider {
                     String predictedLabel;
                     double predictedScore;
                     List<Label> lbls;
+                    String predictionResut;
                     
                     // get predicted labels
-                    String predictionResut = predictionHub.predict("LUP34",params);       
+                    if(usePrediction.equals("true")) {
+                        predictionResut = predictionHub.predict("LUP34",params);       
+                    }
+                    else {
+                        predictionResut = "";
+                    }
                     System.out.println("predictionResut: " + predictionResut);  
                     if(predictionResut != null){
                         // if the prediction string is an error do not do anything
@@ -372,6 +379,125 @@ public class GUIProvider {
         }
 
         return predictionResut;
+    }
+    
+    @GET
+    @Path("entitydetails")
+    public String serviceEntry4(@Context final UriInfo uriInfo,
+            @QueryParam("entityURI") final String entityURI
+            ) throws Exception {
+        
+        // json response for the client
+        String predictionResult = null;
+        
+        try {                    
+            // add the URI to a hashmap 
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("entityURI", entityURI);
+            
+            // get prediction
+            predictionResult = predictionHub.predict("LUP45", params);
+            
+            if (predictionResult == null) {
+                log.error("Error: {}", "LUP45 return null");
+                return "";
+            }
+            else{
+                if(predictionResult.equals("__error__")){
+                    log.error("Error: {}", "LUP45 returned error string");
+                    return "";
+                }
+            }
+                              
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+            return "";
+        }
+
+        return predictionResult;
+    }
+    
+    @GET
+    @Path("getpredicates")
+    public String serviceEntry3(@Context final UriInfo uriInfo,
+            @QueryParam("user") final String user,
+            @QueryParam("document") final String document,
+            @QueryParam("query") final String query
+            ) throws Exception {
+        
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        // json response for the client
+        String predictionResult = null;
+        
+        try {                    
+            // add the properties to a hashmap 
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("user", "http://fusepool.info/users/" + user);
+            params.put("document", document);
+            params.put("query", query);
+            
+            // get prediction
+            predictionResult = predictionHub.predict("LUP55", params);
+                        
+            String predictedLabel;
+            double predictedScore;
+            List<Label> lbls;
+            
+            if (predictionResult == null) {
+                log.error("Error: {}", "LUP55 return null");
+                return "LUP55 return null";
+            }
+            else{
+                if(predictionResult.equals("__error__")){
+                    log.error("Error: {}", "LUP55 returned error string");
+                    return "LUP55 returned error string";
+                }
+                else{
+                    lbls = new ArrayList<Label>();
+                    for (String lbl : predictionResult.split("##")) {
+                        String[] lblsrt = lbl.split("__");
+                        predictedLabel = lblsrt[0];
+                        predictedScore = 0.0;
+                        // try parsing the score value, otherwise it is set to 0.0
+                        try {
+                            predictedScore = Double.parseDouble(lblsrt[1]);
+                        } catch (NumberFormatException e) {
+                            log.warn("Warning: {}", e.getMessage());
+                        }
+                        lbls.add(new Label(predictedLabel, predictedScore));
+                       
+                    }
+                    
+                    int counter = 0;                    
+                    
+                    JSONObject object;
+                    // splitting ## separated prediction result string and adding them to json response
+                    for (Label lbl : lbls) {
+                        if(lbl.getScore() > 0.2){
+                            object = new JSONObject();
+                            object.put("text", lbl.getLabel());
+                            object.put("accepted", "true");
+                            array.add(object);
+                            
+                        }
+                        else{
+                            object = new JSONObject();
+                            object.put("text", lbl.getLabel());
+                            object.put("accepted", "false");
+                            array.add(object);
+                        }
+                    }
+                }
+            }
+                              
+        } catch (Exception e) {
+            System.out.println("Exception: " + e.getMessage());
+            log.error("Error", e);
+            return "Exception: " + e.getMessage();
+        } 
+        return array.toString();
     }
     
     private String CreateEmptyResult(String search, int offset, int maxFacets, int items){

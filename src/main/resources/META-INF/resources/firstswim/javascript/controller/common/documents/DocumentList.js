@@ -12,7 +12,7 @@ enyo.kind(
         offset: 0,
         searchWord: '',
         checkedDocs: 0,
-        minClassifyDoc: GLOBAL.items, // process button showing number
+        minClassifyDoc: readCookie('minClassifyDoc'),  // process button showing number
         documents: null,
         scrollerClass: '',
         titleClass: '',
@@ -68,10 +68,10 @@ enyo.kind(
     ],
 
     toggleLabelPrediction: function(inSender){
-		GLOBAL.labelPrediction = !inSender.checked; //this is weird
+		createCookie('labelPrediction', !inSender.checked, 30); //this is weird
         var shortDocuments = this.$.list.children;
         for(var i=0;i<shortDocuments.length;i++){
-            shortDocuments[i].togglePredictedLabelLists(GLOBAL.labelPrediction);
+            shortDocuments[i].togglePredictedLabelLists(readCookie('labelPrediction'));
         }
     },
 	
@@ -187,10 +187,10 @@ enyo.kind(
      * send and ajax request with the new offset value.
      */
     moreBtnPress: function(){
-        this.offset += GLOBAL.items;
-        this.owner[this.moreDocumentsFunction](this.offset);
-        this.$.loader.show();
-        this.$.moreButton.hide();
+		this.offset += readCookie('items');
+		this.owner[this.moreDocumentsFunction](this.offset);
+		this.$.loader.show();
+		this.$.moreButton.hide();
     },
 	
     /**
@@ -215,6 +215,7 @@ enyo.kind(
      * @param {Array} checkedEntities the checked facets and type facets
      */
     updateList: function(documents, searchWord, checkedEntities){
+		createCookie('lastSearch',searchWord,30);
         this.checkedEntities = checkedEntities;
         this.searchWord = searchWord;
         this.offset = 0;
@@ -233,14 +234,14 @@ enyo.kind(
                     removeCheckFunction: 'removeCheck',
                     showSlidebar: this.activeClassify,
                     titleClass: 'shortDocumentTitle',
-                    shortDocumentClass: 'shortDocument',
+                    shortDocumentClass: (readCookie('viewType') == 'entityList' ? 'personItem' : 'shortDocument'),
                     contentClass: 'shortDocumentContent',
                     openDocEvent: this.openDocEvent,
                     openButtonClass: 'openDocButton',
                     container: this.$.list,
                     url: documents[i].url,
                     title: documents[i].title,
-                    shortContent: cutStr(documents[i].shortContent,350),
+                    shortContent: cutStr(removeTags(documents[i].shortContent),350),
                     type: documents[i].type,
                     parentFunction: 'openDoc',
                     labelListClass: 'labelList',
@@ -256,8 +257,13 @@ enyo.kind(
             this.$.loader.hide();
             this.$.list.render();
             this.$.activateSliders.show();
-            this.$.labelPredictionSettings.show();
-			this.$.moreButton.show();
+			if(readCookie('viewType') != 'entityList') {
+				this.$.labelPredictionSettings.show();
+				this.$.moreButton.show();
+			}
+			else {
+				this.$.activateSliders.hide();
+			}
         } else {
             this.showMessage(this.noDataLabel);
             this.$.loader.hide();
@@ -301,14 +307,14 @@ enyo.kind(
                 removeCheckFunction: 'removeCheck',
                 showSlidebar: this.activeClassify,
                 titleClass: 'shortDocumentTitle',
-                shortDocumentClass: 'shortDocument',
+                shortDocumentClass: (readCookie('viewType') == 'entityList' ? 'personItem' : 'shortDocument'),
                 contentClass: 'shortDocumentContent',
                 openDocEvent: this.openDocEvent,
                 openButtonClass: 'openDocButton',
                 container: this.$.list,
                 url: documents[i].url,
                 title: documents[i].title,
-                shortContent: cutStr(documents[i].shortContent,350),
+                shortContent: cutStr(removeTags(documents[i].shortContent),350),
                 type: documents[i].type,
                 parentFunction: 'openDoc',
                 labelListClass: 'labelList',
@@ -334,7 +340,7 @@ enyo.kind(
      * @param {Object} inEvent the user mouse event (it is important in the desktop version)
      */
     openDoc: function(url, type, inEvent){
-        this.owner[this.openDocFunction](url, type, inEvent);
+        this.owner[this.openDocFunction](url, inEvent);
         this.sendDocListAnnotation(url,type,'true');
     },
 	
@@ -350,7 +356,7 @@ enyo.kind(
 		// console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var currentDate = new Date().toISOString();
-		var userURI =  'http://fusepool.info/users/'+GLOBAL.currentUser;
+		var userURI =  'http://fusepool.info/users/'+readCookie('currentUser');
 		
 		var annotationString = '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . ' +
 								'@prefix xsd: <http://www.w3.org/2011/XMLSchema#> . ' +
@@ -383,17 +389,16 @@ enyo.kind(
     },
 
     /**
-     * This functions scroll to the top.
+     * This function scrolls to the top.
      */
     scrollToTop: function(){
         this.$.scroller.top = 0;
         this.$.scroller.setScrollTop(0);
         this.$.scroller.scrollTo(0,0);
-        this.render();
     },
 
     /**
-     * This function increses the number of checked documents and updates the
+     * This function increases the number of checked documents and updates the
      * checked number text.
      */
     addCheck: function(){
@@ -413,8 +418,8 @@ enyo.kind(
     },
 
     /**
-     * This functions decides that we should show the process button or not (by the checkedDocs value)
-     * and shows or hides it
+     * This functions shows/hides the process button based on the
+	 * current value of 'checkedDocs'.
      */
     showOrHideProcessButton: function(){
         if(this.activeClassify && this.checkedDocs >= this.minClassifyDoc){

@@ -1,27 +1,20 @@
-/************* DESKTOP *************/
-
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 400;
-  src: local('PT Sans Caption'), local('PTSans-Caption'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/OXYTDOzBcXU8MTNBvBHeSZsUyLnvNVEr3YfO1b3hweY.woff') format('woff');
-}
-@font-face {
-  font-family: 'PT Sans Caption';
-  font-style: normal;
-  font-weight: 700;
-  src: local('PT Sans Caption Bold'), local('PTSans-CaptionBold'), url('//themes.googleusercontent.com/static/fonts/ptsanscaption/v5/Q-gJrFokeE7JydPpxASt26-uHvvNr40SEURDy78pRVo.woff') format('woff');
-}
-
 /* ----------- MAIN ----------- */
+html{
+    height:100%;
+}
+
 body{
     margin: 0;
 	height: 100%;
 	width: 100%;
 	background-color: #eaeaea;
-	font-family: 'PT Sans Caption',Arial,sans-serif;
+	font-family: Arial,sans-serif;
 	font-weight: 400;
 	color: #5e5e5e;
+}
+
+h1 {
+	line-height: 1.2em
 }
 
 .clear {
@@ -34,6 +27,11 @@ body{
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
+}
+
+#map-canvas {
+	width: 200px;
+	height: 200px;
 }
 
 /* ----------- Toolbar ----------- */
@@ -62,6 +60,7 @@ body{
 	position: absolute;
 	right: 12px;
 	top: 12px;
+	max-width: 25%;
 }
 
 .toolbarIcons * {
@@ -73,15 +72,39 @@ body{
 	margin: 0px 2px 0px 2px;
 }
 
+.docListViewButton		{ background-image: url("../images/docListViewButton.png"); }
+.entityListViewButton	{ background-image: url("../images/entityListViewButton.png"); }
+.locationViewButton		{ background-image: url("../images/locationViewButton.png"); }
+.landscapeViewButton	{ background-image: url("../images/landscapeViewButton.png"); }
+.nGraphViewButton		{ background-image: url("../images/nGraphViewButton.png"); }
+
+.menuItemTooltip {
+	background-color: #716863;
+	color: #fffbdf;
+	font-size: 13px;
+} 
+
+.menuItemTooltip.below.left-arrow:before {
+	border-bottom: 6px solid #716863;
+}
+
+.menuItemTooltip.below {
+    top: 120%;
+}
+
 .mainLogo {
 	cursor: pointer;
 	width: 271px;
 	height: 111px;
-	background-image: url("../images/logo_only_turq.png");
 	position: absolute;
 	top: 5px;
 	left: -20px;
-	
+	max-width: 30%;
+	background: transparent url("../images/logo_only_turq.png") no-repeat left top;
+	background-size: 100% auto;
+	-o-background-size: 100% auto;
+	-webkit-background-size: 100% auto;
+	-moz-background-size: 100% auto;
 }
 
 /* ----------- Login ----------- */
@@ -93,8 +116,16 @@ body{
 	margin: 0px 2px 0px 2px;
 }
 
+.loggedOut {
+	background-position: 0px 0px;
+}
+
+.loggedIn{
+	background-position: 0px -32px;
+}
+
 .loginPopup{
-    right: 100px;
+    right: 25px;
     position: absolute;
     top: 63px;
     width: 430px;
@@ -125,6 +156,7 @@ body{
 
 .loginTableLeftCol{
     width: 130px;
+	text-align: right;
 }
 
 .loginTable input{
@@ -133,18 +165,14 @@ body{
 
 .loginButtons{
     margin: 0 auto 20px;
-    width: 130px;
+	text-align: center;
 }
 
-.loginBackBtn, .signInBtn, .signOutBtn{
-    display: inline-block;
-    margin-right: 20px;
+.loginBackBtn, .signInBtn, .signOutBtn, .signUpBtn{
+    display: inline;
+    margin-right: 10px;
     cursor: pointer;
-}
-
-.signUpBtn{
-    display: inline-block;
-    cursor: pointer;
+	background-color: #bff3ff;
 }
 
 .currentUserLabel{
@@ -160,6 +188,23 @@ body{
 	margin: 15px auto;
 	width: 320px;
 	color: #FFCD9C;
+}
+/* ----------- Style settings ------------- */
+
+.brushButton{
+	background-image: url("../images/brushButton.png");
+    background-repeat: no-repeat;
+	height: 32px;
+	width: 32px;
+	margin: 0px 2px 0px 2px;
+}
+
+.stylePickerItem {
+	width: 100%;
+}
+
+.stylePickerItem:hover {
+	background-color: #655B53;
 }
 
 /* ----------- Top message box ----------- */
@@ -187,14 +232,14 @@ body{
 	top: 75px;
 	bottom: 10px;
 	left: 10px;
-	width: 320px;
+	width: 300px;
     /*-vertical-align: top;*/
 }
 
 /* ----- Details box ----- */
 .detailsBox {
     position: absolute;
-    top: 290px;
+    top: 200px;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -253,7 +298,7 @@ body{
     cursor: pointer;
     display: inline-block;
     height: 15px;
-    margin: 4px;
+    margin-right: 4px;
     vertical-align: middle;
     width: 15px;
 }
@@ -274,7 +319,7 @@ body{
     left: 10px;
     position: absolute;
     top: 75px;
-	width: 940px;
+	width: 750px;
 }
 
 .nGraphMainTitle {
@@ -303,7 +348,7 @@ body{
     left: 10px;
     position: absolute;
     top: 75px;
-	width: 940px;
+	width: 750px;
 }
 
 .locationViewerMainTitle {
@@ -332,7 +377,7 @@ body{
     left: 10px;
     position: absolute;
     top: 75px;
-	width: 940px;
+	width: 750px;
 }
 
 .landscapeMainTitle {
@@ -371,10 +416,10 @@ body{
 .documentList{
     position: absolute;
     top: 75px;
-    left: 350px;
+    left: 320px;
     bottom: 10px;
     display: inline-block;
-    width: 590px;
+	width: 440px;
 }
 
 .activateSliders{
@@ -438,6 +483,7 @@ body{
 
 .labelListPanel {
     border-top: 1px solid #eeeeee;
+	cursor: default;
 }
 
 .labelDiv, .predictedLabelDiv {
@@ -451,7 +497,7 @@ body{
 }
 
 .labelDiv {
-    background-color: rgba(20, 175, 255, 0.3)
+    background-color: rgba(20, 175, 255, 0.3);
 }
 
 .predictedLabelDiv {
@@ -504,7 +550,7 @@ body{
 	float: left;
 	margin: 1px;
     padding: 1px 2px 12px 4px;
-	width: 35%;
+	width: 50%;
 }
 
 .moreLabelInput {
@@ -512,6 +558,18 @@ body{
 	color: #555555;
 	width: 100%;
 }
+/* Draggers */
+
+.verticalDragger {
+    position: absolute !important;
+    top: 125px;
+	bottom: 10px;
+    width: 10px;
+    cursor: e-resize;
+}
+
+.firstDocDragger { left: 310px; }
+.secondDocDragger { left: 760px; }
 
 /* ----------- RIGHT ----------- */
 
@@ -521,7 +579,7 @@ body{
 	top: 75px;
 	right: 10px;
 	bottom: 10px;
-	left: 960px;
+	left: 770px;
 }
 
 .previewBoxMainTitle {
@@ -571,6 +629,63 @@ body{
 
 .documentContent img {
 	max-width: 100%;
+}
+
+/* Predicate annotator */
+
+.predicateAnnotatorPanel  {
+	border-top: 1px solid #EEEEEE;
+	margin: 20px;
+	cursor: default;
+}
+
+.predicateAnnotatorName {
+	margin: 4px 0px;
+	color: #A6A6A6;
+    font-size: 11px;
+}
+
+.predicateItem {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	float: left;
+	margin: 2px;
+	padding: 3px;
+	max-width: 470px;
+	border: 1px solid #dedede;
+	background-color: #f3f3f3;
+}
+
+.acceptPredicateButton, .dismissPredicateButton {
+	color: #555555;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0px 2px 0px 4px;
+}
+
+.acceptedPredicate {
+	border-color: #75DE7F;
+	background-color: #F0FFEF;
+}
+
+.dismissedPredicate {
+	border-color: #F16279;
+	background-color: #FFF4F4;
+}
+
+.showPredicateAnnotator, .hidePredicateAnnotator {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	background-color: #f1f1f1;
+	cursor: pointer;
+	font-size: 12px;
+	border: 1px solid #d8d8d8;
+	float: left;
+	margin: 6px 0px;
+    padding: 4px 4px 3px 4px;
 }
 
 /* ----- Entity menu ----- */
@@ -738,7 +853,7 @@ body{
     top: 0px;
     left: 0px;
     right: 0px;
-    height: 290px;
+    height: 200px;
 }
 
 .dictionaryListPanel {
@@ -766,7 +881,7 @@ body{
     top: 50px;
     left: 0px;
     right: 0px;
-    height: 245px;
+    height: 155px;
 }
 
 .dictionaryListMobileScrollOpen{
@@ -821,7 +936,7 @@ body{
 	border-radius: 5px;
 	float: left;
 	margin: 2px;
-    padding-right: 6px;
+    padding: 0px 4px 4px 4px;
 }
 
 .entityText{
@@ -855,6 +970,11 @@ body{
 }
 
 /* ----------- MIDDLE ----------- */
+
+#documentMobileApp .searchBox {
+	width: 90%;
+	max-width: none;
+}
 
 /* ----- Bookmark ----- */
 .bookmarkButton {
@@ -944,6 +1064,16 @@ body{
 
 .shortDocument{
     background: #ffffff url("../images/document-icon.png") no-repeat scroll left top;
+    border-bottom: 5px solid #b1b1b1;
+    font-size: 13px;
+    padding: 10px 10px 10px 10px;
+    min-height: 35px;
+    position: relative;
+    text-align: left;
+}
+
+.personItem{
+    background: #ffffff url("../images/person-icon.png") no-repeat scroll left top;
     border-bottom: 5px solid #b1b1b1;
     font-size: 13px;
     padding: 10px 10px 10px 10px;
@@ -1148,6 +1278,7 @@ body{
 	padding: 15px 0px 0px 0px;
     width: 400px;
     position: relative;
+	max-width: 30%;
 }
 
 .searchImage {
@@ -1155,10 +1286,10 @@ body{
     height: 20px;
     background-image: url(../images/search-icon.png);
     background-repeat: no-repeat;
-    position: absolute;
-    right: 35px;
-    top: 25px;
+	max-width: 30%;
 	cursor: pointer;
+    position: relative;
+	float: right;
 }
 
 .searchButton {
@@ -1178,7 +1309,7 @@ body{
 	border-radius: 3px;
     margin: 0;
     padding: 6px 8px 10px;
-    width: 353px;
+    width: 100%;
     height: 23px;
 	background-color: #ffffff;
 }
