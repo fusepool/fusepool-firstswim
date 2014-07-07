@@ -66,14 +66,29 @@ function setCurrentUser() {
 	});
 }
 
+/**
+* This function creates a cookie
+* @param {String} name name of the cookie
+* @param {String} value cookie value
+* @param {Number} days days until expiration
+*/
 function createCookie(name, value, days) {
 	$.cookie(name, value, { expires: days });
 }
 
+/**
+* This function returns a cookie
+* @param {String} name name of the cookie
+* @returns {String} cookie value
+*/
 function readCookie(name) {
     return $.cookie(name);
 }
 
+/**
+* This function deletes a cookie
+* @param {String} name name of the cookie
+*/
 function eraseCookie(name) {
     $.removeCookie(name);
 }
@@ -103,9 +118,9 @@ function removeTags(str) {
 }
 
 /**
- * This function check a text and decide that the
- * text's length is between the minimum and maximum length
- * @param {String} text the text, what the function checks
+ * This function checks whether the length of a given text is between
+ * a minimum and a maximum value
+ * @param {String} text the text to checks
  * @param {Number} min minimum length
  * @param {Number} max maximum length
  * @return {Boolean} true, if the text's length is greater or equals the minimum length
@@ -122,12 +137,11 @@ function textLengthBetween(text, min, max){
 }
 
 /**
- * This function search a parameter in GET parameters, and returns
- * an array with all values which is the parametes's value
- * For example URL contains x=1&x=2, then the result array will contain
- * the 1 and the 2
- * @param {String} paramName the name of the get parameter
- * @return {Array} the result array, if the parameter is not exist, an empty array
+ * This function gets a parameter name and returns an array that contain every
+ * value that can be found in the GET variables under this parameter name.
+ * For example when the URL contains x=1&x=2, the result array will be [1,2]
+ * @param {String} paramName the name of the GET parameter
+ * @return {Array} the result array (empty if the parameter does not exist)
  */
 function GetURLParameter(paramName){
     var result = [];
