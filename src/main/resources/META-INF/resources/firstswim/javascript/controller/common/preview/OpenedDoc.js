@@ -145,12 +145,12 @@ enyo.kind(
 					if(!predicates[i].accepted) {
 						triples.removeMatches(null, predicates[i].text, null);
 					}
-				}				
+				}
 				var tempStore = rdfstore.create();				
 				tempStore.insert(triples, function() {
 					main.showVisualization(tempStore);
 					main.$.loader.hide();
-					$('body').css('cursor','auto');
+					$('html,body').css('cursor','auto');
 				});
 			});
 		},100);
