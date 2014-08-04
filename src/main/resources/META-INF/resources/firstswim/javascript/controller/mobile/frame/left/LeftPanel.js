@@ -23,7 +23,6 @@ enyo.kind(
 			searchFunction: 'search',
 			name: 'dictionaries',
 			titleClass: 'dictionariesMainTitle',
-			// showDetailsFunction: 'updateDetails'
 			showDetailsFunction: 'displayDetails'
 		},
         {
@@ -41,7 +40,7 @@ enyo.kind(
     ],
 
     /**
-     * This functions returns with the unchecked entities of the dictionaries.
+     * This function returns the unchecked entities of the dictionaries.
      * @return {Array} the unchecked entities
      */
     getUncheckedEntities: function(){
@@ -49,29 +48,29 @@ enyo.kind(
     },
 
     /**
-     * This function shows the "Documents" button in the mobile version.
+     * This function shows the 'Documents' button in the mobile version.
      */
     showDocsButton: function(){
         this.$.docsButton.show();
     },
 
     /**
-     * This function hides the "Documents" button in the mobile version.
+     * This function hides the 'Documents' button in the mobile version.
      */
     hideDocsButton: function(){
         this.$.docsButton.hide();
     },
 
     /**
-     * This function is called when the user push the "Documents" button. It calls
-     * the parent function which slide the documents panel.
+     * This function is called when the user presses the 'Documents' button.
+	 * It calls the parent function which slides the Documents panel.
      */
     searchShow: function(){
         this.owner.searchShow();
     },
 
     /**
-     * This function update the dictionary list from a dictionary object.
+     * This function updates the dictionary list from a dictionary object.
      * @param {Object} dictionaryObject the new dictionary list object
      */
     updateDictionaries: function(dictionaryObject){
@@ -79,7 +78,7 @@ enyo.kind(
     },
 
     /**
-     * This function calls the details box content update function.
+     * This function calls the details box content updater function.
      * @param {String} title the title of the details
      * @param {Object} addressObject the address object
      */
@@ -88,7 +87,7 @@ enyo.kind(
     },
 	
 	/**
-     * This function calls the details box content update function.
+     * This function calls the content updater function of the Details box.
 	 * @param {Object} rdf rdf with the metadata of the entity
 	 */
 	displayDetails: function(rdf){
@@ -96,8 +95,8 @@ enyo.kind(
 	},
 
     /**
-     * This function calls the parent's search function with searchword and the
-     * checked entity list.
+     * This function calls the parent's search function with the search
+	 * word and the checked entity list.
      * @param {String} searchWord the last search word
      * @param {String} checkedEntities the actual checked entities
      */

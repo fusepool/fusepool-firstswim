@@ -195,10 +195,11 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user click on the previewed document. If the
-     * popup menu exists and the user clicked with right button, and the
-     * selected text length's is good the entity menu will be showed. If the user
-     * click with other button (and the menu exists) the entity menu will be hided.
+     * This function runs when the user clicks on the previewed document. If the
+     * popup menu exists, the user clicked with right button, and the
+     * selected text length's is sufficient the entity menu is getting displayed.
+	 * If the user clicks with any other mouse button (and the menu exists),
+	 * the entity menu will be hidden.
      * @param {Object} inSender the previewed document
      * @param {Object} inEvent the event which contains information about the mouse
      */
@@ -216,7 +217,7 @@ enyo.kind(
     },            
 
     /**
-     * This function runs when the user push the "positive rate" button. It shows
+     * This function runs when the user pushes the 'positive rate' button. It shows
      * the rate popup with true (positive) parameter.
      */
     positiveRate: function(){
@@ -224,7 +225,7 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user push the "negative rate" button. It shows
+     * This function runs when the user pushes the 'negative rate' button. It shows
      * the rate popup with false (negative) parameter.
      */
     negativeRate: function(){
@@ -232,7 +233,7 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user push the "full view" button.
+     * This function runs when the user pushes the 'full view' button.
      */
     fullView: function(){
         alert('Full view function is coming soon...');
@@ -259,7 +260,7 @@ enyo.kind(
     },
 
     /**
-     * This function call the opened doc's openDoc function and shows the buttons.
+     * This function calls the opened doc's openDoc function and shows the buttons.
      * @param {String} docURI URI of the document to be opened
      */
     openDoc: function(docURI){
@@ -285,11 +286,11 @@ enyo.kind(
     },
 
     /**
-     * This function returns with opened document's document URL.
-     * @return {String} the URL
+     * This function returns the URI of the opened document.
+     * @return {String} document URI
      */
-    getDocumentURL: function(){
-        return this.$.openedDoc.getDocumentURL();
+    getDocumentURI: function(){
+        return this.$.openedDoc.getDocumentURI();
     }
 
 });

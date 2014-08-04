@@ -24,7 +24,7 @@ enyo.kind(
     ],
 
     /**
-     * This function set the popup's width
+     * This function sets the width of the popup window.
      * @param {Number} newWidth the new width in pixels
      * @param {Number} margin left and right margin in pixels
      */
@@ -35,7 +35,7 @@ enyo.kind(
     },
 
     /**
-     * This function return the popup's content
+     * This function returns the content in the popup window.
      * @return {String} the content
      */
     getContent: function(){
@@ -43,7 +43,7 @@ enyo.kind(
     },
 
     /**
-     * This function set the popup's content. It shows all about the popups.
+     * This function sets the content and opens the popup window.
      * @param {String} content the popup's new content
      */
     setContent: function(content){
@@ -61,8 +61,8 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user click out of the popup or to the close
-     * button. It hides all about the popup.
+     * This function runs when the user clicks out of the popup or on the close
+     * button. It hides the popup window.
      */
     close: function(){
         this.hide();

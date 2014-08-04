@@ -67,70 +67,70 @@ enyo.kind(
     ],
 
     /**
-     * This function shows the "Back" button.
+     * This function shows the 'Back' button.
      */
     showBackButton: function(){
         this.$.backButton.show();
     },
 
     /**
-     * This function hides the "Back" button.
+     * This function hides the 'Back' button.
      */
     hideBackButton: function(){
         this.$.backButton.hide();
     },
 
     /**
-     * This function is called when the user push the "Back" button. It calls
-     * the parent's function, which close this panel
+     * This function is called when the user push the 'Back' button.
+	 * It calls the parent's function, which closes this panel.
      */
     back: function(){
         this.owner[this.closeParentFunction]();
     },
 
     /**
-     * This function call the opened document's document opening function with
-     * the document's URL
-     * @param {String} documentURL the URL of the document
+     * This function calls the opened document's document opening
+	 * function with the document's URI
+     * @param {String} documentURI URI of the document
      */
-    openDoc: function(documentURL){
-        this.$.openedDoc.openDoc(documentURL);
+    openDoc: function(documentURI){
+        this.$.openedDoc.openDoc(documentURI);
     },
 
     /**
-     * This functions hides the preview
+     * This functions hides the preview panel.
      */
     clean: function(){
         this.$.openedDoc.hide();
     },
 
     /**
-     * This function returns the opened doc's document URL
-     * @return {String} the document URL
+     * This function returns the URI of the opened document.
+     * @return {String} the document URI
      */
-    getDocumentURL: function(){
-        return this.$.openedDoc.getDocumentURL();
+    getDocumentURI: function(){
+        return this.$.openedDoc.getDocumentURI();
     },
 
     /**
-     * This function is called when user push the "Add" button. It shows the
-     * add entity popup with the selected text.
+     * This function is called when the user presses the 'Add' button.
+	 * It shows the add entity popup with the selected text.
      */
     addEntity: function(){
 //        this.$.addEntityPopup.addEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
-     * This function is called when user push the "Move" button. It shows the
-     * move entity popup with the selected text.
+     * This function is called when the user push the 'Move' button.
+	 * It shows the move entity popup with the selected text.
      */
     moveEntity: function(){
 //        this.$.moveEntityPopup.moveEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
-     * This function is called when user push the "Remove" button. It shows the
-     * remove entity popup with the selected text.
+     * This function is called when the user presses the 'Remove' button.
+	 * It shows the remove entity popup with the selected text.
      */
     removeEntity: function(){
 //        this.$.removeEntityPopup.removeEntity(this.$.openedDoc.getSelectedText());

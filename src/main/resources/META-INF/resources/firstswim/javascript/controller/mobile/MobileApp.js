@@ -8,7 +8,7 @@ jQuery(document).ready(function () {
         enyo.Scroller.touchScrolling=true;
 
         /*
-         * This function create the user interface with the all components
+         * This function creates the user interface with all the components
          */
         function createUI(){
 
@@ -62,9 +62,9 @@ jQuery(document).ready(function () {
                 ],
 
                 /**
-                 * This function process the get parameters. If there is search word,
-                 * starts a search with the unchecked entities and if there is
-                 * previewed document, opens that.
+                 * This function processes GET parameters. If it finds 'search' or
+                 * 'entity', it fires a search and open the document if there is the
+                 * 'openPreview' parameter.
                  */
                 processGETParameters: function(){
                     // Search
@@ -77,39 +77,43 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function check that the window width is a mobile size
+                 * This function checks whether the window width is mobile size or not.
                  * @return {Boolean} true, if the screen size is maximum 800 pixels, otherwise false
                  */
                 isMobileSize: function(){
                     return jQuery(window).width() <= 800;
                 },
 
-                /** This function shows the middle panel */
+                /**
+				 * This function shows the middle panel
+				 */
                 searchShow: function(){
                     this.$.panels.setIndex(1);
                 },
 
-                /** This function shows the left panel */
+                /**
+				 * This function shows the left panel
+				 */
                 entityShow: function(){
                     this.$.panels.setIndex(0);
                 },
 
                 /**
-                 * This function open a document on the preview on the right side.
-                 * If the screen is little, shows only the right panel.
-                 * @param {String} documentURL the document what user want to see
+                 * This function opens a document in the preview panel.
+                 * If the screen size is small, it shows the right panel only.
+                 * @param {String} documentURI the document URI to be opened
                  */
-                openDoc: function(documentURL,type){
+                openDoc: function(documentURI, type){
                     if(this.isMobileSize()){
                         this.$.panels.setIndex(2);
                     }
-                    this.$.rightPanel.openDoc(documentURL);
-                    this.$.middlePanel.$.documents.sendDocListAnnotation(documentURL,type,'true');
+                    this.$.rightPanel.openDoc(documentURI);
+                    this.$.middlePanel.$.documents.sendDocListAnnotation(documentURI, type, 'true');
                 },
 				
                 /**
-                 * This function update the "open" buttons, like the
-                 * "entities button" on the middle
+                 * This function updates the 'open' buttons, (e.g. the
+                 * 'entities button' in the middle)
                  */
                 updateButtons: function(){
                     if(!this.isMobileSize()){
@@ -125,9 +129,9 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function is called when the screen size is changing or
-                 * the user rotate his/her mobile device. This function set the
-                 * actual panel depends on the screen size and update the buttons,
-                 * and change the bookmark popup's position.
+                 * the user rotates the device. This function sets the actual panel
+				 * according to the screen size, updates the buttons, and changes
+				 * the position of the bookmark popup.
                  */
                 reflow: function() {
                     this.inherited(arguments);
@@ -147,7 +151,7 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function create and save a bookmark, which contains the
+                 * This function creates and saves a bookmark, which contains the
                  * search word, the unchecked entities and the opened document
                  */
                 createBookmark: function(){
@@ -170,7 +174,7 @@ jQuery(document).ready(function () {
                             }
                         }
                         // Preview document
-                        var documentURL = this.$.rightPanel.getDocumentURL();
+                        var documentURL = this.$.rightPanel.getDocumentURI();
                         if(!isEmpty(documentURL)){
                             url += '&openPreview=' + documentURL;
                         }
@@ -183,7 +187,7 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * Show a bookmark message in a popup
+                 * This function shows a message in the bookmark popup.
                  * @param {String} message the message what the function shows
                  */
                 popupBookmark: function(message){
@@ -193,8 +197,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function calculate the popup position to the 
-                 * middle of the screen
+                 * This function calculates the position of the popup to be 
+                 * displayed in the middle of the screen.
                  */
                 changeBMPopupPosition: function(){
                     var margin = 30;
@@ -207,7 +211,7 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function call the ajax search if the search word is not empty
+                 * This function calls the ajax search if the search word is not empty.
                  * @param {String} searchWord the search word
                  * @param {Array} checkedEntities the unchecked entities on the left side
                  */
@@ -225,7 +229,7 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function sends an ajax request for searching
+                 * This function sends an ajax request for searching.
                  * @param {String} searchWord the search word
                  * @param {String} checkedEntities the checked entities on the left side
                  * @param {String} responseFunction the name of the response function
@@ -241,7 +245,7 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function creates the search URL for the query
+                 * This function creates the search URL for the query.
                  * @param {String} searchWord the search word
                  * @param {Array} checkedEntities the checked entities
                  * @param {Number} offset offset of the query
@@ -264,7 +268,7 @@ jQuery(document).ready(function () {
                     }
                     url += '?search='+searchWord;
                     if(checkedEntities.length > 0){
-                        url += this.getCheckedEntitesURL(checkedEntities);
+                        url += this.getCheckedEntitiesURL(checkedEntities);
                     }
                     url += '&offset='+offset+'&maxFacets='+readCookie('maxFacets')+'&items='+readCookie('items');
                     return url;
@@ -290,11 +294,12 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function creates the checked entites part of the search URL
+                 * This function creates a URL fraction that represents
+				 * the checked entities.
                  * @param {Array} checkedEntities the original checked entities
-                 * @returns {String} the URL part of the checked entities
+                 * @returns {String} built URL fraction
                  */
-                getCheckedEntitesURL: function(checkedEntities){
+                getCheckedEntitiesURL: function(checkedEntities){
                     var result = '';
                     for(var i=0;i<checkedEntities.length;i++){
                         if(!isEmpty(checkedEntities[i].id)){
@@ -307,9 +312,9 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function runs after the ajax search's finish. This function calls
-                 * the entity list updater and the document updater functions
-                 * @param {Boolean} success the search query was success or not
+                 * This function runs after the ajax search is getting finished.
+				 * It calls the entity list updater and the document updater functions.
+                 * @param {Boolean} success state of the search query
                  * @param {Object} rdf the response rdf object
                  */
                 processSearchResponse: function(success, rdf){
@@ -324,9 +329,10 @@ jQuery(document).ready(function () {
 				},
 
                 /**
-                 * This functions group and sort the entities update the entity list on the left side
-                 * @param {Object} rdf the rdf object which contains the new entity list
-                 * @param {String} searchWord the searched word
+                 * This function groups and sorts the entities and updates
+				 * the entity list on the left side.
+                 * @param {Object} rdf the rdf object
+                 * @param {String} searchWord the search word
                  */
                 updateEntityList: function(rdf, searchWord){
                     var checkedEntities = this.checkedEntitiesFromRdf(rdf);
@@ -364,8 +370,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function search the dictionary categories in an rdf object.
-                 * @param {Object} rdf the rdf object, which conatins the categories
+                 * This function searches for dictionary categories in an rdf object.
+                 * @param {Object} rdf the rdf object that contains the categories
                  * @returns {Array} the categories array with the entities
                  */
                 getCategories: function(rdf){
@@ -389,8 +395,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function search the checked entities in an rdf object and
-                 * return with it
+                 * This function searches for the checked entities in an rdf object,
+				 * and returns the array of it.
                  * @param {Object} rdf the rdf object
                  * @returns {Array} the checked entity list
                  */
@@ -417,10 +423,10 @@ jQuery(document).ready(function () {
                 },
 
                  /**
-                 * This function decide that an entity list contains an entity or not
-                 * @param {Array} entities the array of the entitites
+                 * This function decides whether an entity list contains an entity or not
+                 * @param {Array} entities array of the entities
                  * @param {String} entity the entity
-                 * @returns {Boolean} true, if the list contains the entity, false otherwise
+                 * @returns {Boolean} true if the list contains the entity, false otherwise
                  */
                 containsEntity: function(entities, entity){
                     for(var i=0;i<entities.length;i++){
@@ -432,8 +438,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function delete all entites in an array which are equal
-                 * with an entity after an index
+                 * This function deletes every entity from an array that equals
+                 * a given entity (after a given index).
                  * @param {Array} array the array
                  * @param {String} entity the checked entity
                  * @param {Number} fromIndex the start index in the array
@@ -451,8 +457,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function update the document list on the middle
-                 * @param {Object} rdf the rdf object which contains the new document list
+                 * This function updates the document list in the middle.
+                 * @param {Object} rdf the rdf object that contains the new document list
                  */
                 updateDocumentList: function(rdf){
                     var count = this.getDocumentsCount(rdf);
@@ -467,16 +473,16 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function delete the preview's content
+                 * This function deletes the content from the preview panel.
                  */
                 cleanPreviewBox: function(){
                     this.$.rightPanel.clean();
                 },
 
                 /**
-                 * This functions search the count of documents in an rdf object.
-                 * @param {Object} rdf the rdf object, which contains the count of documents.
-                 * @returns {Number} the count of documents
+                 * This function returns the count of documents in an rdf object.
+                 * @param {Object} rdf the rdf object
+                 * @returns {Number} count of documents
                  */
                 getDocumentsCount: function(rdf){
                     var result = 0;
@@ -490,9 +496,9 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-				 * This function creates ordered document list from the rdf object.
-                 * @param {Object} rdf the rdf object, which contains the documents
-                 * @returns {Array} the document list
+				 * This function creates an ordered document list from the rdf object.
+                 * @param {Object} rdf the rdf object
+                 * @returns {Array} array of containing documents
                  */
                 createDocumentList: function(rdf){
 					var documents = [];
@@ -570,8 +576,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function decide that a document list contains a document,
-                 * which has a same content and same title with another.
+                 * This function decides whether a document list contains
+				 * a document with a specific content and title or not.
                  * @param {Array} documents the list of documents
                  * @param {String} content content of the other document
                  * @param {String} title title of the other document

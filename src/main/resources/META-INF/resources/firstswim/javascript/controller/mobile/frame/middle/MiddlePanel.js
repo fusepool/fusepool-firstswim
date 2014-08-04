@@ -64,8 +64,8 @@ enyo.kind(
     ],
 	
 	/**
-	 * This function runs, when the user start a searching. It calls the document
-	 * list's startSearching function
+	 * This function runs when the user starts a search. It calls the document
+	 * list's startSearching function.
 	 */
 	startSearching: function(){
 		this.$.documents.startLoading();
@@ -79,8 +79,8 @@ enyo.kind(
     },
 
     /**
-     * This functions calls the bookmark's save bookmark function
-     * with an URL and a title
+     * This function calls the bookmark's save bookmark function
+     * with an URL and a title.
      * @param {String} url the new bookmark url
      * @param {String} title the new bookmark title
      */
@@ -89,24 +89,24 @@ enyo.kind(
     },
 
     /**
-     * This function calls the parent's function, which shows a warning message
-     * about the bookmark in a new popup
-     * @param {String} message the warning message
+     * This function calls the parent's function, which shows a
+	 * message about the bookmark in a new popup.
+     * @param {String} message the message
      */
     popupBookmark: function(message){
         this.owner[this.popupBookmarkFunction](message);
     },
 
     /**
-     * This function shows the entities button, which navigates to the entity
-     * list panel.
+     * This function shows the 'Entities' button that navigates
+	 * to the entity list panel.
      */
     showEntitiesButton: function(){
         this.$.entitiesButton.show();
     },
 
     /**
-     * This function hides the entites button.
+     * This function hides the 'Entites' button.
      */
     hideEntitiesButton: function(){
         this.$.entitiesButton.hide();
@@ -122,7 +122,7 @@ enyo.kind(
     /**
      * This function calls the parent's user interface update function.
      * @param {String} searchWord the latest search word
-     * @param {Array} uncheckedEntities the unchecked entities
+     * @param {Array} uncheckedEntities array of unchecked entities
      */
     updateUI: function(searchWord, uncheckedEntities){
         this.owner[this.mainSearchFunction](searchWord, uncheckedEntities);
@@ -137,7 +137,8 @@ enyo.kind(
     },
 
     /**
-     * This function calls the documents's addMoreDocuments function with the new documents.
+     * This function calls the documents' addMoreDocuments
+	 * function with the new documents.
      * @param {Array} documents the new list of documents
      */
     addMoreDocuments: function(documents){
@@ -153,15 +154,15 @@ enyo.kind(
     },
 
     /**
-     * This function calls the parent's openDoc funcion with the document URL
-     * @param {String} documentURL url of the document what the user want to see
+     * This function calls the parent's openDoc function with the document URI.
+     * @param {String} documentURI URI of the document to be opened
      */
-    openDoc: function(documentURL){
-        this.owner[this.openDocFunction](documentURL);
+    openDoc: function(documentURI){
+        this.owner[this.openDocFunction](documentURI);
     },
 
     /**
-     * This function update the searchbox's input text.
+     * This function updates the searchbox's input text.
      * @param {String} inputText the new input text
      */
     updateInput: function(inputText){
@@ -169,8 +170,8 @@ enyo.kind(
     },
 
     /**
-     * This function update the counts text with the new count value
-     * @param {Number} count the count of documents
+     * This function updates the counter with a given value.
+     * @param {Number} count count of documents
      */
     updateCounts: function(count){
         this.$.documentsCount.setContent('Documents: ' + count);
