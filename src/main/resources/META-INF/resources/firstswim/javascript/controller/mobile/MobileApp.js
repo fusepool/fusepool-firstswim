@@ -65,6 +65,7 @@ jQuery(document).ready(function () {
                  * This function processes GET parameters. If it finds 'search' or
                  * 'entity', it fires a search and open the document if there is the
                  * 'openPreview' parameter.
+				 * @method processGETParameters
                  */
                 processGETParameters: function(){
                     // Search
@@ -77,7 +78,8 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function checks whether the window width is mobile size or not.
+                 * This function returns whether the window width is mobile size or not.
+				 * @method isMobileSize
                  * @return {Boolean} true, if the screen size is maximum 800 pixels, otherwise false
                  */
                 isMobileSize: function(){
@@ -85,14 +87,16 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-				 * This function shows the middle panel
+				 * This function shows the middle panel.
+				 * @method searchShow
 				 */
                 searchShow: function(){
                     this.$.panels.setIndex(1);
                 },
 
                 /**
-				 * This function shows the left panel
+				 * This function shows the left panel.
+				 * @method entityShow
 				 */
                 entityShow: function(){
                     this.$.panels.setIndex(0);
@@ -101,6 +105,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function opens a document in the preview panel.
                  * If the screen size is small, it shows the right panel only.
+				 * @method openDoc
                  * @param {String} documentURI the document URI to be opened
                  */
                 openDoc: function(documentURI, type){
@@ -112,8 +117,9 @@ jQuery(document).ready(function () {
                 },
 				
                 /**
-                 * This function updates the 'open' buttons, (e.g. the
-                 * 'entities button' in the middle)
+                 * This function updates the 'open' buttons (e.g. the
+                 * 'entities button' in the middle).
+				 * @method updateButtons
                  */
                 updateButtons: function(){
                     if(!this.isMobileSize()){
@@ -132,6 +138,7 @@ jQuery(document).ready(function () {
                  * the user rotates the device. This function sets the actual panel
 				 * according to the screen size, updates the buttons, and changes
 				 * the position of the bookmark popup.
+				 * @method reflow
                  */
                 reflow: function() {
                     this.inherited(arguments);
@@ -151,8 +158,9 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function creates and saves a bookmark, which contains the
-                 * search word, the unchecked entities and the opened document
+                 * This function creates and saves a bookmark. It contains the
+                 * search word, the unchecked entities and the opened document.
+				 * @method createBookmark
                  */
                 createBookmark: function(){
                     if(!isEmpty(this.searchWord)){
@@ -188,6 +196,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function shows a message in the bookmark popup.
+				 * @method popupBookmark
                  * @param {String} message the message what the function shows
                  */
                 popupBookmark: function(message){
@@ -199,6 +208,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function calculates the position of the popup to be 
                  * displayed in the middle of the screen.
+				 * @method changeBMPopupPosition
                  */
                 changeBMPopupPosition: function(){
                     var margin = 30;
@@ -212,6 +222,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function calls the ajax search if the search word is not empty.
+				 * @method search
                  * @param {String} searchWord the search word
                  * @param {Array} checkedEntities the unchecked entities on the left side
                  */
@@ -230,6 +241,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function sends an ajax request for searching.
+				 * @method sendSearchRequest
                  * @param {String} searchWord the search word
                  * @param {String} checkedEntities the checked entities on the left side
                  * @param {String} responseFunction the name of the response function
@@ -246,10 +258,11 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function creates the search URL for the query.
+				 * @method createSearchURL
                  * @param {String} searchWord the search word
                  * @param {Array} checkedEntities the checked entities
                  * @param {Number} offset offset of the query
-                 * @returns {String} the search url
+                 * @return {String} the search url
                  */
                 createSearchURL: function(searchWord, checkedEntities, offset){
 				
@@ -276,15 +289,17 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function send a request for more documents.
-                 * @param {Number} offset the offset of the document (offset = 10 --> document in 10-20)
+				 * @method moreDocuments
+                 * @param {Number} offset the offset (offset = 10 --> document in 10-20)
                  */
                 moreDocuments: function(offset){
                     this.sendSearchRequest(this.searchWord, this.checkedEntities, 'processMoreResponse', offset);
                 },
 
                 /**
-                 * This function runs after the ajax more search's finish.
-                 * This function calls the document updater function
+                 * This function runs after getting the response from the ajax
+				 * more search. It calls the document updater function.
+				 * @method processMoreResponse
                  * @param {Boolean} success the search query was success or not
                  * @param {Object} rdf the response rdf object
                  */
@@ -296,8 +311,9 @@ jQuery(document).ready(function () {
                 /**
                  * This function creates a URL fraction that represents
 				 * the checked entities.
+				 * @method getCheckedEntitiesURL
                  * @param {Array} checkedEntities the original checked entities
-                 * @returns {String} built URL fraction
+                 * @return {String} built URL fraction
                  */
                 getCheckedEntitiesURL: function(checkedEntities){
                     var result = '';
@@ -314,6 +330,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function runs after the ajax search is getting finished.
 				 * It calls the entity list updater and the document updater functions.
+				 * @method processSearchResponse
                  * @param {Boolean} success state of the search query
                  * @param {Object} rdf the response rdf object
                  */
@@ -331,6 +348,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function groups and sorts the entities and updates
 				 * the entity list on the left side.
+				 * @method updateEntityList
                  * @param {Object} rdf the rdf object
                  * @param {String} searchWord the search word
                  */
@@ -371,8 +389,9 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function searches for dictionary categories in an rdf object.
+				 * @method getCategories
                  * @param {Object} rdf the rdf object that contains the categories
-                 * @returns {Array} the categories array with the entities
+                 * @return {Array} the categories array with the entities
                  */
                 getCategories: function(rdf){
                     var categories = [];
@@ -395,10 +414,11 @@ jQuery(document).ready(function () {
                 },
 
                 /**
-                 * This function searches for the checked entities in an rdf object,
+                 * This function searches for the checked entities in an rdf object
 				 * and returns the array of it.
+				 * @method checkedEntitiesFromRdf
                  * @param {Object} rdf the rdf object
-                 * @returns {Array} the checked entity list
+                 * @return {Array} the checked entity list
                  */
                 checkedEntitiesFromRdf: function(rdf){
                     var main = this;
@@ -423,10 +443,11 @@ jQuery(document).ready(function () {
                 },
 
                  /**
-                 * This function decides whether an entity list contains an entity or not
+                 * This function decides whether an entity list contains an entity or not.
+				 * @method containsEntity
                  * @param {Array} entities array of the entities
                  * @param {String} entity the entity
-                 * @returns {Boolean} true if the list contains the entity, false otherwise
+                 * @return {Boolean} true if the list contains the entity, false otherwise
                  */
                 containsEntity: function(entities, entity){
                     for(var i=0;i<entities.length;i++){
@@ -440,6 +461,7 @@ jQuery(document).ready(function () {
                 /**
                  * This function deletes every entity from an array that equals
                  * a given entity (after a given index).
+				 * @method deteleLaterEntities
                  * @param {Array} array the array
                  * @param {String} entity the checked entity
                  * @param {Number} fromIndex the start index in the array
@@ -458,6 +480,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function updates the document list in the middle.
+				 * @method updateDocumentList
                  * @param {Object} rdf the rdf object that contains the new document list
                  */
                 updateDocumentList: function(rdf){
@@ -474,6 +497,7 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function deletes the content from the preview panel.
+				 * @method cleanPreviewBox
                  */
                 cleanPreviewBox: function(){
                     this.$.rightPanel.clean();
@@ -481,8 +505,9 @@ jQuery(document).ready(function () {
 
                 /**
                  * This function returns the count of documents in an rdf object.
+				 * @method getDocumentsCount
                  * @param {Object} rdf the rdf object
-                 * @returns {Number} count of documents
+                 * @return {Number} count of documents
                  */
                 getDocumentsCount: function(rdf){
                     var result = 0;
@@ -497,8 +522,9 @@ jQuery(document).ready(function () {
 
                 /**
 				 * This function creates an ordered document list from the rdf object.
+				 * @method createDocumentList
                  * @param {Object} rdf the rdf object
-                 * @returns {Array} array of containing documents
+                 * @return {Array} array of containing documents
                  */
                 createDocumentList: function(rdf){
 					var documents = [];
@@ -578,10 +604,11 @@ jQuery(document).ready(function () {
                 /**
                  * This function decides whether a document list contains
 				 * a document with a specific content and title or not.
+				 * @method containsDocument
                  * @param {Array} documents the list of documents
                  * @param {String} content content of the other document
                  * @param {String} title title of the other document
-                 * @returns {Boolean} true, if the list contains, false otherwise
+                 * @return {Boolean} true, if the list contains, false otherwise
                  */
                 containsDocument: function(documents, content, title, url){
                     for(var i=0;i<documents.length;i++){

@@ -19,6 +19,7 @@ enyo.kind(
     /**
      * When the component is created the program sets the title's properties and
      * hides the loader.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);

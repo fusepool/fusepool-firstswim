@@ -8,7 +8,8 @@ enyo.kind(
     name: 'TopMessageBox',
 
     /**
-     * In the beginning this messagebox is not visible.
+     * In the beginning this message box is not visible.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -21,7 +22,8 @@ enyo.kind(
     ],
 
     /**
-     * This function update the message box's content.
+     * This function updates the content in the message box.
+	 * @method updateMessage
      * @param {String} newMessage the box's new content
      */
     updateMessage: function(newMessage){
@@ -30,7 +32,8 @@ enyo.kind(
     },
 
     /**
-     * This function close the top message box.
+     * This function closes the top message box.
+	 * @method close
      */
     close: function(){
         this.hide();

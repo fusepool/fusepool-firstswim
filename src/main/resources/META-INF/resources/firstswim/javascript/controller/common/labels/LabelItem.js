@@ -45,11 +45,19 @@ enyo.kind(
 		{ tag: 'span', name: 'labelAddButton', onclick: 'addPredictedLabel', content: '✔' },
 		{ tag: 'span', name: 'labelDeleteButton', onclick: 'deleteLabel', content: '✗' }
     ],
-
+	
+	/**
+	 * This function calls the delete function of the parent's parent.
+	 * @method deleteLabel
+	 */
     deleteLabel: function(){
         this.owner.owner[this.deleteFunction](this.labelText,this);
-    },
-	
+    },	
+
+	/**
+	 * This function calls the add function of the parent's parent.
+	 * @method addPredictedLabel
+	 */
 	addPredictedLabel: function(){
         this.owner.owner[this.addFunction](this.labelText,this);
 	}

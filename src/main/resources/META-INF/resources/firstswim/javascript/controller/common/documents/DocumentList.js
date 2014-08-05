@@ -28,8 +28,9 @@ enyo.kind(
     },
 
     /**
-     * When the component is created the program sets the title's properties and
+     * When the component is created, the program sets the title's properties and
      * hides it.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -67,6 +68,13 @@ enyo.kind(
         ]}
     ],
 
+	/**
+     * This function runs when the user activates/deactivates label prediction.
+	 * It sets the proper cookie value and calls the label prediction toggle
+	 * function of every 'shortDocument' children kinds.
+	 * @method toggleLabelPrediction
+     * @param {Object} inSender the activator checkbox
+	*/
     toggleLabelPrediction: function(inSender){
 		createCookie('labelPrediction', !inSender.checked, 30); //this is weird
         var shortDocuments = this.$.list.children;
@@ -76,7 +84,8 @@ enyo.kind(
     },
 	
     /**
-     * This function runs when the user activate/unactivate the ratings bar.
+     * This function runs when the user activates/deactivates the rating bar.
+	 * @method activateChecking
      * @param {Object} inSender the activator checkbox
      */
     activateChecking: function(inSender){
@@ -96,7 +105,11 @@ enyo.kind(
     },
 
     /**
-     * This funtion runs when the user pushes the 'Process' button.
+     * This function runs when the user clicks the 'Process' button.
+	 * It collects the sufficient information (checked facets,
+	 * search word and ratings) and calls the function which actually 
+	 * sends a classify request using this classify object.
+	 * @method processClassify
      */
     processClassify: function(){
         var classifyObject = {};
@@ -138,8 +151,10 @@ enyo.kind(
     },
 
     /**
-     * This function send the classify ajax request to the server with an classify object.
-     * @param {Object} classifyObject the classify object
+     * This function sends an ajax request to the server for classification
+	 * using a classify object.
+	 * @method sendClassifyRequest
+     * @param {Object} classifyObject the classify object containing every sufficient information
      */
     sendClassifyRequest: function(classifyObject){
         var sendJSON = JSON.stringify(classifyObject);
@@ -161,9 +176,11 @@ enyo.kind(
     },
 
     /**
-     * This function runs after the the classify query.
-     * @param {Boolean} success the classify request was success or not
-     * @param {Object} classifyResponse the response of the classify request
+     * This function runs when the classifying request returned a response.
+	 * It calls the classify response processor function of the parent kind.
+	 * @method processClassifyResponse
+     * @param {Boolean} success success status of the classification request
+     * @param {Object} classifyResponse the response of the classification request
      */
     processClassifyResponse: function(success, classifyResponse){
         this.$.loader.hide();
@@ -183,8 +200,10 @@ enyo.kind(
     },
 
     /**
-     * This function runs when the user push the 'More' button. It shows the loader, hides the 'More' button and
-     * send and ajax request with the new offset value.
+     * This function runs when the user clicks the 'More' button.
+	 * It shows the loader, hides the 'More' button and sends and ajax
+	 * request with the new offset value.
+	 * @method moreBtnPress
      */
     moreBtnPress: function(){
 		this.offset += readCookie('items');
@@ -194,8 +213,9 @@ enyo.kind(
     },
 	
     /**
-     * This function runs, when the user start a searching. It clears the list
+     * This function runs when the user fires a search. It clears the list
      * and shows the loader.
+	 * @method startLoading
      */
     startLoading: function(){
         this.$.list.setContent('');
@@ -208,11 +228,12 @@ enyo.kind(
     },
 
     /**
-     * This function update the document list from a documents object. This
+     * This function updates the document list using a document object. This
      * object contains the short documents.
+	 * @method updateList
      * @param {Array} documents the document list object
      * @param {String} searchWord the search word
-     * @param {Array} checkedEntities the checked facets and type facets
+     * @param {Array} checkedEntities checked facets and type facets
      */
     updateList: function(documents, searchWord, checkedEntities){
 		createCookie('lastSearch',searchWord,30);
@@ -276,7 +297,8 @@ enyo.kind(
     },
 
     /**
-     * This functions shows a message in the document list box
+     * This function shows a message in the document list box.
+	 * @method showMessage
      * @param {String} message the message what we want to show
      */
     showMessage: function(message){
@@ -285,14 +307,16 @@ enyo.kind(
     },
 
     /**
-     * This function updates the counts text
+     * This function updates the document counter.
+	 * @method updateCounts
      */
     updateCounts: function(){
         this.$.documentsCount.setContent('('+this.documentsCount+')');
     },
 
     /**
-     * This function add more documents to the existing document list.
+     * This function adds more documents to the existing document list.
+	 * @method addMoreDocuments
      * @param {Array} documents the new item of documents
      */
     addMoreDocuments: function(documents){
@@ -325,7 +349,7 @@ enyo.kind(
                 hideAddingPanelButtonClass: 'hideAddingPanelButton',
                 searchWord: this.searchWord
             });
-            this.sendDocListAnnotation(documents[i].url,documents[i].type,'false');
+            this.sendDocListAnnotation(documents[i].url, documents[i].type, 'false');
         }
         this.$.loader.hide();
         this.$.list.render();
@@ -334,25 +358,26 @@ enyo.kind(
 
     /**
      * This function is called when the user opens a document to preview.
-     * It calls a parent function, which can call the preview box to
-     * open a document.
-     * @param {String} url the request URL of the preview opening
-     * @param {Object} inEvent the user mouse event (it is important in the desktop version)
+     * It calls a parent function, which calls the preview box to open it.
+	 * @method openDoc
+     * @param {String} url the URL of the document
+     * @param {Object} inEvent the mouse event (important in the desktop version)
      */
     openDoc: function(url, type, inEvent){
         this.owner[this.openDocFunction](url, inEvent);
-        this.sendDocListAnnotation(url,type,'true');
+        this.sendDocListAnnotation(url, type, 'true');
     },
 	
     /**
      * This function prepares an annotation about the activities related to the
-	 * document list: which documents the user got back using what search query;
-	 * whether the user clicked on the documents. Then calls a parent function 
+	 * document list: which documents the user got using which search query;
+	 * whether the user clicked on the documents. It also calls a parent function 
 	 * which actually sends the request to the server.
+	 * @method sendDocListAnnotation
      * @param {String} docURI the URI of the document
      * @param {Number} click is it only displayed or clicked
      */
-	sendDocListAnnotation: function(docURI,docType,click) {
+	sendDocListAnnotation: function(docURI, docType, click) {
 		// console.log("DocumentAnnotation: " +this.searchWord+ ", " + docURI +  ", " + docType + " clicked: " + click);
 		var src = docType;
 		var currentDate = new Date().toISOString();
@@ -382,14 +407,17 @@ enyo.kind(
 	},
 
     /**
-     * This function updates the checkedNumber text with the offset and the checkedNumbers.
+     * This function updates the 'checkedNumber' text with the offset
+	 * and the checked numbers.
+	 * @method updateCheckedNumber
      */
     updateCheckedNumber: function(){
         this.$.checkedNumbers.setContent(this.checkedDocs + '/' + this.minClassifyDoc);
     },
 
     /**
-     * This function scrolls to the top.
+     * This function scrolls to the top of the document list.
+	 * @method scrollToTop
      */
     scrollToTop: function(){
         this.$.scroller.top = 0;
@@ -400,6 +428,7 @@ enyo.kind(
     /**
      * This function increases the number of checked documents and updates the
      * checked number text.
+	 * @method addCheck
      */
     addCheck: function(){
         this.checkedDocs++;
@@ -410,6 +439,7 @@ enyo.kind(
     /**
      * This function decreases the number of checked documents and updates the
      * checked number text.
+	 * @method removeCheck
      */
     removeCheck: function(){
         this.checkedDocs--;
@@ -418,8 +448,9 @@ enyo.kind(
     },
 
     /**
-     * This functions shows/hides the process button based on the
+     * This function shows/hides the process button based on the
 	 * current value of 'checkedDocs'.
+	 * @method showOrHideProcessButton
      */
     showOrHideProcessButton: function(){
         if(this.activeClassify && this.checkedDocs >= this.minClassifyDoc){

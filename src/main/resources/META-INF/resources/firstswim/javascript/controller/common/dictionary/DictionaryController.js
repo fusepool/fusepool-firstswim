@@ -24,6 +24,7 @@ enyo.kind(
     /**
      * When the component is created the program sets the title's properties and
      * hides it.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -50,7 +51,8 @@ enyo.kind(
     ],
             
     /**
-     * This function hides the all facet popup.
+     * This function hides the facet popup.
+	 * @method tapFacetList
      */
     tapFacetList: function(){
         // Hide checked facet popup
@@ -70,9 +72,10 @@ enyo.kind(
     },
 
     /**
-     * This function update the dictionary list from a dictionary object. This
-     * object contains a searchword, a dictionary array and the unchecked entites
-     * from the past.
+     * This function updates the dictionary list from a dictionary object. This
+     * object contains a search word, a dictionary array and the previously unchecked
+	 * entities.
+	 * @method updateLists
      * @param {Object} dictionaryObject the dictionary object
      */
     updateLists: function(dictionaryObject){
@@ -84,11 +87,13 @@ enyo.kind(
     },
 
     /**
-     * After the user over the mouse an entity, the program gets the details about
-     * the chosen entity, and this function is called for update the details box
-     * with the details title and an address object.
+	 * This function handles the actions that happen on mouseover event:
+	 * it sets the proper css classes and calls the detail displayer function of
+	 * the parent kind.
+	 * [replaced with function 'displayDetails']
+	 * @method updateDetails
      * @param {String} title the title of the details
-     * @param {Object} addressObject the address objects
+     * @param {Object} addressObject the address object
      */
     updateDetails: function(title, addressObject){
         this.setClasses(this.closeClasses);
@@ -97,8 +102,10 @@ enyo.kind(
     },
 
 	/**
-     * After the user hovers an entity, the program gets the details about
-     * the chosen entity, and this function is called for update the details box.
+	 * This function handles the actions that happen on mouseover event:
+	 * it sets the proper css classes and calls the detail displayer function of
+	 * the parent kind.
+	 * @method displayDetails
 	 * @param {Object} rdf rdf with the metadata of the entity
 	 */
     displayDetails: function(rdf){
@@ -108,8 +115,9 @@ enyo.kind(
     },
 	
     /**
-     * This function calls the parent's search function with searchword and the
+     * This function calls the parent's search function with search word and the
      * checked entity list.
+	 * @method filter
      * @param {String} entity the last checked/unchecked entity
      * @param {String} checked the entity was checked or unchecked
      */
@@ -126,10 +134,11 @@ enyo.kind(
     },
 
     /**
-     * This function search an entity object in the list of checked entities and
-     * return with the array index.
+     * This function looks up an entity object in the list of checked entities and
+     * returns the array index.
+	 * @method indexOfEntity
      * @param {Object} entityObject the searched entity object
-     * @returns the array index if the list contains the entity, -1 otherwise
+     * @return {Number} the array index if the list contains the entity, -1 otherwise
      */
     indexOfEntity: function(entityObject){
         for(var i=0;i<this.checkedEntities.length;i++){
@@ -141,7 +150,8 @@ enyo.kind(
     },
 
     /**
-     * This function update the checked entity list
+     * This function updates the checked entity list.
+	 * @method updateCheckedDictionaries
      */
     updateCheckedDictionaries: function(){
         this.$.checkedList.destroyClientControls();
@@ -172,7 +182,8 @@ enyo.kind(
     },
 
     /**
-     * This function update the dictionary list
+     * This function updates the dictionary list.
+	 * @method updateDictionaryList
      * @param {Array} dictionaries list of the new dictionaries
      */
     updateDictionaryList: function(dictionaries){

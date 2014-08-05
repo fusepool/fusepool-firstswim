@@ -19,8 +19,9 @@ enyo.kind(
     },
 
     /**
-     * When this component is created this function set the button's and the
-     * popup's properties.
+     * When the component is created this function sets the css classes of the button
+	 * and the popup.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -37,6 +38,7 @@ enyo.kind(
      * This function runs when the user push the bookmark button. If the
      * parentTapFunction is not empty, it calls the parent's function, otherwise
      * calls the own saveBookmark function.
+	 * @method tapBookmarkButton
      */
     tapBookmarkButton: function(){
         if(this.parentTapFunction !== ''){
@@ -52,6 +54,7 @@ enyo.kind(
      * manually. If any the parameters are empty, the function use the default
      * URL and title. If the URL doesn't start with the "http://" text, it concatenates
      * this text with the URL.
+	 * @method saveBookmark
      * @param {String} url the URL of the bookmark
      * @param {String} title the title of the bookmark
      */

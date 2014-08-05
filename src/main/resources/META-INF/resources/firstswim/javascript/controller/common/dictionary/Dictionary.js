@@ -26,6 +26,7 @@ enyo.kind(
     /**
      * The create function set the css classes, the contents and creates an entity
      * list into the dictionary.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -61,6 +62,11 @@ enyo.kind(
         }
     },
 
+	/**
+	 * This function returns the list object.
+	 * @method getEntities
+	 * @return the list object
+	 */
     getEntities: function(){
         return this.$.list;
     },
@@ -69,6 +75,7 @@ enyo.kind(
      * After the user over the mouse an entity, the program gets the details about
      * the chosen entity, and this function is called for update the details box
      * with the details title and an address object.
+	 * @method updateDetails
      * @param {String} title the title of the details
      * @param {Object} addressObject the address objects
      */
@@ -79,6 +86,7 @@ enyo.kind(
 	/**
      * After the user hovers an entity, the program gets the details about
      * the chosen entity, and this function is called for update the details box.
+	 * @method displayDetails
 	 * @param {Object} rdf rdf with the metadata of the entity
 	 */
     displayDetails: function(rdf){
@@ -86,8 +94,8 @@ enyo.kind(
     },
 
     /**
-     * This function decide that an entity is checked or not (the checked
-     * list contains the entity or not).
+     * This function returns whether an entity is checked or not.
+	 * @method isCheckedEntity
      * @param {String} entity the entity what the function check
      * @return {Boolean} true, if it is checked, false otherwise
      */
@@ -103,6 +111,7 @@ enyo.kind(
     /**
      * This function is called when the user checks/unchecks an entity.
      * It handles the unchecked entity list and calls the parent filter function.
+	 * @method updateEntities
      * @param {Object} entity the chosen entity
      * @param {Boolean} checked the entity is checked or not
      */

@@ -32,8 +32,9 @@ enyo.kind(
     },
 
     /**
-     * When the component is created the program set the content's properties and
-     * join the openDocEvent event to the shortDoc component.
+     * When the component is created the program sets the content's properties and
+     * binds the 'openDocEvent' event to the 'shortDoc' component.
+	 * @method create
      */
     create: function(){
 		this.inherited(arguments);
@@ -59,7 +60,8 @@ enyo.kind(
     },
 
     /**
-     * After the rendering, the positive/negative slider will be initialized.
+     * After rendering, the positive/negative slider is being initialized.
+	 * @method rendered
      */
     rendered: function(){
         this.inherited(arguments);
@@ -112,11 +114,12 @@ enyo.kind(
     ],
 
 	/**
-	* This function is called when the user enables/disables
-	* label prediction. It calls the toggle function of each
-	* label lists'.
-	* @param {Boolean} enable state of label prediction
-	*/
+	 * This function is called when the user enables/disables
+	 * label prediction. It calls the toggle function of each
+	 * label lists'.
+	 * @method togglePredictedLabelLists
+	 * @param {Boolean} enable state of label prediction
+	 */
 	togglePredictedLabelLists: function(enable) {
         var labelList = this.$.labelListContainer.children;
         for(var i=0;i<labelList.length;i++){
@@ -125,7 +128,8 @@ enyo.kind(
 	},
 	
     /**
-     * This functions hides the document popup menu.
+     * This function hides the document popup menu.
+	 * @method leaveMenu
      */
     leaveMenu: function(){
         this.$.documentMenu.hide();
@@ -134,6 +138,7 @@ enyo.kind(
     /**
      * This function is called when the user clicks on the
 	 * 'Open in new tab' menu item.
+	 * @method openInNewTab
      */
     openInNewTab: function(){
         this.$.documentMenu.hide();
@@ -143,6 +148,7 @@ enyo.kind(
     /**
      * This function runs on 'openDocEvent' events (ontap, ontouch, onenter, etc).
 	 * It calls the parent's function which opens the document in the preview.
+	 * @method openDoc
      * @param {Object} inSender the component where the event is fired (shortDoc)
      * @param {Object} inEvent the fired event (important in the desktop version)
      */
@@ -153,6 +159,7 @@ enyo.kind(
 
     /**
      * This function runs when the user clicsk on the document icon.
+	 * @method tapIcon
      * @param {Object} inSender the document icon
      * @param {Object} inEvent the click event
      */
@@ -165,7 +172,8 @@ enyo.kind(
     /**
      * This function shows/hides the slider bar according to the
 	 * 'activated' parameter
-     * @param {Boolean} activated show the slidebar or not
+	 * @method updateRatings
+     * @param {Boolean} activated display status of the slide bar
      */
     updateRatings: function(activated){
         this.showSlidebar = activated;
@@ -180,6 +188,7 @@ enyo.kind(
     /**
      * This function runs when the user slides the bar.
 	 * It calls the parent addCheck or removeCheck function.
+	 * @method checking
      */
     checking: function(){
         if(this.prevCheckVal === 1){

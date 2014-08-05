@@ -23,6 +23,7 @@ enyo.kind(
     /**
      * When the component is created, the program sets the title's properties,
      * hides the loader and calls the function which handles resizing actions.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -42,6 +43,7 @@ enyo.kind(
     /**
      * This function runs when the user starts a search. It clears the current 
      * content and shows the loader.
+	 * @method startLoading
      */
     startLoading: function(){
         this.$.loader.show();
@@ -52,8 +54,9 @@ enyo.kind(
 	
 	/**
 	 * This function returns default values for the graph.
+	 * @method getGraphDefaults
 	 * @param {String} propertyName name of the property (animation/edge/node/navigation/background)
-	 * @returns {Object} the value
+	 * @return {Object} the value
 	 */
 	getGraphDefaults: function(propertyName) {
 		switch(propertyName) {
@@ -79,6 +82,7 @@ enyo.kind(
 	
 	/**
 	 * This function runs a search.
+	 * @method search
 	 * @param {Object} nodeObj the current node
 	 * @param {String} URI URI of the node
 	 * @param {Number} level the current level
@@ -107,8 +111,9 @@ enyo.kind(
 	
 	/**
 	 * This function creates the document list from the rdf object.
+	 * @method createDocumentList
 	 * @param {Object} rdf the rdf object, which contains the documents
-	 * @returns {Array} the document list
+	 * @return {Array} the document list
 	 */
 	createDocumentList: function(rdf){
 		var documents = [];
@@ -146,6 +151,7 @@ enyo.kind(
 	 * This function gets the documents and pushes them to the nodeObj
 	 * as child nodes, and calls the buildGraphJSON to continue building
 	 * the graph on the given branch. 
+	 * @method addDocNodes
 	 * @param {Object} docNodes retrieved documents
 	 * @param {Object} nodeObj points to the parent node
 	 * @param {Number} level the current level
@@ -163,6 +169,7 @@ enyo.kind(
 	 * It's set to 3, the centre node is level 0. This object will be used to feed the 
 	 * graph. Important: The centre node must be initialized already before calling
 	 * this function.
+	 * @method buildGraphJSON
 	 * @param {Object} nodeObj the current node
 	 * @param {String} URI an entity that filters the result. "query" means no filter (for centre node)
 	 * @param {Number} level the current level
@@ -192,15 +199,16 @@ enyo.kind(
 	},
 	
 	/**
-	* After getting the subject children of a given document,
-	* this function iterates through them and initializes the 
-	* nodes in the graph after getting the label information.
-	* @param {Object} nodeObj the parent node
-	* @param {Object} subjNodes the extracted children
-	* @param {Number} nodeLimit the node limit on the current level
-	* @param {Number} level the current level 
-	* @param {Number} i the current index 
-	*/
+	 * After getting the subject children of a given document,
+	 * this function iterates through them and initializes the 
+	 * nodes in the graph after getting the label information.
+	 * @method createSubjNodes
+	 * @param {Object} nodeObj the parent node
+	 * @param {Object} subjNodes the extracted children
+	 * @param {Number} nodeLimit the node limit on the current level
+	 * @param {Number} level the current level 
+	 * @param {Number} i the current index 
+	 */
 	createSubjNodes: function(nodeObj, subjNodes, nodeLimit, level, i){
 		var main=this;
 		if(i<( level >= nodeLimit.length ? 4 : nodeLimit[level]) && i<subjNodes.length) {
@@ -228,9 +236,10 @@ enyo.kind(
 	/**
 	 * This function filters an rdf object and returns an array of URIs found in
 	 * dc:subject
+	 * @method getSubjectConnections
 	 * @param {Boolean} success whether the search query was success or not
 	 * @param {Object} rdf the response rdf object
-	 * @returns {Array} URIs of the connected subjects
+	 * @return {Array} URIs of the connected subjects
 	 */
 	getSubjectConnections: function(success, rdf) {
 		var subjectConnections = [];
@@ -253,6 +262,7 @@ enyo.kind(
 	/**
 	 * After a new search term has been entered, the graph is being redrawn.
 	 * In case of the very first search, a completely new graph is being initialized.
+	 * @method newGraph
 	 */
 	newGraph: function() {
         this.searchWord = this.owner.searchWord;
@@ -312,6 +322,7 @@ enyo.kind(
 	
 	/** 
 	 * This function redraws the graph using the object in the graphJSON variable.
+	 * @method redrawGraph
 	 */
 	redrawGraph: function() {
 		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults('animation'));
@@ -321,6 +332,7 @@ enyo.kind(
      * This function is called when the user clicks on a node.
 	 * It calls a parent function, which can call the preview box
 	 * to open a document.
+	 * @method onNodeClick
 	 * @param {Object} node the clicked node
 	 * @param {Event} inEvent the click event
      */
@@ -335,6 +347,7 @@ enyo.kind(
 	/**
 	 * This function clears the timeout that has been set 
 	 * for node hover.
+	 * @method onNodeLeave
 	 * @param {Object} node the clicked node
 	 * @param {Event} inEvent the click event
 	 */
@@ -344,6 +357,7 @@ enyo.kind(
 	
 	/**
 	 * This function sets a 1 sec timeout before displaying details.
+	 * @method onNodeHover
 	 * @param {Object} node the clicked node
 	 * @param {Event} inEvent the click event
 	 */
@@ -359,9 +373,10 @@ enyo.kind(
 	},
 	
 	/**
-	* This functions shows a message in the network-graph panel
-	* @param {String} message the message to be displayed
-	*/
+	 * This functions shows a message in the network-graph panel
+	 * @method showMessage
+	 * @param {String} message the message to be displayed
+	 */
     showMessage: function(message){
         this.$.nGraphDiv.destroyClientControls();
         this.$.nGraphDiv.setContent(message);
@@ -370,6 +385,7 @@ enyo.kind(
 	/**
 	 * This function defines a function on window resize event which 
 	 * which calls the div resize handler function.
+	 * @method canvasResizer
 	 */
 	canvasResizer: function() {
 		var main=this;
@@ -379,6 +395,7 @@ enyo.kind(
 	/**
 	 * This function resizes the graph canvas to the proper size.
 	 * It should be called after any resize event happens.
+	 * @method onDivResize
 	 */
 	onDivResize: function() {
 		var main=this;

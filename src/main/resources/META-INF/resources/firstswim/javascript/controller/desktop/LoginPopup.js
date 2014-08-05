@@ -48,7 +48,11 @@ enyo.kind(
         ]},
         { name: 'closeButton', ontap: 'close', classes: 'loginCloseButton' }
     ],
-
+	
+	/**
+	 * This function initializes the login panel based on the cookie values.
+	 * @method initLogin
+	 */
     initLogin: function(){
 		if(readCookie('currentUser') == 'anonymous') {
 			this.$.emailRow.hide();
@@ -69,8 +73,13 @@ enyo.kind(
         this.close();
 	},
 	
+	/**
+	 * This function is called when the user clicks on 'Sign out'.
+	 * It hides and shows the proper panels and sets the cookie value.
+	 * @method signOut
+	 */
 	signOut: function(){
-		createCookie('currentUser','anonymous',30);	
+		createCookie('currentUser', 'anonymous', 30);	
 		this.hideCurrentUser();
 		
 		this.$.loginTable.show();
@@ -87,8 +96,9 @@ enyo.kind(
 	},
 	
     /**
-     * This function is called when the tap the "Back" button on the registration
+     * This function is called when the tap the 'Back' button on the registration
      * popup hide the registration's components and shows the login's componens.
+	 * @method back
      */
     back: function(){
         this.$.loginBackBtn.hide();
@@ -100,7 +110,10 @@ enyo.kind(
     },
 
     /**
-     * This funtion runs when the user push the "Sign In" button.
+     * This function runs when the user clicks on 'Sign In'. It starts
+	 * a request to the server and based on the response, it either
+	 * calls the 'signInFailed' or the 'signInSucceed' function.
+	 * @method signIn
      */
     signIn: function(){
 		this.hideLoginMessage();
@@ -125,6 +138,11 @@ enyo.kind(
 		});
     },
 	
+    /**
+     * This function runs after a successful login. It creates the proper
+	 * cookie and sets the login panel to logged in state.
+	 * @method signInSucceed
+     */
 	signInSucceed: function(userName){
 		createCookie('currentUser',userName,30);
 		this.$.loginStatus;
@@ -143,6 +161,10 @@ enyo.kind(
 		getUserLabels(userName);
     },
 	
+    /**
+     * This function runs after an unsuccessful login. It shows an error message.
+	 * @method signInFailed
+     */
 	signInFailed: function(errorMessage){
 		this.showLoginMessage(errorMessage);
     },
@@ -151,6 +173,7 @@ enyo.kind(
      * This function called when the tap the "Sign Up" button. If the registration
      * panel is active, the ajax request will be sent in the future, otherwise
      * it shows the registration's fields.
+	 * @method signUp
      */
     signUp: function(){
 		this.hideLoginMessage();
@@ -187,15 +210,31 @@ enyo.kind(
         }
     },
 	
+    /**
+     * This function runs after an unsuccessful registration.
+	 * It shows an error message.
+	 * @method registrationFailed
+     */
 	registrationFailed: function(errorMessage) {
 		this.showLoginMessage(errorMessage);
 	},
 	
+    /**
+     * This function runs after a successful registration.
+	 * It switches back the panel to login state and informs
+	 * the user about the successful registration.
+	 * @method registrationSucceed
+     */
 	registrationSucceed: function() {
 		this.back();
 		this.showLoginMessage('Successful registration. Now you can sign in.');
 	},
 	
+    /**
+     * This function validates the entered data in the fields
+	 * of the registration panel.
+	 * @method validateFields
+     */
 	validateFields: function() {
 		var valid = true;
 		
@@ -214,26 +253,48 @@ enyo.kind(
 		return valid;
 	},
 	
+    /**
+     * This function clears and hides the 'currentUserLabel' panel.
+	 * @method hideCurrentUser
+     */
 	hideCurrentUser: function() {
 		this.$.currentUserLabel.hide();
 		this.$.currentUserLabel.setContent('');
 	},
 	
+    /**
+     * This function displays a text in the 'currentUserLabel' panel
+	 * (either a username or a message about being logged out).
+	 * @method showCurrentUser
+     */
 	showCurrentUser: function(userStatus) {
 		this.$.currentUserLabel.show();
 		this.$.currentUserLabel.setContent(userStatus);
 	},
 	
+    /**
+     * This function hides the current message in the panel.
+	 * @method hideLoginMessage
+     */
 	hideLoginMessage: function() {
 		this.$.loginMessage.hide();
 		this.$.loginMessage.setContent('');
 	},
 	
+    /**
+     * This function shows a message.
+	 * @method showLoginMessage
+     */
 	showLoginMessage: function(message) {
 		this.$.loginMessage.show();
 		this.$.loginMessage.setContent(message);
 	},
 	
+    /**
+     * This function calls the 'signIn' function when the user
+	 * presses Enter in the login panel.
+	 * @method onKeydown
+     */
 	onKeydown: function(inSender, inEvent) {
 		if(!this.realSignUp) {
 			switch(inEvent.keyCode) {
@@ -246,6 +307,7 @@ enyo.kind(
 
     /**
      * This function shows all fields of the registration.
+	 * @method showRegisterFields
      */
     showRegisterFields: function(){
         this.$.loginBackBtn.show();
@@ -255,7 +317,8 @@ enyo.kind(
     },
 
     /**
-     * This function shows the whole popup.
+     * This function shows the login panel.
+	 * @method showLogin
      */
     showLogin: function(){
         this.$.popup.show();
@@ -266,6 +329,7 @@ enyo.kind(
     /**
      * This function runs when the user clicks out of the popup or to the close
      * button. It hides the whole popup.
+	 * @method close
      */
     close: function(){
 		this.hideLoginMessage();

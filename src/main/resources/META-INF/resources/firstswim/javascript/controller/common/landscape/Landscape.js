@@ -17,6 +17,7 @@ enyo.kind(
     /**
      * When the component is created the program sets the title's properties and
      * hides the loader.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -33,14 +34,17 @@ enyo.kind(
     ],
 	
     /**
-     * This function runs, when the user starts a search. It only shows the loader yet.
+     * This function runs, when the user starts a search.
+	 * Currently does nothing.
+	 * @method startLoading
      */
     startLoading: function(){ },
 	
 	/**
-	* After the elements have been rendered, the Landscape
-	* module is being initialized.
-	*/
+	 * After the elements have been rendered, the Landscape
+	 * module is being initialized.
+	 * @method rendered
+	 */
 	rendered: function() {
 		this.inherited(arguments); // important! must call the inherited method
 		if (this.hasNode()) {

@@ -17,7 +17,8 @@ enyo.kind(
 
 	/**
      * When the component is created, the proper state and label is being set.
-	*/
+	 * @method create
+	 */
     create: function(){
         this.inherited(arguments);
         this.$.predicateText.setContent(this.predicateText);
@@ -46,11 +47,12 @@ enyo.kind(
     ],
 
 	/**
-	* This function is called when the user clicks on the
-	* dismiss icon. It sets the visual state of the element 
-	* and calls the proper function of the parent object 
-	* which handles this action. 
-	*/
+	 * This function is called when the user clicks on the
+	 * dismiss icon. It sets the visual state of the element 
+	 * and calls the proper function of the parent object 
+	 * which handles this action. 
+	 * @method dismissPredicate
+	 */
     dismissPredicate: function(){
         this.owner.owner[this.dismissFunction](this.predicateText);
 		this.$.acceptPredicateButton.show();
@@ -59,11 +61,12 @@ enyo.kind(
     },
 	
 	/**
-	* This function is called when the user clicks on the
-	* accept icon. It sets the visual state of the element 
-	* and calls the proper function of the parent object 
-	* which handles this action. 
-	*/
+	 * This function is called when the user clicks on the
+	 * accept icon. It sets the visual state of the element 
+	 * and calls the proper function of the parent object 
+	 * which handles this action. 
+	 * @method acceptPredicate
+	 */
 	acceptPredicate: function(){
         this.owner.owner[this.acceptFunction](this.predicateText);
 		this.$.acceptPredicateButton.hide();

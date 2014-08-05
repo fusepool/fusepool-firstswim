@@ -44,6 +44,7 @@ enyo.kind(
 
     /**
      * The create function sets the content of the label list based on the doc URI
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -61,9 +62,10 @@ enyo.kind(
     },
 	
 	/**
-	* This function is fired when the user selects a label
-	* from user label list.
-	*/
+	 * This function is fired when the user selects a label
+	 * from user label list.
+	 * @method userLabelSelection
+	 */
 	userLabelSelection: function(inSender, inEvent) {
 		this.addUserLabel(inEvent.selected.content);
 	},
@@ -72,9 +74,10 @@ enyo.kind(
 	},
 	
 	/**
-	* This function calls the back-end for predicted and existing 
-	* labels and initializes the lists based on the return value.
-	*/
+	 * This function calls the back-end for predicted and existing 
+	 * labels and initializes the lists based on the return value.
+	 * @method initLabels
+	 */
 	initLabels: function() {
 		this.labelTexts = [];
 		this.predictedLabelTexts = [];
@@ -149,10 +152,11 @@ enyo.kind(
 	},
 		
 	/**
-	* This function shows/hides the list of predicted labels
-	* based on the 'enable' parameter.
-	* @param {Boolean} enable enable/disable label prediction 
-	*/
+	 * This function shows/hides the list of predicted labels
+	 * based on the 'enable' parameter.
+	 * @method togglePredictedLabelLists
+	 * @param {Boolean} enable enable/disable label prediction 
+	 */
 	togglePredictedLabelLists: function(enable) {
 		if(enable=="true" && this.predictedLabelTexts.length > 0) {
 			this.$.predictedLabelListName.show();
@@ -165,10 +169,11 @@ enyo.kind(
 	},
 	
 	/**
-	* This function runs when the user clicks on the 
-	* 'Add label' button. It displays the panel in which
-	* users can add labels using the input field.
-	*/
+	 * This function runs when the user clicks on the 
+	 * 'Add label' button. It displays the panel in which
+	 * users can add labels using the input field.
+	 * @method addMoreLabelsBtnPress
+	 */
 	addMoreLabelsBtnPress: function() {
 		this.$.addMoreLabelsButton.hide();
 		this.$.moreLabelsPanel.show();
@@ -176,22 +181,24 @@ enyo.kind(
 	},
 		
 	/**
-	* This function runs when the user clicks on the 
-	* 'Close' button. It hides the panel in which
-	* users can add labels using the input field.
-	*/
+	 * This function runs when the user clicks on the 
+	 * 'Close' button. It hides the panel in which
+	 * users can add labels using the input field.
+	 * @method hideAddingPanelBtnPress
+	 */
 	hideAddingPanelBtnPress: function() {
 		this.$.addMoreLabelsButton.show();
 		this.$.moreLabelsPanel.hide();		
 	},
 	
 	/**
-	* This function handles keypress events. On pressing 
-	* 'Enter' it adds the entered label. On pressing 'Esc'
-	* it closes the panel.
-	* @param {Object} inSender the sender object
-	* @param {Object} inEvent the fired event
-	*/
+	 * This function handles key press events. On pressing 
+	 * 'Enter' it adds the entered label. On pressing 'ESC'
+	 * it closes the panel.
+	 * @method onKeydown
+	 * @param {Object} inSender the sender object
+	 * @param {Object} inEvent the fired event
+	 */
 	onKeydown: function(inSender, inEvent) {
 		switch(inEvent.keyCode) {
 			case 13:	// Enter
@@ -204,9 +211,10 @@ enyo.kind(
 	},
 	
 	/**
-	* This function adds a label from the input field to the
-	* list of existing labels. 
-	*/
+	 * This function adds a label from the input field to the
+	 * list of existing labels.
+	 * @method addNewLabel
+	 */
 	addNewLabel: function() {		
 		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
 		if(newLabelText!='' && $.inArray(newLabelText,this.labelTexts)<0 ) {
@@ -238,8 +246,9 @@ enyo.kind(
 	},
 	
 	/**
-	* This function adds a predicted label to the list of existing labels. 
-	*/
+	 * This function adds a predicted label to the list of existing labels. 
+	 * @method addPredictedLabel
+	 */
 	addPredictedLabel: function(labelText,labelElement) {		
 		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
 			
@@ -272,8 +281,9 @@ enyo.kind(
 	},
 	
 	/**
-	* This function adds a user label to the list of existing labels. 
-	*/
+	 * This function adds a user label to the list of existing labels. 
+	 * @method addUserLabel
+	 */
 	addUserLabel: function(labelText) {		
 		if(labelText!='' && $.inArray(labelText,this.labelTexts)<0 ) {
 			
@@ -306,6 +316,7 @@ enyo.kind(
     /**
      * This function deletes a label from the GUI and sends an annotation
 	 * to the server about it.
+	 * @method deleteLabel
 	 * @param {String} labelText name of the label
 	 * @param {Object} labelElement the label element
      */
@@ -330,12 +341,13 @@ enyo.kind(
     },
 	
 	/**
-	* This function creates the proper annotation string
-	* and fires the annotation sender function.
-	* @param {String} docURI URI of the related document
-	* @param {String} labelText name of the label
-	* @param {Number} action type of the click action (1 = accept; -1 = dismiss)
-	*/
+	 * This function creates the proper annotation string
+	 * and fires the annotation sender function.
+	 * @method sendLabelListAnnotation
+	 * @param {String} docURI URI of the related document
+	 * @param {String} labelText name of the label
+	 * @param {Number} action type of the click action (1 = accept; -1 = dismiss)
+	 */
 	sendLabelListAnnotation: function(docURI,labelText,action) {
 				
 		var currentDate = new Date().toISOString();

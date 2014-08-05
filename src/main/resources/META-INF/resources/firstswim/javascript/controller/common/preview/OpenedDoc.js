@@ -21,6 +21,7 @@ enyo.kind(
      * When this component is created, it overwrites the right click listener
      * because of the popup menu in the desktop version. It disables the default popup menu.
 	 * The content's and loader's properties are being set.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -48,6 +49,7 @@ enyo.kind(
     /**
      * This function is called when window size is changing and it should
      * modify the opened document's height too.
+	 * @method changeHeight
      * @param {Number} newHeight the new height in pixels
      */
     changeHeight: function(newHeight){
@@ -57,6 +59,7 @@ enyo.kind(
 
     /**
      * This function returns the selected text in the window.
+	 * @method getSelectedText
      * @return {String} the trimmed selected text
      */
     getSelectedText: function(){
@@ -78,6 +81,7 @@ enyo.kind(
     /**
      * This function clears the document's content and 
 	 * the predicate annotator.
+	 * @method clearAll
      */
     clearAll: function(){
 		this.$.content.setContent('');
@@ -93,6 +97,7 @@ enyo.kind(
 	 * meta-graph of the given document. It asks for predicate 
 	 * prediction, creates the predicate annotator panel and 
 	 * calls a function which processes the prediction result.
+	 * @method processDocGraph
      */
     processDocGraph: function(){
         this.show();
@@ -129,12 +134,13 @@ enyo.kind(
     },
 	
 	/**
-	* This function is responsible for sending the opened
-	* document's graph to the visualizer. It gets an array of 
-	* predicates and cuts the graph according to the status
-	* (accepted: true/false) of this set.
-	* @param {Array} predicates array of predicates 
-	*/
+	 * This function is responsible for sending the opened
+	 * document's graph to the visualizer. It gets an array of 
+	 * predicates and cuts the graph according to the status
+	 * (accepted: true/false) of this set.
+	 * @method filterGraph
+	 * @param {Array} predicates array of predicates 
+	 */
 	filterGraph: function(predicates) {				
 		this.clearVisualization();
 		var main = this;
@@ -157,17 +163,19 @@ enyo.kind(
 	},
 	
 	/**
-	* This function clears the visualizer panel.
-	*/
+	 * This function clears the visualizer panel.
+	 * @method clearVisualization
+	 */
 	clearVisualization: function() {
 		$("#" + this.$.content.getId()).html('');
 	},
 	
 	/**
-	* This function passes a given RDF store object to 
-	* Uduvudu which displays the document.
-	* @param {Object} store the store object
-	*/
+	 * This function passes a given RDF store object to 
+	 * Uduvudu which displays the document.
+	 * @method showVisualization
+	 * @param {Object} store the store object
+	 */
 	showVisualization: function(store) {
 		$("#" + this.$.content.getId()).html('').append(uduvudu.process(store));
 	},
@@ -175,6 +183,7 @@ enyo.kind(
     /**
      * This function clears the document content, shows the loader and sends an
      * open doc request to a URL.
+	 * @method openDoc
      * @param {String} documentURL the request URL
      */
     openDoc: function(documentURL){
@@ -197,6 +206,7 @@ enyo.kind(
 
     /**
      * This function scrolls the scrollbar to the top.
+	 * @method scrollToTop
      */
     scrollToTop: function(){
         this.$.scroller.render();

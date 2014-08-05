@@ -66,6 +66,7 @@ enyo.kind(
 	/**
 	 * This function runs when the user starts a search. It calls the document
 	 * list's startSearching function.
+	 * @method startSearching
 	 */
 	startSearching: function(){
 		this.$.documents.startLoading();
@@ -73,6 +74,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's create bookmark function.
+	 * @method createBookmark
      */
     createBookmark: function(){
         this.owner[this.bookmarkFunction]();
@@ -81,6 +83,7 @@ enyo.kind(
     /**
      * This function calls the bookmark's save bookmark function
      * with an URL and a title.
+	 * @method saveBookmark
      * @param {String} url the new bookmark url
      * @param {String} title the new bookmark title
      */
@@ -91,6 +94,7 @@ enyo.kind(
     /**
      * This function calls the parent's function, which shows a
 	 * message about the bookmark in a new popup.
+	 * @method popupBookmark
      * @param {String} message the message
      */
     popupBookmark: function(message){
@@ -100,13 +104,15 @@ enyo.kind(
     /**
      * This function shows the 'Entities' button that navigates
 	 * to the entity list panel.
+	 * @method showEntitiesButton
      */
     showEntitiesButton: function(){
         this.$.entitiesButton.show();
     },
 
     /**
-     * This function hides the 'Entites' button.
+     * This function hides the 'Entities' button.
+	 * @method hideEntitiesButton
      */
     hideEntitiesButton: function(){
         this.$.entitiesButton.hide();
@@ -114,6 +120,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's entity show function.
+	 * @method entityShow
      */
     entityShow: function(){
         this.owner.entityShow();
@@ -121,6 +128,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's user interface update function.
+	 * @method updateUI
      * @param {String} searchWord the latest search word
      * @param {Array} uncheckedEntities array of unchecked entities
      */
@@ -130,6 +138,7 @@ enyo.kind(
 
     /**
      * This function calls the document list's update function.
+	 * @method updateDocuments
      * @param {Array} documents the new list of documents
      */
     updateDocuments: function(documents){
@@ -139,6 +148,7 @@ enyo.kind(
     /**
      * This function calls the documents' addMoreDocuments
 	 * function with the new documents.
+	 * @method addMoreDocuments
      * @param {Array} documents the new list of documents
      */
     addMoreDocuments: function(documents){
@@ -147,6 +157,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's moreDocuments function.
+	 * @method moreDocuments
      * @param {Number} offset the offset of the documents
      */
     moreDocuments: function(offset){
@@ -155,6 +166,7 @@ enyo.kind(
 
     /**
      * This function calls the parent's openDoc function with the document URI.
+	 * @method openDoc
      * @param {String} documentURI URI of the document to be opened
      */
     openDoc: function(documentURI){
@@ -162,7 +174,8 @@ enyo.kind(
     },
 
     /**
-     * This function updates the searchbox's input text.
+     * This function updates the text in the search field.
+	 * @method updateInput
      * @param {String} inputText the new input text
      */
     updateInput: function(inputText){
@@ -171,6 +184,7 @@ enyo.kind(
 
     /**
      * This function updates the counter with a given value.
+	 * @method updateCounts
      * @param {Number} count count of documents
      */
     updateCounts: function(count){

@@ -41,6 +41,7 @@ enyo.kind(
 
     /**
      * This function returns the unchecked entities of the dictionaries.
+	 * @method getUncheckedEntities
      * @return {Array} the unchecked entities
      */
     getUncheckedEntities: function(){
@@ -49,6 +50,7 @@ enyo.kind(
 
     /**
      * This function shows the 'Documents' button in the mobile version.
+	 * @method showDocsButton
      */
     showDocsButton: function(){
         this.$.docsButton.show();
@@ -56,6 +58,7 @@ enyo.kind(
 
     /**
      * This function hides the 'Documents' button in the mobile version.
+	 * @method hideDocsButton
      */
     hideDocsButton: function(){
         this.$.docsButton.hide();
@@ -64,6 +67,7 @@ enyo.kind(
     /**
      * This function is called when the user presses the 'Documents' button.
 	 * It calls the parent function which slides the Documents panel.
+	 * @method searchShow
      */
     searchShow: function(){
         this.owner.searchShow();
@@ -71,6 +75,7 @@ enyo.kind(
 
     /**
      * This function updates the dictionary list from a dictionary object.
+	 * @method updateDictionaries
      * @param {Object} dictionaryObject the new dictionary list object
      */
     updateDictionaries: function(dictionaryObject){
@@ -78,7 +83,9 @@ enyo.kind(
     },
 
     /**
-     * This function calls the details box content updater function.
+     * This function calls the content updater function of the Details box.
+	 * [replaced with function 'displayDetails']
+	 * @method updateDetails
      * @param {String} title the title of the details
      * @param {Object} addressObject the address object
      */
@@ -88,6 +95,7 @@ enyo.kind(
 	
 	/**
      * This function calls the content updater function of the Details box.
+	 * @method displayDetails
 	 * @param {Object} rdf rdf with the metadata of the entity
 	 */
 	displayDetails: function(rdf){
@@ -97,6 +105,7 @@ enyo.kind(
     /**
      * This function calls the parent's search function with the search
 	 * word and the checked entity list.
+	 * @method search
      * @param {String} searchWord the last search word
      * @param {String} checkedEntities the actual checked entities
      */

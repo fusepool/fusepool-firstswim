@@ -68,6 +68,7 @@ enyo.kind(
 
     /**
      * This function shows the 'Back' button.
+	 * @method showBackButton
      */
     showBackButton: function(){
         this.$.backButton.show();
@@ -75,6 +76,7 @@ enyo.kind(
 
     /**
      * This function hides the 'Back' button.
+	 * @method hideBackButton
      */
     hideBackButton: function(){
         this.$.backButton.hide();
@@ -83,6 +85,7 @@ enyo.kind(
     /**
      * This function is called when the user push the 'Back' button.
 	 * It calls the parent's function, which closes this panel.
+	 * @method back
      */
     back: function(){
         this.owner[this.closeParentFunction]();
@@ -90,7 +93,8 @@ enyo.kind(
 
     /**
      * This function calls the opened document's document opening
-	 * function with the document's URI
+	 * function with the document's URI.
+	 * @method openDoc
      * @param {String} documentURI URI of the document
      */
     openDoc: function(documentURI){
@@ -99,6 +103,7 @@ enyo.kind(
 
     /**
      * This functions hides the preview panel.
+	 * @method clean
      */
     clean: function(){
         this.$.openedDoc.hide();
@@ -106,6 +111,7 @@ enyo.kind(
 
     /**
      * This function returns the URI of the opened document.
+	 * @method getDocumentURI
      * @return {String} the document URI
      */
     getDocumentURI: function(){
@@ -113,24 +119,27 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user presses the 'Add' button.
+     * This function is called when the user clicks the 'Add' button.
 	 * It shows the add entity popup with the selected text.
+	 * @method addEntity
      */
     addEntity: function(){
 //        this.$.addEntityPopup.addEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
-     * This function is called when the user push the 'Move' button.
+     * This function is called when the user clicks the 'Move' button.
 	 * It shows the move entity popup with the selected text.
+	 * @method moveEntity
      */
     moveEntity: function(){
 //        this.$.moveEntityPopup.moveEntity(this.$.openedDoc.getSelectedText());
     },
 
     /**
-     * This function is called when the user presses the 'Remove' button.
+     * This function is called when the user clicks the 'Remove' button.
 	 * It shows the remove entity popup with the selected text.
+	 * @method removeEntity
      */
     removeEntity: function(){
 //        this.$.removeEntityPopup.removeEntity(this.$.openedDoc.getSelectedText());

@@ -28,6 +28,7 @@ enyo.kind(
 
     /**
      * The create function initializes the annotator panel.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -36,9 +37,10 @@ enyo.kind(
     },
 	
 	/**
-	* This function initializes the predicate list based
-	* on the predicates array.
-	*/
+	 * This function initializes the predicate list based
+	 * on the predicates array.
+	 * @method initPredicates
+	 */
 	initPredicates: function() {
 		for(var i=0;i<this.predicates.length;i++){
 			this.$.predicateList.createComponent({
@@ -54,11 +56,12 @@ enyo.kind(
 	},
 	
 	/**
-	* This function sets the state of a predicate element
-	* based on the given properties.
-	* @param {String} predicateName label of the predicate
-	* @param {Boolean} state desired state
-	*/
+	 * This function sets the state of a predicate element
+	 * based on the given properties.
+	 * @method setPredicateState
+	 * @param {String} predicateName label of the predicate
+	 * @param {Boolean} state desired state
+	 */
 	setPredicateState: function(predicateName, state) {
 		for(var i=0;i<this.predicates.length;i++){
 			if(this.predicates[i].text == predicateName) {
@@ -71,6 +74,7 @@ enyo.kind(
      * This function is called when the user clicks on the 
 	 * dismiss icon on a predicate element. It fires the proper
 	 * functions.
+	 * @method dismissPredicate
 	 * @param {String} predicateName label of the clicked element
      */
     dismissPredicate: function(predicateName){
@@ -83,6 +87,7 @@ enyo.kind(
      * This function is called when the user clicks on the 
 	 * accept icon on a predicate element. It fires the proper
 	 * functions.
+	 * @method acceptPredicate
 	 * @param {String} predicateName label of the clicked element
      */
     acceptPredicate: function(predicateName){
@@ -94,6 +99,7 @@ enyo.kind(
 	/**
 	* This function shows the annotator panel and hides the
 	* 'Customize predicates' button.
+	 * @method showPredicateAnnotator
 	*/
 	showPredicateAnnotator: function() {
 		this.$.annotatorPanel.show();
@@ -101,20 +107,22 @@ enyo.kind(
 	},
 	
 	/**
-	* This function hides the annotator panel and shows the
-	* 'Customize predicates' button.
-	*/
+ 	 * This function hides the annotator panel and shows the
+	 * 'Customize predicates' button.
+	 * @method hidePredicateAnnotator
+	 */
 	hidePredicateAnnotator: function() {
 		this.$.annotatorPanel.hide();
 		this.$.showPredicateAnnotator.show();
 	},
 	
 	/**
-	* This function creates the proper annotation string
-	* and fires the annotation sender function.
-	* @param {String} predicateName label of the clicked predicate element
-	* @param {Number} action type of the click action (1 = accept; -1 = dismiss)
-	*/
+	 * This function creates the proper annotation string
+	 * and fires the annotation sender function.
+	 * @method sendPredicateAnnotation
+	 * @param {String} predicateName label of the clicked predicate element
+	 * @param {Number} action type of the click action (1 = accept; -1 = dismiss)
+	 */
 	sendPredicateAnnotation: function(predicateName, action) {
 				
 		var currentDate = new Date().toISOString();

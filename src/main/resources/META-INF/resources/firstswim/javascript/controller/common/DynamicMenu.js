@@ -13,8 +13,9 @@ enyo.kind(
     },
 
     /**
-     * When the component is created, this function iterate the menuItems list
-     * and call the addMenuItem function for every element.
+     * When the component is created this function iterates through the menu items
+	 * and fires the addMenuItem function of them.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -22,9 +23,8 @@ enyo.kind(
     },
 
     /**
-     * This function create an enyo component from an menuItem object, with a
-     * parent function name, which means that this function will be called when
-     * the user push the menuitem.
+     * This function creates an Enyo component using a menuItem object.
+	 * @method addMenuItem
      * @param {Object} menuItem the object which contains data about a menu item
      */
     addMenuItem: function(menuItem){
@@ -38,18 +38,19 @@ enyo.kind(
     },
 
     /**
-     * This function called when the user push any menu item. It has to exist
-     * the menuitem's function name.
-     * @param {Object} inSender the pushed menu item
+     * This function is called when the user clicks on a menu item.
+	 * @method tapMenu
+     * @param {Object} inSender the clicked menu item
      */
     tapMenu: function(inSender){
         this.owner[inSender.functionName]();
     },
 
     /**
-     * This functions returns with the children by index
+     * This function returns a child element by index.
+	 * @method getChildrenById
      * @param {Number} index the index of the child
-     * @returns {Object} the child object
+     * @return {Object} the child object
      */
     getChildrenById: function(index){
         return this.children[index];

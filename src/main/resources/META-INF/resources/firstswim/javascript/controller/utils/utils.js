@@ -48,9 +48,10 @@ var CONSTANTS = {
 };
 
 /**
-* This function queries the platform for the current, logged in user
-* and sets the currentUser cookie value
-*/
+ * This function queries the platform for the current, logged in user
+ * and sets the currentUser cookie value.
+ * @method setCurrentUser
+ */
 function setCurrentUser() {
 	var request = new enyo.Ajax({
 		method: 'GET',
@@ -67,34 +68,38 @@ function setCurrentUser() {
 }
 
 /**
-* This function creates a cookie
-* @param {String} name name of the cookie
-* @param {String} value cookie value
-* @param {Number} days days until expiration
-*/
+ * This function creates a cookie using the parameter values.
+ * @method createCookie
+ * @param {String} name name of the cookie
+ * @param {String} value cookie value
+ * @param {Number} days days until expiration
+ */
 function createCookie(name, value, days) {
 	$.cookie(name, value, { expires: days });
 }
 
 /**
-* This function returns a cookie
-* @param {String} name name of the cookie
-* @returns {String} cookie value
-*/
+ * This function returns a cookie.
+ * @method readCookie
+ * @param {String} name name of the cookie
+ * @return {String} cookie value
+ */
 function readCookie(name) {
     return $.cookie(name);
 }
 
 /**
-* This function deletes a cookie
-* @param {String} name name of the cookie
-*/
+ * This function deletes a cookie.
+ * @method eraseCookie
+ * @param {String} name name of the cookie
+ */
 function eraseCookie(name) {
     $.removeCookie(name);
 }
 
 /**
- * Check the data is empty
+ * Checks whether the data is empty or not.
+ * @method isEmpty
  * @param {Object} data the data what the function checks
  * @return {Boolean} true, if data is empty, false, if data is not empty
  */
@@ -106,9 +111,9 @@ function isEmpty(data){
 }
 
 /**
- * This function formats the given string and clears from the
- * html tags that could cause trouble on the GUI. (Using jquery-clean 
- * jQuery plug-in.)
+ * This function formats the given string and clears the html tags
+ * that could cause trouble on the GUI. It is using jquery-clean jQuery plug-in.
+ * @method removeTags
  * @param {String} string to be cleaned
  * @return {String} clean string
 */
@@ -119,7 +124,8 @@ function removeTags(str) {
 
 /**
  * This function checks whether the length of a given text is between
- * a minimum and a maximum value
+ * a minimum and a maximum value.
+ * @method textLengthBetween
  * @param {String} text the text to checks
  * @param {Number} min minimum length
  * @param {Number} max maximum length
@@ -139,7 +145,8 @@ function textLengthBetween(text, min, max){
 /**
  * This function gets a parameter name and returns an array that contain every
  * value that can be found in the GET variables under this parameter name.
- * For example when the URL contains x=1&x=2, the result array will be [1,2]
+ * For example when the URL contains x=1&x=2, the result array will be [1,2].
+ * @method GetURLParameter
  * @param {String} paramName the name of the GET parameter
  * @return {Array} the result array (empty if the parameter does not exist)
  */
@@ -157,10 +164,11 @@ function GetURLParameter(paramName){
 }
 
 /**
- * Replace all characters in a text, which matched another character
- * @param {String} text what the function checks
- * @param {String} from replacing text
- * @param {String} to purpose text
+ * This function replaces every occurences of a string with another string.
+ * @method replaceAll
+ * @param {String} text text that the function checks
+ * @param {String} from text to be replaced
+ * @param {String} to text to replace with
  * @param {Boolean} decodeURI decode URI or not
  * @return {String} if the text is not empty, the replaced text with trim, else an empty text
  */
@@ -178,8 +186,9 @@ function replaceAll(text, from, to, decodeURI){
 }
 
 /**
- * Replace all characters in a text, which matched another character and the position is
- * between in the startTag and endTag.
+ * This function replaces every occurences of a string with another string 
+ * between 'startTag' and 'endTag'.
+ * @method replaceAllInTags
  * @param {String} text what the function checks
  * @param {String} fromText replacing text
  * @param {String} toText purpose text
@@ -216,7 +225,8 @@ function replaceAllInTags(text, fromText, toText, startTag, endTag){
 }
 
 /**
- * Delete speech marks (") form the first and last character of text
+ * Delete speech marks (") from the first and last character of a text.
+ * @method deleteSpeechMarks
  * @param {String} text the text what the function check
  * @return {String} the string without " characters
  */
@@ -232,10 +242,11 @@ function deleteSpeechMarks(text){
 }
 
 /**
- * This functions search a property's value in an rdf object with rdfstore.
+ * This functions returns a property's value from an rdf object using RDFStore.
+ * @method getRDFPropertyValue
  * @param {Object} rdf the rdf object
  * @param {String} propertyName the name of the property
- * @returns {String} the property's value
+ * @return {String} the property's value
  */
 function getRDFPropertyValue(rdf, propertyName){
     var result = '';
@@ -252,10 +263,11 @@ function getRDFPropertyValue(rdf, propertyName){
  * This function gets an rdf object, an existing subject and an exclude array 
  * and gives back a value from a random property that has been found in the rdf
  * connected to the given subject and does not exist in the exclude array.
+ * @method getAPropertyValue
  * @param {Object} rdf the rdf object
  * @param {String} subject URI of the subject
  * @param {Array} exclude array of properties to exclude
- * @returns {String} the value of a found property 
+ * @return {String} the value of a found property 
  */
 function getAPropertyValue(rdf, subject, exclude) {
 	var prop = '';
@@ -274,7 +286,8 @@ function getAPropertyValue(rdf, subject, exclude) {
 }
 
 /**
- * This function puts an annotation to the annostore
+ * This function places an annotation in the Annostore.
+ * @method sendAnnotation
  * @param {String} annotationString body of the annotation
  */
 function sendAnnotation(annotationString) {
@@ -300,11 +313,12 @@ function sendAnnotation(annotationString) {
  * This function cuts the given string at the given length
  * if the string is longer than this length, adds an ellipsis 
  * character to the end, then returns the new string.
+ * @method cutStr
  * @param {String} str the string
  * @param {Number} val cutting length
  */
-function cutStr(str,val) {
-	if(str.length>val) {
+function cutStr(str, val) {
+	if(str.length > val) {
 		str = str.substring(0,val);
 		var lastSpace = str.lastIndexOf(" ");
 		if (lastSpace > 0){
@@ -315,6 +329,12 @@ function cutStr(str,val) {
 	return str;
 }
 
+/**
+ * This function queries the server for the user's own labels
+ * and places them in a cookie.
+ * @method getUserLabels
+ * @param {String} userName username
+ */
 function getUserLabels(userName) {
 	var request = new enyo.Ajax({
 		method: 'GET',

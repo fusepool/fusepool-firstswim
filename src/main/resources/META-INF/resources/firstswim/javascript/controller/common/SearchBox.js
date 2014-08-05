@@ -23,6 +23,7 @@ enyo.kind(
     /**
      * When this component is created this function set the button's,
      * the input's and the icon's properties.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -54,7 +55,8 @@ enyo.kind(
     ],
 
     /**
-     * This function update the input's text.
+     * This function fires the updater function of the input field.
+	 * @method updateInput
      * @param {String} inputText the new input text
      */
     updateInput: function(inputText){
@@ -62,8 +64,9 @@ enyo.kind(
     },
 
     /**
-     * This function hide the input's suggest list, clear the backend input.
-     * It call the parent's search function.
+     * This function clears and hides the suggest list and fires the
+     * search function of the parent.
+	 * @method search
      */
     search: function(){
         this.$.searchInput.clearBackInput();

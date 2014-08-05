@@ -22,9 +22,9 @@ enyo.kind(
     },
 
     /**
-     * This function creates the entity menu, which will be showed when the user
-     * select a text in the preview document and after this click with the right
-     * click.
+     * This function creates the entity menu, which is being displayed when the user
+     * highlights a text in the preview document and right clicks.
+	 * @method createMenu
      */
     createMenu: function(){
         /**
@@ -82,6 +82,7 @@ enyo.kind(
             /**
              * This function is called when the user push the "Add entity" menu
              * item. The addEntityPopup will be showed with the selected text.
+			 * @method addEntity
              */
             addEntity: function(){
                 this.hideMenu();
@@ -89,8 +90,9 @@ enyo.kind(
             },
 
             /**
-             * This function is called when the user push the "Remove entity" menu
-             * item. The removeEntityPopup will be showed with the selected text.
+             * This function is called when the user clicks on the 'Remove entity' menu
+             * item. The 'removeEntityPopup' will be displayed with the selected text.
+			 * @method removeEntity
              */
             removeEntity: function(){
                 this.hideMenu();
@@ -98,8 +100,9 @@ enyo.kind(
             },
 
             /**
-             * This function is called when the user push the "Move entity" menu
-             * item. The moveEntityPopup will be showed with the selected text.
+             * This function is called when the user clicks on the 'Move entity' menu
+             * item. The 'moveEntityPopup' will be displayed with the selected text.
+			 * @method moveEntity
              */
             moveEntity: function(){
                 this.hideMenu();
@@ -107,7 +110,8 @@ enyo.kind(
             },
 
             /**
-             * This function show the entity menu to the mouse position.
+             * This function displays the entity menu at mouse position.
+			 * @method showMenu
              * @param {Object} inEvent the event which contains the position of the mouse
              * @param {String} selectedText the selected text what the user selected
              */
@@ -143,7 +147,8 @@ enyo.kind(
             },
 
             /**
-             * This function hide the entity menu.
+             * This function hides the entity menu.
+			 * @method hideMenu
              */
             hideMenu: function(){
                 this.$.entityMenu.hide();
@@ -188,6 +193,7 @@ enyo.kind(
 
     /**
      * This function changes the height of the opened document.
+	 * @method changeHeight
      * @param {Number} newHeight the document's new height
      */
     changeHeight: function(newHeight){
@@ -200,6 +206,7 @@ enyo.kind(
      * selected text length's is sufficient the entity menu is getting displayed.
 	 * If the user clicks with any other mouse button (and the menu exists),
 	 * the entity menu will be hidden.
+	 * @method clickText
      * @param {Object} inSender the previewed document
      * @param {Object} inEvent the event which contains information about the mouse
      */
@@ -217,23 +224,28 @@ enyo.kind(
     },            
 
     /**
-     * This function runs when the user pushes the 'positive rate' button. It shows
-     * the rate popup with true (positive) parameter.
+     * This function runs when the user clicks the 'positive rate' button. It shows
+     * the rating popup with true (positive) parameter.
+	 * [This functionality is currently unused.]
+	 * @method positiveRate
      */
     positiveRate: function(){
 //        this.$.ratePopup.showPopup(true);
     },
 
     /**
-     * This function runs when the user pushes the 'negative rate' button. It shows
-     * the rate popup with false (negative) parameter.
+     * This function runs when the user clicks the 'Negative rate' button. It shows
+     * the rating popup with false (negative) parameter.
+	 * [This functionality is currently unused.]
+	 * @method negativeRate
      */
     negativeRate: function(){
 //        this.$.ratePopup.showPopup(false);
     },
 
     /**
-     * This function runs when the user pushes the 'full view' button.
+     * This function runs when the user clicks the 'Full view' button.
+	 * @method fullView
      */
     fullView: function(){
         alert('Full view function is coming soon...');
@@ -242,6 +254,7 @@ enyo.kind(
     /**
      * This function hides the positive and negative rate buttons and the full
      * view button.
+	 * @method hideRateButtons
      */
     hideRateButtons: function(){
         this.$.posRateButton.hide();
@@ -251,7 +264,9 @@ enyo.kind(
 
     /**
      * This function shows the positive and negative rate buttons and the full
-     * view button.
+     * view button. 
+	 * [This functionality is currently unused.]
+	 * @method showRateButtons
      */
     showRateButtons: function(){
 //        this.$.posRateButton.show();
@@ -260,7 +275,9 @@ enyo.kind(
     },
 
     /**
-     * This function calls the opened doc's openDoc function and shows the buttons.
+     * This function calls 'openDoc' function of the opened document
+	 * and displays the buttons.
+	 * @method openDoc
      * @param {String} docURI URI of the document to be opened
      */
     openDoc: function(docURI){
@@ -270,7 +287,8 @@ enyo.kind(
     },
 
     /**
-     * This function cleans the document content.
+     * This function cleans the content of the opened document.
+	 * @method clean
      */
     clean: function(){
 		this.$.openedDoc.clearAll();
@@ -278,8 +296,9 @@ enyo.kind(
     },
 
     /**
-     * This function returns with the opened document id in the DOM.
+     * This function returns the generated ID of the opened document panel.
      * @return {String} the id
+	 * @method getOpenDocId
      */
     getOpenDocId: function(){
         return this.$.openedDoc.getId();
@@ -287,6 +306,7 @@ enyo.kind(
 
     /**
      * This function returns the URI of the opened document.
+	 * @method getDocumentURI
      * @return {String} document URI
      */
     getDocumentURI: function(){

@@ -17,8 +17,9 @@ enyo.kind(
     },
 
     /**
-     * When this component is created it sets the scroller's, the title's,
-     * the image's and the content's properties.
+     * When this component is created it sets the properties of the 
+	 * scroller and the title.
+	 * @method create
      */
     create: function(){
         this.inherited(arguments);
@@ -36,7 +37,8 @@ enyo.kind(
     ],
 	
 	/**
-     * This function updates the content of the details
+     * This function updates the content of the details.
+	 * @method displayDetails
 	 * @param {Object} rdf rdf with the metadata of the entity
 	 */
 	displayDetails: function(rdf) {
@@ -47,15 +49,17 @@ enyo.kind(
 	
     /**
      * This function cleans the content.
+	 * @method clean
      */
     clean: function(){
 		this.$.detailsPanel.setContent('');
     },
 
     /**
-     * This functions returns the country code from a URL
+     * This function returns the country code from a URL.
+	 * @method getCountryCode
      * @param {String} countryURL the url
-     * @returns {String} the country code
+     * @return {String} the country code
      */
     getCountryCode: function(countryURL){
         return countryURL.substring(countryURL.lastIndexOf('/')+1);
@@ -63,6 +67,7 @@ enyo.kind(
 
     /**
      * This function scrolls the scrollbar to the top.
+	 * @method scrollToTop
      */
     scrollToTop: function(){
         this.$.scroller.render();

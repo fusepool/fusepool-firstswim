@@ -75,21 +75,27 @@ enyo.kind(
     ],
 
     /**
-     * This function is called when the user click on the 'Open in new tab' menuitem.
+     * This function is called when the user clicks on the 'Open in new tab' menu item.
+	 * @method openInNewTab
      */
     openInNewTab: function(){
         this.$.facetMenu.hide();
         window.open(this.entityId, '_blank');
     },
 
+    /**
+     * This function hides the facet menu.
+	 * @method hideMenu
+     */
     hideMenu: function(){
         this.$.facetMenu.hide();
     },
 
     /**
-     * This function is called when the user hover the mouse over an entity.
-     * It waits for one second and if the user didn't leave the entity, it calls
-     * the details function.
+     * This function is called on entity mouse over event.
+     * It calls the 'getDetails' function if the user leaves the mouse over
+	 * the element for at least 400 milliseconds.
+	 * @method preDetails
      */
     preDetails: function(){
         if(!this.detailsStart){
@@ -105,14 +111,17 @@ enyo.kind(
     },
 
     /**
-     * It stopped the details if the user move out the mouse from the entity.
+     * This function is called when the user hovers an entity element but immediately
+	 * leaves it, so the detail information should not be updated.
+	 * @method stopDetails
      */
     stopDetails: function(){
         this.detailsStart = false;
     },
 
     /**
-     * This function send an ajax request to get an entity's details
+     * This function sends an ajax request to get detailed information about an entity.
+	 * @method getDetails
      */
     getDetails: function(){
         var main = this;
@@ -124,8 +133,9 @@ enyo.kind(
     },
 
     /**
-     * This functions runs when the details ajax response is arrived about the details.
-     * @param {Boolean} success the search query was success or not
+     * This function runs when the ajax request returned with the requested information.
+	 * @method processDetailsResponse
+     * @param {Boolean} success success state of the request
      * @param {Object} rdf the response rdf object
      */
     processDetailsResponse: function(success, rdf){
@@ -135,8 +145,9 @@ enyo.kind(
     },
 
     /**
-     * This function is called when the user check/uncheck the checkbox.
-     * It calls the callParent function.
+     * This function is called when the user checks/unchecks a checkbox.
+     * It calls the callParent function with the current state.
+	 * @method checkboxChange
      * @param {Object} inSender the checkbox component
      */
     checkboxChange: function(inSender){
@@ -146,6 +157,9 @@ enyo.kind(
 
     /**
      * This function is called when the user clicks on an entity.
+	 * @method entityClick
+     * @param {Object} inSender the clicked element
+     * @param {Object} inEvent the event object
      */
     entityClick: function(inSender, inEvent){
 		if(readCookie('viewType') != 'entityList') {
@@ -161,6 +175,7 @@ enyo.kind(
     /**
      * This function calls the parent's search function with the clicked entity
      * and the new checkbox value.
+	 * @method callParent
      * @param {Boolean} cbValue new checkbox value
      */
     callParent: function(cbValue){
