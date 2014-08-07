@@ -79,13 +79,18 @@ h1 {
 .nGraphViewButton		{ background-image: url("../images/nGraphViewButton.png"); }
 
 .menuItemTooltip {
-	background-color: #716863;
-	color: #fffbdf;
-	font-size: 13px;
+	background-color: #ebebeb;
+    color: #222222;
+    font-size: 13px;
+	border: none !important;
 } 
 
 .menuItemTooltip.below.left-arrow:before {
-	border-bottom: 6px solid #716863;
+	border-bottom: 6px solid #ebebeb;
+}
+
+.onyx-tooltip.below.right-arrow:after {
+	border-bottom: 6px solid #ebebeb;
 }
 
 .menuItemTooltip.below {

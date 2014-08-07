@@ -46,8 +46,7 @@ h1 {
 }
 
 .toolbarIcons {
-	background-color: rgba(30, 27, 26, 0.1);
-	border: 1px solid rgba(255, 255, 255, 0.17);
+	border: 1px solid rgba(255, 255, 255, 1);
 	-webkit-border-radius: 12px;
 	-moz-border-radius: 12px;
 	border-radius: 12px;
@@ -75,13 +74,18 @@ h1 {
 .nGraphViewButton		{ background-image: url("../images/beer/nGraphViewButton.png"); }
 
 .menuItemTooltip {
-	background-color: #716863;
-	color: #fffbdf;
+	background-color: #ffffff;
+	color: #555555;
 	font-size: 13px;
+	border: none !important;
 } 
 
 .menuItemTooltip.below.left-arrow:before {
-	border-bottom: 6px solid #716863;
+	border-bottom: 6px solid #ffffff;
+}
+
+.onyx-tooltip.below.right-arrow:after {
+	border-bottom: 6px solid #ffffff;
 }
 
 .menuItemTooltip.below {
@@ -195,12 +199,19 @@ h1 {
 	margin: 0px 2px 0px 2px;
 }
 
+.styleSettingsMenu {
+	background-color: #ffffff;
+	background-image: none !important;
+	color: #555555;
+}
+
 .stylePickerItem {
 	width: 100%;
+	border-bottom: 1px solid #dddddd;
 }
 
 .stylePickerItem:hover {
-	background-color: #655B53;
+	background-color: #FFDE76;
 }
 
 /* ----------- Top message box ----------- */

@@ -72,15 +72,20 @@ h1 {
 
 .menuItemTooltip {
 	background-image: none;
-	background-color: #bbbbbb;
-	color: #fffbdf;
+	background-color: #ffffff;
+	color: #777777;
 	font-size: 13px;
-	border: none;
+	border: 1px solid #bbbbbb !important;
     box-shadow: none;
+	padding: 5px;
 } 
 
 .menuItemTooltip.below.left-arrow:before {
-	border-bottom: 6px solid #bbbbbb;
+	border-bottom: 6px solid #22b5ff;
+}
+
+.onyx-tooltip.below.right-arrow:after {
+	border-bottom: 6px solid #22b5ff;
 }
 
 .menuItemTooltip.below {
@@ -940,7 +945,7 @@ h1 {
 }
 
 .detailsDiv:hover{ 
-	background-color: #E2ECF7;
+	background-color: #EDF2F8;
 }
 
 .entityText{
@@ -1054,7 +1059,7 @@ h1 {
 }
 
 .shortDocumentContainer:hover {
-    background-color: #f6f6f6;
+	background-color: #F7F8F9;
 }
 
 .shortDocumentIcon{
