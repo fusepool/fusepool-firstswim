@@ -1,0 +1,5343 @@
+{
+    "project": {},
+    "files": {
+        "common\\dictionary\\Dictionary.js": {
+            "name": "common\\dictionary\\Dictionary.js",
+            "modules": {},
+            "classes": {
+                "Dictionary": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\dictionary\\DictionaryController.js": {
+            "name": "common\\dictionary\\DictionaryController.js",
+            "modules": {},
+            "classes": {
+                "DictionaryController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\dictionary\\DictionaryEntity.js": {
+            "name": "common\\dictionary\\DictionaryEntity.js",
+            "modules": {},
+            "classes": {
+                "DictionaryEntity": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\documents\\DocumentList.js": {
+            "name": "common\\documents\\DocumentList.js",
+            "modules": {},
+            "classes": {
+                "DocumentList": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\documents\\ShortDocument.js": {
+            "name": "common\\documents\\ShortDocument.js",
+            "modules": {},
+            "classes": {
+                "ShortDocument": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\labels\\LabelItem.js": {
+            "name": "common\\labels\\LabelItem.js",
+            "modules": {},
+            "classes": {
+                "LabelItem": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\labels\\LabelList.js": {
+            "name": "common\\labels\\LabelList.js",
+            "modules": {},
+            "classes": {
+                "LabelList": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\landscape\\Landscape.js": {
+            "name": "common\\landscape\\Landscape.js",
+            "modules": {},
+            "classes": {
+                "Landscape": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\locationviewer\\LocationViewer.js": {
+            "name": "common\\locationviewer\\LocationViewer.js",
+            "modules": {},
+            "classes": {
+                "LocationViewer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\ngraph\\NGraph.js": {
+            "name": "common\\ngraph\\NGraph.js",
+            "modules": {},
+            "classes": {
+                "NGraph": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\preview\\predicateannotator\\PredicateAnnotator.js": {
+            "name": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "modules": {},
+            "classes": {
+                "PredicateAnnotator": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\preview\\predicateannotator\\PredicateItem.js": {
+            "name": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "modules": {},
+            "classes": {
+                "PredicateItem": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\preview\\OpenedDoc.js": {
+            "name": "common\\preview\\OpenedDoc.js",
+            "modules": {},
+            "classes": {
+                "OpenedDoc": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\Bookmark.js": {
+            "name": "common\\Bookmark.js",
+            "modules": {},
+            "classes": {
+                "Bookmark": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\DetailsBox.js": {
+            "name": "common\\DetailsBox.js",
+            "modules": {},
+            "classes": {
+                "DetailsBox": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\DynamicMenu.js": {
+            "name": "common\\DynamicMenu.js",
+            "modules": {},
+            "classes": {
+                "DynamicMenu": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "common\\SearchBox.js": {
+            "name": "common\\SearchBox.js",
+            "modules": {},
+            "classes": {
+                "SearchBox": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "desktop\\DesktopApp.js": {
+            "name": "desktop\\DesktopApp.js",
+            "modules": {},
+            "classes": {
+                "DocumentApp": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "desktop\\LoginPopup.js": {
+            "name": "desktop\\LoginPopup.js",
+            "modules": {},
+            "classes": {
+                "LoginPopup": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "desktop\\PreviewBox.js": {
+            "name": "desktop\\PreviewBox.js",
+            "modules": {},
+            "classes": {
+                "PreviewBox": 1,
+                "MenuController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "desktop\\TopMessageBox.js": {
+            "name": "desktop\\TopMessageBox.js",
+            "modules": {},
+            "classes": {
+                "TopMessageBox": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\frame\\left\\LeftHeader.js": {
+            "name": "mobile\\frame\\left\\LeftHeader.js",
+            "modules": {},
+            "classes": {
+                "LeftHeader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\frame\\left\\LeftPanel.js": {
+            "name": "mobile\\frame\\left\\LeftPanel.js",
+            "modules": {},
+            "classes": {
+                "LeftPanel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\frame\\middle\\MiddlePanel.js": {
+            "name": "mobile\\frame\\middle\\MiddlePanel.js",
+            "modules": {},
+            "classes": {
+                "MiddlePanel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\frame\\right\\OpenedDocHeader.js": {
+            "name": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "modules": {},
+            "classes": {
+                "OpenedDocHeader": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\frame\\right\\RightPanel.js": {
+            "name": "mobile\\frame\\right\\RightPanel.js",
+            "modules": {},
+            "classes": {
+                "RightPanel": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "mobile\\MobileApp.js": {
+            "name": "mobile\\MobileApp.js",
+            "modules": {},
+            "classes": {
+                "DocumentMobileApp": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "utils\\autosuggest\\Autosuggest.js": {
+            "name": "utils\\autosuggest\\Autosuggest.js",
+            "modules": {},
+            "classes": {
+                "AutoSuggest": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "utils\\ClosablePopup.js": {
+            "name": "utils\\ClosablePopup.js",
+            "modules": {},
+            "classes": {
+                "ClosablePopup": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "utils\\templates.js": {
+            "name": "utils\\templates.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "utils\\utils.js": {
+            "name": "utils\\utils.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "package.js": {
+            "name": "package.js",
+            "modules": {
+                "Firstswim": 1
+            },
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "Firstswim": {
+            "name": "Firstswim",
+            "submodules": {},
+            "classes": {
+                "Dictionary": 1,
+                "DictionaryController": 1,
+                "DictionaryEntity": 1,
+                "DocumentList": 1,
+                "ShortDocument": 1,
+                "LabelItem": 1,
+                "LabelList": 1,
+                "Landscape": 1,
+                "LocationViewer": 1,
+                "NGraph": 1,
+                "PredicateAnnotator": 1,
+                "PredicateItem": 1,
+                "OpenedDoc": 1,
+                "Bookmark": 1,
+                "DetailsBox": 1,
+                "DynamicMenu": 1,
+                "SearchBox": 1,
+                "DocumentApp": 1,
+                "LoginPopup": 1,
+                "PreviewBox": 1,
+                "MenuController": 1,
+                "TopMessageBox": 1,
+                "LeftHeader": 1,
+                "LeftPanel": 1,
+                "MiddlePanel": 1,
+                "OpenedDocHeader": 1,
+                "RightPanel": 1,
+                "DocumentMobileApp": 1,
+                "AutoSuggest": 1,
+                "ClosablePopup": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "utils\\ClosablePopup.js",
+            "line": 1,
+            "description": "Firstswim mobile &amp; desktop application - to making it easy to browse data stored in the Fusepool platform.",
+            "author": "Luca Szab�"
+        }
+    },
+    "classes": {
+        "Dictionary": {
+            "name": "Dictionary",
+            "shortname": "Dictionary",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 1
+        },
+        "DictionaryController": {
+            "name": "DictionaryController",
+            "shortname": "DictionaryController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 1
+        },
+        "DictionaryEntity": {
+            "name": "DictionaryEntity",
+            "shortname": "DictionaryEntity",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 1
+        },
+        "DocumentList": {
+            "name": "DocumentList",
+            "shortname": "DocumentList",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\documents\\DocumentList.js",
+            "line": 1
+        },
+        "ShortDocument": {
+            "name": "ShortDocument",
+            "shortname": "ShortDocument",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 1
+        },
+        "LabelItem": {
+            "name": "LabelItem",
+            "shortname": "LabelItem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\labels\\LabelItem.js",
+            "line": 1
+        },
+        "LabelList": {
+            "name": "LabelList",
+            "shortname": "LabelList",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\labels\\LabelList.js",
+            "line": 1
+        },
+        "Landscape": {
+            "name": "Landscape",
+            "shortname": "Landscape",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\landscape\\Landscape.js",
+            "line": 1
+        },
+        "LocationViewer": {
+            "name": "LocationViewer",
+            "shortname": "LocationViewer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\locationviewer\\LocationViewer.js",
+            "line": 1
+        },
+        "NGraph": {
+            "name": "NGraph",
+            "shortname": "NGraph",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 1
+        },
+        "PredicateAnnotator": {
+            "name": "PredicateAnnotator",
+            "shortname": "PredicateAnnotator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 1
+        },
+        "PredicateItem": {
+            "name": "PredicateItem",
+            "shortname": "PredicateItem",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "line": 1
+        },
+        "OpenedDoc": {
+            "name": "OpenedDoc",
+            "shortname": "OpenedDoc",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 1
+        },
+        "Bookmark": {
+            "name": "Bookmark",
+            "shortname": "Bookmark",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\Bookmark.js",
+            "line": 1
+        },
+        "DetailsBox": {
+            "name": "DetailsBox",
+            "shortname": "DetailsBox",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\DetailsBox.js",
+            "line": 1
+        },
+        "DynamicMenu": {
+            "name": "DynamicMenu",
+            "shortname": "DynamicMenu",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\DynamicMenu.js",
+            "line": 1
+        },
+        "SearchBox": {
+            "name": "SearchBox",
+            "shortname": "SearchBox",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "common\\SearchBox.js",
+            "line": 1
+        },
+        "DocumentApp": {
+            "name": "DocumentApp",
+            "shortname": "DocumentApp",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "desktop\\DesktopApp.js",
+            "line": 16
+        },
+        "LoginPopup": {
+            "name": "LoginPopup",
+            "shortname": "LoginPopup",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "desktop\\LoginPopup.js",
+            "line": 1
+        },
+        "PreviewBox": {
+            "name": "PreviewBox",
+            "shortname": "PreviewBox",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "desktop\\PreviewBox.js",
+            "line": 1
+        },
+        "MenuController": {
+            "name": "MenuController",
+            "shortname": "MenuController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "desktop\\PreviewBox.js",
+            "line": 30
+        },
+        "TopMessageBox": {
+            "name": "TopMessageBox",
+            "shortname": "TopMessageBox",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "desktop\\TopMessageBox.js",
+            "line": 1
+        },
+        "LeftHeader": {
+            "name": "LeftHeader",
+            "shortname": "LeftHeader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\frame\\left\\LeftHeader.js",
+            "line": 1
+        },
+        "LeftPanel": {
+            "name": "LeftPanel",
+            "shortname": "LeftPanel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 1
+        },
+        "MiddlePanel": {
+            "name": "MiddlePanel",
+            "shortname": "MiddlePanel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 1
+        },
+        "OpenedDocHeader": {
+            "name": "OpenedDocHeader",
+            "shortname": "OpenedDocHeader",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "line": 1
+        },
+        "RightPanel": {
+            "name": "RightPanel",
+            "shortname": "RightPanel",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 1
+        },
+        "DocumentMobileApp": {
+            "name": "DocumentMobileApp",
+            "shortname": "DocumentMobileApp",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "mobile\\MobileApp.js",
+            "line": 15
+        },
+        "AutoSuggest": {
+            "name": "AutoSuggest",
+            "shortname": "AutoSuggest",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 1,
+            "description": "Autosuggest component.\nCreated by Adam Nagy, GeoX Kft.",
+            "version": "1.9.1",
+            "author": "�d�m Nagy"
+        },
+        "ClosablePopup": {
+            "name": "ClosablePopup",
+            "shortname": "ClosablePopup",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "Firstswim",
+            "file": "utils\\ClosablePopup.js",
+            "line": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 5,
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 26,
+            "description": "The create function set the css classes, the contents and creates an entity\nlist into the dictionary.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 65,
+            "description": "This function returns the list object.",
+            "itemtype": "method",
+            "name": "getEntities",
+            "return": {
+                "description": "the list object"
+            },
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 74,
+            "description": "After the user over the mouse an entity, the program gets the details about\nthe chosen entity, and this function is called for update the details box\nwith the details title and an address object.",
+            "itemtype": "method",
+            "name": "updateDetails",
+            "params": [
+                {
+                    "name": "title",
+                    "description": "the title of the details",
+                    "type": "String"
+                },
+                {
+                    "name": "addressObject",
+                    "description": "the address objects",
+                    "type": "Object"
+                }
+            ],
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 86,
+            "description": "After the user hovers an entity, the program gets the details about\nthe chosen entity, and this function is called for update the details box.",
+            "itemtype": "method",
+            "name": "displayDetails",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "rdf with the metadata of the entity",
+                    "type": "Object"
+                }
+            ],
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 96,
+            "description": "This function returns whether an entity is checked or not.",
+            "itemtype": "method",
+            "name": "isCheckedEntity",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the entity what the function check",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true, if it is checked, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\Dictionary.js",
+            "line": 111,
+            "description": "This function is called when the user checks/unchecks an entity.\nIt handles the unchecked entity list and calls the parent filter function.",
+            "itemtype": "method",
+            "name": "updateEntities",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the chosen entity",
+                    "type": "Object"
+                },
+                {
+                    "name": "checked",
+                    "description": "the entity is checked or not",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "Dictionary"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 5,
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 24,
+            "description": "When the component is created the program sets the title's properties and\nhides it.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 53,
+            "description": "This function hides the facet popup.",
+            "itemtype": "method",
+            "name": "tapFacetList",
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 74,
+            "description": "This function updates the dictionary list from a dictionary object. This\nobject contains a search word, a dictionary array and the previously unchecked\nentities.",
+            "itemtype": "method",
+            "name": "updateLists",
+            "params": [
+                {
+                    "name": "dictionaryObject",
+                    "description": "the dictionary object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 89,
+            "description": "This function handles the actions that happen on mouseover event:\nit sets the proper css classes and calls the detail displayer function of\nthe parent kind.\n[replaced with function 'displayDetails']",
+            "itemtype": "method",
+            "name": "updateDetails",
+            "params": [
+                {
+                    "name": "title",
+                    "description": "the title of the details",
+                    "type": "String"
+                },
+                {
+                    "name": "addressObject",
+                    "description": "the address object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 104,
+            "description": "This function handles the actions that happen on mouseover event:\nit sets the proper css classes and calls the detail displayer function of\nthe parent kind.",
+            "itemtype": "method",
+            "name": "displayDetails",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "rdf with the metadata of the entity",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 117,
+            "description": "This function calls the parent's search function with search word and the\nchecked entity list.",
+            "itemtype": "method",
+            "name": "filter",
+            "params": [
+                {
+                    "name": "entity",
+                    "description": "the last checked/unchecked entity",
+                    "type": "String"
+                },
+                {
+                    "name": "checked",
+                    "description": "the entity was checked or unchecked",
+                    "type": "String"
+                }
+            ],
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 136,
+            "description": "This function looks up an entity object in the list of checked entities and\nreturns the array index.",
+            "itemtype": "method",
+            "name": "indexOfEntity",
+            "params": [
+                {
+                    "name": "entityObject",
+                    "description": "the searched entity object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the array index if the list contains the entity, -1 otherwise",
+                "type": "Number"
+            },
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 152,
+            "description": "This function updates the checked entity list.",
+            "itemtype": "method",
+            "name": "updateCheckedDictionaries",
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryController.js",
+            "line": 184,
+            "description": "This function updates the dictionary list.",
+            "itemtype": "method",
+            "name": "updateDictionaryList",
+            "params": [
+                {
+                    "name": "dictionaries",
+                    "description": "list of the new dictionaries",
+                    "type": "Array"
+                }
+            ],
+            "class": "DictionaryController"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 5,
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 77,
+            "description": "This function is called when the user clicks on the 'Open in new tab' menu item.",
+            "itemtype": "method",
+            "name": "openInNewTab",
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 86,
+            "description": "This function hides the facet menu.",
+            "itemtype": "method",
+            "name": "hideMenu",
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 94,
+            "description": "This function is called on entity mouse over event.\nIt calls the 'getDetails' function if the user leaves the mouse over\nthe element for at least 400 milliseconds.",
+            "itemtype": "method",
+            "name": "preDetails",
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 113,
+            "description": "This function is called when the user hovers an entity element but immediately\nleaves it, so the detail information should not be updated.",
+            "itemtype": "method",
+            "name": "stopDetails",
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 122,
+            "description": "This function sends an ajax request to get detailed information about an entity.",
+            "itemtype": "method",
+            "name": "getDetails",
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 135,
+            "description": "This function runs when the ajax request returned with the requested information.",
+            "itemtype": "method",
+            "name": "processDetailsResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "success state of the request",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 147,
+            "description": "This function is called when the user checks/unchecks a checkbox.\nIt calls the callParent function with the current state.",
+            "itemtype": "method",
+            "name": "checkboxChange",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the checkbox component",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 158,
+            "description": "This function is called when the user clicks on an entity.",
+            "itemtype": "method",
+            "name": "entityClick",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the clicked element",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the event object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\dictionary\\DictionaryEntity.js",
+            "line": 175,
+            "description": "This function calls the parent's search function with the clicked entity\nand the new checkbox value.",
+            "itemtype": "method",
+            "name": "callParent",
+            "params": [
+                {
+                    "name": "cbValue",
+                    "description": "new checkbox value",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "DictionaryEntity"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 5,
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 30,
+            "description": "When the component is created, the program sets the title's properties and\nhides it.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 71,
+            "description": "This function runs when the user activates/deactivates label prediction.\nIt sets the proper cookie value and calls the label prediction toggle\nfunction of every 'shortDocument' children kinds.",
+            "itemtype": "method",
+            "name": "toggleLabelPrediction",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the activator checkbox",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 86,
+            "description": "This function runs when the user activates/deactivates the rating bar.",
+            "itemtype": "method",
+            "name": "activateChecking",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the activator checkbox",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 107,
+            "description": "This function runs when the user clicks the 'Process' button.\nIt collects the sufficient information (checked facets,\nsearch word and ratings) and calls the function which actually \nsends a classify request using this classify object.",
+            "itemtype": "method",
+            "name": "processClassify",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 153,
+            "description": "This function sends an ajax request to the server for classification\nusing a classify object.",
+            "itemtype": "method",
+            "name": "sendClassifyRequest",
+            "params": [
+                {
+                    "name": "classifyObject",
+                    "description": "the classify object containing every sufficient information",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 178,
+            "description": "This function runs when the classifying request returned a response.\nIt calls the classify response processor function of the parent kind.",
+            "itemtype": "method",
+            "name": "processClassifyResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "success status of the classification request",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "classifyResponse",
+                    "description": "the response of the classification request",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 202,
+            "description": "This function runs when the user clicks the 'More' button.\nIt shows the loader, hides the 'More' button and sends and ajax\nrequest with the new offset value.",
+            "itemtype": "method",
+            "name": "moreBtnPress",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 215,
+            "description": "This function runs when the user fires a search. It clears the list\nand shows the loader.",
+            "itemtype": "method",
+            "name": "startLoading",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 230,
+            "description": "This function updates the document list using a document object. This\nobject contains the short documents.",
+            "itemtype": "method",
+            "name": "updateList",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the document list object",
+                    "type": "Array"
+                },
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "checked facets and type facets",
+                    "type": "Array"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 299,
+            "description": "This function shows a message in the document list box.",
+            "itemtype": "method",
+            "name": "showMessage",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message what we want to show",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 309,
+            "description": "This function updates the document counter.",
+            "itemtype": "method",
+            "name": "updateCounts",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 317,
+            "description": "This function adds more documents to the existing document list.",
+            "itemtype": "method",
+            "name": "addMoreDocuments",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the new item of documents",
+                    "type": "Array"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 359,
+            "description": "This function is called when the user opens a document to preview.\nIt calls a parent function, which calls the preview box to open it.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "the URL of the document",
+                    "type": "String"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the mouse event (important in the desktop version)",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 371,
+            "description": "This function prepares an annotation about the activities related to the\ndocument list: which documents the user got using which search query;\nwhether the user clicked on the documents. It also calls a parent function \nwhich actually sends the request to the server.",
+            "itemtype": "method",
+            "name": "sendDocListAnnotation",
+            "params": [
+                {
+                    "name": "docURI",
+                    "description": "the URI of the document",
+                    "type": "String"
+                },
+                {
+                    "name": "click",
+                    "description": "is it only displayed or clicked",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 409,
+            "description": "This function updates the 'checkedNumber' text with the offset\nand the checked numbers.",
+            "itemtype": "method",
+            "name": "updateCheckedNumber",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 418,
+            "description": "This function scrolls to the top of the document list.",
+            "itemtype": "method",
+            "name": "scrollToTop",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 428,
+            "description": "This function increases the number of checked documents and updates the\nchecked number text.",
+            "itemtype": "method",
+            "name": "addCheck",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 439,
+            "description": "This function decreases the number of checked documents and updates the\nchecked number text.",
+            "itemtype": "method",
+            "name": "removeCheck",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\DocumentList.js",
+            "line": 450,
+            "description": "This function shows/hides the process button based on the\ncurrent value of 'checkedDocs'.",
+            "itemtype": "method",
+            "name": "showOrHideProcessButton",
+            "class": "DocumentList"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 5,
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 34,
+            "description": "When the component is created the program sets the content's properties and\nbinds the 'openDocEvent' event to the 'shortDoc' component.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 62,
+            "description": "After rendering, the positive/negative slider is being initialized.",
+            "itemtype": "method",
+            "name": "rendered",
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 116,
+            "description": "This function is called when the user enables/disables\nlabel prediction. It calls the toggle function of each\nlabel lists'.",
+            "itemtype": "method",
+            "name": "togglePredictedLabelLists",
+            "params": [
+                {
+                    "name": "enable",
+                    "description": "state of label prediction",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 130,
+            "description": "This function hides the document popup menu.",
+            "itemtype": "method",
+            "name": "leaveMenu",
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 138,
+            "description": "This function is called when the user clicks on the\n'Open in new tab' menu item.",
+            "itemtype": "method",
+            "name": "openInNewTab",
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 148,
+            "description": "This function runs on 'openDocEvent' events (ontap, ontouch, onenter, etc).\nIt calls the parent's function which opens the document in the preview.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the component where the event is fired (shortDoc)",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the fired event (important in the desktop version)",
+                    "type": "Object"
+                }
+            ],
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 160,
+            "description": "This function runs when the user clicsk on the document icon.",
+            "itemtype": "method",
+            "name": "tapIcon",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the document icon",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the click event",
+                    "type": "Object"
+                }
+            ],
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 172,
+            "description": "This function shows/hides the slider bar according to the\n'activated' parameter",
+            "itemtype": "method",
+            "name": "updateRatings",
+            "params": [
+                {
+                    "name": "activated",
+                    "description": "display status of the slide bar",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\documents\\ShortDocument.js",
+            "line": 188,
+            "description": "This function runs when the user slides the bar.\nIt calls the parent addCheck or removeCheck function.",
+            "itemtype": "method",
+            "name": "checking",
+            "class": "ShortDocument"
+        },
+        {
+            "file": "common\\labels\\LabelItem.js",
+            "line": 5,
+            "class": "LabelItem"
+        },
+        {
+            "file": "common\\labels\\LabelItem.js",
+            "line": 49,
+            "description": "This function calls the delete function of the parent's parent.",
+            "itemtype": "method",
+            "name": "deleteLabel",
+            "class": "LabelItem"
+        },
+        {
+            "file": "common\\labels\\LabelItem.js",
+            "line": 57,
+            "description": "This function calls the add function of the parent's parent.",
+            "itemtype": "method",
+            "name": "addPredictedLabel",
+            "class": "LabelItem"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 5,
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 45,
+            "description": "The create function sets the content of the label list based on the doc URI",
+            "itemtype": "method",
+            "name": "create",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 64,
+            "description": "This function is fired when the user selects a label\nfrom user label list.",
+            "itemtype": "method",
+            "name": "userLabelSelection",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 76,
+            "description": "This function calls the back-end for predicted and existing \nlabels and initializes the lists based on the return value.",
+            "itemtype": "method",
+            "name": "initLabels",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 154,
+            "description": "This function shows/hides the list of predicted labels\nbased on the 'enable' parameter.",
+            "itemtype": "method",
+            "name": "togglePredictedLabelLists",
+            "params": [
+                {
+                    "name": "enable",
+                    "description": "enable/disable label prediction",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 171,
+            "description": "This function runs when the user clicks on the \n'Add label' button. It displays the panel in which\nusers can add labels using the input field.",
+            "itemtype": "method",
+            "name": "addMoreLabelsBtnPress",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 183,
+            "description": "This function runs when the user clicks on the \n'Close' button. It hides the panel in which\nusers can add labels using the input field.",
+            "itemtype": "method",
+            "name": "hideAddingPanelBtnPress",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 194,
+            "description": "This function handles key press events. On pressing \n'Enter' it adds the entered label. On pressing 'ESC'\nit closes the panel.",
+            "itemtype": "method",
+            "name": "onKeydown",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the sender object",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the fired event",
+                    "type": "Object"
+                }
+            ],
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 213,
+            "description": "This function adds a label from the input field to the\nlist of existing labels.",
+            "itemtype": "method",
+            "name": "addNewLabel",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 248,
+            "description": "This function adds a predicted label to the list of existing labels.",
+            "itemtype": "method",
+            "name": "addPredictedLabel",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 283,
+            "description": "This function adds a user label to the list of existing labels.",
+            "itemtype": "method",
+            "name": "addUserLabel",
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 316,
+            "description": "This function deletes a label from the GUI and sends an annotation\nto the server about it.",
+            "itemtype": "method",
+            "name": "deleteLabel",
+            "params": [
+                {
+                    "name": "labelText",
+                    "description": "name of the label",
+                    "type": "String"
+                },
+                {
+                    "name": "labelElement",
+                    "description": "the label element",
+                    "type": "Object"
+                }
+            ],
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\labels\\LabelList.js",
+            "line": 343,
+            "description": "This function creates the proper annotation string\nand fires the annotation sender function.",
+            "itemtype": "method",
+            "name": "sendLabelListAnnotation",
+            "params": [
+                {
+                    "name": "docURI",
+                    "description": "URI of the related document",
+                    "type": "String"
+                },
+                {
+                    "name": "labelText",
+                    "description": "name of the label",
+                    "type": "String"
+                },
+                {
+                    "name": "action",
+                    "description": "type of the click action (1 = accept; -1 = dismiss)",
+                    "type": "Number"
+                }
+            ],
+            "class": "LabelList"
+        },
+        {
+            "file": "common\\landscape\\Landscape.js",
+            "line": 5,
+            "class": "Landscape"
+        },
+        {
+            "file": "common\\landscape\\Landscape.js",
+            "line": 17,
+            "description": "When the component is created the program sets the title's properties and\nhides the loader.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "Landscape"
+        },
+        {
+            "file": "common\\landscape\\Landscape.js",
+            "line": 36,
+            "description": "This function runs, when the user starts a search.\nCurrently does nothing.",
+            "itemtype": "method",
+            "name": "startLoading",
+            "class": "Landscape"
+        },
+        {
+            "file": "common\\landscape\\Landscape.js",
+            "line": 43,
+            "description": "After the elements have been rendered, the Landscape\nmodule is being initialized.",
+            "itemtype": "method",
+            "name": "rendered",
+            "class": "Landscape"
+        },
+        {
+            "file": "common\\locationviewer\\LocationViewer.js",
+            "line": 5,
+            "class": "LocationViewer"
+        },
+        {
+            "file": "common\\locationviewer\\LocationViewer.js",
+            "line": 19,
+            "description": "When the component is created the program sets the title's properties and\nhides the loader.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "LocationViewer"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 5,
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 23,
+            "description": "When the component is created, the program sets the title's properties,\nhides the loader and calls the function which handles resizing actions.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 43,
+            "description": "This function runs when the user starts a search. It clears the current \ncontent and shows the loader.",
+            "itemtype": "method",
+            "name": "startLoading",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 55,
+            "description": "This function returns default values for the graph.",
+            "itemtype": "method",
+            "name": "getGraphDefaults",
+            "params": [
+                {
+                    "name": "propertyName",
+                    "description": "name of the property (animation/edge/node/navigation/background)",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the value",
+                "type": "Object"
+            },
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 83,
+            "description": "This function runs a search.",
+            "itemtype": "method",
+            "name": "search",
+            "params": [
+                {
+                    "name": "nodeObj",
+                    "description": "the current node",
+                    "type": "Object"
+                },
+                {
+                    "name": "URI",
+                    "description": "URI of the node",
+                    "type": "String"
+                },
+                {
+                    "name": "level",
+                    "description": "the current level",
+                    "type": "Number"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 112,
+            "description": "This function creates the document list from the rdf object.",
+            "itemtype": "method",
+            "name": "createDocumentList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object, which contains the documents",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the document list",
+                "type": "Array"
+            },
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 150,
+            "description": "This function gets the documents and pushes them to the nodeObj\nas child nodes, and calls the buildGraphJSON to continue building\nthe graph on the given branch.",
+            "itemtype": "method",
+            "name": "addDocNodes",
+            "params": [
+                {
+                    "name": "docNodes",
+                    "description": "retrieved documents",
+                    "type": "Object"
+                },
+                {
+                    "name": "nodeObj",
+                    "description": "points to the parent node",
+                    "type": "Object"
+                },
+                {
+                    "name": "level",
+                    "description": "the current level",
+                    "type": "Number"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 167,
+            "description": "This function builds an object recursively until it reaches the desired level. \nIt's set to 3, the centre node is level 0. This object will be used to feed the \ngraph. Important: The centre node must be initialized already before calling\nthis function.",
+            "itemtype": "method",
+            "name": "buildGraphJSON",
+            "params": [
+                {
+                    "name": "nodeObj",
+                    "description": "the current node",
+                    "type": "Object"
+                },
+                {
+                    "name": "URI",
+                    "description": "an entity that filters the result. \"query\" means no filter (for centre node)",
+                    "type": "String"
+                },
+                {
+                    "name": "level",
+                    "description": "the current level",
+                    "type": "Number"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 201,
+            "description": "After getting the subject children of a given document,\nthis function iterates through them and initializes the \nnodes in the graph after getting the label information.",
+            "itemtype": "method",
+            "name": "createSubjNodes",
+            "params": [
+                {
+                    "name": "nodeObj",
+                    "description": "the parent node",
+                    "type": "Object"
+                },
+                {
+                    "name": "subjNodes",
+                    "description": "the extracted children",
+                    "type": "Object"
+                },
+                {
+                    "name": "nodeLimit",
+                    "description": "the node limit on the current level",
+                    "type": "Number"
+                },
+                {
+                    "name": "level",
+                    "description": "the current level",
+                    "type": "Number"
+                },
+                {
+                    "name": "i",
+                    "description": "the current index",
+                    "type": "Number"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 236,
+            "description": "This function filters an rdf object and returns an array of URIs found in\ndc:subject",
+            "itemtype": "method",
+            "name": "getSubjectConnections",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "whether the search query was success or not",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "URIs of the connected subjects",
+                "type": "Array"
+            },
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 262,
+            "description": "After a new search term has been entered, the graph is being redrawn.\nIn case of the very first search, a completely new graph is being initialized.",
+            "itemtype": "method",
+            "name": "newGraph",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 323,
+            "description": "This function redraws the graph using the object in the graphJSON variable.",
+            "itemtype": "method",
+            "name": "redrawGraph",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 331,
+            "description": "This function is called when the user clicks on a node.\nIt calls a parent function, which can call the preview box\nto open a document.",
+            "itemtype": "method",
+            "name": "onNodeClick",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "the clicked node",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the click event",
+                    "type": "Event"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 347,
+            "description": "This function clears the timeout that has been set \nfor node hover.",
+            "itemtype": "method",
+            "name": "onNodeLeave",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "the clicked node",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the click event",
+                    "type": "Event"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 358,
+            "description": "This function sets a 1 sec timeout before displaying details.",
+            "itemtype": "method",
+            "name": "onNodeHover",
+            "params": [
+                {
+                    "name": "node",
+                    "description": "the clicked node",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the click event",
+                    "type": "Event"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 375,
+            "description": "This functions shows a message in the network-graph panel",
+            "itemtype": "method",
+            "name": "showMessage",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message to be displayed",
+                    "type": "String"
+                }
+            ],
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 385,
+            "description": "This function defines a function on window resize event which \nwhich calls the div resize handler function.",
+            "itemtype": "method",
+            "name": "canvasResizer",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\ngraph\\NGraph.js",
+            "line": 395,
+            "description": "This function resizes the graph canvas to the proper size.\nIt should be called after any resize event happens.",
+            "itemtype": "method",
+            "name": "onDivResize",
+            "class": "NGraph"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 5,
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 29,
+            "description": "The create function initializes the annotator panel.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 39,
+            "description": "This function initializes the predicate list based\non the predicates array.",
+            "itemtype": "method",
+            "name": "initPredicates",
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 58,
+            "description": "This function sets the state of a predicate element\nbased on the given properties.",
+            "itemtype": "method",
+            "name": "setPredicateState",
+            "params": [
+                {
+                    "name": "predicateName",
+                    "description": "label of the predicate",
+                    "type": "String"
+                },
+                {
+                    "name": "state",
+                    "description": "desired state",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 73,
+            "description": "This function is called when the user clicks on the \ndismiss icon on a predicate element. It fires the proper\nfunctions.",
+            "itemtype": "method",
+            "name": "dismissPredicate",
+            "params": [
+                {
+                    "name": "predicateName",
+                    "description": "label of the clicked element",
+                    "type": "String"
+                }
+            ],
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 86,
+            "description": "This function is called when the user clicks on the \naccept icon on a predicate element. It fires the proper\nfunctions.",
+            "itemtype": "method",
+            "name": "acceptPredicate",
+            "params": [
+                {
+                    "name": "predicateName",
+                    "description": "label of the clicked element",
+                    "type": "String"
+                }
+            ],
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 99,
+            "description": "This function shows the annotator panel and hides the\n'Customize predicates' button.",
+            "itemtype": "method",
+            "name": "showPredicateAnnotator",
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 109,
+            "description": "This function hides the annotator panel and shows the\n'Customize predicates' button.",
+            "itemtype": "method",
+            "name": "hidePredicateAnnotator",
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateAnnotator.js",
+            "line": 119,
+            "description": "This function creates the proper annotation string\nand fires the annotation sender function.",
+            "itemtype": "method",
+            "name": "sendPredicateAnnotation",
+            "params": [
+                {
+                    "name": "predicateName",
+                    "description": "label of the clicked predicate element",
+                    "type": "String"
+                },
+                {
+                    "name": "action",
+                    "description": "type of the click action (1 = accept; -1 = dismiss)",
+                    "type": "Number"
+                }
+            ],
+            "class": "PredicateAnnotator"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "line": 5,
+            "class": "PredicateItem"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "line": 18,
+            "description": "When the component is created, the proper state and label is being set.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "PredicateItem"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "line": 49,
+            "description": "This function is called when the user clicks on the\ndismiss icon. It sets the visual state of the element \nand calls the proper function of the parent object \nwhich handles this action.",
+            "itemtype": "method",
+            "name": "dismissPredicate",
+            "class": "PredicateItem"
+        },
+        {
+            "file": "common\\preview\\predicateannotator\\PredicateItem.js",
+            "line": 63,
+            "description": "This function is called when the user clicks on the\naccept icon. It sets the visual state of the element \nand calls the proper function of the parent object \nwhich handles this action.",
+            "itemtype": "method",
+            "name": "acceptPredicate",
+            "class": "PredicateItem"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 5,
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 20,
+            "description": "When this component is created, it overwrites the right click listener\nbecause of the popup menu in the desktop version. It disables the default popup menu.\nThe content's and loader's properties are being set.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 49,
+            "description": "This function is called when window size is changing and it should\nmodify the opened document's height too.",
+            "itemtype": "method",
+            "name": "changeHeight",
+            "params": [
+                {
+                    "name": "newHeight",
+                    "description": "the new height in pixels",
+                    "type": "Number"
+                }
+            ],
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 60,
+            "description": "This function returns the selected text in the window.",
+            "itemtype": "method",
+            "name": "getSelectedText",
+            "return": {
+                "description": "the trimmed selected text",
+                "type": "String"
+            },
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 81,
+            "description": "This function clears the document's content and \nthe predicate annotator.",
+            "itemtype": "method",
+            "name": "clearAll",
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 95,
+            "description": "This function is called after the main kind has loaded the \nmeta-graph of the given document. It asks for predicate \nprediction, creates the predicate annotator panel and \ncalls a function which processes the prediction result.",
+            "itemtype": "method",
+            "name": "processDocGraph",
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 136,
+            "description": "This function is responsible for sending the opened\ndocument's graph to the visualizer. It gets an array of \npredicates and cuts the graph according to the status\n(accepted: true/false) of this set.",
+            "itemtype": "method",
+            "name": "filterGraph",
+            "params": [
+                {
+                    "name": "predicates",
+                    "description": "array of predicates",
+                    "type": "Array"
+                }
+            ],
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 165,
+            "description": "This function clears the visualizer panel.",
+            "itemtype": "method",
+            "name": "clearVisualization",
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 173,
+            "description": "This function passes a given RDF store object to \nUduvudu which displays the document.",
+            "itemtype": "method",
+            "name": "showVisualization",
+            "params": [
+                {
+                    "name": "store",
+                    "description": "the store object",
+                    "type": "Object"
+                }
+            ],
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 183,
+            "description": "This function clears the document content, shows the loader and sends an\nopen doc request to a URL.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "documentURL",
+                    "description": "the request URL",
+                    "type": "String"
+                }
+            ],
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\preview\\OpenedDoc.js",
+            "line": 207,
+            "description": "This function scrolls the scrollbar to the top.",
+            "itemtype": "method",
+            "name": "scrollToTop",
+            "class": "OpenedDoc"
+        },
+        {
+            "file": "common\\Bookmark.js",
+            "line": 5,
+            "class": "Bookmark"
+        },
+        {
+            "file": "common\\Bookmark.js",
+            "line": 21,
+            "description": "When the component is created this function sets the css classes of the button\nand the popup.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "Bookmark"
+        },
+        {
+            "file": "common\\Bookmark.js",
+            "line": 37,
+            "description": "This function runs when the user push the bookmark button. If the\nparentTapFunction is not empty, it calls the parent's function, otherwise\ncalls the own saveBookmark function.",
+            "itemtype": "method",
+            "name": "tapBookmarkButton",
+            "class": "Bookmark"
+        },
+        {
+            "file": "common\\Bookmark.js",
+            "line": 51,
+            "description": "This function save a bookmark with an URL and title if it is possible.\nOtherwise show a warning popup with an opportunity to save the bookmark\nmanually. If any the parameters are empty, the function use the default\nURL and title. If the URL doesn't start with the \"http://\" text, it concatenates\nthis text with the URL.",
+            "itemtype": "method",
+            "name": "saveBookmark",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "the URL of the bookmark",
+                    "type": "String"
+                },
+                {
+                    "name": "title",
+                    "description": "the title of the bookmark",
+                    "type": "String"
+                }
+            ],
+            "class": "Bookmark"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 5,
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 19,
+            "description": "When this component is created it sets the properties of the \nscroller and the title.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 39,
+            "description": "This function updates the content of the details.",
+            "itemtype": "method",
+            "name": "displayDetails",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "rdf with the metadata of the entity",
+                    "type": "Object"
+                }
+            ],
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 50,
+            "description": "This function cleans the content.",
+            "itemtype": "method",
+            "name": "clean",
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 58,
+            "description": "This function returns the country code from a URL.",
+            "itemtype": "method",
+            "name": "getCountryCode",
+            "params": [
+                {
+                    "name": "countryURL",
+                    "description": "the url",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the country code",
+                "type": "String"
+            },
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DetailsBox.js",
+            "line": 68,
+            "description": "This function scrolls the scrollbar to the top.",
+            "itemtype": "method",
+            "name": "scrollToTop",
+            "class": "DetailsBox"
+        },
+        {
+            "file": "common\\DynamicMenu.js",
+            "line": 5,
+            "class": "DynamicMenu"
+        },
+        {
+            "file": "common\\DynamicMenu.js",
+            "line": 15,
+            "description": "When the component is created this function iterates through the menu items\nand fires the addMenuItem function of them.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "DynamicMenu"
+        },
+        {
+            "file": "common\\DynamicMenu.js",
+            "line": 25,
+            "description": "This function creates an Enyo component using a menuItem object.",
+            "itemtype": "method",
+            "name": "addMenuItem",
+            "params": [
+                {
+                    "name": "menuItem",
+                    "description": "the object which contains data about a menu item",
+                    "type": "Object"
+                }
+            ],
+            "class": "DynamicMenu"
+        },
+        {
+            "file": "common\\DynamicMenu.js",
+            "line": 40,
+            "description": "This function is called when the user clicks on a menu item.",
+            "itemtype": "method",
+            "name": "tapMenu",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the clicked menu item",
+                    "type": "Object"
+                }
+            ],
+            "class": "DynamicMenu"
+        },
+        {
+            "file": "common\\DynamicMenu.js",
+            "line": 49,
+            "description": "This function returns a child element by index.",
+            "itemtype": "method",
+            "name": "getChildrenById",
+            "params": [
+                {
+                    "name": "index",
+                    "description": "the index of the child",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the child object",
+                "type": "Object"
+            },
+            "class": "DynamicMenu"
+        },
+        {
+            "file": "common\\SearchBox.js",
+            "line": 5,
+            "class": "SearchBox"
+        },
+        {
+            "file": "common\\SearchBox.js",
+            "line": 23,
+            "description": "When this component is created this function set the button's,\nthe input's and the icon's properties.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "SearchBox"
+        },
+        {
+            "file": "common\\SearchBox.js",
+            "line": 57,
+            "description": "This function fires the updater function of the input field.",
+            "itemtype": "method",
+            "name": "updateInput",
+            "params": [
+                {
+                    "name": "inputText",
+                    "description": "the new input text",
+                    "type": "String"
+                }
+            ],
+            "class": "SearchBox"
+        },
+        {
+            "file": "common\\SearchBox.js",
+            "line": 66,
+            "description": "This function clears and hides the suggest list and fires the\nsearch function of the parent.",
+            "itemtype": "method",
+            "name": "search",
+            "class": "SearchBox"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 10,
+            "description": "This function creates the whole user interface by\ninitializing necessary components and methods.",
+            "itemtype": "method",
+            "name": "createUI",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 20,
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 25,
+            "description": "When the component is being created it renders the\ntemplate for the document preview, and calling functions\nthat process cookie and GET parameters.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 38,
+            "description": "After the rendering the program calculates and sets the\nposition of the bookmark popup and the size of the preview box.",
+            "itemtype": "method",
+            "name": "rendered",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 154,
+            "description": "This function calls the 'initViewType' function which\nsets the view type based on cookie values and calls the\n'setCss' function too.",
+            "itemtype": "method",
+            "name": "processCookieValues",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 165,
+            "description": "This function runs when the user selects a stylesheet.\nIt calls the 'setCss' function with the proper value.",
+            "itemtype": "method",
+            "name": "selectCss",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 174,
+            "description": "This function changes the stylesheet behind the page and \nplaces a cookie.",
+            "itemtype": "method",
+            "name": "setCss",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 184,
+            "description": "This function initializes the view type at the beginning\nusing the 'viewType' cookie value by setting up the toggle \nbuttons and calling the 'createViewType' function with the\nproper parameter value.",
+            "itemtype": "method",
+            "name": "initViewType",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 214,
+            "description": "This function runs after changing the view type.\nFirst, it checks whether it is really a change or\nthe same as the current one. If it has to be changed,\nit calls the toggle functions, sets the cookie value\nand fires a search using the current search term.",
+            "itemtype": "method",
+            "name": "toggleViewType",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 231,
+            "description": "This function initializes every components after changing \nview type. It creates both panels and draggers.",
+            "itemtype": "method",
+            "name": "createViewType",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 384,
+            "description": "This function handles view type toggling by calling the\ntoggle function with the proper parameter.",
+            "itemtype": "method",
+            "name": "onViewTypeToggle",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 412,
+            "description": "This function destroys every components of the current view type\nin case it's not the same as the new view type.",
+            "itemtype": "method",
+            "name": "destroyCurrentViewType",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 439,
+            "description": "This function initializes all the draggers that the page contains.\nIt uses jQuery 'draggable'.",
+            "itemtype": "method",
+            "name": "initDraggers",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 499,
+            "description": "This function is called, when the user clicks on the login button.\nIt displays the login popup window.",
+            "itemtype": "method",
+            "name": "login",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 508,
+            "description": "This function is called when the user clicks on the logo.\nIt navigates to the Fusepool main site.",
+            "itemtype": "method",
+            "name": "clickLogo",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 517,
+            "description": "This function processes GET parameters. If it finds 'search' or\n'entity', it fires a search and open the document if there is the\n'openPreview' parameter.",
+            "itemtype": "method",
+            "name": "processGETParameters",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 533,
+            "description": "This function calculates the position of the previewed document\nand opens the document on the right.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "docURI",
+                    "description": "the URI of the clicked document",
+                    "type": "String"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "mouse over on a short document event",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 553,
+            "description": "This function queries the Annostore for a single annotation - only for testing purposes.",
+            "itemtype": "method",
+            "name": "getAnnotation",
+            "params": [
+                {
+                    "name": "annotationIRI",
+                    "description": "identifier of the annotation",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 575,
+            "description": "This function creates and saves a bookmark, which contains the\nsearch word, the unchecked entities and the opened document.",
+            "itemtype": "method",
+            "name": "createBookmark",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 612,
+            "description": "This function shows a message in a popup.",
+            "itemtype": "method",
+            "name": "popupBookmark",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 623,
+            "description": "This function calculates the position of the popup to be \ndisplayed horizontally in the center, vertically on the top.",
+            "itemtype": "method",
+            "name": "changeBMPopupPosition",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 638,
+            "description": "This function is called when the screen size is changing.\nThis function calls the bookmark popup changer function and the\npreview box size changer function.",
+            "itemtype": "method",
+            "name": "resizeHandler",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 649,
+            "description": "This function reduces the preview box height if there isn't enough\nplace for that. It sets the default height for the box otherwise.",
+            "itemtype": "method",
+            "name": "changePreviewBoxSize",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 665,
+            "description": "This function calls the ajax search if the search word is not empty.",
+            "itemtype": "method",
+            "name": "search",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the checked entities on the left side",
+                    "type": "Array"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 699,
+            "description": "This function sends an ajax request for searching.",
+            "itemtype": "method",
+            "name": "sendSearchRequest",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the checked entities on the left side",
+                    "type": "String"
+                },
+                {
+                    "name": "responseFunction",
+                    "description": "the name of the response function",
+                    "type": "String"
+                },
+                {
+                    "name": "offset",
+                    "description": "the offset of the documents (e.g. offset = 10 --> documents in 10-20)",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 716,
+            "description": "This function creates the search URL for the query.",
+            "itemtype": "method",
+            "name": "createSearchURL",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the checked entities",
+                    "type": "Array"
+                },
+                {
+                    "name": "offset",
+                    "description": "offset of the query",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the search url",
+                "type": "String"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 752,
+            "description": "This function sends a request for more documents.",
+            "itemtype": "method",
+            "name": "moreDocuments",
+            "params": [
+                {
+                    "name": "offset",
+                    "description": "the offset of the document (e.g. offset = 10 -> documents 10-20)",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 761,
+            "description": "This function runs after the ajax more search is done.\nThis function calls the document updater function.",
+            "itemtype": "method",
+            "name": "processMoreResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "status of the search query",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 773,
+            "description": "This function creates a URL fraction that represents\nthe checked entities.",
+            "itemtype": "method",
+            "name": "getCheckedEntitiesURL",
+            "params": [
+                {
+                    "name": "checkedEntities",
+                    "description": "the original checked entities",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "built URL fraction",
+                "type": "String"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 792,
+            "description": "This function runs after the ajax search is done. It calls\nthe entity list updater and the document updater functions.",
+            "itemtype": "method",
+            "name": "processSearchResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "status of the search query",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 820,
+            "description": "This function is called after a successful classification.",
+            "itemtype": "method",
+            "name": "processClassifyResponse",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf response of the request",
+                    "type": "Object"
+                },
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 831,
+            "description": "This function updates the document list after classification\nto have the correct order.",
+            "itemtype": "method",
+            "name": "updateClassifiedDocList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the RDF object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 844,
+            "description": "This function creates a document list after classification.",
+            "itemtype": "method",
+            "name": "createClassifiedDocList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the RDF object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the created document list",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 880,
+            "description": "This function groups and sorts the entities and updates\nthe entity list on the left side.",
+            "itemtype": "method",
+            "name": "updateEntityList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object which contains the new entity list",
+                    "type": "Object"
+                },
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 928,
+            "description": "This function searches for dictionary categories in an rdf object.",
+            "itemtype": "method",
+            "name": "getEntities",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the categories array with the entities",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 941,
+            "description": "This function searches for dictionary categories in an rdf object.",
+            "itemtype": "method",
+            "name": "getCheckedEntities",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the categories array with the entities",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 954,
+            "description": "This function returns an array of type facets found in an RDF object.",
+            "itemtype": "method",
+            "name": "getTypeFacets",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the RDF object which contains the type facets",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the result array",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 997,
+            "description": "This function returns an array of facets found in an RDF object.",
+            "itemtype": "method",
+            "name": "getFacets",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the RDF object which contains the facets",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the result array",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1033,
+            "description": "This function searches for the checked entities in an RDF object and\nreturns them.",
+            "itemtype": "method",
+            "name": "checkedEntitiesFromRdf",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the checked entity list",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1062,
+            "description": "This function searches for the checked entities in an RDF object and\nreturns them.",
+            "itemtype": "method",
+            "name": "checkedTypeFacetsFromRdf",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the checked entity list",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1084,
+            "description": "This function decides whether an entity list contains an entity or not.",
+            "itemtype": "method",
+            "name": "containsEntity",
+            "params": [
+                {
+                    "name": "entities",
+                    "description": "the array of the entities",
+                    "type": "Array"
+                },
+                {
+                    "name": "entity",
+                    "description": "the entity",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true, if the list contains the entity, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1100,
+            "description": "This function deletes every entity from an array that equals\na given entity (after a given index).",
+            "itemtype": "method",
+            "name": "deteleLaterEntities",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "the array",
+                    "type": "Array"
+                },
+                {
+                    "name": "entity",
+                    "description": "the checked entity",
+                    "type": "String"
+                },
+                {
+                    "name": "fromIndex",
+                    "description": "the start index in the array",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1120,
+            "description": "This function updates the document list in the middle.",
+            "itemtype": "method",
+            "name": "updateDocumentList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the RDF object which contains the new document list",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1137,
+            "description": "This function deletes the content from the Preview panel.",
+            "itemtype": "method",
+            "name": "cleanPreviewBox",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1145,
+            "description": "This function deletes the content from the Details panel.",
+            "itemtype": "method",
+            "name": "cleanDetailsBox",
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1153,
+            "description": "This function searches for the count of documents in an rdf object.",
+            "itemtype": "method",
+            "name": "getDocumentsCount",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object, which contains the count of documents.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the count of documents",
+                "type": "Number"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1172,
+            "description": "This function creates an ordered list of documents from an rdf object.",
+            "itemtype": "method",
+            "name": "createDocumentList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the document list",
+                "type": "Array"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1282,
+            "description": "This function decides whether a document list contains\na document with a specific content and title or not.",
+            "itemtype": "method",
+            "name": "containsDocument",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the list of documents",
+                    "type": "Array"
+                },
+                {
+                    "name": "content",
+                    "description": "content of the other document",
+                    "type": "String"
+                },
+                {
+                    "name": "title",
+                    "description": "title of the other document",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true, if the list contains, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1300,
+            "description": "This function calls the content updater function of the\ndetails box.\n[replaced with function 'displayDetails']",
+            "itemtype": "method",
+            "name": "updateDetails",
+            "params": [
+                {
+                    "name": "title",
+                    "description": "the title of the details",
+                    "type": "String"
+                },
+                {
+                    "name": "addressObject",
+                    "description": "the address object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\DesktopApp.js",
+            "line": 1312,
+            "description": "This function calls the display function of the\ndetails box.",
+            "itemtype": "method",
+            "name": "displayDetails",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "rdf with the metadata of the entity",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentApp"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 5,
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 52,
+            "description": "This function initializes the login panel based on the cookie values.",
+            "itemtype": "method",
+            "name": "initLogin",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 76,
+            "description": "This function is called when the user clicks on 'Sign out'.\nIt hides and shows the proper panels and sets the cookie value.",
+            "itemtype": "method",
+            "name": "signOut",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 98,
+            "description": "This function is called when the tap the 'Back' button on the registration\npopup hide the registration's components and shows the login's componens.",
+            "itemtype": "method",
+            "name": "back",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 112,
+            "description": "This function runs when the user clicks on 'Sign In'. It starts\na request to the server and based on the response, it either\ncalls the 'signInFailed' or the 'signInSucceed' function.",
+            "itemtype": "method",
+            "name": "signIn",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 141,
+            "description": "This function runs after a successful login. It creates the proper\ncookie and sets the login panel to logged in state.",
+            "itemtype": "method",
+            "name": "signInSucceed",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 164,
+            "description": "This function runs after an unsuccessful login. It shows an error message.",
+            "itemtype": "method",
+            "name": "signInFailed",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 172,
+            "description": "This function called when the tap the \"Sign Up\" button. If the registration\npanel is active, the ajax request will be sent in the future, otherwise\nit shows the registration's fields.",
+            "itemtype": "method",
+            "name": "signUp",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 213,
+            "description": "This function runs after an unsuccessful registration.\nIt shows an error message.",
+            "itemtype": "method",
+            "name": "registrationFailed",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 222,
+            "description": "This function runs after a successful registration.\nIt switches back the panel to login state and informs\nthe user about the successful registration.",
+            "itemtype": "method",
+            "name": "registrationSucceed",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 233,
+            "description": "This function validates the entered data in the fields\nof the registration panel.",
+            "itemtype": "method",
+            "name": "validateFields",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 256,
+            "description": "This function clears and hides the 'currentUserLabel' panel.",
+            "itemtype": "method",
+            "name": "hideCurrentUser",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 265,
+            "description": "This function displays a text in the 'currentUserLabel' panel\n(either a username or a message about being logged out).",
+            "itemtype": "method",
+            "name": "showCurrentUser",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 275,
+            "description": "This function hides the current message in the panel.",
+            "itemtype": "method",
+            "name": "hideLoginMessage",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 284,
+            "description": "This function shows a message.",
+            "itemtype": "method",
+            "name": "showLoginMessage",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 293,
+            "description": "This function calls the 'signIn' function when the user\npresses Enter in the login panel.",
+            "itemtype": "method",
+            "name": "onKeydown",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 308,
+            "description": "This function shows all fields of the registration.",
+            "itemtype": "method",
+            "name": "showRegisterFields",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 319,
+            "description": "This function shows the login panel.",
+            "itemtype": "method",
+            "name": "showLogin",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\LoginPopup.js",
+            "line": 329,
+            "description": "This function runs when the user clicks out of the popup or to the close\nbutton. It hides the whole popup.",
+            "itemtype": "method",
+            "name": "close",
+            "class": "LoginPopup"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 5,
+            "class": "PreviewBox"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 24,
+            "description": "This function creates the entity menu, which is being displayed when the user\nhighlights a text in the preview document and right clicks.",
+            "itemtype": "method",
+            "name": "createMenu",
+            "class": "PreviewBox"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 34,
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 82,
+            "description": "This function is called when the user push the \"Add entity\" menu\nitem. The addEntityPopup will be showed with the selected text.",
+            "itemtype": "method",
+            "name": "addEntity",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 92,
+            "description": "This function is called when the user clicks on the 'Remove entity' menu\nitem. The 'removeEntityPopup' will be displayed with the selected text.",
+            "itemtype": "method",
+            "name": "removeEntity",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 102,
+            "description": "This function is called when the user clicks on the 'Move entity' menu\nitem. The 'moveEntityPopup' will be displayed with the selected text.",
+            "itemtype": "method",
+            "name": "moveEntity",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 112,
+            "description": "This function displays the entity menu at mouse position.",
+            "itemtype": "method",
+            "name": "showMenu",
+            "params": [
+                {
+                    "name": "inEvent",
+                    "description": "the event which contains the position of the mouse",
+                    "type": "Object"
+                },
+                {
+                    "name": "selectedText",
+                    "description": "the selected text what the user selected",
+                    "type": "String"
+                }
+            ],
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 149,
+            "description": "This function hides the entity menu.",
+            "itemtype": "method",
+            "name": "hideMenu",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 194,
+            "description": "This function changes the height of the opened document.",
+            "itemtype": "method",
+            "name": "changeHeight",
+            "params": [
+                {
+                    "name": "newHeight",
+                    "description": "the document's new height",
+                    "type": "Number"
+                }
+            ],
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 203,
+            "description": "This function runs when the user clicks on the previewed document. If the\npopup menu exists, the user clicked with right button, and the\nselected text length's is sufficient the entity menu is getting displayed.\nIf the user clicks with any other mouse button (and the menu exists),\nthe entity menu will be hidden.",
+            "itemtype": "method",
+            "name": "clickText",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the previewed document",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the event which contains information about the mouse",
+                    "type": "Object"
+                }
+            ],
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 226,
+            "description": "This function runs when the user clicks the 'positive rate' button. It shows\nthe rating popup with true (positive) parameter.\n[This functionality is currently unused.]",
+            "itemtype": "method",
+            "name": "positiveRate",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 236,
+            "description": "This function runs when the user clicks the 'Negative rate' button. It shows\nthe rating popup with false (negative) parameter.\n[This functionality is currently unused.]",
+            "itemtype": "method",
+            "name": "negativeRate",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 246,
+            "description": "This function runs when the user clicks the 'Full view' button.",
+            "itemtype": "method",
+            "name": "fullView",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 254,
+            "description": "This function hides the positive and negative rate buttons and the full\nview button.",
+            "itemtype": "method",
+            "name": "hideRateButtons",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 265,
+            "description": "This function shows the positive and negative rate buttons and the full\nview button. \n[This functionality is currently unused.]",
+            "itemtype": "method",
+            "name": "showRateButtons",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 277,
+            "description": "This function calls 'openDoc' function of the opened document\nand displays the buttons.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "docURI",
+                    "description": "URI of the document to be opened",
+                    "type": "String"
+                }
+            ],
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 289,
+            "description": "This function cleans the content of the opened document.",
+            "itemtype": "method",
+            "name": "clean",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 298,
+            "description": "This function returns the generated ID of the opened document panel.",
+            "return": {
+                "description": "the id",
+                "type": "String"
+            },
+            "itemtype": "method",
+            "name": "getOpenDocId",
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\PreviewBox.js",
+            "line": 307,
+            "description": "This function returns the URI of the opened document.",
+            "itemtype": "method",
+            "name": "getDocumentURI",
+            "return": {
+                "description": "document URI",
+                "type": "String"
+            },
+            "class": "MenuController"
+        },
+        {
+            "file": "desktop\\TopMessageBox.js",
+            "line": 5,
+            "class": "TopMessageBox"
+        },
+        {
+            "file": "desktop\\TopMessageBox.js",
+            "line": 10,
+            "description": "In the beginning this message box is not visible.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "TopMessageBox"
+        },
+        {
+            "file": "desktop\\TopMessageBox.js",
+            "line": 24,
+            "description": "This function updates the content in the message box.",
+            "itemtype": "method",
+            "name": "updateMessage",
+            "params": [
+                {
+                    "name": "newMessage",
+                    "description": "the box's new content",
+                    "type": "String"
+                }
+            ],
+            "class": "TopMessageBox"
+        },
+        {
+            "file": "desktop\\TopMessageBox.js",
+            "line": 34,
+            "description": "This function closes the top message box.",
+            "itemtype": "method",
+            "name": "close",
+            "class": "TopMessageBox"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftHeader.js",
+            "line": 5,
+            "class": "LeftHeader"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 5,
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 42,
+            "description": "This function returns the unchecked entities of the dictionaries.",
+            "itemtype": "method",
+            "name": "getUncheckedEntities",
+            "return": {
+                "description": "the unchecked entities",
+                "type": "Array"
+            },
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 51,
+            "description": "This function shows the 'Documents' button in the mobile version.",
+            "itemtype": "method",
+            "name": "showDocsButton",
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 59,
+            "description": "This function hides the 'Documents' button in the mobile version.",
+            "itemtype": "method",
+            "name": "hideDocsButton",
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 67,
+            "description": "This function is called when the user presses the 'Documents' button.\nIt calls the parent function which slides the Documents panel.",
+            "itemtype": "method",
+            "name": "searchShow",
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 76,
+            "description": "This function updates the dictionary list from a dictionary object.",
+            "itemtype": "method",
+            "name": "updateDictionaries",
+            "params": [
+                {
+                    "name": "dictionaryObject",
+                    "description": "the new dictionary list object",
+                    "type": "Object"
+                }
+            ],
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 85,
+            "description": "This function calls the content updater function of the Details box.\n[replaced with function 'displayDetails']",
+            "itemtype": "method",
+            "name": "updateDetails",
+            "params": [
+                {
+                    "name": "title",
+                    "description": "the title of the details",
+                    "type": "String"
+                },
+                {
+                    "name": "addressObject",
+                    "description": "the address object",
+                    "type": "Object"
+                }
+            ],
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 96,
+            "description": "This function calls the content updater function of the Details box.",
+            "itemtype": "method",
+            "name": "displayDetails",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "rdf with the metadata of the entity",
+                    "type": "Object"
+                }
+            ],
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\left\\LeftPanel.js",
+            "line": 105,
+            "description": "This function calls the parent's search function with the search\nword and the checked entity list.",
+            "itemtype": "method",
+            "name": "search",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the last search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the actual checked entities",
+                    "type": "String"
+                }
+            ],
+            "class": "LeftPanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 5,
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 66,
+            "description": "This function runs when the user starts a search. It calls the document\nlist's startSearching function.",
+            "itemtype": "method",
+            "name": "startSearching",
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 75,
+            "description": "This function calls the parent's create bookmark function.",
+            "itemtype": "method",
+            "name": "createBookmark",
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 83,
+            "description": "This function calls the bookmark's save bookmark function\nwith an URL and a title.",
+            "itemtype": "method",
+            "name": "saveBookmark",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "the new bookmark url",
+                    "type": "String"
+                },
+                {
+                    "name": "title",
+                    "description": "the new bookmark title",
+                    "type": "String"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 94,
+            "description": "This function calls the parent's function, which shows a\nmessage about the bookmark in a new popup.",
+            "itemtype": "method",
+            "name": "popupBookmark",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message",
+                    "type": "String"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 104,
+            "description": "This function shows the 'Entities' button that navigates\nto the entity list panel.",
+            "itemtype": "method",
+            "name": "showEntitiesButton",
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 113,
+            "description": "This function hides the 'Entities' button.",
+            "itemtype": "method",
+            "name": "hideEntitiesButton",
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 121,
+            "description": "This function calls the parent's entity show function.",
+            "itemtype": "method",
+            "name": "entityShow",
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 129,
+            "description": "This function calls the parent's user interface update function.",
+            "itemtype": "method",
+            "name": "updateUI",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the latest search word",
+                    "type": "String"
+                },
+                {
+                    "name": "uncheckedEntities",
+                    "description": "array of unchecked entities",
+                    "type": "Array"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 139,
+            "description": "This function calls the document list's update function.",
+            "itemtype": "method",
+            "name": "updateDocuments",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the new list of documents",
+                    "type": "Array"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 148,
+            "description": "This function calls the documents' addMoreDocuments\nfunction with the new documents.",
+            "itemtype": "method",
+            "name": "addMoreDocuments",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the new list of documents",
+                    "type": "Array"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 158,
+            "description": "This function calls the parent's moreDocuments function.",
+            "itemtype": "method",
+            "name": "moreDocuments",
+            "params": [
+                {
+                    "name": "offset",
+                    "description": "the offset of the documents",
+                    "type": "Number"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 167,
+            "description": "This function calls the parent's openDoc function with the document URI.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "documentURI",
+                    "description": "URI of the document to be opened",
+                    "type": "String"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 176,
+            "description": "This function updates the text in the search field.",
+            "itemtype": "method",
+            "name": "updateInput",
+            "params": [
+                {
+                    "name": "inputText",
+                    "description": "the new input text",
+                    "type": "String"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\middle\\MiddlePanel.js",
+            "line": 185,
+            "description": "This function updates the counter with a given value.",
+            "itemtype": "method",
+            "name": "updateCounts",
+            "params": [
+                {
+                    "name": "count",
+                    "description": "count of documents",
+                    "type": "Number"
+                }
+            ],
+            "class": "MiddlePanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "line": 5,
+            "class": "OpenedDocHeader"
+        },
+        {
+            "file": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "line": 29,
+            "description": "This function shows the rate popup with true (positive) parameter.\n[Currently unused.]",
+            "itemtype": "method",
+            "name": "positiveRate",
+            "class": "OpenedDocHeader"
+        },
+        {
+            "file": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "line": 38,
+            "description": "This function shows the rate popup with false (negative) parameter.\n[Currently unused.]",
+            "itemtype": "method",
+            "name": "negativeRate",
+            "class": "OpenedDocHeader"
+        },
+        {
+            "file": "mobile\\frame\\right\\OpenedDocHeader.js",
+            "line": 47,
+            "description": "This function opens a document in full view.\n[Currently unused.]",
+            "itemtype": "method",
+            "name": "fullView",
+            "class": "OpenedDocHeader"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 5,
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 69,
+            "description": "This function shows the 'Back' button.",
+            "itemtype": "method",
+            "name": "showBackButton",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 77,
+            "description": "This function hides the 'Back' button.",
+            "itemtype": "method",
+            "name": "hideBackButton",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 85,
+            "description": "This function is called when the user push the 'Back' button.\nIt calls the parent's function, which closes this panel.",
+            "itemtype": "method",
+            "name": "back",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 94,
+            "description": "This function calls the opened document's document opening\nfunction with the document's URI.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "documentURI",
+                    "description": "URI of the document",
+                    "type": "String"
+                }
+            ],
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 104,
+            "description": "This functions hides the preview panel.",
+            "itemtype": "method",
+            "name": "clean",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 112,
+            "description": "This function returns the URI of the opened document.",
+            "itemtype": "method",
+            "name": "getDocumentURI",
+            "return": {
+                "description": "the document URI",
+                "type": "String"
+            },
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 121,
+            "description": "This function is called when the user clicks the 'Add' button.\nIt shows the add entity popup with the selected text.",
+            "itemtype": "method",
+            "name": "addEntity",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 130,
+            "description": "This function is called when the user clicks the 'Move' button.\nIt shows the move entity popup with the selected text.",
+            "itemtype": "method",
+            "name": "moveEntity",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\frame\\right\\RightPanel.js",
+            "line": 139,
+            "description": "This function is called when the user clicks the 'Remove' button.\nIt shows the remove entity popup with the selected text.",
+            "itemtype": "method",
+            "name": "removeEntity",
+            "class": "RightPanel"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 19,
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 64,
+            "description": "This function processes GET parameters. If it finds 'search' or\n'entity', it fires a search and open the document if there is the\n'openPreview' parameter.",
+            "itemtype": "method",
+            "name": "processGETParameters",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 80,
+            "description": "This function returns whether the window width is mobile size or not.",
+            "itemtype": "method",
+            "name": "isMobileSize",
+            "return": {
+                "description": "true, if the screen size is maximum 800 pixels, otherwise false",
+                "type": "Boolean"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 89,
+            "description": "This function shows the middle panel.",
+            "itemtype": "method",
+            "name": "searchShow",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 97,
+            "description": "This function shows the left panel.",
+            "itemtype": "method",
+            "name": "entityShow",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 105,
+            "description": "This function opens a document in the preview panel.\nIf the screen size is small, it shows the right panel only.",
+            "itemtype": "method",
+            "name": "openDoc",
+            "params": [
+                {
+                    "name": "documentURI",
+                    "description": "the document URI to be opened",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 119,
+            "description": "This function updates the 'open' buttons (e.g. the\n'entities button' in the middle).",
+            "itemtype": "method",
+            "name": "updateButtons",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 136,
+            "description": "This function is called when the screen size is changing or\nthe user rotates the device. This function sets the actual panel\naccording to the screen size, updates the buttons, and changes\nthe position of the bookmark popup.",
+            "itemtype": "method",
+            "name": "reflow",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 160,
+            "description": "This function creates and saves a bookmark. It contains the\nsearch word, the unchecked entities and the opened document.",
+            "itemtype": "method",
+            "name": "createBookmark",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 197,
+            "description": "This function shows a message in the bookmark popup.",
+            "itemtype": "method",
+            "name": "popupBookmark",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message what the function shows",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 208,
+            "description": "This function calculates the position of the popup to be \ndisplayed in the middle of the screen.",
+            "itemtype": "method",
+            "name": "changeBMPopupPosition",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 223,
+            "description": "This function calls the ajax search if the search word is not empty.",
+            "itemtype": "method",
+            "name": "search",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the unchecked entities on the left side",
+                    "type": "Array"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 242,
+            "description": "This function sends an ajax request for searching.",
+            "itemtype": "method",
+            "name": "sendSearchRequest",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the checked entities on the left side",
+                    "type": "String"
+                },
+                {
+                    "name": "responseFunction",
+                    "description": "the name of the response function",
+                    "type": "String"
+                },
+                {
+                    "name": "offset",
+                    "description": "the offset of the documents (e.g. offset = 10 --> documents in 10-20)",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 259,
+            "description": "This function creates the search URL for the query.",
+            "itemtype": "method",
+            "name": "createSearchURL",
+            "params": [
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                },
+                {
+                    "name": "checkedEntities",
+                    "description": "the checked entities",
+                    "type": "Array"
+                },
+                {
+                    "name": "offset",
+                    "description": "offset of the query",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "the search url",
+                "type": "String"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 290,
+            "description": "This function send a request for more documents.",
+            "itemtype": "method",
+            "name": "moreDocuments",
+            "params": [
+                {
+                    "name": "offset",
+                    "description": "the offset (offset = 10 --> document in 10-20)",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 299,
+            "description": "This function runs after getting the response from the ajax\nmore search. It calls the document updater function.",
+            "itemtype": "method",
+            "name": "processMoreResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "the search query was success or not",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 311,
+            "description": "This function creates a URL fraction that represents\nthe checked entities.",
+            "itemtype": "method",
+            "name": "getCheckedEntitiesURL",
+            "params": [
+                {
+                    "name": "checkedEntities",
+                    "description": "the original checked entities",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "built URL fraction",
+                "type": "String"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 330,
+            "description": "This function runs after the ajax search is getting finished.\nIt calls the entity list updater and the document updater functions.",
+            "itemtype": "method",
+            "name": "processSearchResponse",
+            "params": [
+                {
+                    "name": "success",
+                    "description": "state of the search query",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "rdf",
+                    "description": "the response rdf object",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 348,
+            "description": "This function groups and sorts the entities and updates\nthe entity list on the left side.",
+            "itemtype": "method",
+            "name": "updateEntityList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                },
+                {
+                    "name": "searchWord",
+                    "description": "the search word",
+                    "type": "String"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 390,
+            "description": "This function searches for dictionary categories in an rdf object.",
+            "itemtype": "method",
+            "name": "getCategories",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object that contains the categories",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the categories array with the entities",
+                "type": "Array"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 416,
+            "description": "This function searches for the checked entities in an rdf object\nand returns the array of it.",
+            "itemtype": "method",
+            "name": "checkedEntitiesFromRdf",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "the checked entity list",
+                "type": "Array"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 445,
+            "description": "This function decides whether an entity list contains an entity or not.",
+            "itemtype": "method",
+            "name": "containsEntity",
+            "params": [
+                {
+                    "name": "entities",
+                    "description": "array of the entities",
+                    "type": "Array"
+                },
+                {
+                    "name": "entity",
+                    "description": "the entity",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true if the list contains the entity, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 461,
+            "description": "This function deletes every entity from an array that equals\na given entity (after a given index).",
+            "itemtype": "method",
+            "name": "deteleLaterEntities",
+            "params": [
+                {
+                    "name": "array",
+                    "description": "the array",
+                    "type": "Array"
+                },
+                {
+                    "name": "entity",
+                    "description": "the checked entity",
+                    "type": "String"
+                },
+                {
+                    "name": "fromIndex",
+                    "description": "the start index in the array",
+                    "type": "Number"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 481,
+            "description": "This function updates the document list in the middle.",
+            "itemtype": "method",
+            "name": "updateDocumentList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object that contains the new document list",
+                    "type": "Object"
+                }
+            ],
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 498,
+            "description": "This function deletes the content from the preview panel.",
+            "itemtype": "method",
+            "name": "cleanPreviewBox",
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 506,
+            "description": "This function returns the count of documents in an rdf object.",
+            "itemtype": "method",
+            "name": "getDocumentsCount",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "count of documents",
+                "type": "Number"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 523,
+            "description": "This function creates an ordered document list from the rdf object.",
+            "itemtype": "method",
+            "name": "createDocumentList",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "array of containing documents",
+                "type": "Array"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "mobile\\MobileApp.js",
+            "line": 604,
+            "description": "This function decides whether a document list contains\na document with a specific content and title or not.",
+            "itemtype": "method",
+            "name": "containsDocument",
+            "params": [
+                {
+                    "name": "documents",
+                    "description": "the list of documents",
+                    "type": "Array"
+                },
+                {
+                    "name": "content",
+                    "description": "content of the other document",
+                    "type": "String"
+                },
+                {
+                    "name": "title",
+                    "description": "title of the other document",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true, if the list contains, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "DocumentMobileApp"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 10,
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 16,
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 23,
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 50,
+            "description": "Creating function which sets the input and the suggester div css class\nand hides the suggest div.",
+            "itemtype": "method",
+            "name": "create",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 63,
+            "description": "This functions runs after rendering.",
+            "itemtype": "method",
+            "name": "rendered",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 73,
+            "description": "This function update the back input field after the rendering. If the user\nfocus on the back input, the program set the focus to the front input.\nIt requires jQuery.",
+            "itemtype": "method",
+            "name": "updateBackInput",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 90,
+            "description": "This function updates the input field's placeholder.",
+            "itemtype": "method",
+            "name": "updatePlaceholder",
+            "params": [
+                {
+                    "name": "placeHolderText",
+                    "description": "the new placeholder",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 99,
+            "description": "This function put a new text to the input.",
+            "itemtype": "method",
+            "name": "updateInputValue",
+            "params": [
+                {
+                    "name": "newValue",
+                    "description": "the new value",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 110,
+            "description": "This function sends a request to the back-end to get the suggestion list\nfor the keyword.",
+            "itemtype": "method",
+            "name": "refreshFromBackend",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 137,
+            "description": "This function processes the response after the ajax request.",
+            "itemtype": "method",
+            "name": "processResponse",
+            "params": [
+                {
+                    "name": "inResponse",
+                    "description": "the response what is come from the back-end",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 166,
+            "description": "This function parses an rdf text to a string array,\nwhich contains the suggested elements.",
+            "itemtype": "method",
+            "name": "rdfToArray",
+            "params": [
+                {
+                    "name": "response",
+                    "description": "the rdf response from the back-end",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 197,
+            "description": "This function generates the post body text for the ajax request. The postBody\ncontains the input text and the number of max elements. The table name and\nthe 'where' property is optional.",
+            "itemtype": "method",
+            "name": "generatePostBodyText",
+            "return": {
+                "description": "the generated post body text",
+                "type": "String"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 220,
+            "description": "This function returns the format for the request. The possible\nformats are 'json' and 'rdf'. Otherwise it returns 'json'.",
+            "itemtype": "method",
+            "name": "generateRequestFormat",
+            "return": {
+                "description": "the request format",
+                "type": "String"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 236,
+            "description": "This function returns the header for the request.\nIt is important for rdf formatted requests. The default is null.",
+            "itemtype": "method",
+            "name": "generateHeader",
+            "return": {
+                "description": "header object",
+                "type": "Object"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 249,
+            "description": "This function deletes the content from the input field and\nhides the suggestion list.",
+            "itemtype": "method",
+            "name": "clearText",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 259,
+            "description": "This function returns the input field's value.",
+            "itemtype": "method",
+            "name": "getText",
+            "return": {
+                "description": "the input field's value",
+                "type": "String"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 268,
+            "description": "This function disables the input field.",
+            "itemtype": "method",
+            "name": "disableInput",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 276,
+            "description": "This function enables the input field.",
+            "itemtype": "method",
+            "name": "enableInput",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 284,
+            "description": "This function returns true if the parameter is empty, false otherwise.",
+            "itemtype": "method",
+            "name": "isEmptyParam",
+            "params": [
+                {
+                    "name": "parameter",
+                    "description": "the text what the function check",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "true if the parameter is empty, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 297,
+            "description": "This function runs when the user presses a key while \nthe suggestion list is active. The used keys are\nup, down, Enter and ESC.",
+            "itemtype": "method",
+            "name": "keyDown",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the suggestion list",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "pushed button event",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 327,
+            "description": "This function runs when the user changes the input field's content, and\ncontrols the autosuggest event.",
+            "itemtype": "method",
+            "name": "keyUp",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the input field",
+                    "type": "Object"
+                },
+                {
+                    "name": "inEvent",
+                    "description": "the input change event which contains the pressed button",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 349,
+            "description": "This function run, when the user push the 'up arrow' button on\nthe keyboard. The function step down up the suggestion list, and\nupdate the input field text to the selected item.",
+            "itemtype": "method",
+            "name": "moveUp",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 372,
+            "description": "This function run, when the user push the 'down arrow' button on\nthe keyboard. The function step down on the suggestion list, and\nupdate the input field text to the selected item.",
+            "itemtype": "method",
+            "name": "moveDown",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 395,
+            "description": "This function adds a new item to the suggestion list. The item contains the input\ntext, and these characters will be bold in the user interface.",
+            "itemtype": "method",
+            "name": "addSuggestElement",
+            "params": [
+                {
+                    "name": "element",
+                    "description": "the new list item's content",
+                    "type": "String"
+                },
+                {
+                    "name": "inputText",
+                    "description": "the content of the input field",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 423,
+            "description": "This function runs when the user moves the mouse over a suggested element.\nIt selects the related element in the list.",
+            "itemtype": "method",
+            "name": "mouseOver",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the selected list element",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 433,
+            "description": "This function runs when the user moves the mouse out of a suggested element.\nIt deselects the related element in the list.",
+            "itemtype": "method",
+            "name": "mouseOut",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the unselected list element",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 443,
+            "description": "This function updates the input field and hides the suggestion list\nwhen the user clicks on an item.",
+            "itemtype": "method",
+            "name": "mouseDown",
+            "params": [
+                {
+                    "name": "inSender",
+                    "description": "the selected list element",
+                    "type": "Object"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 455,
+            "description": "This function controls the filtering of the data list and creates the\nsuggestion list.",
+            "itemtype": "method",
+            "name": "onTextChange",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 495,
+            "description": "This function clears the second input in the background.",
+            "itemtype": "method",
+            "name": "clearBackInput",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 503,
+            "description": "This function puts the suggested word into the background input so it\nlooks like the suggester continues the term that the user started to type.\nIt handles case-differences between the suggested term and the term that\nthe user entered.",
+            "itemtype": "method",
+            "name": "completeBackInput",
+            "params": [
+                {
+                    "name": "word",
+                    "description": "the word what the function puts",
+                    "type": "String"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 518,
+            "description": "This function checks that which elements are matched to the input field's\ncontent. It can use both global data and own data. This function is used when\nthe there are no refreshing from back-end.",
+            "itemtype": "method",
+            "name": "getMatches",
+            "params": [
+                {
+                    "name": "inputText",
+                    "description": "input field's content",
+                    "type": "String"
+                },
+                {
+                    "name": "list",
+                    "description": "the created filtered list which is returned by the function",
+                    "type": "Array"
+                }
+            ],
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 553,
+            "description": "This function checks whether the first parameter contains the second. If the\n'wordStartingMatching' variable is true, the function checks the beginning of\nthe word, everywhere in the word otherwise.",
+            "itemtype": "method",
+            "name": "containsText",
+            "params": [
+                {
+                    "name": "longText",
+                    "description": "the longText which may contains the searchedText",
+                    "type": "String"
+                },
+                {
+                    "name": "searchedText",
+                    "description": "the searched text",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "true, if the longText contains the searchedText, false otherwise",
+                "type": "Boolean"
+            },
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 574,
+            "description": "This function runs, when the user leaves the input field.\nIt hides the suggestion list and clears the input field in\nthe background too.",
+            "itemtype": "method",
+            "name": "onBlurInput",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 586,
+            "description": "This function hides the suggestion list.",
+            "itemtype": "method",
+            "name": "hideSuggest",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\autosuggest\\Autosuggest.js",
+            "line": 594,
+            "description": "This function shows the suggestion list.",
+            "itemtype": "method",
+            "name": "showSuggest",
+            "class": "AutoSuggest"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 5,
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 26,
+            "description": "This function sets the width of the popup window.",
+            "itemtype": "method",
+            "name": "updateWidth",
+            "params": [
+                {
+                    "name": "newWidth",
+                    "description": "the new width in pixels",
+                    "type": "Number"
+                },
+                {
+                    "name": "margin",
+                    "description": "left and right margin in pixels",
+                    "type": "Number"
+                }
+            ],
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 38,
+            "description": "This function returns the content in the popup window.",
+            "itemtype": "method",
+            "name": "getContent",
+            "return": {
+                "description": "the content",
+                "type": "String"
+            },
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 47,
+            "description": "This function sets the content and opens the popup window.",
+            "itemtype": "method",
+            "name": "setContent",
+            "params": [
+                {
+                    "name": "content",
+                    "description": "the popup's new content",
+                    "type": "String"
+                }
+            ],
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 57,
+            "description": "This function shows the popup and the close button.",
+            "itemtype": "method",
+            "name": "open",
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\ClosablePopup.js",
+            "line": 67,
+            "description": "This function runs when the user clicks out of the popup or on the close\nbutton. It hides the popup window.",
+            "itemtype": "method",
+            "name": "close",
+            "class": "ClosablePopup"
+        },
+        {
+            "file": "utils\\templates.js",
+            "line": 1,
+            "description": "Register helper to show content of a rdf source",
+            "params": [
+                {
+                    "name": "url",
+                    "description": "the url of template details",
+                    "type": "String"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 50,
+            "description": "This function queries the platform for the current, logged in user\nand sets the currentUser cookie value.",
+            "itemtype": "method",
+            "name": "setCurrentUser",
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 70,
+            "description": "This function creates a cookie using the parameter values.",
+            "itemtype": "method",
+            "name": "createCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "name of the cookie",
+                    "type": "String"
+                },
+                {
+                    "name": "value",
+                    "description": "cookie value",
+                    "type": "String"
+                },
+                {
+                    "name": "days",
+                    "description": "days until expiration",
+                    "type": "Number"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 81,
+            "description": "This function returns a cookie.",
+            "itemtype": "method",
+            "name": "readCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "name of the cookie",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "cookie value",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 91,
+            "description": "This function deletes a cookie.",
+            "itemtype": "method",
+            "name": "eraseCookie",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "name of the cookie",
+                    "type": "String"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 100,
+            "description": "Checks whether the data is empty or not.",
+            "itemtype": "method",
+            "name": "isEmpty",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "the data what the function checks",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "true, if data is empty, false, if data is not empty",
+                "type": "Boolean"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 113,
+            "description": "This function formats the given string and clears the html tags\nthat could cause trouble on the GUI. It is using jquery-clean jQuery plug-in.",
+            "itemtype": "method",
+            "name": "removeTags",
+            "params": [
+                {
+                    "name": "string",
+                    "description": "to be cleaned",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "clean string",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 125,
+            "description": "This function checks whether the length of a given text is between\na minimum and a maximum value.",
+            "itemtype": "method",
+            "name": "textLengthBetween",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "the text to checks",
+                    "type": "String"
+                },
+                {
+                    "name": "min",
+                    "description": "minimum length",
+                    "type": "Number"
+                },
+                {
+                    "name": "max",
+                    "description": "maximum length",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "true, if the text's length is greater or equals the minimum length\nand shorter or equals the maximum length",
+                "type": "Boolean"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 145,
+            "description": "This function gets a parameter name and returns an array that contain every\nvalue that can be found in the GET variables under this parameter name.\nFor example when the URL contains x=1&x=2, the result array will be [1,2].",
+            "itemtype": "method",
+            "name": "GetURLParameter",
+            "params": [
+                {
+                    "name": "paramName",
+                    "description": "the name of the GET parameter",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the result array (empty if the parameter does not exist)",
+                "type": "Array"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 166,
+            "description": "This function replaces every occurences of a string with another string.",
+            "itemtype": "method",
+            "name": "replaceAll",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "text that the function checks",
+                    "type": "String"
+                },
+                {
+                    "name": "from",
+                    "description": "text to be replaced",
+                    "type": "String"
+                },
+                {
+                    "name": "to",
+                    "description": "text to replace with",
+                    "type": "String"
+                },
+                {
+                    "name": "decodeURI",
+                    "description": "decode URI or not",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "if the text is not empty, the replaced text with trim, else an empty text",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 188,
+            "description": "This function replaces every occurences of a string with another string \nbetween 'startTag' and 'endTag'.",
+            "itemtype": "method",
+            "name": "replaceAllInTags",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "what the function checks",
+                    "type": "String"
+                },
+                {
+                    "name": "fromText",
+                    "description": "replacing text",
+                    "type": "String"
+                },
+                {
+                    "name": "toText",
+                    "description": "purpose text",
+                    "type": "String"
+                },
+                {
+                    "name": "startTag",
+                    "description": "the start character of the replacing",
+                    "type": "String"
+                },
+                {
+                    "name": "endTag",
+                    "description": "the end character of replacing",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "if the text is not empty, the replaced text with trim, else an empty text",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 227,
+            "description": "Delete speech marks (\") from the first and last character of a text.",
+            "itemtype": "method",
+            "name": "deleteSpeechMarks",
+            "params": [
+                {
+                    "name": "text",
+                    "description": "the text what the function check",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the string without \" characters",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 244,
+            "description": "This functions returns a property's value from an rdf object using RDFStore.",
+            "itemtype": "method",
+            "name": "getRDFPropertyValue",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                },
+                {
+                    "name": "propertyName",
+                    "description": "the name of the property",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "the property's value",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 262,
+            "description": "This function gets an rdf object, an existing subject and an exclude array \nand gives back a value from a random property that has been found in the rdf\nconnected to the given subject and does not exist in the exclude array.",
+            "itemtype": "method",
+            "name": "getAPropertyValue",
+            "params": [
+                {
+                    "name": "rdf",
+                    "description": "the rdf object",
+                    "type": "Object"
+                },
+                {
+                    "name": "subject",
+                    "description": "URI of the subject",
+                    "type": "String"
+                },
+                {
+                    "name": "exclude",
+                    "description": "array of properties to exclude",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "the value of a found property",
+                "type": "String"
+            },
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 288,
+            "description": "This function places an annotation in the Annostore.",
+            "itemtype": "method",
+            "name": "sendAnnotation",
+            "params": [
+                {
+                    "name": "annotationString",
+                    "description": "body of the annotation",
+                    "type": "String"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 312,
+            "description": "This function cuts the given string at the given length\nif the string is longer than this length, adds an ellipsis \ncharacter to the end, then returns the new string.",
+            "itemtype": "method",
+            "name": "cutStr",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "the string",
+                    "type": "String"
+                },
+                {
+                    "name": "val",
+                    "description": "cutting length",
+                    "type": "Number"
+                }
+            ],
+            "class": ""
+        },
+        {
+            "file": "utils\\utils.js",
+            "line": 332,
+            "description": "This function queries the server for the user's own labels\nand places them in a cookie.",
+            "itemtype": "method",
+            "name": "getUserLabels",
+            "params": [
+                {
+                    "name": "userName",
+                    "description": "username",
+                    "type": "String"
+                }
+            ],
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "unknown tag: version",
+            "line": " utils\\autosuggest\\Autosuggest.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\dictionary\\Dictionary.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\dictionary\\DictionaryController.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\dictionary\\DictionaryEntity.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\documents\\DocumentList.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\documents\\ShortDocument.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\labels\\LabelItem.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\labels\\LabelList.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\landscape\\Landscape.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\locationviewer\\LocationViewer.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\ngraph\\NGraph.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\preview\\predicateannotator\\PredicateAnnotator.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\preview\\predicateannotator\\PredicateItem.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\preview\\OpenedDoc.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\Bookmark.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\DetailsBox.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\DynamicMenu.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " common\\SearchBox.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " desktop\\DesktopApp.js:20"
+        },
+        {
+            "message": "Missing item type",
+            "line": " desktop\\LoginPopup.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " desktop\\PreviewBox.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " desktop\\PreviewBox.js:34"
+        },
+        {
+            "message": "Missing item type",
+            "line": " desktop\\TopMessageBox.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\frame\\left\\LeftHeader.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\frame\\left\\LeftPanel.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\frame\\middle\\MiddlePanel.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\frame\\right\\OpenedDocHeader.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\frame\\right\\RightPanel.js:5"
+        },
+        {
+            "message": "Missing item type",
+            "line": " mobile\\MobileApp.js:19"
+        },
+        {
+            "message": "Missing item type",
+            "line": " utils\\autosuggest\\Autosuggest.js:10"
+        },
+        {
+            "message": "Missing item type",
+            "line": " utils\\autosuggest\\Autosuggest.js:16"
+        },
+        {
+            "message": "Missing item type",
+            "line": " utils\\autosuggest\\Autosuggest.js:23"
+        },
+        {
+            "message": "Missing item type",
+            "line": " utils\\ClosablePopup.js:5"
+        },
+        {
+            "message": "Missing item type\nRegister helper to show content of a rdf source",
+            "line": " utils\\templates.js:1"
+        }
+    ]
+}

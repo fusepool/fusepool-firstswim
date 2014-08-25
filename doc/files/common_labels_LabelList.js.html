@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>common\labels\LabelList.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/AutoSuggest.html">AutoSuggest</a></li>
+            
+                <li><a href="../classes/Bookmark.html">Bookmark</a></li>
+            
+                <li><a href="../classes/ClosablePopup.html">ClosablePopup</a></li>
+            
+                <li><a href="../classes/DetailsBox.html">DetailsBox</a></li>
+            
+                <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+            
+                <li><a href="../classes/DictionaryController.html">DictionaryController</a></li>
+            
+                <li><a href="../classes/DictionaryEntity.html">DictionaryEntity</a></li>
+            
+                <li><a href="../classes/DocumentApp.html">DocumentApp</a></li>
+            
+                <li><a href="../classes/DocumentList.html">DocumentList</a></li>
+            
+                <li><a href="../classes/DocumentMobileApp.html">DocumentMobileApp</a></li>
+            
+                <li><a href="../classes/DynamicMenu.html">DynamicMenu</a></li>
+            
+                <li><a href="../classes/LabelItem.html">LabelItem</a></li>
+            
+                <li><a href="../classes/LabelList.html">LabelList</a></li>
+            
+                <li><a href="../classes/Landscape.html">Landscape</a></li>
+            
+                <li><a href="../classes/LeftHeader.html">LeftHeader</a></li>
+            
+                <li><a href="../classes/LeftPanel.html">LeftPanel</a></li>
+            
+                <li><a href="../classes/LocationViewer.html">LocationViewer</a></li>
+            
+                <li><a href="../classes/LoginPopup.html">LoginPopup</a></li>
+            
+                <li><a href="../classes/MenuController.html">MenuController</a></li>
+            
+                <li><a href="../classes/MiddlePanel.html">MiddlePanel</a></li>
+            
+                <li><a href="../classes/NGraph.html">NGraph</a></li>
+            
+                <li><a href="../classes/OpenedDoc.html">OpenedDoc</a></li>
+            
+                <li><a href="../classes/OpenedDocHeader.html">OpenedDocHeader</a></li>
+            
+                <li><a href="../classes/PredicateAnnotator.html">PredicateAnnotator</a></li>
+            
+                <li><a href="../classes/PredicateItem.html">PredicateItem</a></li>
+            
+                <li><a href="../classes/PreviewBox.html">PreviewBox</a></li>
+            
+                <li><a href="../classes/RightPanel.html">RightPanel</a></li>
+            
+                <li><a href="../classes/SearchBox.html">SearchBox</a></li>
+            
+                <li><a href="../classes/ShortDocument.html">ShortDocument</a></li>
+            
+                <li><a href="../classes/TopMessageBox.html">TopMessageBox</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Firstswim.html">Firstswim</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: common\labels\LabelList.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @class LabelList
+*/
+enyo.kind(
+/** @lends LabelList.prototype */
+{
+    name: &#x27;LabelList&#x27;,
+    kind: enyo.Control,
+	classes: &#x27;labelListPanel&#x27;,
+
+    published: {
+		labelListId: &#x27;&#x27;, // docURI
+		moreLabelsPanelClass: &#x27;&#x27;,
+		moreLabelInputClass: &#x27;&#x27;,
+		moreLabelInputDecClass: &#x27;&#x27;,
+		addLabelButtonClass: &#x27;&#x27;,
+		hideAddingPanelButtonClass: &#x27;&#x27;,
+		labelListClass: &#x27;&#x27;,
+		searchWord: &#x27;&#x27;
+    },
+
+    components: [
+		{ tag: &#x27;div&#x27;, name: &#x27;labelListName&#x27;, classes: &#x27;labelListName&#x27;, content: &#x27;Labels:&#x27; },
+        { classes: &#x27;clear&#x27; },
+        { tag: &#x27;div&#x27;, name: &#x27;labelList&#x27; },
+		{ tag: &#x27;div&#x27;, name: &#x27;addMoreLabelsButton&#x27;, classes: &#x27;addMoreLabelsButton enyo-unselectable&#x27;, content: &#x27;Add label&#x27;, ontap: &#x27;addMoreLabelsBtnPress&#x27; },
+		{ tag: &#x27;div&#x27;, name: &#x27;moreLabelsPanel&#x27;, components: [
+			/* {kind: &quot;onyx.PickerDecorator&quot;, name: &#x27;userLabels&#x27;, onActivate: &#x27;initUserLabelSelect&#x27;, onSelect: &#x27;userLabelSelection&#x27;, components: [
+				{kind: &quot;onyx.PickerButton&quot;, content: &quot;My labels&quot;, style: &quot;width: 150px;&quot;},
+				{kind: &quot;onyx.Picker&quot;, name: &#x27;userLabelPicker&#x27;, components: [] }
+			]}, */
+			{kind: &quot;onyx.InputDecorator&quot;, name: &#x27;moreLabelInputDec&#x27;, components: [
+				{ kind: onyx.Input, name: &#x27;moreLabelInput&#x27;, placeholder: &#x27;Add a new label name&#x27;, onkeydown: &#x27;onKeydown&#x27; }
+			]},
+			{ tag: &#x27;div&#x27;, name: &#x27;addLabelButton&#x27;, content: &#x27;Add label&#x27;, ontap: &#x27;addNewLabel&#x27;, classes: &#x27;enyo-unselectable&#x27; },
+			{ tag: &#x27;div&#x27;, name: &#x27;hideAddingPanelButton&#x27;, content: &#x27;Close&#x27;, ontap: &#x27;hideAddingPanelBtnPress&#x27;, classes: &#x27;enyo-unselectable&#x27; }
+		] },
+		{ classes: &#x27;clear&#x27; },
+		{ tag: &#x27;div&#x27;, name: &#x27;predictedLabelListName&#x27;, classes: &#x27;labelListName&#x27;, content: &#x27;Predicted labels:&#x27; },
+		{ classes: &#x27;clear&#x27; },
+        { tag: &#x27;div&#x27;, name: &#x27;predictedLabelList&#x27; },
+		{ classes: &#x27;clear&#x27; }
+    ],
+
+    /**
+     * The create function sets the content of the label list based on the doc URI
+	 * @method create
+     */
+    create: function(){
+        this.inherited(arguments);
+
+		this.initLabels();
+		
+        this.$.moreLabelsPanel.setClasses(this.moreLabelsPanelClass);		
+        this.$.moreLabelInput.setClasses(this.moreLabelInputClass);		
+        this.$.moreLabelInputDec.setClasses(this.moreLabelInputDecClass);		
+        this.$.addLabelButton.addClass(this.addLabelButtonClass);
+        this.$.hideAddingPanelButton.addClass(this.hideAddingPanelButtonClass);
+        this.$.labelList.setClasses(this.labelListClass);
+
+		this.$.moreLabelsPanel.hide();
+    },
+	
+	/**
+	 * This function is fired when the user selects a label
+	 * from user label list.
+	 * @method userLabelSelection
+	 */
+	userLabelSelection: function(inSender, inEvent) {
+		this.addUserLabel(inEvent.selected.content);
+	},
+	
+	initUserLabelSelect: function(inSender, inEvent) {
+	},
+	
+	/**
+	 * This function calls the back-end for predicted and existing 
+	 * labels and initializes the lists based on the return value.
+	 * @method initLabels
+	 */
+	initLabels: function() {
+		this.labelTexts = [];
+		this.predictedLabelTexts = [];
+		
+		var main = this;
+		var request = new enyo.Ajax({
+			method: &#x27;GET&#x27;,
+			url: CONSTANTS.GET_LABELS_URL + &#x27;?iri=&#x27; + this.labelListId + &#x27;&amp;usePrediction=&#x27; + ( readCookie(&#x27;viewType&#x27;) == &#x27;entityList&#x27; ? false : true ),
+			// url: CONSTANTS.GET_LABELS_URL + &#x27;?iri=&#x27; + this.labelListId + &#x27;&amp;usePrediction=false&#x27;,
+			handleAs: &#x27;text&#x27;,
+			headers: { Accept : &#x27;application/json&#x27;, &#x27;Content-Type&#x27; : &#x27;application/x-www-form-urlencoded&#x27;},
+			published: { timeout: 60000 }
+		});
+		request.go();
+		request.error(this, function(){
+			console.log(&quot;error&quot;);
+		});
+		request.response(this, function(inSender, inResponse) {
+			var obj = JSON.parse(inResponse);
+			// obj=JSON.parse(&#x27;{&quot;existingLabels&quot;:[&quot;barriers&quot;,&quot;sodium&quot;,&quot;vascular&quot;,&quot;yea&quot;,&quot;25&quot;,&quot;endothelium&quot;,&quot;helium&quot;,&quot;asd&quot;],&quot;predictedLabels&quot;:[&quot;go&quot;,&quot;fa&quot;]}&#x27;);
+			if(!isEmpty(obj)) {
+				for(var i=0;i&lt;obj.existingLabels.length;i++){
+					main.labelTexts.push(obj.existingLabels[i]);
+					main.$.labelList.createComponent({
+						kind: &#x27;LabelItem&#x27;,
+						name: obj.existingLabels[i],
+						labelText: obj.existingLabels[i],
+						labelType: &#x27;userDefined&#x27;,
+						labelClass: &#x27;labelDiv&#x27;,
+						labelTextClass: &#x27;labelText&#x27;,
+						labelDeleteClass: &#x27;labelDeleteButton&#x27;,
+						deleteFunction: &#x27;deleteLabel&#x27;
+					});
+					main.$.labelList.render();
+				}
+				if(obj.predictedLabels.length &gt; 0 ) {
+					for(var i=0;i&lt;obj.predictedLabels.length;i++){
+						main.predictedLabelTexts.push(obj.predictedLabels[i]);
+						main.$.predictedLabelList.createComponent({
+							kind: &#x27;LabelItem&#x27;,
+							name: obj.predictedLabels[i],
+							labelText: obj.predictedLabels[i],
+							labelType: &#x27;prediction&#x27;,
+							labelClass: &#x27;predictedLabelDiv&#x27;,
+							labelTextClass: &#x27;labelText&#x27;,
+							labelAddClass: &#x27;labelAddButton&#x27;,
+							labelDeleteClass: &#x27;labelDeleteButton&#x27;,
+							deleteFunction: &#x27;deleteLabel&#x27;,
+							addFunction: &#x27;addPredictedLabel&#x27;
+						});
+						main.$.predictedLabelList.render();
+					}
+					if(!readCookie(&#x27;labelPrediction&#x27;)) {
+						main.$.predictedLabelListName.hide();
+						main.$.predictedLabelList.hide();
+					}
+				}
+				else {
+					main.$.predictedLabelListName.hide();
+					main.$.predictedLabelList.hide();
+				}
+			}
+		});
+		/*
+		var userLabels = readCookie(&#x27;userLabels&#x27;); // array!
+		if(userLabels.length &gt; 0) {
+			for(var i=0;i&lt;userLabels.length;i++) {
+				main.$.userLabelPicker.createComponent({ content: userLabels[i] });
+			}
+			main.$.userLabelPicker.render();
+		} */
+	},
+		
+	/**
+	 * This function shows/hides the list of predicted labels
+	 * based on the &#x27;enable&#x27; parameter.
+	 * @method togglePredictedLabelLists
+	 * @param {Boolean} enable enable/disable label prediction 
+	 */
+	togglePredictedLabelLists: function(enable) {
+		if(enable==&quot;true&quot; &amp;&amp; this.predictedLabelTexts.length &gt; 0) {
+			this.$.predictedLabelListName.show();
+			this.$.predictedLabelList.show();
+		}
+		else {
+			this.$.predictedLabelListName.hide();
+			this.$.predictedLabelList.hide();
+		}
+	},
+	
+	/**
+	 * This function runs when the user clicks on the 
+	 * &#x27;Add label&#x27; button. It displays the panel in which
+	 * users can add labels using the input field.
+	 * @method addMoreLabelsBtnPress
+	 */
+	addMoreLabelsBtnPress: function() {
+		this.$.addMoreLabelsButton.hide();
+		this.$.moreLabelsPanel.show();
+        this.$.moreLabelInput.focus();
+	},
+		
+	/**
+	 * This function runs when the user clicks on the 
+	 * &#x27;Close&#x27; button. It hides the panel in which
+	 * users can add labels using the input field.
+	 * @method hideAddingPanelBtnPress
+	 */
+	hideAddingPanelBtnPress: function() {
+		this.$.addMoreLabelsButton.show();
+		this.$.moreLabelsPanel.hide();		
+	},
+	
+	/**
+	 * This function handles key press events. On pressing 
+	 * &#x27;Enter&#x27; it adds the entered label. On pressing &#x27;ESC&#x27;
+	 * it closes the panel.
+	 * @method onKeydown
+	 * @param {Object} inSender the sender object
+	 * @param {Object} inEvent the fired event
+	 */
+	onKeydown: function(inSender, inEvent) {
+		switch(inEvent.keyCode) {
+			case 13:	// Enter
+				this.addNewLabel();
+				break;
+			case 27: 	// Escape
+				this.hideAddingPanelBtnPress();
+				break;
+		}
+	},
+	
+	/**
+	 * This function adds a label from the input field to the
+	 * list of existing labels.
+	 * @method addNewLabel
+	 */
+	addNewLabel: function() {		
+		var newLabelText = $.trim(this.$.moreLabelInput.getValue());
+		if(newLabelText!=&#x27;&#x27; &amp;&amp; $.inArray(newLabelText,this.labelTexts)&lt;0 ) {
+			
+			var ind = $.inArray(newLabelText,this.predictedLabelTexts);	
+			if(ind&gt;-1) {
+				this.addPredictedLabel(this.predictedLabelTexts[ind],this.$.predictedLabelList.$[this.predictedLabelTexts[ind]]);
+				this.$.moreLabelInput.setValue(&#x27;&#x27;);
+			}
+			else {
+				this.sendLabelListAnnotation(this.labelListId,newLabelText,1);
+				
+				this.labelTexts.push(newLabelText);
+				
+				this.$.labelList.createComponent({
+					kind: &#x27;LabelItem&#x27;,
+					name: newLabelText,
+					labelText: newLabelText,
+					labelClass: &#x27;labelDiv&#x27;,
+					labelTextClass: &#x27;labelText&#x27;,
+					labelDeleteClass: &#x27;labelDeleteButton&#x27;,
+					deleteFunction: &#x27;deleteLabel&#x27;
+				});
+				
+				this.$.labelList.render();
+				this.$.moreLabelInput.setValue(&#x27;&#x27;).focus();
+			}
+		}
+	},
+	
+	/**
+	 * This function adds a predicted label to the list of existing labels. 
+	 * @method addPredictedLabel
+	 */
+	addPredictedLabel: function(labelText,labelElement) {		
+		if(labelText!=&#x27;&#x27; &amp;&amp; $.inArray(labelText,this.labelTexts)&lt;0 ) {
+			
+			this.sendLabelListAnnotation(this.labelListId,labelText,1);
+			
+			this.labelTexts.push(labelText);
+			
+			var ind = $.inArray(labelText,this.predictedLabelTexts);	
+			if(ind&gt;-1) {
+				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
+			}
+			
+			this.$.labelList.createComponent({
+				kind: &#x27;LabelItem&#x27;,
+				name: labelText,
+				labelText: labelText,
+				labelClass: &#x27;labelDiv&#x27;,
+				labelTextClass: &#x27;labelText&#x27;,
+				labelDeleteClass: &#x27;labelDeleteButton&#x27;,
+				deleteFunction: &#x27;deleteLabel&#x27;
+			});
+			
+			this.$.labelList.render();
+			
+			labelElement.destroy();
+		}
+	},
+	
+	/**
+	 * This function adds a user label to the list of existing labels. 
+	 * @method addUserLabel
+	 */
+	addUserLabel: function(labelText) {		
+		if(labelText!=&#x27;&#x27; &amp;&amp; $.inArray(labelText,this.labelTexts)&lt;0 ) {
+			
+			this.sendLabelListAnnotation(this.labelListId,labelText,1);
+			
+			this.labelTexts.push(labelText);
+			
+			var ind = $.inArray(labelText,this.predictedLabelTexts);	
+			if(ind&gt;-1) {
+				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
+			}
+			
+			this.$.labelList.createComponent({
+				kind: &#x27;LabelItem&#x27;,
+				name: labelText,
+				labelText: labelText,
+				labelClass: &#x27;labelDiv&#x27;,
+				labelTextClass: &#x27;labelText&#x27;,
+				labelDeleteClass: &#x27;labelDeleteButton&#x27;,
+				deleteFunction: &#x27;deleteLabel&#x27;
+			});
+			
+			this.$.labelList.render();
+		}
+	},
+
+    /**
+     * This function deletes a label from the GUI and sends an annotation
+	 * to the server about it.
+	 * @method deleteLabel
+	 * @param {String} labelText name of the label
+	 * @param {Object} labelElement the label element
+     */
+    deleteLabel: function(labelText,labelElement){
+		var ind = $.inArray(labelText,this.labelTexts);
+		if(ind&gt;-1) {
+			this.sendLabelListAnnotation(this.labelListId,this.labelTexts[ind],-1);
+			this.labelTexts.splice(ind,1);
+			labelElement.destroy();
+		}
+		else {
+			var ind = $.inArray(labelText,this.predictedLabelTexts);
+			if(ind&gt;-1) {
+				this.sendLabelListAnnotation(this.labelListId,this.predictedLabelTexts[ind],-1);
+				this.predictedLabelTexts.splice(ind,1);
+				if(this.predictedLabelTexts.length==0) {
+					this.$.predictedLabelListName.hide();
+				}
+				labelElement.destroy();
+			}
+		}
+    },
+	
+	/**
+	 * This function creates the proper annotation string
+	 * and fires the annotation sender function.
+	 * @method sendLabelListAnnotation
+	 * @param {String} docURI URI of the related document
+	 * @param {String} labelText name of the label
+	 * @param {Number} action type of the click action (1 = accept; -1 = dismiss)
+	 */
+	sendLabelListAnnotation: function(docURI,labelText,action) {
+				
+		var currentDate = new Date().toISOString();
+		var userURI =  &#x27;http://fusepool.info/users/&#x27;+readCookie(&#x27;currentUser&#x27;);
+		
+		var annotationString =	&#x27;@prefix xsd: &lt;http://www.w3.org/2011/XMLSchema#&gt; . &#x27; +
+								&#x27;@prefix cnt: &lt;http://www.w3.org/2011/content#&gt; . &#x27; + 
+								&#x27;@prefix oa: &lt;http://www.w3.org/ns/oa#&gt; . &#x27; + 								
+								&#x27;@prefix fpanno: &lt;http://fusepool.eu/ontologies/annostore#&gt; . &#x27; + 
+								
+								&#x27;_:1 a fpanno:labellingAnnotation , oa:Annotation ; &#x27; +
+								&#x27;fpanno:hasTarget &lt;&#x27;+docURI+&#x27;&gt; ; &#x27; +
+								&#x27;fpanno:hasBody _:2 ; &#x27; +
+								&#x27;fpanno:annotatedAt &quot;&#x27;+currentDate+&#x27;&quot; ; &#x27; +
+								&#x27;fpanno:annotatedBy &lt;&#x27;+userURI+&#x27;&gt; . &#x27; +
+
+								&#x27;_:2 a fpanno:labellingBody ; &#x27;;
+		if(action==1) {
+			annotationString +=	&#x27;fpanno:hasNewLabel _:3 . &#x27; +
+								&#x27;_:3 a oa:Tag, cnt:ContentAsText ; &#x27; +
+								&#x27;cnt:chars &quot;&#x27;+labelText+&#x27;&quot; . &#x27;;
+		}
+		else {
+			annotationString +=	&#x27;fpanno:hasDeletedLabel _:4 . &#x27; +
+								&#x27;_:4 a oa:Tag, cnt:ContentAsText ; &#x27; +
+								&#x27;cnt:chars &quot;&#x27;+labelText+&#x27;&quot; . &#x27;;
+		}
+		sendAnnotation(annotationString);
+	}
+	
+});
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

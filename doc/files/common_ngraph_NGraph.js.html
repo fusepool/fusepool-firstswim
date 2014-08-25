@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>common\ngraph\NGraph.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/AutoSuggest.html">AutoSuggest</a></li>
+            
+                <li><a href="../classes/Bookmark.html">Bookmark</a></li>
+            
+                <li><a href="../classes/ClosablePopup.html">ClosablePopup</a></li>
+            
+                <li><a href="../classes/DetailsBox.html">DetailsBox</a></li>
+            
+                <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+            
+                <li><a href="../classes/DictionaryController.html">DictionaryController</a></li>
+            
+                <li><a href="../classes/DictionaryEntity.html">DictionaryEntity</a></li>
+            
+                <li><a href="../classes/DocumentApp.html">DocumentApp</a></li>
+            
+                <li><a href="../classes/DocumentList.html">DocumentList</a></li>
+            
+                <li><a href="../classes/DocumentMobileApp.html">DocumentMobileApp</a></li>
+            
+                <li><a href="../classes/DynamicMenu.html">DynamicMenu</a></li>
+            
+                <li><a href="../classes/LabelItem.html">LabelItem</a></li>
+            
+                <li><a href="../classes/LabelList.html">LabelList</a></li>
+            
+                <li><a href="../classes/Landscape.html">Landscape</a></li>
+            
+                <li><a href="../classes/LeftHeader.html">LeftHeader</a></li>
+            
+                <li><a href="../classes/LeftPanel.html">LeftPanel</a></li>
+            
+                <li><a href="../classes/LocationViewer.html">LocationViewer</a></li>
+            
+                <li><a href="../classes/LoginPopup.html">LoginPopup</a></li>
+            
+                <li><a href="../classes/MenuController.html">MenuController</a></li>
+            
+                <li><a href="../classes/MiddlePanel.html">MiddlePanel</a></li>
+            
+                <li><a href="../classes/NGraph.html">NGraph</a></li>
+            
+                <li><a href="../classes/OpenedDoc.html">OpenedDoc</a></li>
+            
+                <li><a href="../classes/OpenedDocHeader.html">OpenedDocHeader</a></li>
+            
+                <li><a href="../classes/PredicateAnnotator.html">PredicateAnnotator</a></li>
+            
+                <li><a href="../classes/PredicateItem.html">PredicateItem</a></li>
+            
+                <li><a href="../classes/PreviewBox.html">PreviewBox</a></li>
+            
+                <li><a href="../classes/RightPanel.html">RightPanel</a></li>
+            
+                <li><a href="../classes/SearchBox.html">SearchBox</a></li>
+            
+                <li><a href="../classes/ShortDocument.html">ShortDocument</a></li>
+            
+                <li><a href="../classes/TopMessageBox.html">TopMessageBox</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Firstswim.html">Firstswim</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: common\ngraph\NGraph.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @class NGraph
+*/
+enyo.kind(
+/** @lends NGraph.prototype */
+{
+    name: &#x27;NGraph&#x27;,
+    kind: enyo.Control,
+
+    published: {
+        offset: 0,
+        searchWord: &#x27;&#x27;,
+        titleClass: &#x27;&#x27;,
+        titleContent: &#x27;&#x27;,
+        noDataLabel: &#x27;&#x27;,
+        openDocFunction: &#x27;&#x27;,
+        loaderClass: &#x27;&#x27;,
+        openDocEvent: &#x27;ontap&#x27;,
+		rGraph: null,
+		graphJSON: null
+    },
+
+    /**
+     * When the component is created, the program sets the title&#x27;s properties,
+     * hides the loader and calls the function which handles resizing actions.
+	 * @method create
+     */
+    create: function(){
+        this.inherited(arguments);
+        this.$.loader.hide();
+        this.$.title.setContent(this.titleContent);
+        this.$.title.setClasses(this.titleClass);
+        this.$.loader.setClasses(this.loaderClass);
+		this.canvasResizer();
+    },
+	
+    components: [
+        { tag: &#x27;div&#x27;, name: &#x27;title&#x27; },
+		{ name: &#x27;loader&#x27; },
+		{ tag: &#x27;div&#x27;, name: &#x27;nGraphDiv&#x27;, published: { id: &#x27;nGraphDiv&#x27;}, classes: &#x27;nGraphDiv&#x27; }
+    ],
+		
+    /**
+     * This function runs when the user starts a search. It clears the current 
+     * content and shows the loader.
+	 * @method startLoading
+     */
+    startLoading: function(){
+        this.$.loader.show();
+        this.$.nGraphDiv.setContent(&#x27;&#x27;);
+        this.$.nGraphDiv.destroyClientControls();
+        this.$.nGraphDiv.render();
+	},
+	
+	/**
+	 * This function returns default values for the graph.
+	 * @method getGraphDefaults
+	 * @param {String} propertyName name of the property (animation/edge/node/navigation/background)
+	 * @return {Object} the value
+	 */
+	getGraphDefaults: function(propertyName) {
+		switch(propertyName) {
+			case &#x27;animation&#x27;: 
+				return { type: &#x27;replot&#x27;, duration: 0, fps: 10, hideLabels: false };
+			break;
+			case &#x27;edge&#x27;: 
+				return { overridable: true, color: &#x27;#cadada&#x27;, lineWidth:1 };
+			break;
+			case &#x27;node&#x27;: 
+				return { overridable: true, color: &#x27;#239fa0&#x27; };
+			break;
+			case &#x27;navigation&#x27;: 
+				return  { enable: true, panning: true, zooming: 100 };
+			break;
+			case &#x27;background&#x27;: 
+				return  { CanvasStyles: { strokeStyle: &#x27;#e0e0e0&#x27; } };
+			break;
+			default:
+				return null;
+		}
+	},
+	
+	/**
+	 * This function runs a search.
+	 * @method search
+	 * @param {Object} nodeObj the current node
+	 * @param {String} URI URI of the node
+	 * @param {Number} level the current level
+	 */
+	search: function(nodeObj,URI,level){
+		var main = this;
+		
+		var url = CONSTANTS.SEARCH_URL;
+		if(URI==&quot;query&quot;) {
+			url+=&#x27;?search=&#x27;+nodeObj.name;
+			this.owner.searchWord = nodeObj.name;
+		}
+		else {
+			url+=&#x27;?search=&amp;subject=&#x27;+URI;
+		}		
+		url+=&#x27;&amp;offset=0&amp;maxFacets=0&amp;items=5&#x27;;
+		
+		var store = rdfstore.create();
+		store.load(&#x27;remote&#x27;, url, function(success) {
+			if(success) {
+				var documents = main.createDocumentList(store);
+				main.addDocNodes(documents,nodeObj,level);
+			}
+		});
+	},
+	
+	/**
+	 * This function creates the document list from the rdf object.
+	 * @method createDocumentList
+	 * @param {Object} rdf the rdf object, which contains the documents
+	 * @return {Array} the document list
+	 */
+	createDocumentList: function(rdf){
+		var documents = [];
+		var main = this;
+
+		var querylist = &#x27;PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; &#x27;;
+		querylist += &#x27;SELECT * {&#x27;;
+		querylist += &#x27;      { ?url &lt;http://purl.org/dc/terms/title&gt; ?title .&#x27;;
+		querylist += &#x27;        filter ( lang(?title) = &quot;en&quot;)&#x27;;
+		querylist += &#x27;      } UNION {  &#x27;;
+		querylist += &#x27;        ?url &lt;http://purl.org/dc/terms/title&gt; ?title .&#x27;;
+		querylist += &#x27;        filter ( lang(?title) = &quot;&quot;)&#x27;;
+		querylist += &#x27;      }&#x27;;
+		querylist += &#x27;      OPTIONAL { ?url &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; ?dtype }&#x27;;
+		querylist += &#x27;}&#x27;;
+		
+		rdf.execute(querylist, function(success, results) {
+			if (success) {
+				for(var i=0;i&lt;results.length;i++){
+					var row = results[i];
+					var title = &#x27;Title not found&#x27;;
+					if(!isEmpty(row.title)){
+						title = row.title.value;
+					}
+					if(!main.owner.containsDocument(documents, row.url.value)){
+						documents.push({url: row.url.value, title: title});
+					}
+				}
+			}
+		});
+		return documents;
+	},
+	
+	/**
+	 * This function gets the documents and pushes them to the nodeObj
+	 * as child nodes, and calls the buildGraphJSON to continue building
+	 * the graph on the given branch. 
+	 * @method addDocNodes
+	 * @param {Object} docNodes retrieved documents
+	 * @param {Object} nodeObj points to the parent node
+	 * @param {Number} level the current level
+	*/
+	addDocNodes: function(docNodes,nodeObj,level) {
+		var nodeLimit = readCookie(&#x27;nodeLimit&#x27;).split(&#x27;,&#x27;);
+		for(var i=0; i&lt;docNodes.length &amp;&amp; i&lt;( level &gt;= nodeLimit.length ? 4 : nodeLimit[level]); i++) {
+			nodeObj.children.push({ id: docNodes[i].url, name: cutStr(docNodes[i].title,60), children: [], data: { type: &quot;document&quot;, $type: &quot;square&quot;, $color: &quot;#239fa0&quot; }});
+			this.buildGraphJSON(nodeObj.children[nodeObj.children.length-1],docNodes[i].url,level);
+		}
+	},
+	
+	/**
+	 * This function builds an object recursively until it reaches the desired level. 
+	 * It&#x27;s set to 3, the centre node is level 0. This object will be used to feed the 
+	 * graph. Important: The centre node must be initialized already before calling
+	 * this function.
+	 * @method buildGraphJSON
+	 * @param {Object} nodeObj the current node
+	 * @param {String} URI an entity that filters the result. &quot;query&quot; means no filter (for centre node)
+	 * @param {Number} level the current level
+	 */
+	buildGraphJSON: function(nodeObj,URI,level) {
+		var main = this;
+		level++;
+		
+		if(level &lt; 4) {
+			switch(nodeObj.data.type) {
+				case &quot;query&quot;:
+				case &quot;subject&quot;:
+					this.search(nodeObj,URI,level);
+					this.redrawGraph();
+				break;
+				case &quot;document&quot;:
+					var url = CONSTANTS.DETAILS_URL + &#x27;?iri=&#x27; + URI;
+					var store = rdfstore.create();
+					store.load(&#x27;remote&#x27;, url, function(success) {
+						var subjNodes = main.getSubjectConnections(success, store);
+						var nodeLimit = readCookie(&#x27;nodeLimit&#x27;).split(&#x27;,&#x27;);						
+						main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, 0);						
+					});				
+				break;
+			}
+		}
+	},
+	
+	/**
+	 * After getting the subject children of a given document,
+	 * this function iterates through them and initializes the 
+	 * nodes in the graph after getting the label information.
+	 * @method createSubjNodes
+	 * @param {Object} nodeObj the parent node
+	 * @param {Object} subjNodes the extracted children
+	 * @param {Number} nodeLimit the node limit on the current level
+	 * @param {Number} level the current level 
+	 * @param {Number} i the current index 
+	 */
+	createSubjNodes: function(nodeObj, subjNodes, nodeLimit, level, i){
+		var main=this;
+		if(i&lt;( level &gt;= nodeLimit.length ? 4 : nodeLimit[level]) &amp;&amp; i&lt;subjNodes.length) {
+			var title = &#x27;(?)&#x27;;
+			var url = CONSTANTS.DETAILS_URL + &#x27;?iri=&#x27; + subjNodes[i];
+			var store = rdfstore.create();
+			store.load(&#x27;remote&#x27;, url, function(success) {				
+				var query = &#x27;SELECT * { ?s &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?o }&#x27;;
+				store.execute(query, function(success, results) {
+					if(success &amp;&amp; !isEmpty(results[0])) {
+						if (success &amp;&amp; results.length &gt; 0) {
+							nodeObj.children.push({ id: subjNodes[i], name: results[0].o.value, children: [], data: { type: &quot;subject&quot;, $type: &quot;triangle&quot;, $color: &quot;#55cdff&quot; }});
+							var ind = nodeObj.children.length-1;
+							main.buildGraphJSON(nodeObj.children[ind],subjNodes[i],level);
+							main.redrawGraph();	
+						}
+					}
+					i++;
+					main.createSubjNodes(nodeObj, subjNodes, nodeLimit, level, i);	
+				});								
+			});
+		}
+	},
+	
+	/**
+	 * This function filters an rdf object and returns an array of URIs found in
+	 * dc:subject
+	 * @method getSubjectConnections
+	 * @param {Boolean} success whether the search query was success or not
+	 * @param {Object} rdf the response rdf object
+	 * @return {Array} URIs of the connected subjects
+	 */
+	getSubjectConnections: function(success, rdf) {
+		var subjectConnections = [];
+		var main = this;
+
+		var query = &#x27;SELECT * { ?s &lt;http://purl.org/dc/elements/1.1/subject&gt; ?subj }&#x27;;  		
+		rdf.execute(query, function(success, results) {
+            if (success) {
+                for(var i=0;i&lt;results.length;i++){
+					var row = results[i];
+					if(!isEmpty(row.subj)) {
+						subjectConnections.push(row.subj.value);
+					}
+				}
+            }
+        });
+		return subjectConnections;
+    },
+
+	/**
+	 * After a new search term has been entered, the graph is being redrawn.
+	 * In case of the very first search, a completely new graph is being initialized.
+	 * @method newGraph
+	 */
+	newGraph: function() {
+        this.searchWord = this.owner.searchWord;
+		var main = this;
+		
+		if(isEmpty(this.graphJSON)) {
+			this.rGraph = new $jit.RGraph({
+				injectInto: main.$.nGraphDiv.id,
+				background: main.getGraphDefaults(&#x27;background&#x27;),
+				Navigation: main.getGraphDefaults(&#x27;navigation&#x27;),
+				Node: main.getGraphDefaults(&#x27;node&#x27;),
+				Edge: main.getGraphDefaults(&#x27;edge&#x27;),
+				onBeforeCompute: function(node){ } ,
+				onCreateLabel: function(domElement, node){  
+					domElement.innerHTML = node.name;  
+					domElement.onclick = function(){  
+						main.rGraph.onClick(node.id, {
+							onComplete: function() {
+								main.onNodeClick(node, &#x27;ontap&#x27;);
+							}
+						});  
+					};
+					domElement.onmouseover = function(){ 
+						domElement.style.color = &#x27;#09a7a9&#x27;;
+						main.onNodeHover(node, &#x27;ontap&#x27;);
+					};
+					domElement.onmouseout = function(){  
+						domElement.style.color = &#x27;#555&#x27;;
+						main.onNodeLeave(node, &#x27;ontap&#x27;);
+					};  
+				},
+				onPlaceLabel: function(domElement, node){  
+					var style = domElement.style;  
+					style.display = &#x27;&#x27;;  
+					style.cursor = &#x27;pointer&#x27;;  
+					style.color = &quot;#555&quot;;  
+					style.maxWidth = &quot;130px&quot;;
+					
+					if(node._depth == 0) {
+						style.fontSize = &quot;13px&quot;;  
+					}
+					else {  
+						style.fontSize = &quot;12px&quot;;
+					}
+					var left = parseInt(style.left);  
+					var w = domElement.offsetWidth;  
+					style.left = (left - w / 2) + &#x27;px&#x27;;  
+				}  
+			});
+		}
+		
+		this.graphJSON = { id: &#x27;query&#x27;, name: this.searchWord, children: [], data: { type: &#x27;query&#x27;, $color: &quot;#c5c5c5&quot; }};
+		this.rGraph.loadJSON(this.graphJSON);
+		this.rGraph.compute();		
+		this.buildGraphJSON(this.graphJSON,&#x27;query&#x27;,0);
+	},
+	
+	/** 
+	 * This function redraws the graph using the object in the graphJSON variable.
+	 * @method redrawGraph
+	 */
+	redrawGraph: function() {
+		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults(&#x27;animation&#x27;));
+	},
+
+    /**
+     * This function is called when the user clicks on a node.
+	 * It calls a parent function, which can call the preview box
+	 * to open a document.
+	 * @method onNodeClick
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
+     */
+    onNodeClick: function(node, inEvent){
+		var centre = { id: node.id, name: node.name, children: [], data: { type: node.data.type, $type: node.data.$type, $color: node.data.$color }};
+		this.graphJSON = centre;
+		this.buildGraphJSON(centre, node.id, 0);
+		
+		this.rGraph.op.morph(this.graphJSON, this.getGraphDefaults(&#x27;animation&#x27;));
+    },
+	
+	/**
+	 * This function clears the timeout that has been set 
+	 * for node hover.
+	 * @method onNodeLeave
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
+	 */
+	onNodeLeave: function(node, inEvent) {
+		clearTimeout(this.timeout);
+	},
+	
+	/**
+	 * This function sets a 1 sec timeout before displaying details.
+	 * @method onNodeHover
+	 * @param {Object} node the clicked node
+	 * @param {Event} inEvent the click event
+	 */
+	onNodeHover: function(node, inEvent) {
+		if(node.id!=&#x27;query&#x27;) {
+			var main = this;
+			clearTimeout(this.timeout);
+			this.timeout = setTimeout(function() {
+				main.owner[main.openDocFunction](node.id, inEvent);
+				return false;
+			},1000);
+		}
+	},
+	
+	/**
+	 * This functions shows a message in the network-graph panel
+	 * @method showMessage
+	 * @param {String} message the message to be displayed
+	 */
+    showMessage: function(message){
+        this.$.nGraphDiv.destroyClientControls();
+        this.$.nGraphDiv.setContent(message);
+    },
+	
+	/**
+	 * This function defines a function on window resize event which 
+	 * which calls the div resize handler function.
+	 * @method canvasResizer
+	 */
+	canvasResizer: function() {
+		var main=this;
+		$(window).resize(function() { main.onDivResize(); });
+	},
+	
+	/**
+	 * This function resizes the graph canvas to the proper size.
+	 * It should be called after any resize event happens.
+	 * @method onDivResize
+	 */
+	onDivResize: function() {
+		var main=this;
+		if(!isEmpty(main.rGraph)) {
+			main.rGraph.canvas.resize($(&#x27;.nGraphDiv&#x27;).width(), $(&#x27;.nGraphDiv&#x27;).height()); 
+		}
+	}
+});
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

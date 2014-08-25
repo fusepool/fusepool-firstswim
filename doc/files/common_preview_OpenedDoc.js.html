@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>common\preview\OpenedDoc.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/AutoSuggest.html">AutoSuggest</a></li>
+            
+                <li><a href="../classes/Bookmark.html">Bookmark</a></li>
+            
+                <li><a href="../classes/ClosablePopup.html">ClosablePopup</a></li>
+            
+                <li><a href="../classes/DetailsBox.html">DetailsBox</a></li>
+            
+                <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+            
+                <li><a href="../classes/DictionaryController.html">DictionaryController</a></li>
+            
+                <li><a href="../classes/DictionaryEntity.html">DictionaryEntity</a></li>
+            
+                <li><a href="../classes/DocumentApp.html">DocumentApp</a></li>
+            
+                <li><a href="../classes/DocumentList.html">DocumentList</a></li>
+            
+                <li><a href="../classes/DocumentMobileApp.html">DocumentMobileApp</a></li>
+            
+                <li><a href="../classes/DynamicMenu.html">DynamicMenu</a></li>
+            
+                <li><a href="../classes/LabelItem.html">LabelItem</a></li>
+            
+                <li><a href="../classes/LabelList.html">LabelList</a></li>
+            
+                <li><a href="../classes/Landscape.html">Landscape</a></li>
+            
+                <li><a href="../classes/LeftHeader.html">LeftHeader</a></li>
+            
+                <li><a href="../classes/LeftPanel.html">LeftPanel</a></li>
+            
+                <li><a href="../classes/LocationViewer.html">LocationViewer</a></li>
+            
+                <li><a href="../classes/LoginPopup.html">LoginPopup</a></li>
+            
+                <li><a href="../classes/MenuController.html">MenuController</a></li>
+            
+                <li><a href="../classes/MiddlePanel.html">MiddlePanel</a></li>
+            
+                <li><a href="../classes/NGraph.html">NGraph</a></li>
+            
+                <li><a href="../classes/OpenedDoc.html">OpenedDoc</a></li>
+            
+                <li><a href="../classes/OpenedDocHeader.html">OpenedDocHeader</a></li>
+            
+                <li><a href="../classes/PredicateAnnotator.html">PredicateAnnotator</a></li>
+            
+                <li><a href="../classes/PredicateItem.html">PredicateItem</a></li>
+            
+                <li><a href="../classes/PreviewBox.html">PreviewBox</a></li>
+            
+                <li><a href="../classes/RightPanel.html">RightPanel</a></li>
+            
+                <li><a href="../classes/SearchBox.html">SearchBox</a></li>
+            
+                <li><a href="../classes/ShortDocument.html">ShortDocument</a></li>
+            
+                <li><a href="../classes/TopMessageBox.html">TopMessageBox</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Firstswim.html">Firstswim</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: common\preview\OpenedDoc.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+* @class OpenedDoc
+*/
+enyo.kind(
+/** @lends OpenedDoc.prototype */
+{
+    tag: &#x27;div&#x27;,
+    name: &#x27;OpenedDoc&#x27;,
+
+    published: {
+        documentURL: &#x27;&#x27;,
+        noDataLabel: &#x27;&#x27;,
+        documentContentClass: &#x27;&#x27;,
+        loaderClass: &#x27;&#x27;,
+        openedDocScrollerClass: &#x27;&#x27;,
+        lang: &#x27;en&#x27;,
+		openedDocStore: null
+    },
+
+    /**
+     * When this component is created, it overwrites the right click listener
+     * because of the popup menu in the desktop version. It disables the default popup menu.
+	 * The content&#x27;s and loader&#x27;s properties are being set.
+	 * @method create
+     */
+    create: function(){
+        this.inherited(arguments);
+        this.$.loader.hide();
+        // Overwrite click listener
+        if (document.addEventListener) {
+            document.addEventListener(&#x27;contextmenu&#x27;, function(e) { e.preventDefault();}, false);
+        } else {
+            document.attachEvent(&#x27;oncontextmenu&#x27;, function() { window.event.returnValue = false; });
+        }
+        this.scrollToTop();
+        this.$.content.setClasses(this.documentContentClass);
+        this.$.loader.setClasses(this.loaderClass);
+        this.$.scroller.setClasses(this.openedDocScrollerClass);
+    },
+
+    components: [
+        { kind: &#x27;enyo.Scroller&#x27;, name: &#x27;scroller&#x27;, fit: true, touchOverscroll: false, components: [
+            { name: &#x27;loader&#x27; },
+            { tag: &#x27;div&#x27;, name: &#x27;content&#x27;, allowHtml: true },
+            { tag: &#x27;div&#x27;, name: &#x27;predicateAnnotatorPanel&#x27;, allowHtml: true }
+        ]}
+    ],
+
+    /**
+     * This function is called when window size is changing and it should
+     * modify the opened document&#x27;s height too.
+	 * @method changeHeight
+     * @param {Number} newHeight the new height in pixels
+     */
+    changeHeight: function(newHeight){
+        this.applyStyle(&#x27;height&#x27;, newHeight + &#x27;px&#x27;);
+        this.$.content.applyStyle(&#x27;height&#x27;, newHeight + &#x27;px&#x27;);
+    },
+
+    /**
+     * This function returns the selected text in the window.
+	 * @method getSelectedText
+     * @return {String} the trimmed selected text
+     */
+    getSelectedText: function(){
+        var result = &#x27;&#x27;;
+        if (window.getSelection) {
+            result = window.getSelection();
+        } else if (document.getSelection) {
+            result = document.getSelection();
+        } else if (document.selection) {
+            result = document.selection.createRange().text;
+        }
+        result = result + &#x27;&#x27;;
+        if(jQuery){
+            result = jQuery.trim(result + &#x27;&#x27;);
+        }
+        return result;
+    },
+
+    /**
+     * This function clears the document&#x27;s content and 
+	 * the predicate annotator.
+	 * @method clearAll
+     */
+    clearAll: function(){
+		this.$.content.setContent(&#x27;&#x27;);
+        this.$.content.destroyClientControls();
+        this.$.content.render();
+		this.$.predicateAnnotatorPanel.setContent(&#x27;&#x27;);
+        this.$.predicateAnnotatorPanel.destroyClientControls();
+        this.$.predicateAnnotatorPanel.render();
+    },
+
+    /**
+     * This function is called after the main kind has loaded the 
+	 * meta-graph of the given document. It asks for predicate 
+	 * prediction, creates the predicate annotator panel and 
+	 * calls a function which processes the prediction result.
+	 * @method processDocGraph
+     */
+    processDocGraph: function(){
+        this.show();
+        this.scrollToTop();
+		
+		if(readCookie(&#x27;currentUser&#x27;) != &#x27;anonymous&#x27; ) {
+			var main = this;
+			var request = new enyo.Ajax({
+				method: &#x27;GET&#x27;,
+				url: CONSTANTS.GET_PREDICATES_URL+&#x27;?user=&#x27; + readCookie(&#x27;currentUser&#x27;) + &#x27;&amp;document=&#x27; + this.documentURL + &#x27;&amp;query=&#x27; + readCookie(&#x27;lastSearch&#x27;),
+				handleAs: &#x27;text&#x27;,
+				headers: { Accept : &#x27;application/json&#x27;, &#x27;Content-Type&#x27; : &#x27;application/x-www-form-urlencoded&#x27; },
+				published: { timeout: 60000 }
+			});
+			request.go();
+			request.response(this, function(inSender, inResponse) {
+			
+				var predicates = JSON.parse(inResponse);
+			
+				main.$.predicateAnnotatorPanel.createComponent({
+					kind: &#x27;PredicateAnnotator&#x27;,
+					searchWord: main.searchWord,
+					documentURL: main.documentURL,
+					predicates: predicates
+				});
+				main.$.predicateAnnotatorPanel.render();
+				main.filterGraph(predicates);
+			});
+		}
+		else {
+			this.showVisualization(this.openedDocStore);
+			this.$.loader.hide();
+		}
+    },
+	
+	/**
+	 * This function is responsible for sending the opened
+	 * document&#x27;s graph to the visualizer. It gets an array of 
+	 * predicates and cuts the graph according to the status
+	 * (accepted: true/false) of this set.
+	 * @method filterGraph
+	 * @param {Array} predicates array of predicates 
+	 */
+	filterGraph: function(predicates) {				
+		this.clearVisualization();
+		var main = this;
+		$(&#x27;html,body&#x27;).css(&#x27;cursor&#x27;,&#x27;wait&#x27;);
+		setTimeout(function(){
+			main.openedDocStore.graph(function(success, triples) {				
+				for(var i=0;i&lt;predicates.length;i++) {
+					if(!predicates[i].accepted) {
+						triples.removeMatches(null, predicates[i].text, null);
+					}
+				}
+				var tempStore = rdfstore.create();				
+				tempStore.insert(triples, function() {
+					main.showVisualization(tempStore);
+					main.$.loader.hide();
+					$(&#x27;html,body&#x27;).css(&#x27;cursor&#x27;,&#x27;auto&#x27;);
+				});
+			});
+		},100);
+	},
+	
+	/**
+	 * This function clears the visualizer panel.
+	 * @method clearVisualization
+	 */
+	clearVisualization: function() {
+		$(&quot;#&quot; + this.$.content.getId()).html(&#x27;&#x27;);
+	},
+	
+	/**
+	 * This function passes a given RDF store object to 
+	 * Uduvudu which displays the document.
+	 * @method showVisualization
+	 * @param {Object} store the store object
+	 */
+	showVisualization: function(store) {
+		$(&quot;#&quot; + this.$.content.getId()).html(&#x27;&#x27;).append(uduvudu.process(store));
+	},
+
+    /**
+     * This function clears the document content, shows the loader and sends an
+     * open doc request to a URL.
+	 * @method openDoc
+     * @param {String} documentURL the request URL
+     */
+    openDoc: function(documentURL){
+        this.clearAll();
+        this.$.loader.show();
+        this.documentURL = documentURL;
+
+        var main = this;
+		if(readCookie(&#x27;viewType&#x27;) == &quot;entityList&quot;) {
+			var url = CONSTANTS.ENTITY_DETAILS_URL + &#x27;?entityURI=&#x27; + documentURL;
+		}
+		else {
+			var url = CONSTANTS.OPEN_DOC_URL + &#x27;?iri=&#x27; + documentURL;
+		}
+        this.openedDocStore = rdfstore.create();
+        this.openedDocStore.load(&#x27;remote&#x27;, url, this.openedDocStore.rdf, function(success) {
+			main.processDocGraph();
+        });
+    },
+
+    /**
+     * This function scrolls the scrollbar to the top.
+	 * @method scrollToTop
+     */
+    scrollToTop: function(){
+        this.$.scroller.render();
+        this.$.scroller.top = 0;
+        this.$.scroller.setScrollTop(0);
+        this.$.scroller.scrollTo(0,0);
+    }
+
+});
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

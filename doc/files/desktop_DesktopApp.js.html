@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>desktop\DesktopApp.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+            
+                <h1><img src="../assets/css/logo.png" title=""></h1>
+            
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/AutoSuggest.html">AutoSuggest</a></li>
+            
+                <li><a href="../classes/Bookmark.html">Bookmark</a></li>
+            
+                <li><a href="../classes/ClosablePopup.html">ClosablePopup</a></li>
+            
+                <li><a href="../classes/DetailsBox.html">DetailsBox</a></li>
+            
+                <li><a href="../classes/Dictionary.html">Dictionary</a></li>
+            
+                <li><a href="../classes/DictionaryController.html">DictionaryController</a></li>
+            
+                <li><a href="../classes/DictionaryEntity.html">DictionaryEntity</a></li>
+            
+                <li><a href="../classes/DocumentApp.html">DocumentApp</a></li>
+            
+                <li><a href="../classes/DocumentList.html">DocumentList</a></li>
+            
+                <li><a href="../classes/DocumentMobileApp.html">DocumentMobileApp</a></li>
+            
+                <li><a href="../classes/DynamicMenu.html">DynamicMenu</a></li>
+            
+                <li><a href="../classes/LabelItem.html">LabelItem</a></li>
+            
+                <li><a href="../classes/LabelList.html">LabelList</a></li>
+            
+                <li><a href="../classes/Landscape.html">Landscape</a></li>
+            
+                <li><a href="../classes/LeftHeader.html">LeftHeader</a></li>
+            
+                <li><a href="../classes/LeftPanel.html">LeftPanel</a></li>
+            
+                <li><a href="../classes/LocationViewer.html">LocationViewer</a></li>
+            
+                <li><a href="../classes/LoginPopup.html">LoginPopup</a></li>
+            
+                <li><a href="../classes/MenuController.html">MenuController</a></li>
+            
+                <li><a href="../classes/MiddlePanel.html">MiddlePanel</a></li>
+            
+                <li><a href="../classes/NGraph.html">NGraph</a></li>
+            
+                <li><a href="../classes/OpenedDoc.html">OpenedDoc</a></li>
+            
+                <li><a href="../classes/OpenedDocHeader.html">OpenedDocHeader</a></li>
+            
+                <li><a href="../classes/PredicateAnnotator.html">PredicateAnnotator</a></li>
+            
+                <li><a href="../classes/PredicateItem.html">PredicateItem</a></li>
+            
+                <li><a href="../classes/PreviewBox.html">PreviewBox</a></li>
+            
+                <li><a href="../classes/RightPanel.html">RightPanel</a></li>
+            
+                <li><a href="../classes/SearchBox.html">SearchBox</a></li>
+            
+                <li><a href="../classes/ShortDocument.html">ShortDocument</a></li>
+            
+                <li><a href="../classes/TopMessageBox.html">TopMessageBox</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/Firstswim.html">Firstswim</a></li>
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: desktop\DesktopApp.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+jQuery(document).ready(function () {
+
+    function initialization(){
+
+		placeDefaultCookies();
+        createUI();
+		// setCurrentUser();
+        enyo.Scroller.touchScrolling=false;
+
+        /**
+		 * This function creates the whole user interface by
+		 * initializing necessary components and methods.
+		 * @method createUI
+		 */
+        function createUI(){
+            /**
+            * @class DocumentApp
+            */
+            enyo.kind(
+            /** @lends DocumentApp.prototype */
+            {
+                name: &#x27;DocumentApp&#x27;,
+                kind: enyo.Control,
+
+                /**
+                 * When the component is being created it renders the
+				 * template for the document preview, and calling functions
+				 * that process cookie and GET parameters.
+				 * @method create
+                 */
+                create: function(){
+                    this.inherited(arguments);
+                    renderTemplateDiv();
+					this.processCookieValues();
+                    this.processGETParameters();
+                },
+
+                /**
+                 * After the rendering the program calculates and sets the
+                 * position of the bookmark popup and the size of the preview box.
+				 * @method rendered
+                 */
+                rendered: function(){
+                    this.inherited(arguments);
+                    this.previewOriginHeight = jQuery(&#x27;#&#x27; + this.$.previewBox.getOpenDocId()).height();
+                    this.changeBMPopupPosition();
+					this.initDraggers();
+                },
+
+                published: {
+                    searchWord: &#x27;&#x27;,
+                    checkedEntities: [],
+                    lang: &#x27;en&#x27;
+                },
+
+                components: [
+                    {
+                        kind: &#x27;TopMessageBox&#x27;,
+                        name: &#x27;topMessageBox&#x27;,
+                        classes: &#x27;topMessageBox&#x27;
+                    },
+                    {
+                        tag: &#x27;div&#x27;,
+                        classes: &#x27;docApp&#x27;,
+                        name: &#x27;docApp&#x27;,
+                        components: [
+                            { name: &#x27;Toolbar&#x27;, classes: &#x27;toolbar&#x27;, components: [
+                                { name: &#x27;ToolbarCenter&#x27;, classes: &#x27;toolbarCenter&#x27;, components: [
+                                        {
+											name: &#x27;mainLogo&#x27;,
+											classes: &#x27;mainLogo&#x27;,
+											ontap: &#x27;clickLogo&#x27;
+                                        },
+                                        {
+											kind: &#x27;SearchBox&#x27;,
+											name: &#x27;searchBox&#x27;,
+											placeholder: &#x27;Search in documents&#x27;,
+											buttonClass: &#x27;searchButton&#x27;,
+											buttonContent: &#x27;OK&#x27;,
+											searchIconClass: &#x27;searchImage&#x27;,
+											parentSeachFunction: &#x27;search&#x27;
+                                        },
+										{ 
+											name: &#x27;toolbarIcons&#x27;,
+											classes: &#x27;toolbarIcons&#x27;,
+											components: [
+												{kind: &#x27;Group&#x27;, classes: &#x27;viewTypeToggleButtons&#x27;, onActivate: &quot;onViewTypeToggle&quot;, components: [
+													{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+														{kind: &quot;onyx.IconButton&quot;, name: &#x27;docListViewButton&#x27;, classes: &#x27;docListViewButton&#x27; },
+														{kind: &quot;onyx.Tooltip&quot;, content: &quot;Document list view&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+													]},
+													{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+														{kind: &quot;onyx.IconButton&quot;, name: &#x27;entityListViewButton&#x27;,  classes: &#x27;entityListViewButton&#x27;},
+														{kind: &quot;onyx.Tooltip&quot;, content: &quot;Entity list view&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+													]},
+													{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+														{kind: &quot;onyx.IconButton&quot;, name: &#x27;locationViewButton&#x27;,  classes: &#x27;locationViewButton&#x27;},
+														{kind: &quot;onyx.Tooltip&quot;, content: &quot;LocationMapper&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+													]},
+													{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+														{kind: &quot;onyx.IconButton&quot;, name: &#x27;landscapeViewButton&#x27;,  classes: &#x27;landscapeViewButton&#x27;},
+														{kind: &quot;onyx.Tooltip&quot;, content: &quot;Landscape view&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+													]},
+													{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+														{kind: &quot;onyx.IconButton&quot;, name: &#x27;nGraphViewButton&#x27;,  classes: &#x27;nGraphViewButton&#x27;},
+														{kind: &quot;onyx.Tooltip&quot;, content: &quot;Network graph view&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+													]}
+												]},
+												{kind: &#x27;onyx.MenuDecorator&#x27;, name: &#x27;styleSettingsSelect&#x27;, classes: &#x27;styleSettingsSelect&#x27;, onSelect: &#x27;selectCss&#x27;, components: [
+													{kind: &quot;onyx.IconButton&quot;, name: &#x27;brushButton&#x27;, classes: &#x27;brushButton&#x27; },
+													{kind: &quot;onyx.Tooltip&quot;, content: &quot;Style settings&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false },
+													{kind: &quot;onyx.Menu&quot;, name: &#x27;styleSettingsMenu&#x27;, classes: &#x27;styleSettingsMenu&#x27;, components: [
+														{content: &quot;Default&quot;, name: &quot;firstswim&quot;, classes: &quot;stylePickerItem&quot;, value: &#x27;firstswim&#x27;},
+														{content: &quot;High contrast&quot;, name: &quot;contrast&quot;, classes: &quot;stylePickerItem&quot;, value: &#x27;contrast&#x27;},
+														{content: &quot;Orange&quot;, name: &quot;beer&quot;, classes: &quot;stylePickerItem&quot;, value: &#x27;beer&#x27;},
+														{content: &quot;Clear&quot;, name: &quot;clear&quot;, classes: &quot;stylePickerItem&quot;, value: &#x27;clear&#x27;}
+													]}
+												]},
+												{kind: &quot;onyx.TooltipDecorator&quot;, components: [
+													{kind: &quot;onyx.IconButton&quot;, ontap: &#x27;login&#x27;, name: &#x27;loginButton&#x27;, classes: &#x27;loginButton loggedOut&#x27; },
+													{kind: &quot;onyx.Tooltip&quot;, content: &quot;Login&quot;, classes: &#x27;menuItemTooltip&#x27;, active: false }
+												]}
+												/*,
+												{
+													name: &#x27;bookmark&#x27;,
+													kind: &#x27;Bookmark&#x27;,
+													buttonClass: &#x27;bookmarkButton&#x27;,
+													parentTapFunction: &#x27;createBookmark&#x27;,
+													parentPopupFunction: &#x27;popupBookmark&#x27;,
+													warningPopupClass: &#x27;bookmarkPopup&#x27;,
+													warningPopupContent: &#x27;&lt;br/&gt;Your browser doesn\&#x27;t support add bookmark via Javascript.&lt;br/&gt;&lt;br/&gt;Please insert this URL manually:&lt;br/&gt;&lt;br/&gt;&#x27;
+												} */
+											]
+										},
+										{
+											kind: &#x27;LoginPopup&#x27;,
+											name: &#x27;loginPopup&#x27;,
+											classes: &#x27;loginPopup&#x27;
+										}
+                                ]}
+                            ]},
+                            { kind: &#x27;ClosablePopup&#x27;, name: &#x27;bookmarkPopup&#x27;, classes: &#x27;bookmarkPopup&#x27;, popupClasses: &#x27;bookmarkPopupDiv&#x27;, closeButtonClasses: &#x27;popupCloseButton&#x27; },
+                            {
+                                kind: &#x27;PreviewBox&#x27;,
+                                name: &#x27;previewBox&#x27;,
+                                classes: &#x27;previewBox&#x27;,
+                                previewBoxMainTitle: &#x27;Preview&#x27;,
+                                previewBoxMainTitleClass: &#x27;previewBoxMainTitle&#x27;
+                            }
+                        ]
+                    }
+                ],
+				
+				/**
+				 * This function calls the &#x27;initViewType&#x27; function which
+				 * sets the view type based on cookie values and calls the
+				 * &#x27;setCss&#x27; function too.
+				 * @method processCookieValues
+				 */
+				processCookieValues: function() {
+					this.initViewType();
+					this.setCss(readCookie(&#x27;css&#x27;));
+				},
+				
+				/**
+				 * This function runs when the user selects a stylesheet.
+				 * It calls the &#x27;setCss&#x27; function with the proper value.
+				 * @method selectCss
+				 */
+				selectCss: function(inSender, inEvent) {
+					this.setCss(inEvent.originator.value);
+				},
+				
+				/**
+				 * This function changes the stylesheet behind the page and 
+				 * places a cookie.
+				 * @method setCss
+				 */
+				setCss: function(cssName) {
+					$(&quot;#mainCss&quot;).attr(&quot;href&quot;, CONSTANTS.STYLE_PATH + cssName + &quot;.css&quot;);
+					createCookie(&#x27;css&#x27;, cssName, 30);
+				},
+				
+				/**
+				 * This function initializes the view type at the beginning
+				 * using the &#x27;viewType&#x27; cookie value by setting up the toggle 
+				 * buttons and calling the &#x27;createViewType&#x27; function with the
+				 * proper parameter value.
+				 * @method initViewType
+				 */
+				initViewType: function() {
+					switch(readCookie(&#x27;viewType&#x27;)) {
+						case &#x27;documentList&#x27;:
+							this.$.docListViewButton.setActive(true);
+						break;
+						case &#x27;entityList&#x27;:
+							this.$.entityListViewButton.setActive(true);
+						break;
+						case &#x27;locationViewer&#x27;:
+							this.$.locationViewButton.setActive(true);
+						break;
+						case &#x27;landscape&#x27;:
+							this.$.landscapeViewButton.setActive(true);
+						break;
+						case &#x27;nGraph&#x27;:
+							this.$.nGraphViewButton.setActive(true);
+						break;
+						default:
+							this.$.docListViewButton.setActive(true);
+					}
+					this.createViewType(readCookie(&#x27;viewType&#x27;));
+				},
+				
+				/**
+				 * This function runs after changing the view type.
+				 * First, it checks whether it is really a change or
+				 * the same as the current one. If it has to be changed,
+				 * it calls the toggle functions, sets the cookie value
+				 * and fires a search using the current search term.
+				 * @method toggleViewType
+				 */
+				toggleViewType: function(viewType) {
+					if(readCookie(&#x27;viewType&#x27;) != viewType) {
+						this.destroyCurrentViewType(viewType);
+						createCookie(&#x27;viewType&#x27;, viewType, 30);
+						this.createViewType(viewType);
+						this.search(this.searchWord);
+					}
+				},
+				
+				/**
+				 * This function initializes every components after changing 
+				 * view type. It creates both panels and draggers.
+				 * @method createViewType
+				 */
+				createViewType: function(viewType) {
+					switch(viewType) {
+						default:
+						case &#x27;documentList&#x27;:
+							this.createComponent({	name: &#x27;leftDesktopCol&#x27;,
+													classes: &#x27;leftDesktopCol&#x27;,
+													components: [
+														{
+																kind: &#x27;DictionaryController&#x27;,
+																openClasses: &#x27;dictionaryListOpen&#x27;,
+																closeClasses: &#x27;dictionaryListClose&#x27;,
+																openScrollerClass: &#x27;dictionaryListScrollOpen&#x27;,
+																closeScrollerClass: &#x27;dictionaryListScrollClose&#x27;,
+																entityCheckboxClass: &#x27;dictionaryCheckbox&#x27;,
+																searchFunction: &#x27;search&#x27;,
+																name: &#x27;dictionaries&#x27;,
+																dictionaryTitle: &#x27;Entities&#x27;,
+																titleClass: &#x27;dictionariesMainTitle&#x27;,
+																showDetailsFunction: &#x27;displayDetails&#x27;
+														},
+														{
+																kind: &#x27;DetailsBox&#x27;,
+																name: &#x27;detailsBox&#x27;,
+																classes: &#x27;detailsBox enyo-unselectable&#x27;,
+																detailsMainTitle: &#x27;Details&#x27;,
+																mainTitleClass: &#x27;detailsMainTitle&#x27;,
+																scrollerClass: &#x27;detailsScroll&#x27;,
+																titleClass: &#x27;detailsTitle&#x27;
+														}
+													]
+												});
+												
+							this.createComponent({	name: &#x27;firstDocDragger&#x27;, classes: &#x27;firstDocDragger verticalDragger&#x27; });
+							
+							this.createComponent({	kind: &#x27;DocumentList&#x27;,
+													name: &#x27;documents&#x27;,
+													openDocFunction: &#x27;openDoc&#x27;,
+													openDocEvent: &#x27;ontap&#x27;,
+													classes: &#x27;documentList&#x27;,
+													loaderClass: &#x27;loader&#x27;,
+													scrollerClass: &#x27;documentListScroll&#x27;,
+													titleClass: &#x27;documentsMainTitle&#x27;,
+													classifyFinishFunction: &#x27;processClassifyResponse&#x27;,
+													titleContent: &#x27;Documents &#x27;,
+													documentsCountClass: &#x27;documentsCount&#x27;,
+													noDataLabel: &#x27;No data available&#x27;,
+													moreButtonClass: &#x27;moreButton&#x27;,
+													moreDocumentsFunction: &#x27;moreDocuments&#x27;
+												});
+												
+							this.createComponent({	name: &#x27;secondDocDragger&#x27;, classes: &#x27;secondDocDragger verticalDragger&#x27; });
+							
+							this.render();							
+							
+						break;
+						case &#x27;entityList&#x27;:									
+							this.createComponent({	name: &#x27;leftDesktopCol&#x27;,
+													classes: &#x27;leftDesktopCol&#x27;,
+													components: [
+														{
+															kind: &#x27;DictionaryController&#x27;,
+															openClasses: &#x27;dictionaryListOpen&#x27;,
+															closeClasses: &#x27;dictionaryListClose&#x27;,
+															openScrollerClass: &#x27;dictionaryListScrollOpen&#x27;,
+															closeScrollerClass: &#x27;dictionaryListScrollClose&#x27;,
+															entityCheckboxClass: &#x27;dictionaryCheckbox&#x27;,
+															searchFunction: &#x27;search&#x27;,
+															name: &#x27;dictionaries&#x27;,
+															dictionaryTitle: &#x27;Organizations&#x27;,
+															titleClass: &#x27;dictionariesMainTitle&#x27;,
+															showDetailsFunction: &#x27;displayDetails&#x27;
+														},
+														{
+															kind: &#x27;DetailsBox&#x27;,
+															name: &#x27;detailsBox&#x27;,
+															classes: &#x27;detailsBox enyo-unselectable&#x27;,
+															detailsMainTitle: &#x27;Details&#x27;,
+															mainTitleClass: &#x27;detailsMainTitle&#x27;,
+															scrollerClass: &#x27;detailsScroll&#x27;,
+															titleClass: &#x27;detailsTitle&#x27;
+														}
+													]
+												});
+												
+							this.createComponent({	name: &#x27;firstDocDragger&#x27;, classes: &#x27;firstDocDragger verticalDragger&#x27; });
+							
+							this.createComponent({	kind: &#x27;DocumentList&#x27;,
+													name: &#x27;documents&#x27;,
+													openDocFunction: &#x27;openDoc&#x27;,
+													openDocEvent: &#x27;ontap&#x27;,
+													classes: &#x27;documentList&#x27;,
+													loaderClass: &#x27;loader&#x27;,
+													scrollerClass: &#x27;documentListScroll&#x27;,
+													titleClass: &#x27;documentsMainTitle&#x27;,
+													classifyFinishFunction: &#x27;processClassifyResponse&#x27;,
+													titleContent: &#x27;People &#x27;,
+													documentsCountClass: &#x27;documentsCount&#x27;,
+													noDataLabel: &#x27;No data available&#x27;,
+													moreButtonClass: &#x27;moreButton&#x27;,
+													moreDocumentsFunction: &#x27;moreDocuments&#x27;
+												});
+												
+							this.createComponent({	name: &#x27;secondDocDragger&#x27;, classes: &#x27;secondDocDragger verticalDragger&#x27; });
+							
+							this.render();
+							
+						break;
+						case &#x27;locationViewer&#x27;:
+							this.createComponent({
+								kind: &#x27;LocationViewer&#x27;,
+								name: &#x27;locationViewer&#x27;,
+								classes: &#x27;locationViewerPanel&#x27;,
+								loaderClass: &#x27;loader&#x27;,
+								titleClass: &#x27;locationViewerMainTitle&#x27;,
+								titleContent: &#x27;Location viewer &#x27;,
+								noDataLabel: &#x27;No data available&#x27;
+							});
+							this.render();
+						break;
+						case &#x27;landscape&#x27;:						
+							this.createComponent({
+									kind: &#x27;Landscape&#x27;,
+									name: &#x27;landscape&#x27;,
+									classes: &#x27;landscapePanel&#x27;,
+									loaderClass: &#x27;loader&#x27;,
+									titleClass: &#x27;landscapeMainTitle&#x27;,
+									titleContent: &#x27;Landscape &#x27;
+								});
+							this.render();
+						break;
+						case &#x27;nGraph&#x27;:
+							this.createComponent({
+								kind: &#x27;NGraph&#x27;,
+								name: &#x27;nGraph&#x27;,
+								openDocFunction: &#x27;openDoc&#x27;,
+								openDocEvent: &#x27;ontap&#x27;,
+								classes: &#x27;nGraphPanel&#x27;,
+								loaderClass: &#x27;loader&#x27;,
+								titleClass: &#x27;nGraphMainTitle&#x27;,
+								titleContent: &#x27;Network graph &#x27;,
+								noDataLabel: &#x27;No data available&#x27;
+							});
+							this.createComponent({	name: &#x27;nGraphDragger&#x27;, classes: &#x27;nGraphDragger verticalDragger&#x27; });
+							this.render();
+						break;
+					}
+				},
+				
+				/**
+				 * This function handles view type toggling by calling the
+				 * toggle function with the proper parameter.
+				 * @method onViewTypeToggle
+				 */
+				onViewTypeToggle: function(inSender, inEvent) {
+					if (inEvent.originator.getActive()) {
+						//var selected = inEvent.originator.indexInContainer();
+						switch(inEvent.originator.name) {
+							case &#x27;docListViewButton&#x27;:
+								this.toggleViewType(&#x27;documentList&#x27;);
+							break;
+							case &#x27;entityListViewButton&#x27;:
+								this.toggleViewType(&#x27;entityList&#x27;);
+							break;
+							case &#x27;locationViewButton&#x27;:
+								this.toggleViewType(&#x27;locationViewer&#x27;);
+							break;
+							case &#x27;landscapeViewButton&#x27;:
+								this.toggleViewType(&#x27;landscape&#x27;);
+							break;
+							case &#x27;nGraphViewButton&#x27;:
+								this.toggleViewType(&#x27;nGraph&#x27;);
+							break;
+						}
+					}
+				},
+				
+				/**
+				 * This function destroys every components of the current view type
+				 * in case it&#x27;s not the same as the new view type.
+				 * @method destroyCurrentViewType
+				 */
+				destroyCurrentViewType: function(newType) {
+					switch (readCookie(&#x27;viewType&#x27;)) {
+						case &#x27;nGraph&#x27;:
+							this.$.nGraph.destroy();
+							this.$.nGraphDragger.destroy();
+						break;
+						case &#x27;documentList&#x27;:	
+						case &#x27;entityList&#x27;:										
+							this.$.leftDesktopCol.destroy();
+							this.$.firstDocDragger.destroy();
+							this.$.documents.destroy();
+							this.$.secondDocDragger.destroy();
+						break;
+						case &#x27;landscape&#x27;:									
+							this.$.landscape.destroy();
+						break;
+						case &#x27;locationViewer&#x27;:									
+							this.$.locationViewer.destroy();
+						break;
+					}
+				},
+				
+				/**
+				 * This function initializes all the draggers that the page contains.
+				 * It uses jQuery &#x27;draggable&#x27;.
+				 * @method initDraggers
+				 */
+				initDraggers: function() {
+					if($(&#x27;.firstDocDragger&#x27;).length &gt; 0) {
+						$(&#x27;.firstDocDragger&#x27;).draggable({
+							axis: &quot;x&quot;,
+							drag: function( event, ui ) {								
+								var docListCalcWidth = parseInt($(&#x27;.previewBox&#x27;).css(&#x27;left&#x27;), 10) - ((ui.position.left - 10 ) + 30);								
+								if( ui.position.left &gt; 80 &amp;&amp; docListCalcWidth &gt; 160 ) {
+									$(&#x27;.leftDesktopCol&#x27;).css(&#x27;width&#x27;, ( ui.position.left - 10 )+&#x27;px&#x27;);
+									$(&#x27;.documentList&#x27;).css(&#x27;left&#x27;, ( ui.position.left + 10 )+&#x27;px&#x27;);
+									$(&#x27;.documentList&#x27;).css(&#x27;width&#x27;, docListCalcWidth+&#x27;px&#x27;);
+								}
+								else {
+									event.type = &#x27;mouseup&#x27;;
+									$(&#x27;.firstDocDragger&#x27;).trigger(event);
+								}
+							}
+						});
+						
+					}
+					if($(&#x27;.secondDocDragger&#x27;).length &gt; 0) {
+						$(&#x27;.secondDocDragger&#x27;).draggable({
+							axis: &quot;x&quot;,
+							drag: function( event, ui ) {
+								var docListCalcWidth = ui.position.left - ($(&#x27;.leftDesktopCol&#x27;).width() + 20);
+								if( ($(document).width() - ui.position.left ) &gt; 80 &amp;&amp; docListCalcWidth &gt; 160 ) {
+									$(&#x27;.documentList&#x27;).css(&#x27;width&#x27;, docListCalcWidth + &#x27;px&#x27;);
+									$(&#x27;.previewBox&#x27;).css(&#x27;left&#x27;, ( ui.position.left + 10 )+&#x27;px&#x27;);
+								}
+								else {
+									event.type = &#x27;mouseup&#x27;;
+									$(&#x27;.secondDocDragger&#x27;).trigger(event);
+								}
+							}
+						});
+					}
+					if($(&#x27;.nGraphDragger&#x27;).length &gt; 0) {
+						var main = this;
+						$(&#x27;.nGraphDragger&#x27;).draggable({
+							axis: &quot;x&quot;,
+							drag: function( event, ui ) {
+								var nGraphCalcWidth = ui.position.left - 10;
+								if( ($(document).width() - ui.position.left ) &gt; 80 &amp;&amp; nGraphCalcWidth &gt; 160 ) {
+									$(&#x27;.nGraphDiv&#x27;).css(&#x27;width&#x27;, nGraphCalcWidth + &#x27;px&#x27;);
+									$(&#x27;.previewBox&#x27;).css(&#x27;left&#x27;, ( ui.position.left + 10 )+&#x27;px&#x27;);
+								}
+								else {
+									event.type = &#x27;mouseup&#x27;;
+									$(&#x27;.nGraphDragger&#x27;).trigger(event);
+								}
+								main.$.nGraph.onDivResize();
+							}
+						});
+					}
+				},
+				
+                /**
+                 * This function is called, when the user clicks on the login button.
+                 * It displays the login popup window.
+				 * @method login
+                 */
+                login: function(){
+                    this.$.loginPopup.showLogin();
+                },
+
+                /**
+                 * This function is called when the user clicks on the logo.
+                 * It navigates to the Fusepool main site.
+				 * @method clickLogo
+                 */
+                clickLogo: function(){
+                    window.open(CONSTANTS.FUSEPOOL_MAIN_URL);
+                },
+
+                /**
+                 * This function processes GET parameters. If it finds &#x27;search&#x27; or
+                 * &#x27;entity&#x27;, it fires a search and open the document if there is the
+                 * &#x27;openPreview&#x27; parameter.
+				 * @method processGETParameters
+                 */
+                processGETParameters: function(){
+                    // Search
+                    this.search(GetURLParameter(&#x27;search&#x27;)[0], GetURLParameter(&#x27;entity&#x27;));
+                    // Open Document
+                    var openPreview = GetURLParameter(&#x27;openPreview&#x27;)[0];
+                    if(!isEmpty(openPreview)){
+                        this.openDoc(openPreview);
+                    }
+                },
+
+                /**
+                 * This function calculates the position of the previewed document
+                 * and opens the document on the right.
+				 * @method openDoc
+                 * @param {String} docURI the URI of the clicked document
+                 * @param {Object} inEvent mouse over on a short document event
+                 */
+                openDoc: function(docURI, inEvent){
+                    if(!isEmpty(inEvent)){
+                        var topMessage = jQuery(&#x27;#&#x27; + this.$.topMessageBox.getId());
+                        var topMessageVisible = topMessage.is(&#x27;:visible&#x27;);
+                        var topMessageHeight = 0;
+                        if(topMessageVisible){
+                            topMessageHeight = topMessage.outerHeight();
+                            alert(topMessageHeight);
+                        }
+                    }
+                    this.$.previewBox.openDoc(docURI);
+                },
+				
+                /**
+                 * This function queries the Annostore for a single annotation - only for testing purposes.
+				 * @method getAnnotation
+                 * @param {String} annotationIRI identifier of the annotation
+                 */
+				getAnnotation: function(annotationIRI){
+					var request = new enyo.Ajax({
+						method: &#x27;GET&#x27;,
+						url: CONSTANTS.ANNOTATION_URL+&#x27;?iri=&#x27;+annotationIRI,
+						handleAs: &#x27;text&#x27;,
+						headers: { Accept : &#x27;application/rdf+xml&#x27;, &#x27;Content-Type&#x27; : &#x27;application/x-www-form-urlencoded&#x27;},
+						published: { timeout: 60000 }
+					});
+					request.go();
+					request.error(this, function(){
+						console.log(&quot;error&quot;);
+					});
+					request.response(this, function(inSender, inResponse) {
+						// console.log(&quot;success: &quot;+inResponse);
+					});
+                },
+
+                /**
+                 * This function creates and saves a bookmark, which contains the
+                 * search word, the unchecked entities and the opened document.
+				 * @method createBookmark
+                 */
+                createBookmark: function(){
+                    if(!isEmpty(this.searchWord)){
+                        // Cut characters after &#x27;?&#x27;
+                        var location = window.location.href;
+                        var parametersIndex = location.indexOf(&#x27;?&#x27;);
+                        if(parametersIndex !== -1){
+                            location = location.substr(0, parametersIndex);
+                        }
+                        // Search word
+                        var url = location + &#x27;?search=&#x27; + this.searchWord;
+                        // Unchecked entities
+                        var entities = this.getCheckedEntities();
+                        for(var i=0;i&lt;entities.length;i++){
+                            if(!isEmpty(entities[i].id)){
+                                url += &#x27;&amp;entity=&#x27; + entities[i].id;
+                            } else {
+                                url += &#x27;&amp;entity=&#x27; + entities[i];
+                            }
+                        }
+                        // Preview document
+                        var documentURL = this.$.previewBox.getDocumentURI();
+                        if(!isEmpty(documentURL)){
+                            url += &#x27;&amp;openPreview=&#x27; + documentURL;
+                        }
+
+                        var title = &#x27;Fusepool&#x27;;
+                        this.$.bookmark.saveBookmark(url, title);
+                    } else {
+                        this.$.bookmark.saveBookmark(url, title);
+                    }
+                },
+
+                /**
+                 * This function shows a message in a popup.
+				 * @method popupBookmark
+                 * @param {String} message the message
+                 */
+                popupBookmark: function(message){
+                    this.$.bookmarkPopup.show();
+                    this.$.bookmarkPopup.setContent(message);
+                    this.changeBMPopupPosition();
+                },
+
+                /**
+                 * This function calculates the position of the popup to be 
+                 * displayed horizontally in the center, vertically on the top.
+				 * @method changeBMPopupPosition
+                 */
+                changeBMPopupPosition: function(){
+                    if(!isEmpty(this.$.bookmarkPopup.getContent())){
+                        var jQBookmark = jQuery(&#x27;#&#x27; + this.$.bookmarkPopup.getId());
+                        var popupWidth = jQBookmark.outerWidth();
+                        var windowWidth = jQuery(&#x27;#&#x27; + this.getId()).width();
+                        var newLeft = (windowWidth - popupWidth) / 2;
+                        this.$.bookmarkPopup.applyStyle(&#x27;left&#x27;, newLeft + &#x27;px&#x27;);
+                    }
+                },
+
+               /**
+                 * This function is called when the screen size is changing.
+                 * This function calls the bookmark popup changer function and the
+                 * preview box size changer function.
+				 * @method resizeHandler
+                 */
+                resizeHandler: function() {
+                    this.inherited(arguments);
+                    this.changeBMPopupPosition();
+                },
+
+                /**
+                 * This function reduces the preview box height if there isn&#x27;t enough
+                 * place for that. It sets the default height for the box otherwise.
+				 * @method changePreviewBoxSize
+                 */
+                changePreviewBoxSize: function(){
+                    var windowHeight = jQuery(window).height();
+                    var newHeight = windowHeight - 110;
+
+                    if(newHeight &lt; this.previewOriginHeight){
+                        this.$.previewBox.changeHeight(newHeight);
+                    } else {
+                        this.$.previewBox.changeHeight(this.previewOriginHeight);
+                    }
+                },
+
+                /**
+                 * This function calls the ajax search if the search word is not empty.
+				 * @method search
+                 * @param {String} searchWord the search word
+                 * @param {Array} checkedEntities the checked entities on the left side
+                 */
+                search: function(searchWord, checkedEntities){
+					checkedEntities = typeof checkedEntities !== &#x27;undefined&#x27; ? checkedEntities : [];
+                    this.searchWord = searchWord;
+					createCookie(&#x27;lastSearch&#x27;,searchWord,30);
+                    this.checkedEntities = checkedEntities;
+                    if(!isEmpty(searchWord)){
+						this.cleanPreviewBox();
+						switch(readCookie(&#x27;viewType&#x27;)) {
+							case &#x27;entityList&#x27;:
+							case &#x27;documentList&#x27;:
+								this.$.documents.startLoading();
+								this.sendSearchRequest(searchWord, checkedEntities, &#x27;processSearchResponse&#x27;);
+							break;
+							case &#x27;nGraph&#x27;:
+								this.$.nGraph.newGraph();	
+							break;
+							case &#x27;landscape&#x27;:
+								this.$.landscape.startLoading();
+								this.sendSearchRequest(searchWord, [], &#x27;processSearchResponse&#x27;);
+							break;
+							case &#x27;locationViewer&#x27;:
+								this.$.locationViewer.search(searchWord);
+							break;
+						}
+                        this.$.searchBox.updateInput(this.searchWord);
+                    }
+                },
+
+                /**
+                 * This function sends an ajax request for searching.
+				 * @method sendSearchRequest
+                 * @param {String} searchWord the search word
+                 * @param {String} checkedEntities the checked entities on the left side
+                 * @param {String} responseFunction the name of the response function
+                 * @param {Number} offset the offset of the documents (e.g. offset = 10 --&gt; documents in 10-20)
+                 */
+                sendSearchRequest: function(searchWord, checkedEntities, responseFunction, offset){
+                    var main = this;
+                    var url = this.createSearchURL(searchWord, checkedEntities, offset);
+                    var store = rdfstore.create();
+                    store.load(&#x27;remote&#x27;, url, function(success) {
+                        main[responseFunction](success, store);
+                    });
+                },
+
+                /**
+                 * This function creates the search URL for the query.
+				 * @method createSearchURL
+                 * @param {String} searchWord the search word
+                 * @param {Array} checkedEntities the checked entities
+                 * @param {Number} offset offset of the query
+                 * @return {String} the search url
+                 */
+                createSearchURL: function(searchWord, checkedEntities, offset){
+					
+					// var labelPattern = /^.*&#x27;label:&#x27;.*$/;
+					// if(labelPattern.test(searchWord)) {
+					
+					// }
+					// var predictedLabelPattern = /^.*&#x27;predicted label:&#x27;.*$/;
+					// if(predictedLabelPattern.test(searchWord)) {
+					
+					// }
+					
+					if(readCookie(&#x27;viewType&#x27;) == &quot;entityList&quot;) {
+						var url = CONSTANTS.ENTITY_SEARCH_URL;
+					}
+					else {
+						var url = CONSTANTS.SEARCH_URL;
+					}
+                    if(isEmpty(offset)){
+                        offset = 0;
+                    }
+                    url += &#x27;?search=&#x27;+searchWord;
+                    if(checkedEntities.length &gt; 0){
+                        url += this.getCheckedEntitiesURL(checkedEntities);
+                    }
+                    url += &#x27;&amp;offset=&#x27;+offset+&#x27;&amp;maxFacets=&#x27;+readCookie(&#x27;maxFacets&#x27;)+&#x27;&amp;items=&#x27;+readCookie(&#x27;items&#x27;);
+                    return url;
+                },
+
+                /**
+                 * This function sends a request for more documents.
+				 * @method moreDocuments
+                 * @param {Number} offset the offset of the document (e.g. offset = 10 -&gt; documents 10-20)
+                 */
+                moreDocuments: function(offset){
+                    this.sendSearchRequest(this.searchWord, this.checkedEntities, &#x27;processMoreResponse&#x27;, offset);
+                },
+
+                /**
+                 * This function runs after the ajax more search is done.
+                 * This function calls the document updater function.
+				 * @method processMoreResponse
+                 * @param {Boolean} success status of the search query
+                 * @param {Object} rdf the response rdf object
+                 */
+                processMoreResponse: function(success, rdf){
+                     var documents = this.createDocumentList(rdf);
+                     this.$.documents.addMoreDocuments(documents);
+                },
+
+                /**
+                 * This function creates a URL fraction that represents
+				 * the checked entities.
+				 * @method getCheckedEntitiesURL
+                 * @param {Array} checkedEntities the original checked entities
+                 * @return {String} built URL fraction
+                 */
+                getCheckedEntitiesURL: function(checkedEntities){
+                    var result = &#x27;&#x27;;
+                    for(var i=0;i&lt;checkedEntities.length;i++){
+                        if(checkedEntities[i].typeFacet){   
+                            result += &#x27;&amp;type=&#x27; + replaceAll(checkedEntities[i].id, &#x27;#&#x27;, &#x27;%23&#x27;);
+                        } else {
+                            result += &#x27;&amp;subject=&#x27; + checkedEntities[i].id;
+                        }
+                    }
+                    return result;
+                },
+
+                /**
+                 * This function runs after the ajax search is done. It calls
+                 * the entity list updater and the document updater functions.
+				 * @method processSearchResponse
+                 * @param {Boolean} success status of the search query
+                 * @param {Object} rdf the response rdf object
+                 */
+                processSearchResponse: function(success, rdf){
+                    if(success) {
+						switch(readCookie(&#x27;viewType&#x27;)) {
+							case &#x27;documentList&#x27;:
+							case &#x27;entityList&#x27;:
+								this.updateEntityList(rdf, this.searchWord);
+								this.updateDocumentList(rdf);
+								this.cleanDetailsBox();
+							break;
+							case &#x27;landscape&#x27;:
+								FusePool.Landscaping.doSearch();
+							break;
+						}
+					}
+					else {
+						this.$.documents.updateList([], this.searchWord, this.checkedEntities);
+						this.$.documents.documentsCount = 0;
+						this.$.documents.updateCounts();
+					}
+				},
+
+                /**
+                 * This function is called after a successful classification.
+				 * @method processClassifyResponse
+                 * @param {Object} rdf the rdf response of the request
+                 * @param {String} searchWord the search word
+                 */
+                processClassifyResponse: function(rdf, searchWord){
+                    this.updateEntityList(rdf, searchWord);
+                    this.updateClassifiedDocList(rdf);
+                },
+
+                /**
+                 * This function updates the document list after classification
+				 * to have the correct order.
+				 * @method updateClassifiedDocList
+                 * @param {Object} rdf the RDF object
+                 */
+                updateClassifiedDocList: function(rdf){
+                    var documents = this.createClassifiedDocList(rdf);
+                    this.$.documents.updateList(documents, this.searchWord);
+                    this.$.documents.documentsCount = this.getDocumentsCount(rdf);
+                    this.$.documents.updateCounts();
+                },
+
+                /**
+                 * This function creates a document list after classification.
+				 * @method createClassifiedDocList
+                 * @param {Object} rdf the RDF object
+                 * @return {Array} the created document list
+                 */
+                createClassifiedDocList: function(rdf){
+                    var documents = [];
+                    var main = this;
+
+                    var query = &#x27;SELECT * { ?url &lt;http://fusepool.eu/ontologies/ecs#textPreview&gt; ?preview&#x27;;
+                    query += &#x27;      OPTIONAL { ?url &lt;http://purl.org/dc/terms/title&gt; ?title }&#x27;;
+                    query += &#x27;      OPTIONAL { ?url &lt;http://purl.org/dc/terms/abstract&gt; ?content }&#x27;;
+                    query += &#x27;      OPTIONAL { ?url &lt;http://www.w3.org/2001/XMLSchema#double&gt; ?orderVal }&#x27;;
+                    query += &#x27;}&#x27;;
+                    query += &#x27;  ORDER BY DESC(?orderVal)&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i&lt;results.length;i++){
+                                var row = results[i];
+                                if(!isEmpty(row.content) &amp;&amp; (isEmpty(row.title) || isEmpty(row.title.lang) || row.title.lang + &#x27;&#x27; === main.lang)){
+                                    var content = row.content.value;
+                                    var title = &#x27;&#x27;;
+                                    if(!isEmpty(row.title)){
+                                        title = row.title.value;
+                                    }
+                                    if(!main.containsDocument(documents, content, title, row.url.value)){
+                                        documents.push({url: row.url.value, shortContent: content, title: title});
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    return documents;
+                },
+
+                /**
+                 * This function groups and sorts the entities and updates
+				 * the entity list on the left side.
+				 * @method updateEntityList
+                 * @param {Object} rdf the rdf object which contains the new entity list
+                 * @param {String} searchWord the search word
+                 */
+                updateEntityList: function(rdf, searchWord){
+                    // The checked facets and type facets
+                    var checkedEntities = this.getCheckedEntities(rdf);
+
+                    // The facet and the type facet list
+                    var categories = this.getEntities(rdf);
+
+                    var groupVars = _.groupBy(categories, function(val){ return val.value; });
+                    var sortedGroup = _.sortBy(groupVars, function(val){ return -val.length; });
+
+                    var dictionaries = [];
+                    for(var i=0;i&lt;sortedGroup.length;i++){
+                        // One category
+                        var category = sortedGroup[i];
+                        if(category.length &gt; 0){
+                            var categoryText = replaceAll(category[0].value, &#x27;_&#x27;, &#x27; &#x27;);
+                            var categoryName = categoryText.substr(categoryText.lastIndexOf(&#x27;/&#x27;)+1);
+
+                            var entities = [];
+                            for(var j=0;j&lt;category.length;j++){
+                                this.deteleLaterEntities(sortedGroup, category[j].entity, i);
+                                // Entity
+                                var entityId = category[j].entityId;
+                                var entityText = replaceAll(category[j].entity + &#x27;&#x27;, &#x27;_&#x27;, &#x27; &#x27;);
+                                var entityName = entityText.substr(entityText.lastIndexOf(&#x27;/&#x27;)+1);
+                                entityName = entityName.substr(entityName.lastIndexOf(&#x27;#&#x27;)+1);
+                                var entityCount = category[j].count;
+                                var typeFacet = category[j].typeFacet;
+
+                                var entity = {id: entityId, text:entityName, count: entityCount, typeFacet: typeFacet};
+                                if(!this.containsEntity(entities, entity)){
+                                    entities.push(entity);
+                                }
+                            }
+                            dictionaries.push({ name: categoryName, entities: entities });
+                        }
+                    }
+                    var dictionaryObject = { searchWord: searchWord, checkedEntities: checkedEntities, dictionaries: dictionaries };
+                    this.$.dictionaries.updateLists(dictionaryObject);
+                },
+
+                /**
+                 * This function searches for dictionary categories in an rdf object.
+				 * @method getEntities
+                 * @param {Object} rdf the rdf object
+                 * @return {Array} the categories array with the entities
+                 */
+                getEntities: function(rdf){
+                    var entities = [];
+                    entities = this.getFacets(rdf);
+                    entities = entities.concat(this.getTypeFacets(rdf));
+                    return entities;
+                },
+
+                /**
+                 * This function searches for dictionary categories in an rdf object.
+				 * @method getCheckedEntities
+                 * @param {Object} rdf the rdf object
+                 * @return {Array} the categories array with the entities
+                 */
+                getCheckedEntities: function(rdf){
+                    var checkedEntities = [];
+                    var checkedEntities = this.checkedEntitiesFromRdf(rdf);
+                    checkedEntities = checkedEntities.concat(this.checkedTypeFacetsFromRdf(rdf));
+                    return checkedEntities;
+                },
+
+                /**
+                 * This function returns an array of type facets found in an RDF object.
+				 * @method getTypeFacets
+                 * @param {Object} rdf the RDF object which contains the type facets
+                 * @return {Array} the result array
+                 */
+                getTypeFacets: function(rdf){
+                    var result = [];
+                    var query = &#x27;SELECT * { ?v &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://fusepool.eu/ontologies/ecs#ContentStoreView&gt;.&#x27;;
+                    query += &#x27;       ?v &lt;http://fusepool.eu/ontologies/ecs#typeFacet&gt; ?f. &#x27;;
+                    query += &#x27;       ?f &lt;http://fusepool.eu/ontologies/ecs#facetCount&gt; ?count. &#x27;;
+                    query += &#x27;       ?f &lt;http://fusepool.eu/ontologies/ecs#facetValue&gt; ?id. &#x27;;
+					query += &#x27;		OPTIONAL { { ?id &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?entity .&#x27;;
+					query += &#x27;        filter ( lang(?entity) = &quot;en&quot;)&#x27;;
+					query += &#x27;      } UNION {  &#x27;;
+					query += &#x27;        ?id &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?entity .&#x27;;
+					query += &#x27;        filter ( lang(?entity) = &quot;&quot;)&#x27;;
+					query += &#x27;      } } &#x27;;
+                    query += &#x27;      OPTIONAL { ?id &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; ?type }&#x27;;
+                    query += &#x27;}&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i&lt;results.length;i++){
+                                var row = results[i];
+                                var entity = row.entity;
+                                if(isEmpty(entity)){
+                                    entity = row.id.value;
+                                } else {
+                                    entity = row.entity.value;
+                                }
+                                var type = row.type;
+                                if(isEmpty(type)){
+                                    type = &#x27;Facet types&#x27;;
+                                } else {
+                                    type = row.type.value;
+                                }
+                                result.push({entityId: row.id.value, entity: entity, value: type, count: row.count.value, typeFacet: true});
+                            }
+                        }
+                    });
+                    return result;
+                },
+
+				/**
+                 * This function returns an array of facets found in an RDF object.
+				 * @method getFacets
+                 * @param {Object} rdf the RDF object which contains the facets
+                 * @return {Array} the result array
+				*/
+                getFacets: function(rdf){
+                    var result = [];
+                    var query = &#x27;SELECT * { ?v &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; &lt;http://fusepool.eu/ontologies/ecs#ContentStoreView&gt;.&#x27;;
+                    query += &#x27;       ?v &lt;http://fusepool.eu/ontologies/ecs#facet&gt; ?f. &#x27;;
+                    query += &#x27;       ?f &lt;http://fusepool.eu/ontologies/ecs#facetCount&gt; ?count. &#x27;;
+                    query += &#x27;       ?f &lt;http://fusepool.eu/ontologies/ecs#facetValue&gt; ?id. &#x27;;
+					query += &#x27;		OPTIONAL { { ?id &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?entity .&#x27;;
+					query += &#x27;        filter ( lang(?entity) = &quot;en&quot;)&#x27;;
+					query += &#x27;      } UNION {  &#x27;;
+					query += &#x27;        ?id &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?entity .&#x27;;
+					query += &#x27;        filter ( lang(?entity) = &quot;&quot;)&#x27;;
+					query += &#x27;      } } &#x27;;
+                    query += &#x27;      OPTIONAL { ?id &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; ?type }&#x27;;
+                    query += &#x27;}&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i&lt;results.length;i++){
+                                var row = results[i];
+								// if(!isEmpty(row.entity)){ 	// X branch
+                                if(!isEmpty(row.entity) &amp;&amp; !isEmpty(row.type)){
+                                    var type = row.type.value;
+                                    var categoryName = type.substring(type.lastIndexOf(&#x27;#&#x27;)+1);
+                                    result.push({entityId: row.id.value, entity: row.entity.value, value: categoryName, count: row.count.value, typeFacet: false});    
+                                }
+                            }
+                        }
+                    });
+                    return result;
+                },
+
+                /**
+                 * This function searches for the checked entities in an RDF object and
+                 * returns them.
+				 * @method checkedEntitiesFromRdf
+                 * @param {Object} rdf the rdf object
+                 * @return {Array} the checked entity list
+                 */
+                checkedEntitiesFromRdf: function(rdf){
+                    var main = this;
+                    var checkedEntities = [];
+                    var query = &#x27;SELECT * { ?s &lt;http://fusepool.eu/ontologies/ecs#subject&gt; ?id&#x27;;
+                    query += &#x27;      OPTIONAL { ?id &lt;http://www.w3.org/2000/01/rdf-schema#label&gt; ?entity }&#x27;;
+                    query += &#x27;}&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+                            for(var i=0;i&lt;results.length;i++){
+                                var row = results[i];
+                                if(!isEmpty(row.entity)){
+                                    var entity = {id: row.id.value, text: row.entity.value, count: -1, typeFacet: false};
+                                    if(!main.containsEntity(checkedEntities, entity)){
+                                        checkedEntities.push(entity);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    return checkedEntities;
+                },
+
+                /**
+                 * This function searches for the checked entities in an RDF object and
+                 * returns them.
+				 * @method checkedTypeFacetsFromRdf
+                 * @param {Object} rdf the rdf object
+                 * @return {Array} the checked entity list
+                 */
+                checkedTypeFacetsFromRdf: function(rdf){
+                    var checkedTypes = [];
+                    var query = &#x27;SELECT * { ?s &lt;http://fusepool.eu/ontologies/ecs#type&gt; ?o }&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        for(var i=0;i&lt;results.length;i++){
+                            var id = results[i].o.value;
+                            var text = id.substring(id.lastIndexOf(&#x27;#&#x27;)+1);
+                            text = text.substring(text.lastIndexOf(&#x27;/&#x27;)+1);
+                            var entity = {id: id, text: text, count: -1, typeFacet: true};
+                            checkedTypes.push(entity);
+                        }
+                    });
+                    return checkedTypes;
+                },
+
+                /**
+                 * This function decides whether an entity list contains an entity or not.
+				 * @method containsEntity
+                 * @param {Array} entities the array of the entities
+                 * @param {String} entity the entity
+                 * @return {Boolean} true, if the list contains the entity, false otherwise
+                 */
+                containsEntity: function(entities, entity){
+                    for(var i=0;i&lt;entities.length;i++){
+                        if(entities[i].id === entity.id || entities[i].text.toUpperCase() === entity.text.toUpperCase()){
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+
+                /**
+                 * This function deletes every entity from an array that equals
+                 * a given entity (after a given index).
+				 * @method deteleLaterEntities
+                 * @param {Array} array the array
+                 * @param {String} entity the checked entity
+                 * @param {Number} fromIndex the start index in the array
+                 */
+                deteleLaterEntities: function(array, entity, fromIndex){
+                    for(var i=fromIndex+1;i&lt;array.length;i++){
+                        var category = array[i];
+                        for(var j=0;j&lt;category.length;j++){
+                            if(category[j].entity === entity){
+                                array[i].splice(j, 1);
+                                j--;
+                            }
+                        }
+                    }
+                },
+
+                /**
+                 * This function updates the document list in the middle.
+				 * @method updateDocumentList
+                 * @param {Object} rdf the RDF object which contains the new document list
+                 */
+                updateDocumentList: function(rdf){
+                    this.$.documents.documentsCount = this.getDocumentsCount(rdf);
+                    this.$.documents.updateCounts();
+					if(this.$.documents.documentsCount&gt;0) {
+						var documents = this.createDocumentList(rdf);
+					}
+					else {
+						var documents = [];
+					}
+					this.$.documents.updateList(documents, this.searchWord, this.checkedEntities);
+                },
+
+                /**
+                 * This function deletes the content from the Preview panel.
+				 * @method cleanPreviewBox
+                 */
+                cleanPreviewBox: function(){
+                    this.$.previewBox.clean();
+                },
+				
+                /**
+                 * This function deletes the content from the Details panel.
+				 * @method cleanDetailsBox
+                 */
+                cleanDetailsBox: function(){
+                    this.$.detailsBox.clean();
+                },
+
+                /**
+                 * This function searches for the count of documents in an rdf object.
+				 * @method getDocumentsCount
+                 * @param {Object} rdf the rdf object, which contains the count of documents.
+                 * @return {Number} the count of documents
+                 */
+                getDocumentsCount: function(rdf){
+                    var result = 0;
+                    var query = &#x27;SELECT * { ?s &lt;http://fusepool.eu/ontologies/ecs#contentsCount&gt; ?o }&#x27;;
+                    rdf.execute(query, function(success, results) {
+                        if (success) {
+							if(results.length &gt; 0) {
+								result = results[0].o.value;
+							}
+						}
+					});
+                    return result;
+                },
+
+				/**
+				 * This function creates an ordered list of documents from an rdf object.
+				 * @method createDocumentList
+				 * @param {Object} rdf the rdf object
+				 * @return {Array} the document list
+				 */
+				createDocumentList: function(rdf){
+					var documents = [];
+					var main = this;
+					var hits = [];
+
+					rdf.rdf.setPrefix(&quot;ecs&quot;,&quot;http://fusepool.eu/ontologies/ecs#&quot;);
+					rdf.rdf.setPrefix(&quot;rdf&quot;,&quot;http://www.w3.org/1999/02/22-rdf-syntax-ns#&quot;);
+					var graph;
+					rdf.graph(function(success, things){graph = things;});
+					var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve(&quot;ecs:contents&quot;)), null).toArray();
+					var current = triples[0].object;
+
+					while(!current.equals(rdf.rdf.createNamedNode(rdf.rdf.resolve(&quot;rdf:nil&quot;)))){
+						var hit = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve(&quot;rdf:first&quot;)), null).toArray()[0].object;
+						hits.push(hit.nominalValue);
+						current = graph.match(current, rdf.rdf.createNamedNode(rdf.rdf.resolve(&quot;rdf:rest&quot;)), null).toArray()[0].object;
+					}
+					
+					if(readCookie(&#x27;viewType&#x27;) == &quot;entityList&quot;) {							
+						var querylist = &#x27;PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;&#x27; + 
+						&#x27;PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;&#x27; + 
+						&#x27;SELECT ?url ?name ?addresslocality ?streetaddress &#x27; + 
+						&#x27;WHERE { &#x27; + 
+							&#x27;?url rdf:type foaf:Person . &#x27; + 
+							&#x27;?url foaf:name ?name .  &#x27; + 
+							&#x27;?url &lt;http://schema.org/address&gt; ?addressURI . &#x27; + 
+							&#x27;?addressURI &lt;http://schema.org/addressLocality&gt; ?addresslocality . &#x27; + 
+							&#x27;?addressURI &lt;http://schema.org/streetAddress&gt; ?streetaddress &#x27; + 
+						&#x27;}&#x27;;
+					}
+					else {
+						var querylist = &#x27;PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; &#x27;;
+							querylist += &#x27;SELECT * {&#x27;;
+							querylist += &#x27;      { ?url &lt;http://purl.org/dc/terms/title&gt; ?title . &#x27;;
+							querylist += &#x27;        filter ( lang(?title) = &quot;en&quot;)&#x27;;
+							querylist += &#x27;      } UNION {  &#x27;;
+							querylist += &#x27;        ?url &lt;http://purl.org/dc/terms/title&gt; ?title . &#x27;;
+							querylist += &#x27;        filter ( lang(?title) = &quot;&quot;)&#x27;;
+							querylist += &#x27;      }&#x27;;
+							querylist += &#x27;      OPTIONAL { ?url &lt;http://purl.org/dc/terms/abstract&gt; ?abst } . &#x27;;
+							querylist += &#x27;      OPTIONAL { ?url &lt;http://fusepool.eu/ontologies/ecs#textPreview&gt; ?preview } . &#x27;;
+							querylist += &#x27;      OPTIONAL { ?url &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&gt; ?dtype } . &#x27;;
+							querylist += &#x27;}&#x27;;
+					}
+					
+					/* This is the tentative to iterate the list at the API level to have it in ORDER 
+						var triples = graph.match(null, rdf.rdf.createNamedNode(rdf.rdf.resolve(&quot;ecs:contents&quot;)), null).toArray();
+						var hit = graph.match(triples[0].object, store.rdf.createNamedNode(store.rdf.resolve(&quot;rdf:rest&quot;)), null).toArray(); */
+
+					rdf.execute(querylist, function(success, results) {
+						if (success) {
+							for(var rank=0; rank&lt;hits.length; rank++){
+								for(var i=0; i&lt;results.length; i++){
+									var row = results[i];
+									
+									if(row.url.value!=hits[rank]) {
+										/*if(row.url.value!=hits[rank] || 
+										row.dtype.value.indexOf(&quot;ecs&quot;) != -1 || 
+										row.dtype.value.indexOf(&quot;owl#A&quot;) != -1 ){ */
+										continue;
+									}
+									
+									//// TITLE ////
+									var title = &#x27;[Unknown]&#x27;;
+									if(!isEmpty(row.title)){
+										title = row.title.value;
+									}
+									else if(!isEmpty(row.name)) {
+										title = row.name.value;
+									}
+									
+									//// SHORT CONTENT ////									
+									var shortContent = &#x27;&#x27;;
+									if(!isEmpty(row.abst)) {
+										shortContent = row.abst.value;
+									}
+									else if(!isEmpty(row.preview)) {
+										shortContent = row.preview.value;
+									}
+									else if(!isEmpty(row.addresslocality) &amp;&amp; !isEmpty(row.streetaddress)) {
+										shortContent = row.addresslocality.value + &#x27;, &#x27; + row.streetaddress.value;
+									}
+									else {
+										var exclude = [&#x27;http://www.w3.org/1999/02/22-rdf-syntax-ns#type&#x27;,&#x27;http://purl.org/dc/terms/title&#x27;];
+										shortContent = getAPropertyValue(rdf, row.url.value, exclude);
+									}
+									
+									//// DOCTYPE ////
+									var dtype = &#x27;[Type not found]&#x27;;
+									if(!isEmpty(row.dtype)){
+										dtype = row.dtype.value;
+									}
+									
+									if(!main.containsDocument(documents, shortContent, title, row.url.value)){
+										documents.push({url: row.url.value, shortContent: shortContent, title: title, type: dtype});
+									}
+								}
+							}
+						}
+					});
+					
+					return documents;
+				},
+				
+                /**
+                 * This function decides whether a document list contains
+				 * a document with a specific content and title or not.
+				 * @method containsDocument
+                 * @param {Array} documents the list of documents
+                 * @param {String} content content of the other document
+                 * @param {String} title title of the other document
+                 * @return {Boolean} true, if the list contains, false otherwise
+                 */
+                containsDocument: function(documents, content, title, url){
+                    for(var i=0;i&lt;documents.length;i++){
+                        if(documents[i].url === url || (documents[i].shortContent === content &amp;&amp; documents[i].title === title)){
+                            return true;
+                        }
+                    }
+                    return false;
+                },
+
+                /**
+                 * This function calls the content updater function of the
+				 * details box.
+				 * [replaced with function &#x27;displayDetails&#x27;]
+				 * @method updateDetails
+                 * @param {String} title the title of the details
+                 * @param {Object} addressObject the address object
+                 */
+                updateDetails: function(title, addressObject){
+                    this.$.detailsBox.updateDetails(title, addressObject);
+                },
+				
+				/**
+				 * This function calls the display function of the
+				 * details box.
+				 * @method displayDetails
+				 * @param {Object} rdf rdf with the metadata of the entity
+				 */
+				displayDetails: function(rdf){
+					this.$.detailsBox.displayDetails(rdf);
+				}
+            });
+        }
+        new DocumentApp().renderInto(document.getElementById(&#x27;main&#x27;));
+        renderTemplateDiv();
+        
+        function renderTemplateDiv(){
+            // load the preview templates
+            jQuery(&quot;#visualizer&quot;).load(CONSTANTS.VISUALIZER_URL);
+        }
+    }
+	
+    try {
+        initialization();
+    } catch(e) {
+        console.log(e);
+    }
+});
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
