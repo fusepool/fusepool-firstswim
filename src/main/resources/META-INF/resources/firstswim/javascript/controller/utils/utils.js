@@ -9,7 +9,7 @@ function placeDefaultCookies() {
 	if(isEmpty(readCookie('labelPrediction'))) { createCookie('labelPrediction', 1, 30); }
 	if(isEmpty(readCookie('userLabels'))) { createCookie('userLabels', [], 30); }
 	if(isEmpty(readCookie('css'))) { createCookie('css', 'firstswim', 30); }
-}
+}	
 
 // var BASE_URL = 'http://localhost:8080/';
 // var BASE_URL = 'http://platform.fusepool.info/';
