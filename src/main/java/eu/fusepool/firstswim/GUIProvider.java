@@ -8,11 +8,10 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import org.apache.clerezza.rdf.core.Literal;
-import org.apache.clerezza.rdf.core.MGraph;
+import org.apache.clerezza.rdf.core.Graph;
 import org.apache.clerezza.rdf.core.Resource;
 import org.apache.clerezza.rdf.core.TypedLiteral;
 import org.apache.clerezza.rdf.core.UriRef;
-import org.apache.clerezza.rdf.core.access.LockableMGraph;
 import org.apache.clerezza.rdf.core.access.TcManager;
 import org.apache.clerezza.rdf.core.impl.PlainLiteralImpl;
 import org.apache.clerezza.rdf.core.sparql.ParseException;
@@ -29,7 +28,7 @@ import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
-import org.apache.stanbol.commons.indexedgraph.IndexedMGraph;
+import org.apache.stanbol.commons.indexedgraph.IndexedGraph;
 import org.apache.stanbol.commons.web.viewable.RdfViewable;
 import org.apache.stanbol.enhancer.servicesapi.ChainManager;
 import org.apache.stanbol.enhancer.servicesapi.ContentItemFactory;
@@ -80,7 +79,7 @@ public class GUIProvider {
     @Reference
     private TcManager tcManager;
     
-    private LockableMGraph graph;
+    private Graph graph;
     
     // threshold for weight of predicted labels
     private final double THRESHOLD = 0.0;
@@ -104,7 +103,7 @@ public class GUIProvider {
 //        TcAccessController tca;
         
         try {
-            graph = tcManager.getMGraph(ANNOTATION_GRAPH_NAME);
+            graph = tcManager.getGraph(ANNOTATION_GRAPH_NAME);
 //            tca = new TcAccessController(tcManager);
 //            tca.setRequiredReadPermissions(ANNOTATION_GRAPH_NAME, Collections.singleton((Permission) new TcPermission(
 //                    "urn:x-localinstance:/fusepool/content.graph", "read")));
@@ -131,7 +130,7 @@ public class GUIProvider {
         //central serviceUri in the response
         final UriRef serviceUri = new UriRef(resourcePath);
         //the in memory graph to which the triples for the response are added
-        final MGraph responseGraph = new IndexedMGraph();
+        final Graph responseGraph = new IndexedGraph();
         //This GraphNode represents the service within our result graph
         final GraphNode node = new GraphNode(serviceUri, responseGraph);
         //The triples will be added to the first graph of the union

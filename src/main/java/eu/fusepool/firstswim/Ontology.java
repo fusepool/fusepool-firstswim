@@ -1,6 +1,7 @@
 package eu.fusepool.firstswim;
 
-import org.apache.clerezza.rdf.core.UriRef;
+import org.apache.clerezza.commons.rdf.IRI;
+
 
 
 /**
@@ -14,6 +15,6 @@ public class Ontology {
      * containing the content to be enhance as one field and optionally the
      * requested enhancment chain in the other.
      */
-    public static final UriRef GUI = new UriRef("http://example.org/service-description#GUI");
+    public static final IRI GUI = new IRI("http://example.org/service-description#GUI");
     
 }
