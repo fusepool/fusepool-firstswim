@@ -7,13 +7,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import org.apache.clerezza.rdf.core.Literal;
-import org.apache.clerezza.rdf.core.Graph;
-import org.apache.clerezza.rdf.core.Resource;
-import org.apache.clerezza.rdf.core.TypedLiteral;
-import org.apache.clerezza.rdf.core.UriRef;
+import org.apache.clerezza.commons.rdf.Literal;
+import org.apache.clerezza.commons.rdf.ImmutableGraph;
+import org.apache.clerezza.commons.rdf.RDFTerm;
+import org.apache.clerezza.commons.rdf.IRI;
 import org.apache.clerezza.rdf.core.access.TcManager;
-import org.apache.clerezza.rdf.core.impl.PlainLiteralImpl;
+import org.apache.clerezza.commons.rdf.impl.utils.PlainLiteralImpl;
 import org.apache.clerezza.rdf.core.sparql.ParseException;
 import org.apache.clerezza.rdf.core.sparql.QueryParser;
 import org.apache.clerezza.rdf.core.sparql.ResultSet;
@@ -50,6 +49,7 @@ import java.util.List;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
+import org.apache.clerezza.commons.rdf.Graph;
 import org.apache.stanbol.commons.security.auth.AuthenticationService;
 import org.apache.stanbol.commons.security.auth.NoSuchAgent;
 
@@ -79,7 +79,7 @@ public class GUIProvider {
     @Reference
     private TcManager tcManager;
     
-    private Graph graph;
+    private ImmutableGraph graph;
     
     // threshold for weight of predicted labels
     private final double THRESHOLD = 0.0;
@@ -90,7 +90,7 @@ public class GUIProvider {
     @Reference
     private HubEngine predictionHub;
     
-    private UriRef ANNOTATION_GRAPH_NAME = new UriRef("urn:x-localinstance:/fusepool/annotation.graph");
+    private IRI ANNOTATION_GRAPH_NAME = new IRI("urn:x-localinstance:/fusepool/annotation.graph");
     
     @Reference
     private AuthenticationService authenticationService;
@@ -103,7 +103,7 @@ public class GUIProvider {
 //        TcAccessController tca;
         
         try {
-            graph = tcManager.getGraph(ANNOTATION_GRAPH_NAME);
+            graph = tcManager.getImmutableGraph(ANNOTATION_GRAPH_NAME);
 //            tca = new TcAccessController(tcManager);
 //            tca.setRequiredReadPermissions(ANNOTATION_GRAPH_NAME, Collections.singleton((Permission) new TcPermission(
 //                    "urn:x-localinstance:/fusepool/content.graph", "read")));
@@ -128,7 +128,7 @@ public class GUIProvider {
         final String resourcePath = uriInfo.getAbsolutePath().toString();
         //The URI at which this service was accessed accessed, this will be the 
         //central serviceUri in the response
-        final UriRef serviceUri = new UriRef(resourcePath);
+        final IRI serviceUri = new IRI(resourcePath);
         //the in memory graph to which the triples for the response are added
         final Graph responseGraph = new IndexedGraph();
         //This GraphNode represents the service within our result graph
@@ -144,7 +144,7 @@ public class GUIProvider {
     @GET
     @Path("getlabels")
     public String serviceEntry(@Context final UriInfo uriInfo,
-            @QueryParam("iri") final UriRef iri,
+            @QueryParam("iri") final IRI iri,
             @QueryParam("usePrediction") final String usePrediction ) throws Exception {
         
         // json response for the client
@@ -189,34 +189,25 @@ public class GUIProvider {
                     // object for handling labels
                     Labels labels = new Labels();       
                     String label, date, status;
-                    UriRef uri;
+                    IRI uri;
                     while (resultSet.hasNext()) {
                         SolutionMapping mapping = resultSet.next();
                         try {
-                            Literal literal;
+                            
                             
                             // get label text
-                            Resource r = mapping.get("label");
-                            if (r instanceof TypedLiteral) {
-                                literal = (TypedLiteral) r;
-                            } else {
-                                literal = (PlainLiteralImpl) r;
-                            }
+                            RDFTerm r = mapping.get("label");
+                            Literal literal = (Literal)r;
                             label = literal.getLexicalForm();
                             
                             // get timestamp of label
                             r = mapping.get("date");
-                            if (r instanceof TypedLiteral) {
-                                literal = (TypedLiteral) r;
-                            } else {
-                                literal = (PlainLiteralImpl) r;
-                            }
-                            date = literal.getLexicalForm();
+                            date = ((Literal)r).getLexicalForm();
                             
                             // get status of label (hasNew or hasDeleted)
                             r = mapping.get("status");
-                            if (r instanceof UriRef) {
-                                uri = (UriRef) r;
+                            if (r instanceof IRI) {
+                                uri = (IRI) r;
                                 status = uri.getUnicodeString();
                             } else {
                                 literal = (PlainLiteralImpl) r;
@@ -562,34 +553,26 @@ public class GUIProvider {
                     // object for handling labels
                     Labels labels = new Labels();       
                     String label, date, status;
-                    UriRef uri;
+                    IRI uri;
                     while (resultSet.hasNext()) {
                         SolutionMapping mapping = resultSet.next();
                         try {
-                            Literal literal;
+                            
                             
                             // get label text
-                            Resource r = mapping.get("label");
-                            if (r instanceof TypedLiteral) {
-                                literal = (TypedLiteral) r;
-                            } else {
-                                literal = (PlainLiteralImpl) r;
-                            }
+                            RDFTerm r = mapping.get("label");
+                            Literal literal = (Literal)r;
                             label = literal.getLexicalForm();
                             
                             // get timestamp of label
                             r = mapping.get("date");
-                            if (r instanceof TypedLiteral) {
-                                literal = (TypedLiteral) r;
-                            } else {
-                                literal = (PlainLiteralImpl) r;
-                            }
+                            literal = (Literal)r;
                             date = literal.getLexicalForm();
                             
                             // get status of label (hasNew or hasDeleted)
                             r = mapping.get("status");
-                            if (r instanceof UriRef) {
-                                uri = (UriRef) r;
+                            if (r instanceof IRI) {
+                                uri = (IRI) r;
                                 status = uri.getUnicodeString();
                             } else {
                                 literal = (PlainLiteralImpl) r;
